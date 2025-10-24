@@ -1,5 +1,5 @@
 
-import  { FlipCard }  from "@/components/FlipCard";
+import  { FlipCard }  from "@/app/behind-the-web/components/FlipCard";
 const players = [
   "/assets/images/ronaldo.jpg",
   "/assets/images/ronaldo.svg",

@@ -1,8 +1,19 @@
-import Navbar from "./components/NavBar";
 
+import  { FlipCard }  from "@/app/behind-the-web/components/FlipCard";
+const players = [
+  "/assets/images/ronaldo.jpg",
+  "/assets/images/ronaldo.svg",
+  "/assets/images/neymar.svg",
+];
 export function BehindTheWeb() {
   return (<>
     <h1>Behind The Web</h1>
+    <div className="font-sans flex flex-row items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 bg-black">
+      {players.map((player, index) => (
+        <FlipCard key={index} size={(index + 1) as 1 | 2 | 3} imageSrc={player} />
+      ))}
+      
+    </div>
   </>
   );
 }

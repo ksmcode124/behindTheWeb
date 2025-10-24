@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+
 import React, { useState } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
@@ -11,7 +11,7 @@ const cardVariant = cva("", {
       1: "w-[296px] h-[434px]",
       2: "w-[195px] h-[294px]",
       3: "w-[139px] h-[210px]",
-    },
+    }, 
   },
   defaultVariants: {
     size: 1,
