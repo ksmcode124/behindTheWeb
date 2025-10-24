@@ -1,0 +1,90 @@
+"use client";
+import Image from "next/image";
+import React, { useState } from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
+import { Slot } from "@radix-ui/react-slot";
+
+const cardVariant = cva("", {
+  variants: {
+    size: {
+      1: "w-[296px] h-[434px]",
+      2: "w-[195px] h-[294px]",
+      3: "w-[139px] h-[210px]",
+    },
+  },
+  defaultVariants: {
+    size: 1,
+  },
+});
+
+
+function FlipCard({
+  size,
+  imageSrc, // dikeluarkan dari props
+  asChild = false,
+  className,
+  children,
+  ...restProps // ganti jadi restProps agar imageSrc tidak ikut tersebar
+}: React.ComponentPropsWithoutRef<"div"> &
+  VariantProps<typeof cardVariant> & {
+    asChild?: boolean;
+    children?: React.ReactNode;
+    imageSrc?: string;
+  }) {
+  const Comp = asChild ? Slot : "div";
+  const [hover, setHover] = useState(false);
+
+  return (
+    <Comp
+      className={cn("[perspective:1000px]", cardVariant({ size }), className)}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      {...restProps} // ✅ aman, imageSrc tidak ikut tersebar
+    >
+      <div
+        className={cn(
+          "relative w-full h-full transition-transform duration-500 [transform-style:preserve-3d]",
+          hover && "[transform:rotateY(180deg)]"
+        )}
+      >
+        {/* bagian depan pas dihover */}
+        <div
+          className={cn(
+            "absolute w-full h-full flex items-center justify-center bg-blue-400 text-white font-semibold [backface-visibility:hidden overflow-hidden] bg-cover ",
+            size === 1 ? "border-[13px] rounded-[35px] border-white" :
+              size === 2 ? "border-[9px] rounded-[30px]" :
+                size === 3 ? "border-[6px] rounded-[25px]" : "",
+          )}
+          {/* menambahkan gambarnya disini */}
+          style={{ backgroundImage: `url(${imageSrc})` }}
+        >
+          <div className={cn(
+            "absolute w-full bottom-0 flex flex-col items-center justify-center text-black font-semibold bg-white/65 backdrop-blur-xs overflow-hidden",
+            size === 1 ? "text-[20px] p-[13px] rounded-b-[21px]" :
+              size === 2 ? "text-[16px] p-[9px] rounded-b-[18px]" :
+                size === 3 ? "text-[12px] p-[6px] rounded-b-[17px]" : "",
+          )}>
+            {/* nama dan role untuk looping*/}
+            <h3>Nama</h3>
+            <span>Role</span>
+          </div>
+        </div>
+
+        {/* BACK */}
+        <div
+          className={cn(
+            "absolute w-full h-full flex items-center justify-center bg-red-400 text-white font-semibold [transform:rotateY(180deg)] [backface-visibility:hidden]",
+            size === 1 ? "border-[13px] rounded-[35px] border-white" :
+              size === 2 ? "border-[9px] rounded-[30px] " :
+                size === 3 ? "border-[6px] rounded-[25px]" : "",
+          )}
+        >
+          Belakang
+        </div>
+      </div>
+    </Comp>
+  );
+}
+
+export { FlipCard, cardVariant };
