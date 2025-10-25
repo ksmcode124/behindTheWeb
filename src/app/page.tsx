@@ -1,17 +1,36 @@
+"use client";
+import Card from "@/app/behind-the-web/components/hasbi";
+import Image from "next/image";
+import { useState } from 'react';
 
-import  { FlipCard }  from "@/app/behind-the-web/components/FlipCard";
-const players = [
-  "/assets/images/ronaldo.jpg",
-  "/assets/images/ronaldo.svg",
-  "/assets/images/neymar.svg",
-];
-export default function Home() {
+export default function AccordionParent() {
+  // Simpan indeks card yang sedang terbuka
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const handleToggle = (index: number) => {
+    // Jika yang diklik sudah terbuka → tutup
+    // Jika belum terbuka → buka yang ini, tutup lainnya
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
   return (
-    <div className="font-sans flex flex-row items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 bg-black">
-      {players.map((player, index) => (
-        <FlipCard key={index} size={(index + 1) as 1 | 2 | 3} imageSrc={player} />
-      ))}
-      
+    <div 
+      className="flex bg-cover gap-4 bg-center justify-center items-center w-[705px] overflow-hidden" 
+      style={{ backgroundImage: "url('/assets/images/photo.svg')"
+       }}
+    >
+    <Card title="visi" 
+        content="lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." 
+        expanded={openIndex === 0} 
+        onToggle={() => handleToggle(0)}>
+    </Card>
+      <Card title="misi" 
+        content="lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." 
+        expanded={openIndex === 1} 
+        onToggle={() => handleToggle(1)}>
+   </Card>
     </div>
   );
 }
