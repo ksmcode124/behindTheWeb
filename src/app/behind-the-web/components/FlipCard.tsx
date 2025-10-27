@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import { Slot } from "@radix-ui/react-slot";
-
+import { SocialMediaLink } from "@/app/behind-the-web/components/SosialMediaLink";
 const cardVariant = cva("", {
   variants: {
     size: {
@@ -73,13 +73,15 @@ function FlipCard({
         {/* BACK */}
         <div
           className={cn(
-            "absolute w-full h-full flex items-center justify-center bg-red-400 text-white font-semibold [transform:rotateY(180deg)] [backface-visibility:hidden]",
+            "absolute w-full h-full flex items-center justify-center bg-white gap-4 text-white font-semibold [transform:rotateY(180deg)] [backface-visibility:hidden]",
             size === 1 ? "border-[13px] rounded-[35px] border-white" :
               size === 2 ? "border-[9px] rounded-[30px] " :
                 size === 3 ? "border-[6px] rounded-[25px]" : "",
           )}
         >
-          Belakang
+          <SocialMediaLink platform="instagram" href="#" />
+          <SocialMediaLink platform="linkedin" href="#" />
+
         </div>
       </div>
     </Comp>
