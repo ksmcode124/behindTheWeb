@@ -45,7 +45,7 @@ function FlipCard({
       <div
         className={cn(
           "relative w-full h-full transition-transform duration-500 [transform-style:preserve-3d]",
-          hover && "[transform:rotateY(180deg)]"
+          hover && size === 1 &&  "[transform:rotateY(180deg)]"
         )}
       >
         {/* bagian depan pas dihover */}
@@ -56,7 +56,6 @@ function FlipCard({
               size === 2 ? "border-[9px] rounded-[30px]" :
                 size === 3 ? "border-[6px] rounded-[25px]" : "",
           )}
-          {/* menambahkan gambarnya disini */}
           style={{ backgroundImage: `url(${imageSrc})` }}
         >
           <div className={cn(
