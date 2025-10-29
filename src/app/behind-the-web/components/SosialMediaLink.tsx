@@ -11,10 +11,10 @@ interface SocialMediaProps {
 }
 
 const iconMap = {
-  instagram: <FaInstagram size={25} />,
-  linkedin: <FaLinkedin size={25} />,
-  whatsapp: <FaWhatsapp size={25} />,
-  email: <FaEnvelope size={25} />
+  instagram: <FaInstagram/>,
+  linkedin: <FaLinkedin/>,
+  whatsapp: <FaWhatsapp/>,
+  email: <FaEnvelope/>
 };
 
 export function SocialMediaLink({platform, href, className}: SocialMediaProps) {
@@ -29,7 +29,7 @@ export function SocialMediaLink({platform, href, className}: SocialMediaProps) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`flex items-center justify-center w-10 h-10 rounded-full bg-white text-black transition-all duration-300 ease-in-out hover:bg-black hover:text-white
+      className={`flex items-center justify-center rounded-full bg-white text-black transition-all duration-300 ease-in-out hover:bg-black hover:text-white
         ${className || ""} 
       `}
     >

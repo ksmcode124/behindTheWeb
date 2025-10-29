@@ -79,8 +79,8 @@ function FlipCard({
                 size === 3 ? "border-[6px] rounded-[25px]" : "",
           )}
         >
-          <SocialMediaLink platform="instagram" href="#" />
-          <SocialMediaLink platform="linkedin" href="#" />
+          <SocialMediaLink platform="instagram" href="#" className="w-[60px] h-[60px] text-[38px]" />
+          <SocialMediaLink platform="linkedin" href="#" className="w-[60px] h-[60px] text-[38px]" />
 
         </div>
       </div>
