@@ -51,8 +51,8 @@ function FlipCard({
         {/* bagian depan pas dihover */}
         <div
           className={cn(
-            "absolute w-full h-full flex items-center justify-center bg-blue-400 text-white font-semibold [backface-visibility:hidden overflow-hidden] bg-cover ",
-            size === 1 ? "border-[13px] rounded-[35px] border-white" :
+            "absolute w-full h-full flex items-center justify-center bg-blue-400 text-white font-semibold [backface-visibility:hidden overflow-hidden] bg-cover border-[#393c45]",
+            size === 1 ? "border-[13px] rounded-[35px]" :
               size === 2 ? "border-[9px] rounded-[30px]" :
                 size === 3 ? "border-[6px] rounded-[25px]" : "",
           )}
@@ -74,7 +74,7 @@ function FlipCard({
         <div
           className={cn(
             "absolute w-full h-full flex items-center justify-center bg-white gap-4 text-white font-semibold [transform:rotateY(180deg)] [backface-visibility:hidden]",
-            size === 1 ? "border-[13px] rounded-[35px] border-white" :
+            size === 1 ? "border-[13px] rounded-[35px]" :
               size === 2 ? "border-[9px] rounded-[30px] " :
                 size === 3 ? "border-[6px] rounded-[25px]" : "",
           )}

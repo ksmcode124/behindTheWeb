@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react";
 import { FlipCard } from "@/app/behind-the-web/components/FlipCard";
+import Image from "next/image";
 
 const players = [
   "/assets/images/ronaldo.jpg",
@@ -31,28 +32,17 @@ export default function Home() {
     });
   };
   
-  let count: number = 0;
-  const ButtonPosition = (size: 1 | 2 | 3) => {
-    size === 2 ?  count++ : "";
-    return (count % 2 === 0 ? handlePrev : count % 2 === 1 ? handleNext : "");
-  };
-  
   return (
-    <div className="font-sans flex flex-row items-center justify-center  min-h-screen p-8 pb-20 gap-8 sm:p-20 bg-black">
+    <div className="font-sans flex flex-row items-center justify-center min-h-screen p-8 pb-20 gap-8 sm:p-20 bg-black">
+      <button onClick={handlePrev} className="text-white w-[70px] h-[70px] rounded-full bg-[#393c45] p-auto justify-content-center justify-items-center"><Image src="/assets/images/Vector.svg" alt="Previous" width={17} height={28}/></button>
       {getVisibleNames().map((player, i)  => {
         const size: 1 | 2 | 3 = i < 3
           ? (3 - i) as 1 | 2 | 3   // 0→3, 1→2, 2→1
           : (i - 1) as 1 | 2 | 3;  // 3→2, 4→3
-        const isButton = size === 2;
-        return isButton ? <button
-          key={player}
-          onClick={ButtonPosition(size)}
-          className="flex w-auto h-auto"
-        >
-          <FlipCard size={size} imageSrc={player} />
-        </button> :
-           <FlipCard key={player} size={size} imageSrc={player} />
+        return <FlipCard key={player} size={size} imageSrc={player} />
       })}
+      <button onClick={handleNext} className="text-white w-[70px] h-[70px] rounded-full bg-[#393c45] p-auto justify-content-center justify-items-center"><Image src="/assets/images/Vector.svg" alt="Next" className="rotate-180" width={17} height={28}/></button>
     </div>
+  
   );
 }
