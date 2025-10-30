@@ -26,10 +26,11 @@ export default function Card({ expanded, onToggle, title, content }: CardProps) 
         width: expanded ? 460 : 228,
       }}
       transition={{
-        stiffness: 131,
-        damping: 50,
-        mass: 1,
-        ease: "easeInOut", // tanpa percepatan atau perlambatan
+        // stiffness: 131,
+        // damping: 50,
+        // mass: 1,
+        duration: 0.2,
+        // ease: "easeInOut", // tanpa percepatan atau perlambatan
 
       }}
 
@@ -38,8 +39,8 @@ export default function Card({ expanded, onToggle, title, content }: CardProps) 
       <motion.div
         layout  // <-- membuat posisi elemen ikut animasi saat berubah
         transition={{
-          duration: 0.5, // durasi total animasi
-          ease: "easeInOut", // tanpa percepatan atau perlambatan
+          duration: 0.2, // durasi total animasi
+          // ease: "easeInOut", // tanpa percepatan atau perlambatan
         }}
         className={cn(
           "header flex items-center justify-center h-auto w-full text-[45px]",
@@ -77,8 +78,7 @@ export default function Card({ expanded, onToggle, title, content }: CardProps) 
           initial={{ x: 200, opacity: 0 }} // dari kanan ke kiri
           animate={{ x: 0, opacity: 8 }}
           exit={{ x: 200, opacity: 0 }}
-          transition={{ duration: 1, ease: "easeInOut" }}
-
+          transition={{ duration: 0.7, ease: "easeInOut" }}
         >
           {content}
         </motion.p>

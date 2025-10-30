@@ -1,6 +1,7 @@
 "use client";
 import Card from "@/app/behind-the-web/components/hasbi";
 import { motion } from "framer-motion";
+import { div } from "framer-motion/client";
 import { useState, useEffect, useRef } from "react";
 
 export default function AccordionParent() {
@@ -69,7 +70,7 @@ export default function AccordionParent() {
 
   return (
     <div
-      className="flex gap-4 bg-cover justify-center"
+      className="flex gap-4 bg-cover justify-center items-center"
     >
       <div ref={cardRefs[0]}>
         <Card
