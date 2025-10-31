@@ -22,6 +22,10 @@ const cardVariant = cva("", {
 function FlipCard({
   size,
   imageSrc, // dikeluarkan dari props
+  nama,
+  role,
+  ig,
+  linkedIn,
   asChild = false,
   className,
   children,
@@ -31,6 +35,11 @@ function FlipCard({
     asChild?: boolean;
     children?: React.ReactNode;
     imageSrc?: string;
+    className?: string;
+    nama?: string;
+    role?: string;
+    ig?: string;
+    linkedIn?: string;
   }) {
   const Comp = asChild ? Slot : "div";
   const [hover, setHover] = useState(false);
@@ -65,8 +74,8 @@ function FlipCard({
                 size === 3 ? "text-[12px] p-[6px] rounded-b-[17px]" : "",
           )}>
             {/* nama dan role untuk looping*/}
-            <h3>Nama</h3>
-            <span>Role</span>
+            <h3>{nama}</h3>
+            <span>{role}</span>
           </div>
         </div>
 
@@ -79,8 +88,8 @@ function FlipCard({
                 size === 3 ? "border-[6px] rounded-[25px]" : "",
           )}
         >
-          <SocialMediaLink platform="instagram" href="#" className="w-[60px] h-[60px] text-[38px]" />
-          <SocialMediaLink platform="linkedin" href="#" className="w-[60px] h-[60px] text-[38px]" />
+          <SocialMediaLink platform="instagram" href={ig ?? ""} className="w-[60px] h-[60px] text-[38px]" />
+          <SocialMediaLink platform="linkedin" href={linkedIn ?? ""} className="w-[60px] h-[60px] text-[38px]" />
 
         </div>
       </div>
