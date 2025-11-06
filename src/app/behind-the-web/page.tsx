@@ -1,8 +1,12 @@
-import Navbar from "./components/NavBar";
+import React from "react";
+import Footer from "./components/Footer";
 
-export function BehindTheWeb() {
-  return (<>
-    <h1>Behind The Web</h1>
-  </>
+export function Page() {
+  return (
+    <div>
+      <Footer />
+    </div>
   );
-}
+};
+
+export default Page;
