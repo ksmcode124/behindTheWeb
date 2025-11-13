@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
 :root[data-theme='himasisfo'] {
   @theme inline {
     --color-bg-base: #d3b28a;
