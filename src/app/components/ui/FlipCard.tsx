@@ -1,23 +1,25 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '@/lib/utils';
-import { Slot } from '@radix-ui/react-slot';
-import { SocialMediaLink } from './SocialMediaLink';
-
-const cardVariant = cva('', {
+import React, { useState } from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
+import { Slot } from "@radix-ui/react-slot";
+import { SocialMediaLink } from "./SocialMediaLink";
+const cardVariant = cva("", {
   variants: {
     size: {
-      1: 'w-[296px] h-[434px]',
-      2: 'w-[195px] h-[294px]',
-      3: 'w-[139px] h-[210px]',
-    },
+      1: "w-[296px] h-[434px]",
+      2: "w-[195px] h-[294px]",
+      3: "w-[139px] h-[210px]",
+      4: "w-[121.67px] h-[183.4px]",
+      5: "w-[87.87px] h-[132.48px]",
+    }, 
   },
   defaultVariants: {
     size: 1,
   },
 });
+
 
 function FlipCard({
   size,
@@ -30,7 +32,7 @@ function FlipCard({
   className,
   children,
   ...restProps // ganti jadi restProps agar imageSrc tidak ikut tersebar
-}: React.ComponentPropsWithoutRef<'div'> &
+}: React.ComponentPropsWithoutRef<"div"> &
   VariantProps<typeof cardVariant> & {
     asChild?: boolean;
     children?: React.ReactNode;
@@ -41,48 +43,44 @@ function FlipCard({
     ig?: string;
     linkedIn?: string;
   }) {
-  const Comp = asChild ? Slot : 'div';
+  const Comp = asChild ? Slot : "div";
   const [hover, setHover] = useState(false);
 
   return (
     <Comp
-      className={cn('[perspective:1000px]', cardVariant({ size }), className)}
+      className={cn("[perspective:1000px]", cardVariant({ size }), className)}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       {...restProps} // ✅ aman, imageSrc tidak ikut tersebar
     >
       <div
         className={cn(
-          'relative h-full w-full transition-transform duration-500 [transform-style:preserve-3d]',
-          hover && size === 1 && '[transform:rotateY(180deg)]',
+          "relative w-full h-full transition-transform duration-500 [transform-style:preserve-3d]",
+          hover && size === 1 &&  "[transform:rotateY(180deg)]"
         )}
       >
         {/* bagian depan pas dihover */}
         <div
           className={cn(
-            '[backface-visibility:hidden overflow-hidden] absolute flex h-full w-full items-center justify-center border-[#393c45] bg-blue-400 bg-cover font-semibold text-white',
-            size === 1
-              ? 'rounded-[35px] border-[13px]'
-              : size === 2
-                ? 'rounded-[30px] border-[9px]'
-                : size === 3
-                  ? 'rounded-[25px] border-[6px]'
-                  : '',
+            "absolute w-full h-full flex items-center justify-center bg-blue-400 text-white font-semibold [backface-visibility:hidden overflow-hidden] bg-cover border-[#393c45]",
+            size === 1 ? "border-[13px] rounded-[35px]" :
+              size === 2 ? "border-[9px] rounded-[30px]" :
+                size === 3 ? "border-[6px] rounded-[25px]" :
+                  size === 4 ? "border-[4px] rounded-[20px]" :
+                    size === 5 ? "border-[3px] rounded-[15px]" : "",
+
+
           )}
           style={{ backgroundImage: `url(${imageSrc})` }}
         >
-          <div
-            className={cn(
-              'absolute bottom-0 flex w-full flex-col items-center justify-center overflow-hidden bg-white/65 font-semibold text-black backdrop-blur-xs',
-              size === 1
-                ? 'rounded-b-[21px] p-[13px] text-[20px]'
-                : size === 2
-                  ? 'rounded-b-[18px] p-[9px] text-[16px]'
-                  : size === 3
-                    ? 'rounded-b-[17px] p-[6px] text-[12px]'
-                    : '',
-            )}
-          >
+          <div className={cn(
+            "absolute w-full bottom-0 flex flex-col items-center justify-center text-black font-semibold bg-white/65 backdrop-blur-xs overflow-hidden",
+            size === 1 ? "text-[20px] p-[13px] rounded-b-[21px]" :
+              size === 2 ? "text-[16px] p-[9px] rounded-b-[18px]" :
+                size === 3 ? "text-[12px] p-[6px] rounded-b-[17px]" :
+                  size === 4 ? "text-[10px] p-[4px] rounded-b-[14px]" :
+                    size === 5 ? "text-[8px] p-[3px] rounded-b-[10px]" : "",
+          )}>
             {/* nama dan role untuk looping*/}
             <h3>{nama}</h3>
             <span>{role}</span>
@@ -92,26 +90,17 @@ function FlipCard({
         {/* BACK */}
         <div
           className={cn(
-            'absolute flex h-full w-full [transform:rotateY(180deg)] items-center justify-center gap-4 bg-white font-semibold text-white [backface-visibility:hidden]',
-            size === 1
-              ? 'rounded-[35px] border-[13px]'
-              : size === 2
-                ? 'rounded-[30px] border-[9px]'
-                : size === 3
-                  ? 'rounded-[25px] border-[6px]'
-                  : '',
+            "absolute w-full h-full flex items-center justify-center bg-white gap-4 text-white font-semibold [transform:rotateY(180deg)] [backface-visibility:hidden]",
+            size === 1 ? "border-[13px] rounded-[35px]" :
+              size === 2 ? "border-[9px] rounded-[30px] " :
+                size === 3 ? "border-[6px] rounded-[25px]" :
+                  size === 4 ? "border-[4px] rounded-[20px]" :
+                    size === 5 ? "border-[3px] rounded-[15px]" : "",
           )}
         >
-          <SocialMediaLink
-            platform="instagram"
-            href={ig ?? ''}
-            className="h-[60px] w-[60px] text-[38px]"
-          />
-          <SocialMediaLink
-            platform="linkedin"
-            href={linkedIn ?? ''}
-            className="h-[60px] w-[60px] text-[38px]"
-          />
+          <SocialMediaLink platform="instagram" href={ig ?? ""} className="w-[60px] h-[60px] text-[38px]" />
+          <SocialMediaLink platform="linkedin" href={linkedIn ?? ""} className="w-[60px] h-[60px] text-[38px]" />
+
         </div>
       </div>
     </Comp>
