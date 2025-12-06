@@ -1,11 +1,16 @@
 import type { Metadata } from 'next';
-import { Anton } from 'next/font/google';
+import { Anton, Poppins } from 'next/font/google';
 import '@/app/globals.css';
 
 const anton = Anton({
   subsets: ['latin'],
   weight: '400',
   variable: '--font-anton',
+});
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
 });
 
 export const metadata: Metadata = {
@@ -20,7 +25,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="behind-the-web">
-      <body className={`${anton.variable} font-display antialiased`}>
+      <body
+        className={`${anton.variable} ${poppins.className} font-display antialiased`}
+      >
         {children}
       </body>
     </html>

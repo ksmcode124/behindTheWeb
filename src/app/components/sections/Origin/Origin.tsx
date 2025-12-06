@@ -53,7 +53,7 @@ export default function Origin() {
       </div>
 
       <div className="flex h-screen w-screen items-center justify-center px-[15vw] py-[15vw]">
-        <div className="pointer-events-none h-full w-full bg-[url('/assets/images/hero_bg.png')] bg-cover bg-center shadow-[0_0_0_5vw_#5EAA9E,0_0_0_10vw_#FEB863,0_0_0_15vw_#F2D3A5]"></div>
+        <div className="pointer-events-none h-full w-full bg-[url('/assets/images/hero_bg.webp')] bg-cover bg-center shadow-[0_0_0_5vw_#5EAA9E,0_0_0_10vw_#FEB863,0_0_0_15vw_#F2D3A5]"></div>
       </div>
     </>
   );

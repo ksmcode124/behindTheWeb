@@ -11,13 +11,13 @@ export default function Index() {
         <Navbar />
       </header>
 
-      <main className="bg-secondary-300 min-h-screen">
+      <main className="bg-secondary-300 font-display min-h-screen">
         <Hero />
         <Origin />
         <Team />
       </main>
 
-      <footer>
+      <footer className="font-body">
         <Footer />
       </footer>
     </>

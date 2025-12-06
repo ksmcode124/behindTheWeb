@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Code124Black from '/public/assets/images/logo.png';
+import Code124Black from '/public/assets/images/logo_black.png';
 import Code124White from '/public/assets/images/logo_white.png';
 
 interface LogoProps {
