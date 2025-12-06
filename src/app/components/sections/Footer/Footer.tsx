@@ -1,6 +1,5 @@
 import React from 'react';
 import { SocialMediaLink } from '../../ui/SocialMediaLink';
-import Image from 'next/image';
 import Logo from '../../ui/Logo';
 
 const socialMediaData = [

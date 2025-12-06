@@ -15,7 +15,7 @@ export default function ShadowedText({
 }: ShadowedTextProps) {
   return (
     <Component
-      className={`text-secondary-400 font-display -rotate-3 ${className} ${
+      className={`text-secondary-400 font-display ${className} ${
         textShadow
           ? `[text-shadow:${textShadow}]`
           : '[text-shadow:4px_4px_0_#FEB863,6px_6px_0_#F3D199,8px_8px_0_#F2D39C,10px_10px_0_#AEBC8B,12px_12px_0_#5EAA9E]'
