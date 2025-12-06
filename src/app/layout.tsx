@@ -20,7 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="behind-the-web">
-      <body className={`${anton.variable} antialiased`}>{children}</body>
+      <body className={`${anton.variable} font-display antialiased`}>
+        {children}
+      </body>
     </html>
   );
 }

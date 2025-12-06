@@ -1,7 +1,7 @@
 'use client';
-import { FlipCard } from '@/app/components/FlipCard';
+import { FlipCard } from '@/app/components/ui/FlipCard';
 import Image from 'next/image';
-import Card from '@/app/components/GoalCard';
+import Card from '@/app/components/ui/GoalCard';
 import { motion } from 'framer-motion';
 import { div } from 'framer-motion/client';
 import { useState, useEffect, useRef } from 'react';
