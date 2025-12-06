@@ -1,8 +1,8 @@
 'use client';
 import { useState } from 'react';
-import { NavLink } from './NavLink';
+import { NavLink } from '../../ui/NavLink';
 
-export default function MobileNavigation({ className }: { className: string }) {
+export function Navigation({ className }: { className: string }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -36,10 +36,9 @@ export default function MobileNavigation({ className }: { className: string }) {
             : 'pointer-events-none -translate-y-4 opacity-0'
         }`}
       >
-        <NavLink href="#tentang">TENTANG</NavLink>
-        <NavLink href="#sejarah">SEJARAH</NavLink>
-        <NavLink href="#visimisi">VISI & MISI</NavLink>
-        <NavLink href="#departemen">DEPARTEMEN</NavLink>
+        <NavLink href="/">HOME</NavLink>
+        <NavLink href="/the-team">THE TEAM</NavLink>
+        <NavLink href="/our-past">OUR PAST</NavLink>
       </div>
     </div>
   );

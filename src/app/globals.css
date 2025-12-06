@@ -1,24 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-:root[data-theme='himasisfo'] {
-  @theme inline {
-    --color-bg-base: #d3b28a;
-    --color-bg-surface: #e3c49e;
-    --color-bg-paper: #f8f2db;
-    --color-bg-contrast: #38393e;
-
-    --color-primary: #f4943d;
-    --color-secondary: #f7b66c;
-    --color-accent: #e9ce8a;
-    --color-info: #63b1a7;
-    --color-success: #b6c68a;
-
-    --font-display: "Anton", sans-serif;
-    --font-body: "Anton", sans-serif;
-  }
-}
-
 :root[data-theme='behind-the-web'] {
   @theme inline {
     --color-primary-600: #F59A47;
