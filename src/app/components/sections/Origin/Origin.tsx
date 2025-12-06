@@ -5,7 +5,7 @@ export default function Origin() {
   return (
     <>
       <div className="flex h-screen w-full flex-col gap-6 px-6 lg:grid lg:h-screen lg:grid-cols-2 lg:items-center lg:gap-10">
-        <div className="flex justify-center">
+        <div className="flex justify-center bg-[url('/assets/images/origin_img_bg.webp')] bg-cover bg-center bg-no-repeat p-5">
           <Image
             src="/assets/images/logo_white.png"
             width={400}
@@ -17,7 +17,7 @@ export default function Origin() {
 
         <div className="flex max-w-2xl flex-none flex-col justify-start text-white">
           <div className="space-y-8 lg:space-y-10">
-            <ShadowedText as="h2" className="text-6xl">
+            <ShadowedText as="h2" className="-rotate-3 text-6xl">
               THE ORIGIN
             </ShadowedText>
             <p className="text-lg leading-relaxed">
@@ -52,8 +52,8 @@ export default function Origin() {
         Sliding Carousel
       </div>
 
-      <div className="flex h-screen w-screen items-center justify-center px-[15vw] py-[15vw]">
-        <div className="pointer-events-none h-full w-full bg-[url('/assets/images/hero_bg.webp')] bg-cover bg-center shadow-[0_0_0_5vw_#5EAA9E,0_0_0_10vw_#FEB863,0_0_0_15vw_#F2D3A5]"></div>
+      <div className="flex h-screen w-screen items-center justify-center px-[11vw] py-[11vw]">
+        <div className="pointer-events-none flex h-full w-full items-center justify-center bg-[url('/assets/images/hero_bg.webp')] bg-cover bg-center shadow-[0_0_0_4vw_#5EAA9E,0_0_0_8vw_#FEB863,0_0_0_12vw_#F2D3A5]"></div>
       </div>
     </>
   );
