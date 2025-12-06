@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { SocialMediaLink } from '../../ui/SocialMediaLink';
+import ShadowedText from '../../ui/ShadowedText';
 
 export default function HeroSection() {
   const socialMediaData = [
@@ -22,9 +23,7 @@ export default function HeroSection() {
   ];
   return (
     <div className="flex min-h-screen min-w-screen flex-col items-center justify-center gap-4 [background-image:url('/assets/images/hero_bg.png')] bg-cover bg-center px-11">
-      <h1 className="text-secondary-400 -rotate-3 text-8xl [-webkit-text-stroke-color:var(--color-primary-500)] [-webkit-text-stroke-width:2.87px] [text-shadow:4px_4px_0_#FEB863,6px_6px_0_#F3D199,8px_8px_0_#F2D39C,10px_10px_0_#AEBC8B,12px_12px_0px_#5EAA9E]">
-        CODE124
-      </h1>
+      <ShadowedText className="text-8xl">Code124</ShadowedText>
       <h3 className="h-12 -rotate-3 text-4xl">#TheFirstCommit</h3>
       <p className="border-b-secondary mx-auto max-w-5xl -rotate-3 border-b-4 pb-4 text-justify leading-relaxed [text-align-last:center]">
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem hic
