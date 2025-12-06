@@ -22,7 +22,7 @@ export default function HeroSection() {
     },
   ];
   return (
-    <div className="flex min-h-screen min-w-screen flex-col items-center justify-center gap-4 [background-image:url('/assets/images/hero_bg.png')] bg-cover bg-center px-11">
+    <div className="flex min-h-screen min-w-screen flex-col items-center justify-center gap-4 bg-[url('/assets/images/hero_bg.png')] bg-cover bg-center px-11">
       <ShadowedText className="text-8xl">Code124</ShadowedText>
       <h3 className="h-12 -rotate-3 text-4xl">#TheFirstCommit</h3>
       <p className="border-b-secondary mx-auto max-w-5xl -rotate-3 border-b-4 pb-4 text-justify leading-relaxed [text-align-last:center]">
