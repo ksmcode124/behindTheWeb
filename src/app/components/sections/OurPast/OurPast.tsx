@@ -3,7 +3,7 @@ import ShadowedText from '../../ui/ShadowedText';
 
 export default function OurPast() {
   return (
-    <div className="bg-secondary-300 text-secondary-400 relative grid h-auto grid-cols-[2fr_1fr] gap-x-16 overflow-hidden px-6 py-6 md:h-[35vh] md:px-16 md:py-8 lg:grid-cols-[5fr_2fr] lg:px-56 lg:py-12">
+    <div className="bg-secondary-300 text-secondary-400 relative grid h-auto grid-cols-[2fr_1fr] gap-x-16 overflow-hidden px-6 py-6 md:h-[45vh] md:px-16 md:py-8 lg:grid-cols-[5fr_2fr] lg:px-56 lg:py-12">
       {/* Background */}
       <div className="pointer-events-none absolute inset-0 my-5 bg-[url('/assets/images/line.webp')] bg-contain bg-center bg-no-repeat" />
 
@@ -15,7 +15,7 @@ export default function OurPast() {
           </ShadowedText>
           <p className="text-3xl md:text-4xl lg:text-7xl">PREVIOUS</p>
         </div>
-        <div className="flex -rotate-3 items-center gap-x-8 md:gap-x-12">
+        <div className="flex -rotate-3 items-center gap-x-8 pl-5 md:gap-x-25 md:pl-10">
           <p className="text-3xl md:text-4xl lg:text-7xl">MEMBER</p>
           <div className="flex flex-col text-sm md:text-lg lg:text-4xl">
             <p className="text-primary-500 [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:1px] text-shadow-[1.5px_1.5px_0_#FEB863]">

@@ -27,15 +27,12 @@ const socialMediaData = [
 
 export default function Footer() {
   return (
-    <footer className="relative min-h-[350px] bg-[#393C45] text-white">
+    <footer className="bg-secondary-300 font-body relative min-h-[350px] w-full text-white shadow-[inset_7px_10px_20px_rgba(0,0,0,0.7)]">
       <div className="mx-auto flex max-w-7xl flex-col items-start justify-start px-6 pt-10 pb-10 lg:flex-row lg:justify-between lg:pt-[65px] lg:pr-8 lg:pb-0 lg:pl-[140px]">
         {/* Kolom Kiri: Logo dan Deskripsi */}
         <div className="flex w-full flex-col space-y-4 lg:w-1/2 lg:space-y-6">
           <div className="flex items-center space-x-3">
-            <div className="relative h-[30px] w-[35px] lg:h-[38px] lg:w-[43px]">
-              <Image src="/logo_white.png" alt="Logo Code124" fill priority />
-            </div>
-            <div className="text-base font-semibold lg:text-lg">CODE124</div>
+            <Logo variant="white" />
           </div>
           <div>
             <h3 className="mb-2 font-bold">#TheFirstCommit</h3>
@@ -55,6 +52,7 @@ export default function Footer() {
               platform={social.platform}
               href={social.href}
               label={social.label}
+              iconClassName="h-12 w-12 text-2xl"
               withBorder
             />
           ))}

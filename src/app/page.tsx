@@ -17,9 +17,7 @@ export default function Index() {
         <OurPast />
       </main>
 
-      <footer className="font-body">
-        <Footer />
-      </footer>
+      <Footer />
     </>
   );
 }
