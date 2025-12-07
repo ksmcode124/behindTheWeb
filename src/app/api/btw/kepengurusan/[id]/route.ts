@@ -49,7 +49,7 @@ export async function PUT(
       where: { id_btw: parseInt(params.id) },
       data: {
         tahun_kerja: body.tahun_kerja,
-        nama_pengurus: body.nama_pengurus,
+        nama_kepengurusan: body.nama_kepengurusan,
       },
     });
 
