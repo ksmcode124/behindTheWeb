@@ -42,7 +42,7 @@ export default function OurPast() {
         </p>
 
         <Link
-          href="/"
+          href="/our-past"
           className="bg-primary-500 hover:text-secondary-300 mt-6 self-end border px-3 py-2 text-xl font-bold shadow-[0_3px_5px_#000] transition-colors duration-300 hover:bg-white md:px-6 md:py-3 md:text-2xl lg:px-5 lg:py-3"
         >
           LIHAT DI SINI

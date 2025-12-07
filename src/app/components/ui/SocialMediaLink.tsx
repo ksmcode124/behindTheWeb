@@ -2,9 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import {
   FaInstagram,
-  FaLinkedin,
   FaWhatsapp,
   FaEnvelope,
+  FaLinkedinIn,
 } from 'react-icons/fa';
 
 interface SocialMediaProps {
@@ -19,7 +19,7 @@ interface SocialMediaProps {
 
 const iconMap: Record<SocialMediaProps['platform'], React.ElementType> = {
   instagram: FaInstagram,
-  linkedin: FaLinkedin,
+  linkedin: FaLinkedinIn,
   whatsapp: FaWhatsapp,
   email: FaEnvelope,
 };

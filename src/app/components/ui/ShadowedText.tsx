@@ -5,22 +5,32 @@ interface ShadowedTextProps {
   children: React.ReactNode;
   className?: string;
   textShadow?: string;
+  textColor?: string;
 }
 
 const DEFAULT_TEXT_SHADOW =
-  '4px_4px_0_#FEB863,6px_6px_0_#F3D199,8px_8px_0_#F2D39C,10px_10px_0_#AEBC8B,12px_12px_0_#5EAA9E';
+  '4px 4px 0 #FEB863, 6px 6px 0 #F3D199, 8px 8px 0 #F2D39C, 10px 10px 0 #AEBC8B, 12px 12px 0 #5EAA9E';
+
+const DEFAULT_TEXT_COLOR = 'var(--color-secondary-400)';
 
 export default function ShadowedText({
   as: Component = 'h1',
   children,
   className = '',
   textShadow,
+  textColor,
 }: ShadowedTextProps) {
   const shadowValue = textShadow ?? DEFAULT_TEXT_SHADOW;
+  const colorValue = textColor ?? DEFAULT_TEXT_COLOR;
 
   return (
     <Component
-      className={`text-secondary-400 font-display [-webkit-text-stroke-color:var(--color-primary-500)] [-webkit-text-stroke-width:2.87px] ${className} [text-shadow:${shadowValue}]`}
+      className={`font-display ${className}`}
+      style={{
+        WebkitTextStroke: '2.87px var(--color-primary-500)',
+        textShadow: shadowValue,
+        color: colorValue,
+      }}
     >
       {children}
     </Component>
