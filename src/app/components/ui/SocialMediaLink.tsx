@@ -14,9 +14,10 @@ interface SocialMediaProps {
   className?: string;
   iconClassName?: string;
   withBorder?: boolean;
+  iconSize?: number; // optional improvement
 }
 
-const iconMap = {
+const iconMap: Record<SocialMediaProps['platform'], React.ElementType> = {
   instagram: FaInstagram,
   linkedin: FaLinkedin,
   whatsapp: FaWhatsapp,
@@ -27,38 +28,31 @@ export function SocialMediaLink({
   platform,
   href,
   label,
-  className,
-  iconClassName,
+  className = '',
+  iconClassName = '',
   withBorder = false,
+  iconSize = 24, // default icon size
 }: SocialMediaProps) {
   const IconComponent = iconMap[platform];
 
-  if (!IconComponent) {
-    return null;
-  }
-
-  const borderClass = withBorder
-    ? 'border border-white'
-    : 'border border-transparent';
+  if (!IconComponent) return null;
 
   return (
     <Link
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex w-fit items-center gap-10 transition-colors duration-300 ${
-        className || ''
-      } `}
+      className={`inline-flex w-fit items-center transition-colors duration-300 ${className}`}
     >
-      {/* Lingkaran ikon */}
+      {/* Icon circle */}
       <span
-        className={`flex items-center justify-center rounded-full transition-all duration-300 ease-in-out ${iconClassName} ${borderClass} whitespace-nowrap hover:border-white hover:bg-white hover:text-black`}
+        className={`flex items-center justify-center rounded-full transition-all duration-300 ease-in-out ${iconClassName} ${withBorder ? 'border border-white' : 'border border-transparent'} hover:border-white hover:bg-white hover:text-black`}
       >
-        <IconComponent />
+        <IconComponent size={iconSize} />
       </span>
 
-      {/* Label text di kanan ikon (opsional) */}
-      {label && <span className="font-semibold">{label}</span>}
+      {/* Optional label */}
+      {label && <span className="ml-10 font-semibold">{label}</span>}
     </Link>
   );
 }

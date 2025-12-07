@@ -1,8 +1,9 @@
 'use client';
+
 import { useState } from 'react';
 import { NavLink } from '../../ui/NavLink';
 
-export function Navigation({ className }: { className: string }) {
+export function MobileNav({ className }: { className: string }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -37,7 +38,11 @@ export function Navigation({ className }: { className: string }) {
 
       {/* MENU */}
       <div
-        className={`bg-secondary-300 absolute -top-5 -right-6 flex w-[50vw] flex-col gap-4 p-5 pt-20 transition-all duration-300 ${open ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none -translate-y-4 opacity-0'} `}
+        className={`bg-secondary-300 absolute -top-5 -right-6 flex w-[50vw] flex-col gap-4 p-5 pt-20 transition-all duration-300 ${
+          open
+            ? 'pointer-events-auto translate-y-0 opacity-100'
+            : 'pointer-events-none -translate-y-4 opacity-0'
+        }`}
       >
         {/* Separator line */}
         <div className="bg-secondary-400 mb-2 h-[2px] w-full opacity-40" />

@@ -64,7 +64,7 @@ export default function AccordionParent() {
   }, [openIndex]);
 
   return (
-    <div className="flex w-auto flex-col items-center justify-center gap-4 overflow-hidden md:flex-row">
+    <div className="z-50 flex w-auto flex-col items-center justify-center gap-4 overflow-hidden md:flex-row">
       <div ref={cardRefs[0]}>
         <GoalCard
           title="visi"

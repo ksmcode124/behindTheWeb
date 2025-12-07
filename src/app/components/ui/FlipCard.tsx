@@ -1,110 +1,113 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/utils";
-import { Slot } from "@radix-ui/react-slot";
-import { SocialMediaLink } from "./SocialMediaLink";
-const cardVariant = cva("", {
-  variants: {
-    size: {
-      1: "w-[296px] h-[434px]",
-      2: "w-[195px] h-[294px]",
-      3: "w-[139px] h-[210px]",
-      4: "w-[121.67px] h-[183.4px]",
-      5: "w-[87.87px] h-[132.48px]",
-    }, 
-  },
-  defaultVariants: {
-    size: 1,
-  },
-});
+import React, { useState } from 'react';
+import { cn } from '@/lib/utils';
+import { SocialMediaLink } from './SocialMediaLink';
 
-
-function FlipCard({
-  size,
-  imageSrc, // dikeluarkan dari props
+export function FlipCard({
+  imageSrc,
   nama,
   role,
   ig,
   linkedIn,
-  asChild = false,
   className,
-  children,
-  ...restProps // ganti jadi restProps agar imageSrc tidak ikut tersebar
-}: React.ComponentPropsWithoutRef<"div"> &
-  VariantProps<typeof cardVariant> & {
-    asChild?: boolean;
-    children?: React.ReactNode;
-    imageSrc?: string;
-    className?: string;
-    nama?: string;
-    role?: string;
-    ig?: string;
-    linkedIn?: string;
-  }) {
-  const Comp = asChild ? Slot : "div";
+  flip = true,
+  frontBg = 'bg-white',
+  backBg = 'bg-white',
+  borderColor = 'border-secondary-300',
+  ...props
+}: {
+  imageSrc?: string;
+  nama?: string;
+  role?: string;
+  ig?: string;
+  linkedIn?: string;
+  className?: string;
+  flip?: boolean;
+
+  /** NEW: THEMING */
+  frontBg?: string;
+  backBg?: string;
+  borderColor?: string;
+}) {
   const [hover, setHover] = useState(false);
+  const hasInfo = nama || role;
 
   return (
-    <Comp
-      className={cn("[perspective:1000px]", cardVariant({ size }), className)}
+    <div
+      className={cn(
+        'relative aspect-[2/3] w-full max-w-[320px] shrink-0',
+        'rounded-[clamp(10px,2vw,24px)] [perspective:1000px]',
+        className,
+      )}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      {...restProps} // ✅ aman, imageSrc tidak ikut tersebar
+      {...props}
     >
       <div
         className={cn(
-          "relative w-full h-full transition-transform duration-500 [transform-style:preserve-3d]",
-          hover && size === 1 &&  "[transform:rotateY(180deg)]"
+          'relative h-full w-full transition-transform duration-500',
+          'rounded-[clamp(10px,2vw,24px)] [transform-style:preserve-3d]',
+          hover && flip && '[transform:rotateY(180deg)]',
         )}
       >
-        {/* bagian depan pas dihover */}
+        {/* FRONT */}
         <div
           className={cn(
-            "absolute w-full h-full flex items-center justify-center bg-blue-400 text-white font-semibold [backface-visibility:hidden overflow-hidden] bg-cover border-[#393c45]",
-            size === 1 ? "border-[13px] rounded-[35px]" :
-              size === 2 ? "border-[9px] rounded-[30px]" :
-                size === 3 ? "border-[6px] rounded-[25px]" :
-                  size === 4 ? "border-[4px] rounded-[20px]" :
-                    size === 5 ? "border-[3px] rounded-[15px]" : "",
-
-
+            'absolute inset-0 overflow-hidden [backface-visibility:hidden]',
+            'rounded-[clamp(10px,2vw,24px)]',
+            borderColor,
+            'border-4',
+            frontBg,
           )}
-          style={{ backgroundImage: `url(${imageSrc})` }}
         >
-          <div className={cn(
-            "absolute w-full bottom-0 flex flex-col items-center justify-center text-black font-semibold bg-white/65 backdrop-blur-xs overflow-hidden",
-            size === 1 ? "text-[20px] p-[13px] rounded-b-[21px]" :
-              size === 2 ? "text-[16px] p-[9px] rounded-b-[18px]" :
-                size === 3 ? "text-[12px] p-[6px] rounded-b-[17px]" :
-                  size === 4 ? "text-[10px] p-[4px] rounded-b-[14px]" :
-                    size === 5 ? "text-[8px] p-[3px] rounded-b-[10px]" : "",
-          )}>
-            {/* nama dan role untuk looping*/}
-            <h3>{nama}</h3>
-            <span>{role}</span>
-          </div>
+          {/* IMAGE */}
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${imageSrc})` }}
+          />
+
+          {/* NAME / ROLE */}
+          {hasInfo ? (
+            <div
+              className={cn(
+                'absolute bottom-0 flex w-full flex-col items-center',
+                'bg-black/30 py-[clamp(4px,1vw,10px)] backdrop-blur-sm',
+                'text-[clamp(10px,2vw,18px)] font-semibold text-white',
+                'rounded-b-[clamp(10px,2vw,24px)]',
+              )}
+            >
+              <h3>{nama}</h3>
+              <span className="opacity-80">{role}</span>
+            </div>
+          ) : (
+            <div className="rounded-b-[clamp(10px,2vw,24px)]. absolute bottom-0 h-[18%] w-full" />
+          )}
         </div>
 
         {/* BACK */}
         <div
           className={cn(
-            "absolute w-full h-full flex items-center justify-center bg-white gap-4 text-white font-semibold [transform:rotateY(180deg)] [backface-visibility:hidden]",
-            size === 1 ? "border-[13px] rounded-[35px]" :
-              size === 2 ? "border-[9px] rounded-[30px] " :
-                size === 3 ? "border-[6px] rounded-[25px]" :
-                  size === 4 ? "border-[4px] rounded-[20px]" :
-                    size === 5 ? "border-[3px] rounded-[15px]" : "",
+            'absolute inset-0 flex items-center justify-center gap-4',
+            '[transform:rotateY(180deg)] [backface-visibility:hidden]',
+            'rounded-[clamp(10px,2vw,24px)]',
+            borderColor,
+            'border-4',
+            backBg, // <— THEMEABLE BACKGROUND
           )}
         >
-          <SocialMediaLink platform="instagram" href={ig ?? ""} className="w-[60px] h-[60px] text-[38px]" />
-          <SocialMediaLink platform="linkedin" href={linkedIn ?? ""} className="w-[60px] h-[60px] text-[38px]" />
-
+          <SocialMediaLink
+            platform="instagram"
+            href={ig ?? ''}
+            className="h-[clamp(30px,8vw,60px)] w-[clamp(30px,8vw,60px)] text-[clamp(18px,4vw,32px)]"
+          />
+          <SocialMediaLink
+            platform="linkedin"
+            href={linkedIn ?? ''}
+            className="h-[clamp(30px,8vw,60px)] w-[clamp(30px,8vw,60px)] text-[clamp(18px,4vw,32px)]"
+          />
         </div>
       </div>
-    </Comp>
+    </div>
   );
 }
-
-export { FlipCard, cardVariant };
