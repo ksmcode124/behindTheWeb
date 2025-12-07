@@ -1,48 +1,50 @@
-import { FlipCard } from '../../ui/FlipCard';
-import Image from 'next/image';
 import Link from 'next/link';
+import Image from 'next/image';
+import { FlipCard } from '../../ui/FlipCard';
+import Wrapper from '../../ui/Wrapper';
+
+const ketua_wakil = [
+  {
+    nama: 'Barita',
+    imageSrc: '/assets/images/logo_black.jpg',
+    ig: 'instagram',
+    linkedIn: 'linkedIn',
+    role: 'Ketua',
+  },
+  {
+    nama: 'Nobel',
+    imageSrc: '/assets/images/logo_white.jpeg',
+    ig: 'instagram',
+    linkedIn: 'linkedIn',
+    role: 'Wakil Ketua',
+  },
+];
+
+const developers = [
+  {
+    id: 1,
+    nama: 'UI/UX DESIGNER',
+    caption:
+      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi, mollitia ex, inventore in illo molestiae sunt voluptatum nostrum quasi ipsum, provident rerum aut! Eius, id fuga quam a quidem sequi. Tempore ad maxime error dignissimos illum possimus sapiente, quam esse sed eveniet repudiandae ab pariatur a praesentium eum, saepe, provident consequatur eaque ipsam eligendi officia repellendus officiis aliquid. Quibusdam, iste.',
+    imageSrc: '/assets/images/logo_white.png',
+  },
+  {
+    id: 2,
+    nama: 'Frontend Developer',
+    caption:
+      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi, mollitia ex, inventore in illo molestiae sunt voluptatum nostrum quasi ipsum, provident rerum aut! Eius, id fuga quam a quidem sequi. Tempore ad maxime error dignissimos illum possimus sapiente, quam esse sed eveniet repudiandae ab pariatur a praesentium eum, saepe, provident consequatur eaque ipsam eligendi officia repellendus officiis aliquid. Quibusdam, iste.',
+    imageSrc: '/assets/images/logo_black.png',
+  },
+  {
+    id: 3,
+    nama: 'Backend Developer',
+    caption:
+      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi, mollitia ex, inventore in illo molestiae sunt voluptatum nostrum quasi ipsum, provident rerum aut! Eius, id fuga quam a quidem sequi. Tempore ad maxime error dignissimos illum possimus sapiente, quam esse sed eveniet repudiandae ab pariatur a praesentium eum, saepe, provident consequatur eaque ipsam eligendi officia repellendus officiis aliquid. Quibusdam, iste.',
+    imageSrc: '/assets/images/logo_white.png',
+  },
+];
 
 export default function Team() {
-  const ketua_wakil = [
-    {
-      nama: 'Barita',
-      imageSrc: '/assets/images/logo_black.jpg',
-      ig: 'instagram',
-      linkedIn: 'linkedIn',
-      role: 'Ketua',
-    },
-    {
-      nama: 'Nobel',
-      imageSrc: '/assets/images/logo_white.jpeg',
-      ig: 'instagram',
-      linkedIn: 'linkedIn',
-      role: 'Wakil Ketua',
-    },
-  ];
-
-  const team = [
-    {
-      id: 1,
-      nama: 'UI/UX DESIGNER',
-      caption:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi, mollitia ex, inventore in illo molestiae sunt voluptatum nostrum quasi ipsum, provident rerum aut! Eius, id fuga quam a quidem sequi. Tempore ad maxime error dignissimos illum possimus sapiente, quam esse sed eveniet repudiandae ab pariatur a praesentium eum, saepe, provident consequatur eaque ipsam eligendi officia repellendus officiis aliquid. Quibusdam, iste.',
-      imageSrc: '/assets/images/logo.png',
-    },
-    {
-      id: 2,
-      nama: 'Frontend Developer',
-      caption:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi, mollitia ex, inventore in illo molestiae sunt voluptatum nostrum quasi ipsum, provident rerum aut! Eius, id fuga quam a quidem sequi. Tempore ad maxime error dignissimos illum possimus sapiente, quam esse sed eveniet repudiandae ab pariatur a praesentium eum, saepe, provident consequatur eaque ipsam eligendi officia repellendus officiis aliquid. Quibusdam, iste.',
-      imageSrc: '/assets/images/logo.png',
-    },
-    {
-      id: 3,
-      nama: 'Backend Developer',
-      caption:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi, mollitia ex, inventore in illo molestiae sunt voluptatum nostrum quasi ipsum, provident rerum aut! Eius, id fuga quam a quidem sequi. Tempore ad maxime error dignissimos illum possimus sapiente, quam esse sed eveniet repudiandae ab pariatur a praesentium eum, saepe, provident consequatur eaque ipsam eligendi officia repellendus officiis aliquid. Quibusdam, iste.',
-      imageSrc: '/assets/images/logo.png',
-    },
-  ];
   return (
     <>
       <div className="flex h-[80vh] w-full flex-col items-center justify-center gap-6 px-6 text-white">
@@ -67,9 +69,8 @@ export default function Team() {
           ))}
         </div>
       </div>
-      <div className="border-secondary-400 relative flex flex-col items-center gap-15 rounded-t-[5em] bg-[linear-gradient(to_right,#FFF9E6_0%,#DEBB95_30%,#DEBB95_80%,#FFF9E6_100%)] px-10 py-30">
-        <div className="border-secondary-400 absolute -top-3.5 left-0 h-10 w-full rounded-t-[15em] border-x border-t-2"></div>
-        {team.map(({ nama, caption, imageSrc, id }) => (
+      <Wrapper>
+        {developers.map(({ nama, caption, imageSrc, id }) => (
           <div key={id} className="flex w-full flex-col items-center">
             <h3 className="text-primary-500 mb-6 -rotate-4 text-5xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:2.5px]">
               {nama}
@@ -98,8 +99,8 @@ export default function Team() {
               </div>
             </div>
           </div>
-        ))}{' '}
-      </div>
+        ))}
+      </Wrapper>
     </>
   );
 }
