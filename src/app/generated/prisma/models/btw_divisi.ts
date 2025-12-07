@@ -36,16 +36,19 @@ export type Btw_divisiSumAggregateOutputType = {
 export type Btw_divisiMinAggregateOutputType = {
   id_divisi: number | null
   nama_divisi: string | null
+  foto_divisi: string | null
 }
 
 export type Btw_divisiMaxAggregateOutputType = {
   id_divisi: number | null
   nama_divisi: string | null
+  foto_divisi: string | null
 }
 
 export type Btw_divisiCountAggregateOutputType = {
   id_divisi: number
   nama_divisi: number
+  foto_divisi: number
   _all: number
 }
 
@@ -61,16 +64,19 @@ export type Btw_divisiSumAggregateInputType = {
 export type Btw_divisiMinAggregateInputType = {
   id_divisi?: true
   nama_divisi?: true
+  foto_divisi?: true
 }
 
 export type Btw_divisiMaxAggregateInputType = {
   id_divisi?: true
   nama_divisi?: true
+  foto_divisi?: true
 }
 
 export type Btw_divisiCountAggregateInputType = {
   id_divisi?: true
   nama_divisi?: true
+  foto_divisi?: true
   _all?: true
 }
 
@@ -163,6 +169,7 @@ export type btw_divisiGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 export type Btw_divisiGroupByOutputType = {
   id_divisi: number
   nama_divisi: string
+  foto_divisi: string | null
   _count: Btw_divisiCountAggregateOutputType | null
   _avg: Btw_divisiAvgAggregateOutputType | null
   _sum: Btw_divisiSumAggregateOutputType | null
@@ -191,12 +198,14 @@ export type btw_divisiWhereInput = {
   NOT?: Prisma.btw_divisiWhereInput | Prisma.btw_divisiWhereInput[]
   id_divisi?: Prisma.IntFilter<"btw_divisi"> | number
   nama_divisi?: Prisma.StringFilter<"btw_divisi"> | string
+  foto_divisi?: Prisma.StringNullableFilter<"btw_divisi"> | string | null
   detail?: Prisma.Detail_anggotaListRelationFilter
 }
 
 export type btw_divisiOrderByWithRelationInput = {
   id_divisi?: Prisma.SortOrder
   nama_divisi?: Prisma.SortOrder
+  foto_divisi?: Prisma.SortOrderInput | Prisma.SortOrder
   detail?: Prisma.detail_anggotaOrderByRelationAggregateInput
 }
 
@@ -206,12 +215,14 @@ export type btw_divisiWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.btw_divisiWhereInput[]
   NOT?: Prisma.btw_divisiWhereInput | Prisma.btw_divisiWhereInput[]
   nama_divisi?: Prisma.StringFilter<"btw_divisi"> | string
+  foto_divisi?: Prisma.StringNullableFilter<"btw_divisi"> | string | null
   detail?: Prisma.Detail_anggotaListRelationFilter
 }, "id_divisi">
 
 export type btw_divisiOrderByWithAggregationInput = {
   id_divisi?: Prisma.SortOrder
   nama_divisi?: Prisma.SortOrder
+  foto_divisi?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.btw_divisiCountOrderByAggregateInput
   _avg?: Prisma.btw_divisiAvgOrderByAggregateInput
   _max?: Prisma.btw_divisiMaxOrderByAggregateInput
@@ -225,47 +236,56 @@ export type btw_divisiScalarWhereWithAggregatesInput = {
   NOT?: Prisma.btw_divisiScalarWhereWithAggregatesInput | Prisma.btw_divisiScalarWhereWithAggregatesInput[]
   id_divisi?: Prisma.IntWithAggregatesFilter<"btw_divisi"> | number
   nama_divisi?: Prisma.StringWithAggregatesFilter<"btw_divisi"> | string
+  foto_divisi?: Prisma.StringNullableWithAggregatesFilter<"btw_divisi"> | string | null
 }
 
 export type btw_divisiCreateInput = {
   nama_divisi: string
+  foto_divisi?: string | null
   detail?: Prisma.detail_anggotaCreateNestedManyWithoutDivisiInput
 }
 
 export type btw_divisiUncheckedCreateInput = {
   id_divisi?: number
   nama_divisi: string
+  foto_divisi?: string | null
   detail?: Prisma.detail_anggotaUncheckedCreateNestedManyWithoutDivisiInput
 }
 
 export type btw_divisiUpdateInput = {
   nama_divisi?: Prisma.StringFieldUpdateOperationsInput | string
+  foto_divisi?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   detail?: Prisma.detail_anggotaUpdateManyWithoutDivisiNestedInput
 }
 
 export type btw_divisiUncheckedUpdateInput = {
   id_divisi?: Prisma.IntFieldUpdateOperationsInput | number
   nama_divisi?: Prisma.StringFieldUpdateOperationsInput | string
+  foto_divisi?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   detail?: Prisma.detail_anggotaUncheckedUpdateManyWithoutDivisiNestedInput
 }
 
 export type btw_divisiCreateManyInput = {
   id_divisi?: number
   nama_divisi: string
+  foto_divisi?: string | null
 }
 
 export type btw_divisiUpdateManyMutationInput = {
   nama_divisi?: Prisma.StringFieldUpdateOperationsInput | string
+  foto_divisi?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type btw_divisiUncheckedUpdateManyInput = {
   id_divisi?: Prisma.IntFieldUpdateOperationsInput | number
   nama_divisi?: Prisma.StringFieldUpdateOperationsInput | string
+  foto_divisi?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type btw_divisiCountOrderByAggregateInput = {
   id_divisi?: Prisma.SortOrder
   nama_divisi?: Prisma.SortOrder
+  foto_divisi?: Prisma.SortOrder
 }
 
 export type btw_divisiAvgOrderByAggregateInput = {
@@ -275,11 +295,13 @@ export type btw_divisiAvgOrderByAggregateInput = {
 export type btw_divisiMaxOrderByAggregateInput = {
   id_divisi?: Prisma.SortOrder
   nama_divisi?: Prisma.SortOrder
+  foto_divisi?: Prisma.SortOrder
 }
 
 export type btw_divisiMinOrderByAggregateInput = {
   id_divisi?: Prisma.SortOrder
   nama_divisi?: Prisma.SortOrder
+  foto_divisi?: Prisma.SortOrder
 }
 
 export type btw_divisiSumOrderByAggregateInput = {
@@ -307,11 +329,13 @@ export type btw_divisiUpdateOneRequiredWithoutDetailNestedInput = {
 
 export type btw_divisiCreateWithoutDetailInput = {
   nama_divisi: string
+  foto_divisi?: string | null
 }
 
 export type btw_divisiUncheckedCreateWithoutDetailInput = {
   id_divisi?: number
   nama_divisi: string
+  foto_divisi?: string | null
 }
 
 export type btw_divisiCreateOrConnectWithoutDetailInput = {
@@ -332,11 +356,13 @@ export type btw_divisiUpdateToOneWithWhereWithoutDetailInput = {
 
 export type btw_divisiUpdateWithoutDetailInput = {
   nama_divisi?: Prisma.StringFieldUpdateOperationsInput | string
+  foto_divisi?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type btw_divisiUncheckedUpdateWithoutDetailInput = {
   id_divisi?: Prisma.IntFieldUpdateOperationsInput | number
   nama_divisi?: Prisma.StringFieldUpdateOperationsInput | string
+  foto_divisi?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -373,6 +399,7 @@ export type Btw_divisiCountOutputTypeCountDetailArgs<ExtArgs extends runtime.Typ
 export type btw_divisiSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id_divisi?: boolean
   nama_divisi?: boolean
+  foto_divisi?: boolean
   detail?: boolean | Prisma.btw_divisi$detailArgs<ExtArgs>
   _count?: boolean | Prisma.Btw_divisiCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["btw_divisi"]>
@@ -380,19 +407,22 @@ export type btw_divisiSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type btw_divisiSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id_divisi?: boolean
   nama_divisi?: boolean
+  foto_divisi?: boolean
 }, ExtArgs["result"]["btw_divisi"]>
 
 export type btw_divisiSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id_divisi?: boolean
   nama_divisi?: boolean
+  foto_divisi?: boolean
 }, ExtArgs["result"]["btw_divisi"]>
 
 export type btw_divisiSelectScalar = {
   id_divisi?: boolean
   nama_divisi?: boolean
+  foto_divisi?: boolean
 }
 
-export type btw_divisiOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_divisi" | "nama_divisi", ExtArgs["result"]["btw_divisi"]>
+export type btw_divisiOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_divisi" | "nama_divisi" | "foto_divisi", ExtArgs["result"]["btw_divisi"]>
 export type btw_divisiInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   detail?: boolean | Prisma.btw_divisi$detailArgs<ExtArgs>
   _count?: boolean | Prisma.Btw_divisiCountOutputTypeDefaultArgs<ExtArgs>
@@ -408,6 +438,7 @@ export type $btw_divisiPayload<ExtArgs extends runtime.Types.Extensions.Internal
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id_divisi: number
     nama_divisi: string
+    foto_divisi: string | null
   }, ExtArgs["result"]["btw_divisi"]>
   composites: {}
 }
@@ -834,6 +865,7 @@ export interface Prisma__btw_divisiClient<T, Null = never, ExtArgs extends runti
 export interface btw_divisiFieldRefs {
   readonly id_divisi: Prisma.FieldRef<"btw_divisi", 'Int'>
   readonly nama_divisi: Prisma.FieldRef<"btw_divisi", 'String'>
+  readonly foto_divisi: Prisma.FieldRef<"btw_divisi", 'String'>
 }
     
 

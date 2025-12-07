@@ -53,6 +53,7 @@ export async function PUT(
       where: { id_divisi: parseInt(params.id) },
       data: {
         nama_divisi: body.nama_divisi,
+        foto_divisi: body.foto_divisi
       },
     });
 

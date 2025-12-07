@@ -32,6 +32,7 @@ export async function POST(request: NextRequest) {
     const data = await prisma.btw_divisi.create({
       data: {
         nama_divisi: body.nama_divisi,
+        foto_divisi: body.foto_divisi
       },
     });
 

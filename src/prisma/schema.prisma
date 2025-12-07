@@ -19,6 +19,7 @@ model btw_anggota {
   nama_anggota String
   foto_anggota String?
   linkedin     String?
+  instagram     String?
   detail     detail_anggota[]
 
   @@map("btw_anggota")
@@ -27,6 +28,7 @@ model btw_anggota {
 model btw_divisi {
   id_divisi   Int               @id @default(autoincrement())
   nama_divisi String
+  foto_divisi String?
   detail    detail_anggota[]
 
   @@map("btw_divisi")

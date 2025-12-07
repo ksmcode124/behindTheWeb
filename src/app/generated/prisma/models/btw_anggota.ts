@@ -38,6 +38,7 @@ export type Btw_anggotaMinAggregateOutputType = {
   nama_anggota: string | null
   foto_anggota: string | null
   linkedin: string | null
+  instagram: string | null
 }
 
 export type Btw_anggotaMaxAggregateOutputType = {
@@ -45,6 +46,7 @@ export type Btw_anggotaMaxAggregateOutputType = {
   nama_anggota: string | null
   foto_anggota: string | null
   linkedin: string | null
+  instagram: string | null
 }
 
 export type Btw_anggotaCountAggregateOutputType = {
@@ -52,6 +54,7 @@ export type Btw_anggotaCountAggregateOutputType = {
   nama_anggota: number
   foto_anggota: number
   linkedin: number
+  instagram: number
   _all: number
 }
 
@@ -69,6 +72,7 @@ export type Btw_anggotaMinAggregateInputType = {
   nama_anggota?: true
   foto_anggota?: true
   linkedin?: true
+  instagram?: true
 }
 
 export type Btw_anggotaMaxAggregateInputType = {
@@ -76,6 +80,7 @@ export type Btw_anggotaMaxAggregateInputType = {
   nama_anggota?: true
   foto_anggota?: true
   linkedin?: true
+  instagram?: true
 }
 
 export type Btw_anggotaCountAggregateInputType = {
@@ -83,6 +88,7 @@ export type Btw_anggotaCountAggregateInputType = {
   nama_anggota?: true
   foto_anggota?: true
   linkedin?: true
+  instagram?: true
   _all?: true
 }
 
@@ -177,6 +183,7 @@ export type Btw_anggotaGroupByOutputType = {
   nama_anggota: string
   foto_anggota: string | null
   linkedin: string | null
+  instagram: string | null
   _count: Btw_anggotaCountAggregateOutputType | null
   _avg: Btw_anggotaAvgAggregateOutputType | null
   _sum: Btw_anggotaSumAggregateOutputType | null
@@ -207,6 +214,7 @@ export type btw_anggotaWhereInput = {
   nama_anggota?: Prisma.StringFilter<"btw_anggota"> | string
   foto_anggota?: Prisma.StringNullableFilter<"btw_anggota"> | string | null
   linkedin?: Prisma.StringNullableFilter<"btw_anggota"> | string | null
+  instagram?: Prisma.StringNullableFilter<"btw_anggota"> | string | null
   detail?: Prisma.Detail_anggotaListRelationFilter
 }
 
@@ -215,6 +223,7 @@ export type btw_anggotaOrderByWithRelationInput = {
   nama_anggota?: Prisma.SortOrder
   foto_anggota?: Prisma.SortOrderInput | Prisma.SortOrder
   linkedin?: Prisma.SortOrderInput | Prisma.SortOrder
+  instagram?: Prisma.SortOrderInput | Prisma.SortOrder
   detail?: Prisma.detail_anggotaOrderByRelationAggregateInput
 }
 
@@ -226,6 +235,7 @@ export type btw_anggotaWhereUniqueInput = Prisma.AtLeast<{
   nama_anggota?: Prisma.StringFilter<"btw_anggota"> | string
   foto_anggota?: Prisma.StringNullableFilter<"btw_anggota"> | string | null
   linkedin?: Prisma.StringNullableFilter<"btw_anggota"> | string | null
+  instagram?: Prisma.StringNullableFilter<"btw_anggota"> | string | null
   detail?: Prisma.Detail_anggotaListRelationFilter
 }, "id_anggota">
 
@@ -234,6 +244,7 @@ export type btw_anggotaOrderByWithAggregationInput = {
   nama_anggota?: Prisma.SortOrder
   foto_anggota?: Prisma.SortOrderInput | Prisma.SortOrder
   linkedin?: Prisma.SortOrderInput | Prisma.SortOrder
+  instagram?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.btw_anggotaCountOrderByAggregateInput
   _avg?: Prisma.btw_anggotaAvgOrderByAggregateInput
   _max?: Prisma.btw_anggotaMaxOrderByAggregateInput
@@ -249,12 +260,14 @@ export type btw_anggotaScalarWhereWithAggregatesInput = {
   nama_anggota?: Prisma.StringWithAggregatesFilter<"btw_anggota"> | string
   foto_anggota?: Prisma.StringNullableWithAggregatesFilter<"btw_anggota"> | string | null
   linkedin?: Prisma.StringNullableWithAggregatesFilter<"btw_anggota"> | string | null
+  instagram?: Prisma.StringNullableWithAggregatesFilter<"btw_anggota"> | string | null
 }
 
 export type btw_anggotaCreateInput = {
   nama_anggota: string
   foto_anggota?: string | null
   linkedin?: string | null
+  instagram?: string | null
   detail?: Prisma.detail_anggotaCreateNestedManyWithoutAnggotaInput
 }
 
@@ -263,6 +276,7 @@ export type btw_anggotaUncheckedCreateInput = {
   nama_anggota: string
   foto_anggota?: string | null
   linkedin?: string | null
+  instagram?: string | null
   detail?: Prisma.detail_anggotaUncheckedCreateNestedManyWithoutAnggotaInput
 }
 
@@ -270,6 +284,7 @@ export type btw_anggotaUpdateInput = {
   nama_anggota?: Prisma.StringFieldUpdateOperationsInput | string
   foto_anggota?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   detail?: Prisma.detail_anggotaUpdateManyWithoutAnggotaNestedInput
 }
 
@@ -278,6 +293,7 @@ export type btw_anggotaUncheckedUpdateInput = {
   nama_anggota?: Prisma.StringFieldUpdateOperationsInput | string
   foto_anggota?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   detail?: Prisma.detail_anggotaUncheckedUpdateManyWithoutAnggotaNestedInput
 }
 
@@ -286,12 +302,14 @@ export type btw_anggotaCreateManyInput = {
   nama_anggota: string
   foto_anggota?: string | null
   linkedin?: string | null
+  instagram?: string | null
 }
 
 export type btw_anggotaUpdateManyMutationInput = {
   nama_anggota?: Prisma.StringFieldUpdateOperationsInput | string
   foto_anggota?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type btw_anggotaUncheckedUpdateManyInput = {
@@ -299,6 +317,7 @@ export type btw_anggotaUncheckedUpdateManyInput = {
   nama_anggota?: Prisma.StringFieldUpdateOperationsInput | string
   foto_anggota?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type btw_anggotaCountOrderByAggregateInput = {
@@ -306,6 +325,7 @@ export type btw_anggotaCountOrderByAggregateInput = {
   nama_anggota?: Prisma.SortOrder
   foto_anggota?: Prisma.SortOrder
   linkedin?: Prisma.SortOrder
+  instagram?: Prisma.SortOrder
 }
 
 export type btw_anggotaAvgOrderByAggregateInput = {
@@ -317,6 +337,7 @@ export type btw_anggotaMaxOrderByAggregateInput = {
   nama_anggota?: Prisma.SortOrder
   foto_anggota?: Prisma.SortOrder
   linkedin?: Prisma.SortOrder
+  instagram?: Prisma.SortOrder
 }
 
 export type btw_anggotaMinOrderByAggregateInput = {
@@ -324,6 +345,7 @@ export type btw_anggotaMinOrderByAggregateInput = {
   nama_anggota?: Prisma.SortOrder
   foto_anggota?: Prisma.SortOrder
   linkedin?: Prisma.SortOrder
+  instagram?: Prisma.SortOrder
 }
 
 export type btw_anggotaSumOrderByAggregateInput = {
@@ -369,6 +391,7 @@ export type btw_anggotaCreateWithoutDetailInput = {
   nama_anggota: string
   foto_anggota?: string | null
   linkedin?: string | null
+  instagram?: string | null
 }
 
 export type btw_anggotaUncheckedCreateWithoutDetailInput = {
@@ -376,6 +399,7 @@ export type btw_anggotaUncheckedCreateWithoutDetailInput = {
   nama_anggota: string
   foto_anggota?: string | null
   linkedin?: string | null
+  instagram?: string | null
 }
 
 export type btw_anggotaCreateOrConnectWithoutDetailInput = {
@@ -398,6 +422,7 @@ export type btw_anggotaUpdateWithoutDetailInput = {
   nama_anggota?: Prisma.StringFieldUpdateOperationsInput | string
   foto_anggota?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type btw_anggotaUncheckedUpdateWithoutDetailInput = {
@@ -405,6 +430,7 @@ export type btw_anggotaUncheckedUpdateWithoutDetailInput = {
   nama_anggota?: Prisma.StringFieldUpdateOperationsInput | string
   foto_anggota?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -443,6 +469,7 @@ export type btw_anggotaSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   nama_anggota?: boolean
   foto_anggota?: boolean
   linkedin?: boolean
+  instagram?: boolean
   detail?: boolean | Prisma.btw_anggota$detailArgs<ExtArgs>
   _count?: boolean | Prisma.Btw_anggotaCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["btw_anggota"]>
@@ -452,6 +479,7 @@ export type btw_anggotaSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   nama_anggota?: boolean
   foto_anggota?: boolean
   linkedin?: boolean
+  instagram?: boolean
 }, ExtArgs["result"]["btw_anggota"]>
 
 export type btw_anggotaSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -459,6 +487,7 @@ export type btw_anggotaSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   nama_anggota?: boolean
   foto_anggota?: boolean
   linkedin?: boolean
+  instagram?: boolean
 }, ExtArgs["result"]["btw_anggota"]>
 
 export type btw_anggotaSelectScalar = {
@@ -466,9 +495,10 @@ export type btw_anggotaSelectScalar = {
   nama_anggota?: boolean
   foto_anggota?: boolean
   linkedin?: boolean
+  instagram?: boolean
 }
 
-export type btw_anggotaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_anggota" | "nama_anggota" | "foto_anggota" | "linkedin", ExtArgs["result"]["btw_anggota"]>
+export type btw_anggotaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_anggota" | "nama_anggota" | "foto_anggota" | "linkedin" | "instagram", ExtArgs["result"]["btw_anggota"]>
 export type btw_anggotaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   detail?: boolean | Prisma.btw_anggota$detailArgs<ExtArgs>
   _count?: boolean | Prisma.Btw_anggotaCountOutputTypeDefaultArgs<ExtArgs>
@@ -486,6 +516,7 @@ export type $btw_anggotaPayload<ExtArgs extends runtime.Types.Extensions.Interna
     nama_anggota: string
     foto_anggota: string | null
     linkedin: string | null
+    instagram: string | null
   }, ExtArgs["result"]["btw_anggota"]>
   composites: {}
 }
@@ -914,6 +945,7 @@ export interface btw_anggotaFieldRefs {
   readonly nama_anggota: Prisma.FieldRef<"btw_anggota", 'String'>
   readonly foto_anggota: Prisma.FieldRef<"btw_anggota", 'String'>
   readonly linkedin: Prisma.FieldRef<"btw_anggota", 'String'>
+  readonly instagram: Prisma.FieldRef<"btw_anggota", 'String'>
 }
     
 

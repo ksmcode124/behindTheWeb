@@ -42,6 +42,7 @@ export async function POST(request: NextRequest) {
         nama_anggota: body.nama_anggota,
         foto_anggota: body.foto_anggota,
         linkedin: body.linkedin,
+        instagram: body.instagram,
       },
     });
 

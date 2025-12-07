@@ -79,7 +79,8 @@ export const Btw_anggotaScalarFieldEnum = {
   id_anggota: 'id_anggota',
   nama_anggota: 'nama_anggota',
   foto_anggota: 'foto_anggota',
-  linkedin: 'linkedin'
+  linkedin: 'linkedin',
+  instagram: 'instagram'
 } as const
 
 export type Btw_anggotaScalarFieldEnum = (typeof Btw_anggotaScalarFieldEnum)[keyof typeof Btw_anggotaScalarFieldEnum]
@@ -87,7 +88,8 @@ export type Btw_anggotaScalarFieldEnum = (typeof Btw_anggotaScalarFieldEnum)[key
 
 export const Btw_divisiScalarFieldEnum = {
   id_divisi: 'id_divisi',
-  nama_divisi: 'nama_divisi'
+  nama_divisi: 'nama_divisi',
+  foto_divisi: 'foto_divisi'
 } as const
 
 export type Btw_divisiScalarFieldEnum = (typeof Btw_divisiScalarFieldEnum)[keyof typeof Btw_divisiScalarFieldEnum]

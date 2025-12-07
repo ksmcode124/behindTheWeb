@@ -56,6 +56,7 @@ export async function GET(request: NextRequest) {
             nama_anggota: detail.anggota.nama_anggota,
             foto_anggota: detail.anggota.foto_anggota,
             linkedin: detail.anggota.linkedin,
+            instagram: detail.anggota.instagram,
             jabatan: detail.jabatan.nama_jabatan,
           })),
         })),
