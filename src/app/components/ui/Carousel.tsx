@@ -2,26 +2,20 @@
 import { useState, useEffect } from 'react';
 import { FlipCard } from './FlipCard';
 import Image from 'next/image';
-interface TeamProps {
-  members: {
-    name: string;
-    role: string;
-    image: string;
-    ig: string;
-    linkedIn: string;
-  }[];
-}
+import { Divisi } from '../data/btw';
 
-export default function Carousel({ members }: TeamProps) {
+export default function Carousel({ divisi }: { divisi: Divisi }) {
   const [batchSize, setBatchSize] = useState<number>(0); // ukuran window
   const [startIndex, setStartIndex] = useState<number>(0); // index awal window
   const handlePrev = () => {
-    setStartIndex((prev) => (prev - 1 < 0 ? members.length - 1 : prev - 1)); // geser window ke kanan
+    setStartIndex((prev) =>
+      prev - 1 < 0 ? divisi.anggota.length - 1 : prev - 1,
+    ); // geser window ke kanan
     console.log('prev');
   };
 
   const handleNext = () => {
-    setStartIndex((prev) => (prev + 1 >= members.length ? 0 : prev + 1)); // geser window ke kiri
+    setStartIndex((prev) => (prev + 1 >= divisi.anggota.length ? 0 : prev + 1)); // geser window ke kiri
     console.log('next');
   };
 
@@ -38,8 +32,8 @@ export default function Carousel({ members }: TeamProps) {
   // Fungsi untuk mengambil 5 nama (looping)
   const visibleMembers = [];
   for (let i = 0; i < batchSize; i++) {
-    const index = (startIndex + i) % members.length; // loop jika habis
-    visibleMembers.push(members[index]);
+    const index = (startIndex + i) % divisi.anggota.length; // loop jika habis
+    visibleMembers.push(divisi.anggota[index]);
   }
 
   let count: number = 0;
@@ -68,7 +62,7 @@ export default function Carousel({ members }: TeamProps) {
         </button>
       ) : null}
 
-      {visibleMembers.map((members, i) => {
+      {visibleMembers.map((anggota, i) => {
         const size =
           batchSize === 3
             ? i % 2 === 1
@@ -80,28 +74,28 @@ export default function Carousel({ members }: TeamProps) {
         const isButton = size === 2;
         return isButton ? (
           <button
-            key={members.name}
+            key={i}
             onClick={ButtonPosition(size)}
             className="flex h-auto w-auto"
           >
             <FlipCard
               size={size}
-              imageSrc={members.image}
-              nama={members.name}
-              role={members.role}
-              ig={members.ig}
-              linkedIn={members.linkedIn}
+              imageSrc={anggota.foto_anggota}
+              nama={anggota.nama_anggota}
+              role={anggota.jabatan}
+              ig={anggota.linkedin}
+              linkedIn={anggota.linkedin}
             />
           </button>
         ) : (
           <FlipCard
-            key={members.name}
+            key={i}
             size={size}
-            imageSrc={members.image}
-            nama={members.name}
-            role={members.role}
-            ig={members.ig}
-            linkedIn={members.linkedIn}
+            imageSrc={anggota.foto_anggota}
+            nama={anggota.nama_anggota}
+            role={anggota.jabatan}
+            ig={anggota.linkedin}
+            linkedIn={anggota.linkedin}
           />
         );
       })}
