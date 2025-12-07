@@ -1,15 +1,18 @@
+'use client';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FlipCard } from '../../ui/FlipCard';
 import Wrapper from '../../ui/Wrapper';
 import { DEVELOPERS, BOARD } from '../../data/team';
+import { Anggota, useBtwData } from '../../data/btw';
 
 export default function Team() {
+  const dataInti = useBtwData()?.divisi.find(
+    (div) => div.nama_divisi === 'Inti',
+  );
+
   return (
     <>
-      {/* ==============================
-          TOP TEAM (BOARD)
-      ============================== */}
       <section className="flex min-h-[70vh] w-full flex-col items-center justify-center gap-8 px-6 text-white">
         <h2 className="border-b-secondary border-b-2 pb-5 text-5xl">
           MEET OUR TEAM
@@ -18,28 +21,25 @@ export default function Team() {
         <p className="lg:hidden">Click the photo for details</p>
 
         <div className="mx-auto flex w-full max-w-6xl flex-wrap justify-center gap-12">
-          {BOARD.map(({ nama, image, ig, linkedIn, role }) => (
-            <div key={nama} className="flex flex-col items-center gap-4">
+          {dataInti?.anggota.map((inti: Anggota, idx: number) => (
+            <div key={idx} className="flex flex-col items-center gap-4">
               <FlipCard
-                key={nama}
+                key={idx}
                 size={1}
-                imageSrc={image}
-                ig={ig}
-                linkedIn={linkedIn}
+                imageSrc={inti.foto_anggota}
+                ig={inti.instagram}
+                linkedIn={inti.instagram}
               />
 
               <p className="border-b-secondary w-full border-b-2 text-center text-3xl">
-                {nama}
+                {inti.nama_anggota}
               </p>
-              <p className="text-center text-xl">{role}</p>
+              <p className="text-center text-xl">{inti.jabatan}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ==============================
-          DEVELOPER LIST
-      ============================== */}
       <Wrapper className="flex flex-col gap-24 py-20">
         {DEVELOPERS.map(({ id, nama, caption, image }) => (
           <div key={id} className="flex w-full flex-col items-center">

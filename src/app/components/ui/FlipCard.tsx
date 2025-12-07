@@ -33,11 +33,11 @@ export function FlipCard({
   ...props
 }: {
   size?: 0 | 1 | 2 | 3;
-  imageSrc?: string;
+  imageSrc?: string | null;
   nama?: string;
   role?: string;
-  ig?: string;
-  linkedIn?: string;
+  ig?: string | null;
+  linkedIn?: string | null;
   className?: string;
   flip?: boolean;
 

@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 
 import Navbar from '../components/sections/Navigation/Navbar';
@@ -9,17 +10,15 @@ import Carousel from '../components/ui/Carousel';
 import ShadowedText from '../components/ui/ShadowedText';
 import { SocialMediaLink } from '../components/ui/SocialMediaLink';
 import { SOCIAL_MEDIA } from '../components/data/socialMedia';
-import { TEAM } from '../components/data/team';
+import { Divisi, useBtwData } from '../components/data/btw';
 
 export default function TheTeam() {
+  const dataDivisi = useBtwData();
   return (
     <>
       <Navbar />
 
       <main className="bg-secondary-300 font-display min-h-screen">
-        {/* =========================
-    HERO SECTION
-========================== */}
         <section className="flex h-[80vh] w-full flex-col items-center justify-center gap-10 bg-[url('/assets/images/header_meet_team1.webp')] bg-cover bg-center px-6 text-white">
           {/* Title */}
           <div className="flex flex-col items-center text-right">
@@ -42,7 +41,7 @@ export default function TheTeam() {
               </h3>
             </div>
 
-            {/* Right: Social + Pixel Art */}
+            {/* Social + Pixel Art */}
             <div className="flex flex-col items-center gap-y-8">
               <Image
                 src="/assets/images/retro_pixel.webp"
@@ -69,22 +68,20 @@ export default function TheTeam() {
           </div>
         </section>
 
-        {/* =========================
-            CAROUSEL SECTION
-        ========================== */}
         <Wrapper>
-          <div className="flex w-full flex-col items-center">
-            <h3 className="text-primary-500 mb-6 -rotate-4 text-5xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:2.5px]">
-              UI/UX Designer
-            </h3>
-          </div>
+          {dataDivisi?.divisi.map((divisi: Divisi) => (
+            <>
+              <div className="flex w-full flex-col items-center">
+                <h3 className="text-primary-500 mb-6 -rotate-4 text-5xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:2.5px]">
+                  {divisi.nama_divisi}
+                </h3>
+              </div>
 
-          <Carousel members={TEAM}/>
+              <Carousel divisi={divisi} />
+            </>
+          ))}
         </Wrapper>
 
-        {/* =========================
-            OUR PAST SECTION
-        ========================== */}
         <OurPast />
       </main>
 

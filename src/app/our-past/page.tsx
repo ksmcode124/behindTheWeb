@@ -9,10 +9,11 @@ import Carousel from '../components/ui/Carousel';
 import ShadowedText from '../components/ui/ShadowedText';
 import { SocialMediaLink } from '../components/ui/SocialMediaLink';
 import { SOCIAL_MEDIA } from '../components/data/socialMedia';
-import { DEVELOPERS } from '../components/data/team';
-import { TEAM } from '../components/data/team';
+import { Divisi, useBtwData } from '../components/data/btw';
 
 export default function TheTeam() {
+  const dataDivisi = useBtwData();
+
   return (
     <>
       <Navbar />
@@ -88,22 +89,20 @@ export default function TheTeam() {
           </div>
         </section>
 
-        {/* =========================
-            CAROUSEL SECTION
-        ========================== */}
         <Wrapper>
-          <div className="flex w-full flex-col items-center">
-            <h3 className="text-primary-500 mb-6 -rotate-4 text-5xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:2.5px]">
-              UI/UX Designer
-            </h3>
-          </div>
+          {dataDivisi?.divisi.map((divisi: Divisi) => (
+            <>
+              <div className="flex w-full flex-col items-center">
+                <h3 className="text-primary-500 mb-6 -rotate-4 text-5xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:2.5px]">
+                  {divisi.nama_divisi}
+                </h3>
+              </div>
 
-          <Carousel members={TEAM} />
+              <Carousel divisi={divisi} />
+            </>
+          ))}
         </Wrapper>
 
-        {/* =========================
-            OUR PAST SECTION
-        ========================== */}
         <OurPast />
       </main>
 
