@@ -4,9 +4,10 @@ import Code124White from '/public/assets/images/logo_white.png';
 
 interface LogoProps {
   variant?: 'black' | 'white';
+  text?: string;
 }
 
-export default function Logo({ variant = 'black' }: LogoProps) {
+export default function Logo({ variant = 'black', text = 'CODE124' }: LogoProps) {
   const logoConfig = {
     black: Code124Black,
     white: Code124White,
@@ -28,7 +29,7 @@ export default function Logo({ variant = 'black' }: LogoProps) {
       <p
         className={`font-display text-xl font-semibold md:block lg:text-3xl ${variant === 'black' ? 'text-black' : 'text-white'}`}
       >
-        CODE124
+        {text}
       </p>
     </div>
   );
