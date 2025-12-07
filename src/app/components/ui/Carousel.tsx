@@ -81,22 +81,24 @@ export default function Carousel() {
   }
 
   let count: number = 0;
-  const ButtonPosition = (size: 1 | 2 | 3 | 4 | 5) => {
-    size === 2 ? count++ : "";
-    return (count % 2 === 0 ? handlePrev : count % 2 === 1 ? handleNext : null);
+  const ButtonPosition = (size: 1 | 2 | 3 | 4 | 5): React.MouseEventHandler<HTMLButtonElement> | undefined => {
+    if (size === 2) count++;
+    if (count % 2 === 0) return () => handlePrev();
+    if (count % 2 === 1) return () => handleNext();
+    return undefined;
   };
 
 
   return (
-    <div className="font-sans flex flex-row items-center justify-center border-2 border-amber-50 p-8 pb-20 gap-2 md:gap-3 sm:p-20 bg-black">
+    <div className="font-sans flex flex-row items-center justify-center border-2 border-amber-50 p-8 pb-20 gap-2 sm:p-20 bg-black">
       {batchSize === 5 ? (
-        <button onClick={handlePrev} className="text-white w-[70px] h-[70px] rounded-full bg-[#393c45] p-auto justify-content-center justify-items-center"><Image src="/assets/images/Vector.svg" alt="Previous" width={17} height={28} /></button>
+        <button onClick={handlePrev} className="text-white w-[70px] h-[70px] rounded-full bg-[#393c45] p-auto justify-content-center justify-items-center"><Image src="/assets/images/icon/Vector.svg" alt="Previous" width={17} height={28} /></button>
       ) : null}
 
       {visiblePlayers.map((players, i) => {
         console.log("tes", i);
-        const size = batchSize === 3 ? (i % 2 === 1 ? 4 : 5) : (i < 3 ? (3 - i) as 1 | 2 | 3 : (i - 1) as 1 | 2 | 3);
-        const isButton = batchSize === 3 ? size === 5 : size === 2;
+        const size = batchSize === 3 ? (i % 2 === 1 ? 1 : 2) : (i < 3 ? (3 - i) as 1 | 2 | 3 : (i - 1) as 1 | 2 | 3);
+        const isButton = size === 2;
         return isButton ?
           <button key={players.nama} onClick={ButtonPosition(size)}
             className="flex w-auto h-auto" >
@@ -117,7 +119,7 @@ export default function Carousel() {
             linkedIn={players.linkedIn} />;
       })}
       {batchSize === 5 ? (
-      <button onClick={handleNext} className="text-white w-[70px] h-[70px] rounded-full bg-[#393c45] p-auto justify-content-center justify-items-center"><Image src="/assets/images/Vector.svg" alt="Next" className="rotate-180" width={17} height={28} /></button>
+      <button onClick={handleNext} className="text-white w-[70px] h-[70px] rounded-full bg-[#393c45] p-auto justify-content-center justify-items-center"><Image src="/assets/images/icon/Vector.svg" alt="Next" className="rotate-180" width={17} height={28} /></button>
       ) : null}
     </div>
 
