@@ -40,9 +40,40 @@ export const DEVELOPERS = [
   },
 ];
 
-export const team = {
-  members: [
-    { name: "Cristiano", role: "Forward", image: "/img/cristiano.png", ig: "#", linkedIn: "#" },
-    { name: "Messi", role: "Forward", image: "/img/messi.png", ig: "#", linkedIn: "#" },
-  ],
-};
+export const TEAM = [
+  {
+    name: 'Alice Putri',
+    role: 'Project Manager',
+    image: '/images/team/alice.jpg',
+    ig: 'https://instagram.com/aliceputri',
+    linkedIn: 'https://linkedin.com/in/aliceputri',
+  },
+  {
+    name: 'Budi Santoso',
+    role: 'Frontend Developer',
+    image: '/images/team/budi.jpg',
+    ig: 'https://instagram.com/budisantoso',
+    linkedIn: 'https://linkedin.com/in/budisantoso',
+  },
+  {
+    name: 'Citra Dewi',
+    role: 'Backend Developer',
+    image: '/images/team/citra.jpg',
+    ig: 'https://instagram.com/citradewi',
+    linkedIn: 'https://linkedin.com/in/citradewi',
+  },
+  {
+    name: 'Dewa Pratama',
+    role: 'UI/UX Designer',
+    image: '/images/team/dewa.jpg',
+    ig: 'https://instagram.com/dewapratama',
+    linkedIn: 'https://linkedin.com/in/dewapratama',
+  },
+  {
+    name: 'Eva Wijaya',
+    role: 'QA Engineer',
+    image: '/images/team/eva.jpg',
+    ig: 'https://instagram.com/evawijaya',
+    linkedIn: 'https://linkedin.com/in/evawijaya',
+  },
+];

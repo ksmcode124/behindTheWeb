@@ -9,7 +9,7 @@ import Carousel from '../components/ui/Carousel';
 import ShadowedText from '../components/ui/ShadowedText';
 import { SocialMediaLink } from '../components/ui/SocialMediaLink';
 import { SOCIAL_MEDIA } from '../components/data/socialMedia';
-import { DEVELOPERS } from '../components/data/team';
+import { TEAM } from '../components/data/team';
 
 export default function TheTeam() {
   return (
@@ -97,7 +97,7 @@ export default function TheTeam() {
             </h3>
           </div>
 
-          <Carousel members={team} />
+          <Carousel members={TEAM} />
         </Wrapper>
 
         {/* =========================
