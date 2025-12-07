@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
-import { Slot } from "@radix-ui/react-slot";
 import { SocialMediaLink } from "./SocialMediaLink";
 const cardVariant = cva("", {
   variants: {
@@ -20,7 +19,7 @@ const cardVariant = cva("", {
 });
 
 
-function FlipCard({
+export function FlipCard({
   size,
   imageSrc, // dikeluarkan dari props
   nama,
@@ -34,6 +33,7 @@ function FlipCard({
   borderColor = 'border-secondary-300',
   ...props
 }: {
+  size?: 0 | 1 | 2 | 3;
   imageSrc?: string;
   nama?: string;
   role?: string;
@@ -53,8 +53,7 @@ function FlipCard({
   return (
     <div
       className={cn(
-        'relative aspect-[2/3] w-full max-w-[320px] shrink-0',
-        'rounded-[clamp(10px,2vw,24px)] [perspective:1000px]',
+        'relative w-auto justify-items-center [perspective:1000px]',
         className,
       )}
       onMouseEnter={() => setHover(true)}
@@ -63,7 +62,7 @@ function FlipCard({
     >
       <div
         className={cn(
-          "relative w-full h-full transition-transform duration-500 [transform-style:preserve-3d]",
+          "relative w-full h-full transition-transform duration-500 [transform-style:preserve-3d]", cardVariant({ size }),
           hover && (size === 1 || size === 0) &&  "[transform:rotateY(180deg)]"
         )}
       >
@@ -94,15 +93,15 @@ function FlipCard({
         {/* BACK */}
         <div
           className={cn(
-            "absolute w-full h-full flex items-center justify-center gap-4 text-white font-semibold [transform:rotateY(180deg)] [backface-visibility:hidden]",
-            size === 0 ? "border-[5.33px] rounded-[22.9px] md:rounded-[46.62px] bg-[#393c45] border-[#DEBC96]" :
-              size === 1 ? "border-[4px] rounded-[20px] md:border-[13px] md:rounded-[35px] bg-white " :
-                size === 2 ? "border-[3px] rounded-[15px] md:border-[9px] md:rounded-[30px] bg-white " :
-                  size === 3 ? "border-[6px] rounded-[25px] bg-white " : ""
+            "absolute w-full h-full flex items-center justify-center gap-2 text-white font-semibold [transform:rotateY(180deg)] [backface-visibility:hidden] bg-[#393c45]",
+            size === 0 ? "border-[5.33px] rounded-[22.9px] md:rounded-[46.62px]  border-[#DEBC96]" :
+              size === 1 ? "border-[4px] rounded-[20px] md:border-[13px] md:rounded-[35px] border-[#393c45]" :
+                size === 2 ? "border-[3px] rounded-[15px] md:border-[9px] md:rounded-[30px]  border-[#393c45] " :
+                  size === 3 ? "border-[6px] rounded-[25px] border-[#393c45]" : ""
           )}
         >
-          <SocialMediaLink platform="instagram" href={ig ?? ""} className="w-[60px] h-[60px] text-[20px] md:text-[35px]" />
-          <SocialMediaLink platform="linkedin" href={linkedIn ?? ""} className="w-[60px] h-[60px] text-[20px] md:text-[35px]" />
+          <SocialMediaLink platform="instagram" href={ig ?? ""} iconSize={40} iconClassName="p-4" />
+          <SocialMediaLink platform="linkedin" href={linkedIn ?? ""} iconSize={40} iconClassName="p-4"/>
 
         </div>
       </div>
