@@ -1143,7 +1143,7 @@ export type Btw_divisiScalarFieldEnum = (typeof Btw_divisiScalarFieldEnum)[keyof
 export const Btw_kepengurusanScalarFieldEnum = {
   id_btw: 'id_btw',
   tahun_kerja: 'tahun_kerja',
-  nama_pengurus: 'nama_pengurus'
+  nama_kepengurusan: 'nama_kepengurusan'
 } as const
 
 export type Btw_kepengurusanScalarFieldEnum = (typeof Btw_kepengurusanScalarFieldEnum)[keyof typeof Btw_kepengurusanScalarFieldEnum]

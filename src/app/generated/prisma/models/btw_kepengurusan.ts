@@ -36,19 +36,19 @@ export type Btw_kepengurusanSumAggregateOutputType = {
 export type Btw_kepengurusanMinAggregateOutputType = {
   id_btw: number | null
   tahun_kerja: string | null
-  nama_pengurus: string | null
+  nama_kepengurusan: string | null
 }
 
 export type Btw_kepengurusanMaxAggregateOutputType = {
   id_btw: number | null
   tahun_kerja: string | null
-  nama_pengurus: string | null
+  nama_kepengurusan: string | null
 }
 
 export type Btw_kepengurusanCountAggregateOutputType = {
   id_btw: number
   tahun_kerja: number
-  nama_pengurus: number
+  nama_kepengurusan: number
   _all: number
 }
 
@@ -64,19 +64,19 @@ export type Btw_kepengurusanSumAggregateInputType = {
 export type Btw_kepengurusanMinAggregateInputType = {
   id_btw?: true
   tahun_kerja?: true
-  nama_pengurus?: true
+  nama_kepengurusan?: true
 }
 
 export type Btw_kepengurusanMaxAggregateInputType = {
   id_btw?: true
   tahun_kerja?: true
-  nama_pengurus?: true
+  nama_kepengurusan?: true
 }
 
 export type Btw_kepengurusanCountAggregateInputType = {
   id_btw?: true
   tahun_kerja?: true
-  nama_pengurus?: true
+  nama_kepengurusan?: true
   _all?: true
 }
 
@@ -169,7 +169,7 @@ export type btw_kepengurusanGroupByArgs<ExtArgs extends runtime.Types.Extensions
 export type Btw_kepengurusanGroupByOutputType = {
   id_btw: number
   tahun_kerja: string
-  nama_pengurus: string
+  nama_kepengurusan: string
   _count: Btw_kepengurusanCountAggregateOutputType | null
   _avg: Btw_kepengurusanAvgAggregateOutputType | null
   _sum: Btw_kepengurusanSumAggregateOutputType | null
@@ -198,14 +198,14 @@ export type btw_kepengurusanWhereInput = {
   NOT?: Prisma.btw_kepengurusanWhereInput | Prisma.btw_kepengurusanWhereInput[]
   id_btw?: Prisma.IntFilter<"btw_kepengurusan"> | number
   tahun_kerja?: Prisma.StringFilter<"btw_kepengurusan"> | string
-  nama_pengurus?: Prisma.StringFilter<"btw_kepengurusan"> | string
+  nama_kepengurusan?: Prisma.StringFilter<"btw_kepengurusan"> | string
   detail?: Prisma.Detail_anggotaListRelationFilter
 }
 
 export type btw_kepengurusanOrderByWithRelationInput = {
   id_btw?: Prisma.SortOrder
   tahun_kerja?: Prisma.SortOrder
-  nama_pengurus?: Prisma.SortOrder
+  nama_kepengurusan?: Prisma.SortOrder
   detail?: Prisma.detail_anggotaOrderByRelationAggregateInput
 }
 
@@ -215,14 +215,14 @@ export type btw_kepengurusanWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.btw_kepengurusanWhereInput[]
   NOT?: Prisma.btw_kepengurusanWhereInput | Prisma.btw_kepengurusanWhereInput[]
   tahun_kerja?: Prisma.StringFilter<"btw_kepengurusan"> | string
-  nama_pengurus?: Prisma.StringFilter<"btw_kepengurusan"> | string
+  nama_kepengurusan?: Prisma.StringFilter<"btw_kepengurusan"> | string
   detail?: Prisma.Detail_anggotaListRelationFilter
 }, "id_btw">
 
 export type btw_kepengurusanOrderByWithAggregationInput = {
   id_btw?: Prisma.SortOrder
   tahun_kerja?: Prisma.SortOrder
-  nama_pengurus?: Prisma.SortOrder
+  nama_kepengurusan?: Prisma.SortOrder
   _count?: Prisma.btw_kepengurusanCountOrderByAggregateInput
   _avg?: Prisma.btw_kepengurusanAvgOrderByAggregateInput
   _max?: Prisma.btw_kepengurusanMaxOrderByAggregateInput
@@ -236,56 +236,56 @@ export type btw_kepengurusanScalarWhereWithAggregatesInput = {
   NOT?: Prisma.btw_kepengurusanScalarWhereWithAggregatesInput | Prisma.btw_kepengurusanScalarWhereWithAggregatesInput[]
   id_btw?: Prisma.IntWithAggregatesFilter<"btw_kepengurusan"> | number
   tahun_kerja?: Prisma.StringWithAggregatesFilter<"btw_kepengurusan"> | string
-  nama_pengurus?: Prisma.StringWithAggregatesFilter<"btw_kepengurusan"> | string
+  nama_kepengurusan?: Prisma.StringWithAggregatesFilter<"btw_kepengurusan"> | string
 }
 
 export type btw_kepengurusanCreateInput = {
   tahun_kerja: string
-  nama_pengurus: string
+  nama_kepengurusan: string
   detail?: Prisma.detail_anggotaCreateNestedManyWithoutKepengurusanInput
 }
 
 export type btw_kepengurusanUncheckedCreateInput = {
   id_btw?: number
   tahun_kerja: string
-  nama_pengurus: string
+  nama_kepengurusan: string
   detail?: Prisma.detail_anggotaUncheckedCreateNestedManyWithoutKepengurusanInput
 }
 
 export type btw_kepengurusanUpdateInput = {
   tahun_kerja?: Prisma.StringFieldUpdateOperationsInput | string
-  nama_pengurus?: Prisma.StringFieldUpdateOperationsInput | string
+  nama_kepengurusan?: Prisma.StringFieldUpdateOperationsInput | string
   detail?: Prisma.detail_anggotaUpdateManyWithoutKepengurusanNestedInput
 }
 
 export type btw_kepengurusanUncheckedUpdateInput = {
   id_btw?: Prisma.IntFieldUpdateOperationsInput | number
   tahun_kerja?: Prisma.StringFieldUpdateOperationsInput | string
-  nama_pengurus?: Prisma.StringFieldUpdateOperationsInput | string
+  nama_kepengurusan?: Prisma.StringFieldUpdateOperationsInput | string
   detail?: Prisma.detail_anggotaUncheckedUpdateManyWithoutKepengurusanNestedInput
 }
 
 export type btw_kepengurusanCreateManyInput = {
   id_btw?: number
   tahun_kerja: string
-  nama_pengurus: string
+  nama_kepengurusan: string
 }
 
 export type btw_kepengurusanUpdateManyMutationInput = {
   tahun_kerja?: Prisma.StringFieldUpdateOperationsInput | string
-  nama_pengurus?: Prisma.StringFieldUpdateOperationsInput | string
+  nama_kepengurusan?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type btw_kepengurusanUncheckedUpdateManyInput = {
   id_btw?: Prisma.IntFieldUpdateOperationsInput | number
   tahun_kerja?: Prisma.StringFieldUpdateOperationsInput | string
-  nama_pengurus?: Prisma.StringFieldUpdateOperationsInput | string
+  nama_kepengurusan?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type btw_kepengurusanCountOrderByAggregateInput = {
   id_btw?: Prisma.SortOrder
   tahun_kerja?: Prisma.SortOrder
-  nama_pengurus?: Prisma.SortOrder
+  nama_kepengurusan?: Prisma.SortOrder
 }
 
 export type btw_kepengurusanAvgOrderByAggregateInput = {
@@ -295,13 +295,13 @@ export type btw_kepengurusanAvgOrderByAggregateInput = {
 export type btw_kepengurusanMaxOrderByAggregateInput = {
   id_btw?: Prisma.SortOrder
   tahun_kerja?: Prisma.SortOrder
-  nama_pengurus?: Prisma.SortOrder
+  nama_kepengurusan?: Prisma.SortOrder
 }
 
 export type btw_kepengurusanMinOrderByAggregateInput = {
   id_btw?: Prisma.SortOrder
   tahun_kerja?: Prisma.SortOrder
-  nama_pengurus?: Prisma.SortOrder
+  nama_kepengurusan?: Prisma.SortOrder
 }
 
 export type btw_kepengurusanSumOrderByAggregateInput = {
@@ -329,13 +329,13 @@ export type btw_kepengurusanUpdateOneRequiredWithoutDetailNestedInput = {
 
 export type btw_kepengurusanCreateWithoutDetailInput = {
   tahun_kerja: string
-  nama_pengurus: string
+  nama_kepengurusan: string
 }
 
 export type btw_kepengurusanUncheckedCreateWithoutDetailInput = {
   id_btw?: number
   tahun_kerja: string
-  nama_pengurus: string
+  nama_kepengurusan: string
 }
 
 export type btw_kepengurusanCreateOrConnectWithoutDetailInput = {
@@ -356,13 +356,13 @@ export type btw_kepengurusanUpdateToOneWithWhereWithoutDetailInput = {
 
 export type btw_kepengurusanUpdateWithoutDetailInput = {
   tahun_kerja?: Prisma.StringFieldUpdateOperationsInput | string
-  nama_pengurus?: Prisma.StringFieldUpdateOperationsInput | string
+  nama_kepengurusan?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type btw_kepengurusanUncheckedUpdateWithoutDetailInput = {
   id_btw?: Prisma.IntFieldUpdateOperationsInput | number
   tahun_kerja?: Prisma.StringFieldUpdateOperationsInput | string
-  nama_pengurus?: Prisma.StringFieldUpdateOperationsInput | string
+  nama_kepengurusan?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -399,7 +399,7 @@ export type Btw_kepengurusanCountOutputTypeCountDetailArgs<ExtArgs extends runti
 export type btw_kepengurusanSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id_btw?: boolean
   tahun_kerja?: boolean
-  nama_pengurus?: boolean
+  nama_kepengurusan?: boolean
   detail?: boolean | Prisma.btw_kepengurusan$detailArgs<ExtArgs>
   _count?: boolean | Prisma.Btw_kepengurusanCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["btw_kepengurusan"]>
@@ -407,22 +407,22 @@ export type btw_kepengurusanSelect<ExtArgs extends runtime.Types.Extensions.Inte
 export type btw_kepengurusanSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id_btw?: boolean
   tahun_kerja?: boolean
-  nama_pengurus?: boolean
+  nama_kepengurusan?: boolean
 }, ExtArgs["result"]["btw_kepengurusan"]>
 
 export type btw_kepengurusanSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id_btw?: boolean
   tahun_kerja?: boolean
-  nama_pengurus?: boolean
+  nama_kepengurusan?: boolean
 }, ExtArgs["result"]["btw_kepengurusan"]>
 
 export type btw_kepengurusanSelectScalar = {
   id_btw?: boolean
   tahun_kerja?: boolean
-  nama_pengurus?: boolean
+  nama_kepengurusan?: boolean
 }
 
-export type btw_kepengurusanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_btw" | "tahun_kerja" | "nama_pengurus", ExtArgs["result"]["btw_kepengurusan"]>
+export type btw_kepengurusanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_btw" | "tahun_kerja" | "nama_kepengurusan", ExtArgs["result"]["btw_kepengurusan"]>
 export type btw_kepengurusanInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   detail?: boolean | Prisma.btw_kepengurusan$detailArgs<ExtArgs>
   _count?: boolean | Prisma.Btw_kepengurusanCountOutputTypeDefaultArgs<ExtArgs>
@@ -438,7 +438,7 @@ export type $btw_kepengurusanPayload<ExtArgs extends runtime.Types.Extensions.In
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id_btw: number
     tahun_kerja: string
-    nama_pengurus: string
+    nama_kepengurusan: string
   }, ExtArgs["result"]["btw_kepengurusan"]>
   composites: {}
 }
@@ -865,7 +865,7 @@ export interface Prisma__btw_kepengurusanClient<T, Null = never, ExtArgs extends
 export interface btw_kepengurusanFieldRefs {
   readonly id_btw: Prisma.FieldRef<"btw_kepengurusan", 'Int'>
   readonly tahun_kerja: Prisma.FieldRef<"btw_kepengurusan", 'String'>
-  readonly nama_pengurus: Prisma.FieldRef<"btw_kepengurusan", 'String'>
+  readonly nama_kepengurusan: Prisma.FieldRef<"btw_kepengurusan", 'String'>
 }
     
 
