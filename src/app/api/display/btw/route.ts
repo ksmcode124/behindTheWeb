@@ -49,7 +49,7 @@ export async function GET(request: NextRequest) {
       success: true,
       data: {
         tahun_kerja: kepengurusan.tahun_kerja,
-        nama_pengurus: kepengurusan.nama_pengurus,
+        nama_kepengurusan: kepengurusan.nama_kepengurusan,
         divisi: divisi.map((d: any) => ({
           nama_divisi: d.nama_divisi,
           anggota: d.detail.map((detail: any) => ({

@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
     const data = await prisma.btw_kepengurusan.create({
       data: {
         tahun_kerja: body.tahun_kerja,
-        nama_pengurus: body.nama_pengurus,
+        nama_kepengurusan: body.nama_kepengurusan,
       },
     });
 
