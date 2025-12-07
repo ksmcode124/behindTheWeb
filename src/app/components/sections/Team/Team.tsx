@@ -21,12 +21,11 @@ export default function Team() {
           {BOARD.map(({ nama, image, ig, linkedIn, role }) => (
             <div key={nama} className="flex flex-col items-center gap-4">
               <FlipCard
+                key={nama}
+                size={1}
                 imageSrc={image}
                 ig={ig}
                 linkedIn={linkedIn}
-                flip={true}
-                className="h-[340px] w-[260px]" // SIZE FIX — now it scales properly
-                borderColor="border-primary-500"
               />
 
               <p className="border-b-secondary w-full border-b-2 text-center text-3xl">

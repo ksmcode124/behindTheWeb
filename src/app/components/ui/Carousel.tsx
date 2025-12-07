@@ -1,65 +1,27 @@
 'use client';
-import { useState, useEffect} from 'react';
-import { FlipCard }  from './FlipCard';
+import { useState, useEffect } from 'react';
+import { FlipCard } from './FlipCard';
 import Image from 'next/image';
+interface TeamProps {
+  members: {
+    name: string;
+    role: string;
+    image: string;
+    ig: string;
+    linkedIn: string;
+  }[];
+}
 
-const FE_players = [
-  // Dummy bisa diganti looping dari database
-  {
-    nama: 'Cristiano Ronaldo',
-    role: 'Forward',
-    image: '/assets/images/logo_black.webp',
-    ig: 'https://www.instagram.com/cristiano/',
-    linkedIn: 'https://www.linkedin.com/in/cristiano-ronaldo-123456789/',
-  },
-  {
-    nama: 'Lionel Messi',
-    role: 'Forward',
-    image: '/assets/images/logo_black.webp',
-    ig: 'https://www.instagram.com/leomessi/',
-    linkedIn: 'https://www.linkedin.com/in/leomessi/',
-  },
-  {
-    nama: 'Neymar Jr',
-    role: 'Forward',
-    image: '/assets/images/logo_white.webp',
-    ig: 'https://www.instagram.com/neymarjr/',
-    linkedIn: 'https://www.linkedin.com/in/neymarjr/',
-  },
-  {
-    nama: 'Kylian Mbappe',
-    role: 'Forward',
-    image: '/assets/images/logo_white.webp',
-    ig: 'https://www.instagram.com/k.mbappe/',
-    linkedIn: 'https://www.linkedin.com/in/kylian-mbappe/',
-  },
-  {
-    nama: 'Vinicius Jr',
-    role: 'Forward',
-    image: '/assets/images/logo_white.webp',
-    ig: 'https://www.instagram.com/vinijr/',
-    linkedIn: 'https://www.linkedin.com/in/vinicius-jr-123456789/',
-  },
-];
-// [
-//   "/assets/images/ronaldo.jpg",
-//   "/assets/images/ronaldo.svg",
-//   "/assets/images/neymar.jpeg",
-//   "/assets/images/messi.jpeg",
-//   "/assets/images/mbappe.jpeg",
-//   "/assets/images/vini.jpeg",
-// ];
-
-export default function Carousel() {
+export default function Carousel({ members }: TeamProps) {
   const [batchSize, setBatchSize] = useState<number>(0); // ukuran window
   const [startIndex, setStartIndex] = useState<number>(0); // index awal window
   const handlePrev = () => {
-    setStartIndex((prev) => (prev - 1 < 0 ? FE_players.length - 1 : prev - 1)); // geser window ke kanan
+    setStartIndex((prev) => (prev - 1 < 0 ? members.length - 1 : prev - 1)); // geser window ke kanan
     console.log('prev');
   };
 
   const handleNext = () => {
-    setStartIndex((prev) => (prev + 1 >= FE_players.length ? 0 : prev + 1)); // geser window ke kiri
+    setStartIndex((prev) => (prev + 1 >= members.length ? 0 : prev + 1)); // geser window ke kiri
     console.log('next');
   };
 
@@ -74,14 +36,16 @@ export default function Carousel() {
   console.log(batchSize);
 
   // Fungsi untuk mengambil 5 nama (looping)
-  const visiblePlayers = [];
+  const visibleMembers = [];
   for (let i = 0; i < batchSize; i++) {
-    const index = (startIndex + i) % FE_players.length; // loop jika habis
-    visiblePlayers.push(FE_players[index]);
+    const index = (startIndex + i) % members.length; // loop jika habis
+    visibleMembers.push(members[index]);
   }
 
   let count: number = 0;
-  const ButtonPosition = (size: 1 | 2 | 3 | 4 | 5): React.MouseEventHandler<HTMLButtonElement> | undefined => {
+  const ButtonPosition = (
+    size: 1 | 2 | 3 | 4 | 5,
+  ): React.MouseEventHandler<HTMLButtonElement> | undefined => {
     if (size === 2) count++;
     if (count % 2 === 0) return () => handlePrev();
     if (count % 2 === 1) return () => handleNext();
@@ -89,43 +53,71 @@ export default function Carousel() {
   };
 
   return (
-    <div className="font-sans flex items-center justify-center h-screen p-8 pb-20 gap-3 sm:p-20">
+    <div className="flex h-screen items-center justify-center gap-3 p-8 pb-20 font-sans sm:p-20">
       {batchSize === 5 ? (
-        <button onClick={handlePrev} className="text-white w-[70px] h-[70px] rounded-full bg-[#393c45] p-auto justify-content-center justify-items-center"><Image src="/assets/images/icon/Vector.svg" alt="Previous" width={17} height={28} /></button>
+        <button
+          onClick={handlePrev}
+          className="p-auto justify-content-center h-[70px] w-[70px] justify-items-center rounded-full bg-[#393c45] text-white"
+        >
+          <Image
+            src="/assets/images/icon/Vector.svg"
+            alt="Previous"
+            width={17}
+            height={28}
+          />
+        </button>
       ) : null}
 
-      {visiblePlayers.map((players, i) => {
-        const size = batchSize === 3 ? (i % 2 === 1 ? 1 : 2) : (i < 3 ? (3 - i) as 1 | 2 | 3 : (i - 1) as 1 | 2 | 3);
+      {visibleMembers.map((members, i) => {
+        const size =
+          batchSize === 3
+            ? i % 2 === 1
+              ? 1
+              : 2
+            : i < 3
+              ? ((3 - i) as 1 | 2 | 3)
+              : ((i - 1) as 1 | 2 | 3);
         const isButton = size === 2;
         return isButton ? (
           <button
-            key={players.nama}
+            key={members.name}
             onClick={ButtonPosition(size)}
-            className="flex w-auto h-auto"
+            className="flex h-auto w-auto"
           >
             <FlipCard
               size={size}
-              imageSrc={players.image}
-              nama={players.nama}
-              role={players.role}
-              ig={players.ig}
-              linkedIn={players.linkedIn}
+              imageSrc={members.image}
+              nama={members.name}
+              role={members.role}
+              ig={members.ig}
+              linkedIn={members.linkedIn}
             />
           </button>
         ) : (
           <FlipCard
-            key={players.nama}
+            key={members.name}
             size={size}
-            imageSrc={players.image}
-            nama={players.nama}
-            role={players.role}
-            ig={players.ig}
-            linkedIn={players.linkedIn}
+            imageSrc={members.image}
+            nama={members.name}
+            role={members.role}
+            ig={members.ig}
+            linkedIn={members.linkedIn}
           />
         );
       })}
       {batchSize === 5 ? (
-      <button onClick={handleNext} className="text-white w-[70px] h-[70px] rounded-full bg-[#393c45] p-auto justify-content-center justify-items-center"><Image src="/assets/images/icon/Vector.svg" alt="Next" className="rotate-180" width={17} height={28} /></button>
+        <button
+          onClick={handleNext}
+          className="p-auto justify-content-center h-[70px] w-[70px] justify-items-center rounded-full bg-[#393c45] text-white"
+        >
+          <Image
+            src="/assets/images/icon/Vector.svg"
+            alt="Next"
+            className="rotate-180"
+            width={17}
+            height={28}
+          />
+        </button>
       ) : null}
     </div>
   );

@@ -39,3 +39,10 @@ export const DEVELOPERS = [
     image: '/assets/images/logo_white.png',
   },
 ];
+
+export const team = {
+  members: [
+    { name: "Cristiano", role: "Forward", image: "/img/cristiano.png", ig: "#", linkedIn: "#" },
+    { name: "Messi", role: "Forward", image: "/img/messi.png", ig: "#", linkedIn: "#" },
+  ],
+};

@@ -1,29 +1,7 @@
 import React from 'react';
 import { SocialMediaLink } from '../../ui/SocialMediaLink';
 import Logo from '../../ui/Logo';
-
-const socialMediaData = [
-  {
-    platform: 'instagram' as const,
-    href: 'https://instagram.com/the.code124',
-    label: 'the.code124',
-  },
-  {
-    platform: 'whatsapp' as const,
-    href: 'https://wa.me/6285777700124',
-    label: '+6285-777-700-124',
-  },
-  {
-    platform: 'email' as const,
-    href: 'mailto:ksm.code124@gmail.com',
-    label: 'ksm.code124@gmail.com',
-  },
-  {
-    platform: 'linkedin' as const,
-    href: 'https://linkedin.com/in/code124',
-    label: 'code124',
-  },
-];
+import { SOCIAL_MEDIA } from '../../data/socialMedia';
 
 export default function Footer() {
   return (
@@ -46,7 +24,7 @@ export default function Footer() {
 
         {/* Kolom Kanan: Social Media */}
         <div className="flex w-full flex-col items-start space-y-3 pt-8 lg:w-1/2 lg:space-y-4 lg:pt-0 lg:pl-5">
-          {socialMediaData.map((social) => (
+          {SOCIAL_MEDIA.map((social) => (
             <SocialMediaLink
               key={social.platform}
               platform={social.platform}
