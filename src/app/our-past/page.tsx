@@ -1,13 +1,12 @@
 import Footer from '../components/sections/Footer/Footer';
 import Navbar from '../components/sections/Navigation/Navbar';
-import OurPast from '../components/sections/OurPast/OurPast';
 import Carousel from '../components/ui/Carousel';
 import ShadowedText from '../components/ui/ShadowedText';
 import { SocialMediaLink } from '../components/ui/SocialMediaLink';
 import Wrapper from '../components/ui/Wrapper';
 import Image from 'next/image';
 
-export default function TheTeam() {
+export default function OurPastPage() {
   const socialMediaData = [
     {
       platform: 'instagram' as const,
@@ -80,8 +79,6 @@ export default function TheTeam() {
           </div>
           <Carousel />
         </Wrapper>
-
-        <OurPast />
       </main>
 
       <Footer />

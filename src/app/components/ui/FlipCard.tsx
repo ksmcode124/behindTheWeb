@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useState } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
@@ -27,30 +27,39 @@ function FlipCard({
   role,
   ig,
   linkedIn,
-  asChild = false,
   className,
-  children,
-  ...restProps // ganti jadi restProps agar imageSrc tidak ikut tersebar
-}: React.ComponentPropsWithoutRef<"div"> &
-  VariantProps<typeof cardVariant> & {
-    asChild?: boolean;
-    children?: React.ReactNode;
-    imageSrc?: string;
-    className?: string;
-    nama?: string;
-    role?: string;
-    ig?: string;
-    linkedIn?: string;
-  }) {
-  const Comp = asChild ? Slot : "div";
+  flip = true,
+  frontBg = 'bg-white',
+  backBg = 'bg-white',
+  borderColor = 'border-secondary-300',
+  ...props
+}: {
+  imageSrc?: string;
+  nama?: string;
+  role?: string;
+  ig?: string;
+  linkedIn?: string;
+  className?: string;
+  flip?: boolean;
+
+  /** NEW: THEMING */
+  frontBg?: string;
+  backBg?: string;
+  borderColor?: string;
+}) {
   const [hover, setHover] = useState(false);
+  const hasInfo = nama || role;
 
   return (
-    <Comp
-      className={cn("[perspective:1000px]", cardVariant({ size }), className)}
+    <div
+      className={cn(
+        'relative aspect-[2/3] w-full max-w-[320px] shrink-0',
+        'rounded-[clamp(10px,2vw,24px)] [perspective:1000px]',
+        className,
+      )}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      {...restProps} // ✅ aman, imageSrc tidak ikut tersebar
+      {...props}
     >
       <div
         className={cn(
@@ -58,7 +67,7 @@ function FlipCard({
           hover && (size === 1 || size === 0) &&  "[transform:rotateY(180deg)]"
         )}
       >
-        {/* bagian depan pas dihover */}
+        {/* FRONT */}
         <div
           className={cn(
             "absolute w-full h-full flex items-center justify-center bg-blue-400 text-white font-semibold [backface-visibility:hidden overflow-hidden] bg-cover",
@@ -97,8 +106,6 @@ function FlipCard({
 
         </div>
       </div>
-    </Comp>
+    </div>
   );
 }
-
-export { FlipCard, cardVariant };
