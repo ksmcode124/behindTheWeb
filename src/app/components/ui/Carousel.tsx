@@ -1,6 +1,6 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
-import { FlipCard } from './FlipCard';
+import { useState, useEffect} from 'react';
+import { FlipCard }  from './FlipCard';
 import Image from 'next/image';
 
 const FE_players = [
@@ -89,19 +89,21 @@ export default function Carousel() {
   };
 
   return (
-    <div className="font-sans flex flex-row items-center justify-center border-2 border-amber-50 p-8 pb-20 gap-2 sm:p-20 bg-black">
+    <div className="font-sans flex items-center justify-center h-screen p-8 pb-20 gap-3 sm:p-20">
       {batchSize === 5 ? (
         <button onClick={handlePrev} className="text-white w-[70px] h-[70px] rounded-full bg-[#393c45] p-auto justify-content-center justify-items-center"><Image src="/assets/images/icon/Vector.svg" alt="Previous" width={17} height={28} /></button>
       ) : null}
 
       {visiblePlayers.map((players, i) => {
-        console.log("tes", i);
         const size = batchSize === 3 ? (i % 2 === 1 ? 1 : 2) : (i < 3 ? (3 - i) as 1 | 2 | 3 : (i - 1) as 1 | 2 | 3);
         const isButton = size === 2;
-        return isButton ?
-          <button key={players.nama} onClick={ButtonPosition(size)}
-            className="flex w-auto h-auto" >
-            <FlipCard key={players.nama}
+        return isButton ? (
+          <button
+            key={players.nama}
+            onClick={ButtonPosition(size)}
+            className="flex w-auto h-auto"
+          >
+            <FlipCard
               size={size}
               imageSrc={players.image}
               nama={players.nama}
