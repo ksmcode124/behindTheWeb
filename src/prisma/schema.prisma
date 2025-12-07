@@ -75,6 +75,7 @@ model user {
   role          Role      @default(admin)
 
   accounts Account[]
+  sessions Session[]
 }
 
 model Account {
@@ -98,6 +99,20 @@ model Account {
 
   @@unique([providerId, accountId])
 }
+
+model Session {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
 
 model VerificationToken {
   identifier String

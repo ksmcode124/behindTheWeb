@@ -55,6 +55,7 @@ export const ModelName = {
   detail_anggota: 'detail_anggota',
   user: 'user',
   Account: 'Account',
+  Session: 'Session',
   VerificationToken: 'VerificationToken'
 } as const
 
@@ -153,6 +154,20 @@ export const AccountScalarFieldEnum = {
 } as const
 
 export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
+
+
+export const SessionScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  userId: 'userId',
+  expiresAt: 'expiresAt',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
 
 
 export const VerificationTokenScalarFieldEnum = {

@@ -79,6 +79,11 @@ export type user = Prisma.userModel
  */
 export type Account = Prisma.AccountModel
 /**
+ * Model Session
+ * 
+ */
+export type Session = Prisma.SessionModel
+/**
  * Model VerificationToken
  * 
  */
