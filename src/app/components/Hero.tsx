@@ -30,7 +30,7 @@ export default function HeroSection() {
               key={social.platform}
               platform={social.platform}
               href={social.href}
-              iconClassName="h-12 w-12 text-2xl bg-primary-600 text-black shadow-[4px_4px_0px_#393C45]"
+              iconClassName="h-12 w-12 text-2xl bg-primary-600 text-secondary-400 shadow-[4px_4px_0px_#393C45]"
             />
           ))}
         </div>

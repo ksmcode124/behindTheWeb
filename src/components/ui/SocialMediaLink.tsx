@@ -46,7 +46,7 @@ export function SocialMediaLink({
     >
       {/* Icon circle */}
       <span
-        className={`flex items-center justify-center rounded-full transition-all duration-300 ease-in-out ${iconClassName} ${withBorder ? 'border border-white' : 'border border-transparent'} hover:border-white hover:bg-white hover:text-black`}
+        className={`flex items-center justify-center rounded-full transition-all duration-300 ease-in-out ${iconClassName} ${withBorder ? 'border border-white' : 'border border-transparent'} hover:text-secondary-400 hover:border-white hover:bg-white`}
       >
         <IconComponent size={iconSize} />
       </span>

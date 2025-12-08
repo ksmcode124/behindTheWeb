@@ -16,21 +16,21 @@ export function MobileNav({ className }: { className: string }) {
       >
         {/* Top bar */}
         <span
-          className={`block h-1 w-6 rounded-2xl bg-black transition-transform duration-300 ${
+          className={`bg-secondary-300 block h-1 w-6 rounded-2xl transition-transform duration-300 ${
             open ? 'translate-y-3 rotate-45' : ''
           }`}
         />
 
         {/* Middle bar */}
         <span
-          className={`block h-1 w-6 rounded-2xl bg-black transition-opacity duration-300 ${
+          className={`bg-secondary-300 block h-1 w-6 rounded-2xl transition-opacity duration-300 ${
             open ? 'opacity-0' : 'opacity-100'
           }`}
         />
 
         {/* Bottom bar */}
         <span
-          className={`block h-1 w-6 rounded-2xl bg-black transition-transform duration-300 ${
+          className={`bg-secondary-300 block h-1 w-6 rounded-2xl transition-transform duration-300 ${
             open ? '-translate-y-2 -rotate-45' : ''
           }`}
         />

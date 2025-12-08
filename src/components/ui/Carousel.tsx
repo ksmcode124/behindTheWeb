@@ -53,7 +53,7 @@ export default function Carousel({ members }: TeamProps) {
       {batchSize === 5 ? (
         <button
           onClick={handlePrev}
-          className="p-auto justify-content-center h-[70px] w-[70px] justify-items-center rounded-full bg-[#393c45] text-white"
+          className="p-auto justify-content-center text-secondary-400 h-[70px] w-[70px] justify-items-center rounded-full bg-[#393c45]"
         >
           <Image
             src="/assets/images/icon/Vector.svg"
@@ -104,7 +104,7 @@ export default function Carousel({ members }: TeamProps) {
       {batchSize === 5 ? (
         <button
           onClick={handleNext}
-          className="p-auto justify-content-center h-[70px] w-[70px] justify-items-center rounded-full bg-[#393c45] text-white"
+          className="p-auto justify-content-center text-secondary-400 h-[70px] w-[70px] justify-items-center rounded-full bg-[#393c45]"
         >
           <Image
             src="/assets/images/icon/Vector.svg"

@@ -10,7 +10,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="bg-primary-500 pointer-events-auto relative border px-4 py-1 text-2xl font-bold transition-colors hover:bg-white"
+          className="bg-primary-500 hover:bg-secondary-400 pointer-events-auto relative border px-4 py-1 text-2xl font-bold transition-colors"
         >
           <Logo />
         </Link>

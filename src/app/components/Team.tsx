@@ -7,7 +7,7 @@ import { DEVELOPERS, BOARD } from './data/team';
 export default function Team() {
   return (
     <>
-      <section className="flex min-h-[70vh] w-full flex-col items-center justify-center gap-8 px-6 text-white">
+      <section className="text-secondary-400 flex min-h-[70vh] w-full flex-col items-center justify-center gap-8 px-6">
         <h2 className="border-b-secondary border-b-2 pb-5 text-5xl">
           MEET OUR TEAM
         </h2>
@@ -38,7 +38,7 @@ export default function Team() {
         {DEVELOPERS.map(({ id, nama, caption, image }) => (
           <div key={id} className="flex w-full flex-col items-center">
             {/* TITLE */}
-            <h3 className="text-primary-500 mb-10 -rotate-4 text-5xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:2.5px]">
+            <h3 className="text-primary-500 mb-10 -rotate-4 text-5xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:2.5px] text-shadow-[1.5px_1.5px_0_var(--color-primary-600)]">
               {nama}
             </h3>
 
@@ -51,13 +51,15 @@ export default function Team() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
 
               <div className="absolute bottom-0 left-0 flex w-full items-end justify-between gap-3">
-                <p className="max-w-[70%] p-4 text-sm text-white">{caption}</p>
+                <p className="text-secondary-400 max-w-[70%] p-4 text-sm">
+                  {caption}
+                </p>
 
                 <Link
                   href="/"
                   className="border-secondary-300 bg-primary-600 pointer-events-auto relative border-[0.4em] px-4 py-1 text-center text-2xl font-bold transition-colors duration-300 hover:bg-white"
                 >
-                  SELENGKAPNYA
+                  SELENGKAPNYAbg-secondary-400
                 </Link>
               </div>
             </div>

@@ -18,7 +18,7 @@ export default function TheTeam() {
       <Navbar />
 
       <main className="bg-secondary-300 font-display min-h-screen">
-        <section className="flex h-[80vh] w-full flex-col items-center justify-center gap-10 bg-[url('/assets/images/header_meet_team1.webp')] bg-cover bg-center px-6 text-white">
+        <section className="text-secondary-400 flex h-[80vh] w-full flex-col items-center justify-center gap-10 bg-[url('/assets/images/header_meet_team1.webp')] bg-cover bg-center px-6">
           {/* Title */}
           <div className="flex flex-col items-center text-right">
             <h1 className="text-secondary-400 -rotate-3 text-6xl leading-none md:text-7xl lg:text-[10rem]">
@@ -57,7 +57,7 @@ export default function TheTeam() {
                     platform={social.platform}
                     href={social.href}
                     iconClassName="
-              h-12 w-12 bg-primary-600 text-2xl text-black
+              h-12 w-12 bg-primary-600 text-2xl text-secondary-400
               shadow-[4px_4px_0px_#393C45]
             "
                   />

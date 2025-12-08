@@ -18,7 +18,7 @@ export default function TheTeam() {
       <Navbar />
 
       <main className="bg-secondary-300 font-display min-h-screen">
-        <section className="relative flex min-h-[70vh] w-full flex-col items-center justify-center gap-4 overflow-hidden px-4 py-12 text-white sm:min-h-[75vh] sm:gap-6 sm:py-14 md:min-h-[80vh] md:gap-8 md:py-16 lg:min-h-[85vh] lg:gap-10 lg:py-20">
+        <section className="text-secondary-400 relative flex min-h-[70vh] w-full flex-col items-center justify-center gap-4 overflow-hidden px-4 py-12 sm:min-h-[75vh] sm:gap-6 sm:py-14 md:min-h-[80vh] md:gap-8 md:py-16 lg:min-h-[85vh] lg:gap-10 lg:py-20">
           {/* Background Images */}
           <div
             className="absolute inset-0 bg-[url('/assets/images/header_meet_team.webp')] bg-cover bg-fixed bg-no-repeat"
@@ -79,7 +79,7 @@ export default function TheTeam() {
                     key={social.platform}
                     platform={social.platform}
                     href={social.href}
-                    iconClassName="h-11 w-11 bg-primary-600 text-xl text-black shadow-[3px_3px_0px_#393C45] transition-all duration-200 hover:translate-y-[-2px] hover:shadow-[5px_5px_0px_#393C45] sm:h-12 sm:w-12 sm:text-2xl md:h-13 md:w-13"
+                    iconClassName="h-11 w-11 bg-primary-600 text-xl text-secondary-400 shadow-[3px_3px_0px_#393C45] transition-all duration-200 hover:translate-y-[-2px] hover:shadow-[5px_5px_0px_#393C45] sm:h-12 sm:w-12 sm:text-2xl md:h-13 md:w-13"
                   />
                 ))}
               </div>
@@ -127,7 +127,7 @@ export default function TheTeam() {
                       key={social.platform}
                       platform={social.platform}
                       href={social.href}
-                      iconClassName="h-12 w-12 bg-primary-600 text-2xl text-black shadow-[4px_4px_0px_#393C45] transition-all duration-200 hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#393C45] xl:h-14 xl:w-14"
+                      iconClassName="h-12 w-12 bg-primary-600 text-2xl text-secondary-400 shadow-[4px_4px_0px_#393C45] transition-all duration-200 hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#393C45] xl:h-14 xl:w-14"
                     />
                   ))}
                 </div>

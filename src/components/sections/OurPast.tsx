@@ -21,10 +21,10 @@ export default function OurPast() {
           <p className="text-3xl md:text-4xl lg:text-7xl">MEMBER</p>
 
           <div className="flex flex-col text-sm leading-none md:text-lg lg:text-4xl">
-            <p className="text-primary-500 [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:1px] text-shadow-[1.5px_1.5px_0_#FEB863]">
+            <p className="text-primary-500 [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:1px] text-shadow-[1.5px_1.5px_0_var(--color-primary-600)]">
               #TheFirstCommit
             </p>
-            <p className="text-primary-500 [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:1px] text-shadow-[1.5px_1.5px_0_#FEB863]">
+            <p className="text-primary-500 [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:1px] text-shadow-[1.5px_1.5px_0_var(--color-primary-600)]">
               #TheFirstCommit
             </p>
           </div>
@@ -43,7 +43,7 @@ export default function OurPast() {
 
         <Link
           href="/our-past"
-          className="bg-primary-500 hover:text-secondary-300 mt-6 self-end border px-3 py-2 text-xl font-bold shadow-[0_3px_5px_#000] transition-colors duration-300 hover:bg-white md:px-6 md:py-3 md:text-2xl lg:px-5 lg:py-3"
+          className="bg-primary-500 hover:text-secondary-300 mt-6 self-end border-3 px-3 py-2 text-xl font-bold shadow-[0_3px_5px_#000] transition-colors duration-300 hover:bg-white md:px-6 md:py-3 md:text-2xl lg:px-5 lg:py-3"
         >
           LIHAT DI SINI
         </Link>

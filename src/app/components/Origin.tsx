@@ -20,7 +20,7 @@ export default function Origin() {
         </div>
 
         {/* Text block */}
-        <div className="flex max-w-2xl flex-col justify-start space-y-8 text-white">
+        <div className="text-secondary-400 flex max-w-2xl flex-col justify-start space-y-8">
           <ShadowedText as="h2" className="-rotate-3 text-6xl">
             THE ORIGIN
           </ShadowedText>

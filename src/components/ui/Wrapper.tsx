@@ -12,7 +12,7 @@ export default function Wrapper({ children, className = '' }: WrapperProps) {
       className={`relative flex flex-col items-center overflow-hidden rounded-t-[5em] bg-[linear-gradient(to_right,#FFF9E6_0%,#DEBB95_30%,#DEBB95_80%,#FFF9E6_100%)] px-6 py-20 md:px-10 md:py-[7.5rem] ${className}`}
     >
       {/* top border */}
-      <div className="border-secondary-400 absolute -top-3.5 left-0 h-10 w-full rounded-t-[15em] border-x border-t-2" />
+      <div className="border-secondary-400 absolute -top-6.5 left-0 h-10 w-full rounded-t-[15em] border-x border-t-2" />
 
       {/* DECORATION WRAPPER — prevents overflow */}
       <div className="pointer-events-none absolute inset-0 hidden overflow-hidden lg:block">
