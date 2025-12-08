@@ -1,12 +1,15 @@
+// src/app/api/btw/kepengurusan/[id]/route.ts
+
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
 // GET /api/btw/kepengurusan/1 - Get one
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await props.params;
     const data = await prisma.btw_kepengurusan.findUnique({
       where: { id_btw: parseInt(params.id) },
       include: {
@@ -40,9 +43,10 @@ export async function GET(
 // PUT /api/btw/kepengurusan/1 - Update
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await props.params;
     const body = await request.json();
     
     const data = await prisma.btw_kepengurusan.update({
@@ -70,9 +74,10 @@ export async function PUT(
 // DELETE /api/btw/kepengurusan/1 - Delete
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await props.params;
     await prisma.btw_kepengurusan.delete({
       where: { id_btw: parseInt(params.id) },
     });

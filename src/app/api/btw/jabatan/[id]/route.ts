@@ -1,6 +1,4 @@
-// ============================================
 // src/app/api/btw/jabatan/[id]/route.ts
-// ============================================
 
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
@@ -8,9 +6,10 @@ import { prisma } from '@/lib/prisma';
 // GET /api/btw/jabatan/1 - Get one
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await props.params;
     const data = await prisma.btw_jabatan.findUnique({
       where: { id_jabatan: parseInt(params.id) },
     });
@@ -35,9 +34,10 @@ export async function GET(
 // PUT /api/btw/jabatan/1 - Update
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await props.params;
     const body = await request.json();
     
     const data = await prisma.btw_jabatan.update({
@@ -64,9 +64,10 @@ export async function PUT(
 // DELETE /api/btw/jabatan/1 - Delete
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await props.params;
     await prisma.btw_jabatan.delete({
       where: { id_jabatan: parseInt(params.id) },
     });

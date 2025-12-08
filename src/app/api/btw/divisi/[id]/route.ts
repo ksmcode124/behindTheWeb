@@ -1,32 +1,22 @@
-// ============================================
-// src/app/api/btw/divisi/[id]/route.ts
-// ============================================
+// src/app/api/btw/jabatan/[id]/route.ts
 
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-// GET /api/btw/divisi/1 - Get one
+// GET /api/btw/jabatan/1 - Get one
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
   try {
-    const data = await prisma.btw_divisi.findUnique({
-      where: { id_divisi: parseInt(params.id) },
-      include: {
-        detail: {
-          include: {
-            anggota: true,
-            kepengurusan: true,
-            jabatan: true,
-          },
-        },
-      },
+    const params = await props.params;
+    const data = await prisma.btw_jabatan.findUnique({
+      where: { id_jabatan: parseInt(params.id) },
     });
 
     if (!data) {
       return NextResponse.json(
-        { success: false, message: 'Divisi tidak ditemukan' },
+        { success: false, message: 'Jabatan tidak ditemukan' },
         { status: 404 }
       );
     }
@@ -41,54 +31,55 @@ export async function GET(
   }
 }
 
-// PUT /api/btw/divisi/1 - Update
+// PUT /api/btw/jabatan/1 - Update
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await props.params;
     const body = await request.json();
     
-    const data = await prisma.btw_divisi.update({
-      where: { id_divisi: parseInt(params.id) },
+    const data = await prisma.btw_jabatan.update({
+      where: { id_jabatan: parseInt(params.id) },
       data: {
-        nama_divisi: body.nama_divisi,
-        foto_divisi: body.foto_divisi
+        nama_jabatan: body.nama_jabatan,
       },
     });
 
     return NextResponse.json({
       success: true,
-      message: 'Divisi berhasil diupdate',
+      message: 'Jabatan berhasil diupdate',
       data,
     });
   } catch (error) {
     console.error('Error:', error);
     return NextResponse.json(
-      { success: false, message: 'Gagal update divisi' },
+      { success: false, message: 'Gagal update jabatan' },
       { status: 500 }
     );
   }
 }
 
-// DELETE /api/btw/divisi/1 - Delete
+// DELETE /api/btw/jabatan/1 - Delete
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
   try {
-    await prisma.btw_divisi.delete({
-      where: { id_divisi: parseInt(params.id) },
+    const params = await props.params;
+    await prisma.btw_jabatan.delete({
+      where: { id_jabatan: parseInt(params.id) },
     });
 
     return NextResponse.json({
       success: true,
-      message: 'Divisi berhasil dihapus',
+      message: 'Jabatan berhasil dihapus',
     });
   } catch (error) {
     console.error('Error:', error);
     return NextResponse.json(
-      { success: false, message: 'Gagal menghapus divisi' },
+      { success: false, message: 'Gagal menghapus jabatan' },
       { status: 500 }
     );
   }
