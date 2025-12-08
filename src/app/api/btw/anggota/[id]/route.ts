@@ -1,6 +1,4 @@
-// ============================================
 // src/app/api/btw/anggota/[id]/route.ts
-// ============================================
 
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
@@ -8,9 +6,10 @@ import { prisma } from '@/lib/prisma';
 // GET /api/btw/anggota/1 - Get one
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await props.params;
     const data = await prisma.btw_anggota.findUnique({
       where: { id_anggota: parseInt(params.id) },
       include: {
@@ -44,9 +43,10 @@ export async function GET(
 // PUT /api/btw/anggota/1 - Update
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await props.params;
     const body = await request.json();
     
     const data = await prisma.btw_anggota.update({
@@ -55,7 +55,6 @@ export async function PUT(
         nama_anggota: body.nama_anggota,
         foto_anggota: body.foto_anggota,
         linkedin: body.linkedin,
-        instagram: body.instagram,
       },
     });
 
@@ -76,9 +75,10 @@ export async function PUT(
 // DELETE /api/btw/anggota/1 - Delete
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await props.params;
     await prisma.btw_anggota.delete({
       where: { id_anggota: parseInt(params.id) },
     });
