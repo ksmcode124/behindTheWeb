@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { FlipCard } from '../../ui/FlipCard';
-import Wrapper from '../../ui/Wrapper';
-import { DEVELOPERS, BOARD } from '../../data/team';
+import { FlipCard } from '../../components/ui/FlipCard';
+import Wrapper from '../../components/ui/Wrapper';
+import { DEVELOPERS, BOARD } from './data/team';
 
 export default function Team() {
   return (

@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import ShadowedText from '../../ui/ShadowedText';
-import AccordionParent from '../../ui/Accordion';
-import InfiniteCarousel from '../../ui/InfiniteCarousel';
+import ShadowedText from '@/components/ui/ShadowedText';
+import AccordionParent from './Accordion';
+import InfiniteCarousel from './InfiniteCarousel';
 
 export default function Origin() {
   return (

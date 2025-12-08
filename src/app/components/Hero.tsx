@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import { SocialMediaLink } from '../../ui/SocialMediaLink';
-import ShadowedText from '../../ui/ShadowedText';
-import { SOCIAL_MEDIA } from '../../data/socialMedia';
+import { SocialMediaLink } from '@/components/ui/SocialMediaLink';
+import ShadowedText from '@/components/ui/ShadowedText';
+import { SOCIAL_MEDIA } from '../../components/data/socialMedia';
 
 export default function HeroSection() {
   return (

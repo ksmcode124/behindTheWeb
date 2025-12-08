@@ -1,16 +1,16 @@
 import Image from 'next/image';
 
-import Navbar from '../components/sections/Navigation/Navbar';
-import Footer from '../components/sections/Footer/Footer';
-import OurPast from '../components/sections/OurPast/OurPast';
+import Navbar from '@/components/sections/Navigation/Navbar';
+import Footer from '@/components/sections/Footer';
+import OurPast from '@/components/sections/OurPast';
 
-import Wrapper from '../components/ui/Wrapper';
-import Carousel from '../components/ui/Carousel';
-import ShadowedText from '../components/ui/ShadowedText';
-import { SocialMediaLink } from '../components/ui/SocialMediaLink';
-import { SOCIAL_MEDIA } from '../components/data/socialMedia';
+import Wrapper from '../../components/ui/Wrapper';
+import Carousel from '../../components/ui/Carousel';
+import ShadowedText from '../../components/ui/ShadowedText';
+import { SocialMediaLink } from '../../components/ui/SocialMediaLink';
+import { SOCIAL_MEDIA } from '../../components/data/socialMedia';
 import { TEAM, BOARD } from '../components/data/team';
-import { FlipCard } from '../components/ui/FlipCard';
+import { FlipCard } from '../../components/ui/FlipCard';
 
 export default function TheTeam() {
   return (
@@ -46,7 +46,7 @@ export default function TheTeam() {
           {/* Title Section */}
           <div className="relative z-20 flex w-full max-w-7xl flex-col items-start gap-2 px-4 text-center sm:gap-3 md:gap-4 lg:px-8 lg:text-left xl:px-12">
             <ShadowedText
-              className="-rotate-1 text-3xl font-bold sm:text-4xl md:-rotate-2 md:text-5xl lg:-rotate-3 lg:text-7xl xl:text-8xl 2xl:text-9xl"
+              className="-rotate-1 text-5xl font-bold sm:text-6xl md:-rotate-2 md:text-7xl lg:-rotate-3 lg:text-8xl xl:text-9xl"
               strokeWidth="1.5px sm:2px md:2.5px lg:2.87px"
             >
               CODE124

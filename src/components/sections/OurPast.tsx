@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import ShadowedText from '../../ui/ShadowedText';
+import ShadowedText from '../ui/ShadowedText';
 
 export default function OurPast() {
   return (

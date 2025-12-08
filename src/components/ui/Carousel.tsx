@@ -17,12 +17,10 @@ export default function Carousel({ members }: TeamProps) {
   const [startIndex, setStartIndex] = useState<number>(0); // index awal window
   const handlePrev = () => {
     setStartIndex((prev) => (prev - 1 < 0 ? members.length - 1 : prev - 1)); // geser window ke kanan
-    console.log('prev');
   };
 
   const handleNext = () => {
     setStartIndex((prev) => (prev + 1 >= members.length ? 0 : prev + 1)); // geser window ke kiri
-    console.log('next');
   };
 
   useEffect(() => {
@@ -32,8 +30,6 @@ export default function Carousel({ members }: TeamProps) {
       setBatchSize(5);
     }
   }, []);
-
-  console.log(batchSize);
 
   // Fungsi untuk mengambil 5 nama (looping)
   const visibleMembers = [];

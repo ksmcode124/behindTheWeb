@@ -1,7 +1,7 @@
 import React from 'react';
-import { SocialMediaLink } from '../../ui/SocialMediaLink';
-import Logo from '../../ui/Logo';
-import { SOCIAL_MEDIA } from '../../data/socialMedia';
+import { SocialMediaLink } from '@/components/ui/SocialMediaLink';
+import Logo from '@/components/ui/Logo';
+import { SOCIAL_MEDIA } from '../data/socialMedia';
 
 export default function Footer() {
   return (

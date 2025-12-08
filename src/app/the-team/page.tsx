@@ -1,14 +1,14 @@
 import Image from 'next/image';
 
-import Navbar from '../components/sections/Navigation/Navbar';
-import Footer from '../components/sections/Footer/Footer';
-import OurPast from '../components/sections/OurPast/OurPast';
+import Navbar from '../../components/sections/Navigation/Navbar';
+import Footer from '../../components/sections/Footer';
+import OurPast from '../../components/sections/OurPast';
 
-import Wrapper from '../components/ui/Wrapper';
-import Carousel from '../components/ui/Carousel';
-import ShadowedText from '../components/ui/ShadowedText';
-import { SocialMediaLink } from '../components/ui/SocialMediaLink';
-import { SOCIAL_MEDIA } from '../components/data/socialMedia';
+import Wrapper from '../../components/ui/Wrapper';
+import Carousel from '../../components/ui/Carousel';
+import ShadowedText from '../../components/ui/ShadowedText';
+import { SocialMediaLink } from '@/components/ui/SocialMediaLink';
+import { SOCIAL_MEDIA } from '../../components/data/socialMedia';
 
 import { TEAM } from '../components/data/team';
 
