@@ -18,9 +18,6 @@ export default function TheTeam() {
       <Navbar />
 
       <main className="bg-secondary-300 font-display min-h-screen">
-        {/* =========================
-    HERO SECTION
-========================== */}
         <section className="flex h-[80vh] w-full flex-col items-center justify-center gap-10 bg-[url('/assets/images/header_meet_team1.webp')] bg-cover bg-center px-6 text-white">
           {/* Title */}
           <div className="flex flex-col items-center text-right">
@@ -70,22 +67,38 @@ export default function TheTeam() {
           </div>
         </section>
 
-        {/* =========================
-            CAROUSEL SECTION
-        ========================== */}
         <Wrapper>
-          <div className="flex w-full flex-col items-center">
-            <h3 className="text-primary-500 mb-6 -rotate-4 text-5xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:2.5px]">
-              UI/UX Designer
-            </h3>
-          </div>
-
-          <Carousel members={TEAM} />
+          {[
+            {
+              title: 'UI/UX Designer',
+              members: TEAM,
+              rotation: '-rotate-2 sm:-rotate-3 md:-rotate-4',
+            },
+            {
+              title: 'Frontend Developer',
+              members: TEAM,
+              rotation: 'rotate-2 sm:rotate-3 md:rotate-4',
+            },
+            {
+              title: 'Backend Developer',
+              members: TEAM,
+              rotation: '-rotate-1 sm:-rotate-2 md:-rotate-3',
+            },
+          ].map((section, index) => (
+            <div
+              key={index}
+              className="flex w-full flex-col items-center px-4 py-8 sm:px-6 sm:py-10 md:px-8 md:py-12 lg:py-16"
+            >
+              <h3
+                className={`text-primary-500 mb-4 -rotate-3 text-3xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:1.5px] sm:mb-5 sm:text-4xl sm:[-webkit-text-stroke-width:2px] md:mb-6 md:text-5xl md:[-webkit-text-stroke-width:2.5px] lg:text-6xl xl:text-7xl`}
+              >
+                {section.title}
+              </h3>
+              <Carousel members={section.members} />
+            </div>
+          ))}
         </Wrapper>
 
-        {/* =========================
-            OUR PAST SECTION
-        ========================== */}
         <OurPast />
       </main>
 

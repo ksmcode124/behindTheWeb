@@ -7,9 +7,6 @@ import { DEVELOPERS, BOARD } from '../../data/team';
 export default function Team() {
   return (
     <>
-      {/* ==============================
-          TOP TEAM (BOARD)
-      ============================== */}
       <section className="flex min-h-[70vh] w-full flex-col items-center justify-center gap-8 px-6 text-white">
         <h2 className="border-b-secondary border-b-2 pb-5 text-5xl">
           MEET OUR TEAM
@@ -37,9 +34,6 @@ export default function Team() {
         </div>
       </section>
 
-      {/* ==============================
-          DEVELOPER LIST
-      ============================== */}
       <Wrapper className="flex flex-col gap-24 py-20">
         {DEVELOPERS.map(({ id, nama, caption, image }) => (
           <div key={id} className="flex w-full flex-col items-center">
