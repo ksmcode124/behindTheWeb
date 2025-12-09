@@ -9,9 +9,29 @@ export default function Team() {
   return (
     <>
       <section className="text-secondary-400 flex min-h-[70vh] w-full flex-col items-center justify-center gap-8 px-6">
-        <h2 className="border-b-secondary border-b-2 pb-5 text-5xl">
-          MEET OUR TEAM
-        </h2>
+        <div className="relative w-fit">
+          <h2 className="border-secondary border-b-2 px-5 pb-5 text-center text-5xl">
+            MEET OUR TEAM
+          </h2>
+
+          {/* Left — Bigger + Squished */}
+          <Image
+            src="/assets/images/line_brow_black.webp"
+            alt=""
+            width={200}
+            height={200}
+            className="absolute bottom-0 left-0 h-8 w-20 translate-y-[50%] object-contain"
+          />
+
+          {/* Right — Bigger + Squished + Flipped */}
+          <Image
+            src="/assets/images/line_brow_black.webp"
+            alt=""
+            width={200}
+            height={200}
+            className="absolute right-0 bottom-0 h-8 w-20 translate-y-[50%] scale-x-[-1] object-contain"
+          />
+        </div>
 
         <p className="lg:hidden">Click the photo for details</p>
 
@@ -40,7 +60,7 @@ export default function Team() {
         {DEVELOPERS.map(({ id, nama, caption, image }) => (
           <div key={id} className="flex w-full flex-col items-center">
             {/* TITLE */}
-            <h3 className="text-primary-500 mb-10 -rotate-4 text-5xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:2.5px] text-shadow-[1.5px_1.5px_0_var(--color-primary-600)]">
+            <h3 className="text-primary-500 mb-10 -skew-4 text-5xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:2.5px] text-shadow-[5px_4px_0_var(--color-primary-600)]">
               {nama}
             </h3>
 

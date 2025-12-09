@@ -32,11 +32,13 @@ export default function Inti() {
             className="mx-auto items-center justify-center"
           />
           <div className="items-center justify-center py-6 text-center">
-            <h3 className="text-base font-normal text-[#FFF9E6]">
+            <h3 className="text-xl font-normal text-[#FFF9E6]">
               {player.nama}
             </h3>
             <div className="mx-auto mt-1 mb-2 h-0.5 w-full bg-[#DEBB95]"></div>
-            <p className="text-xs font-normal text-[#FFF9E6]">{player.role}</p>
+            <p className="text-base font-normal text-[#FFF9E6]">
+              {player.role}
+            </p>
           </div>
         </div>
       ))}
