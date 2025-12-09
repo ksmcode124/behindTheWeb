@@ -72,7 +72,7 @@ export default function Origin() {
           />
         </div>
         {/* Section subtitle */}
-        <h2 className="text-secondary-400 col-span-full mt-6 text-right text-4xl lg:text-5xl">
+        <h2 className="text-secondary-400 col-span-full mt-6 text-right text-4xl lg:text-6xl">
           THROUGH THE LENS OF US...
         </h2>
       </section>
@@ -92,7 +92,7 @@ export default function Origin() {
       </section>
 
       {/* ACCORDION SECTION */}
-      <div className="relative top-11 z-2 flex w-full justify-between lg:top-16">
+      <div className="relative top-11 z-2 flex w-full justify-between lg:top-15">
         <ShadowedText
           className="pl-15 text-7xl lg:text-9xl"
           textShadow="6px 6px 0 #5EAA9E"

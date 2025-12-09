@@ -10,7 +10,7 @@ export function MobileNav({ className }: { className: string }) {
     <div className={`${className} relative`}>
       {/* BUTTON */}
       <button
-        className="bg-primary-500 relative z-25 flex flex-col items-center justify-center space-y-1.5 p-2"
+        className="bg-primary-500 relative z-25 flex flex-col space-y-1.5 p-2"
         onClick={() => setOpen(!open)}
         aria-label="Toggle menu"
       >
@@ -38,10 +38,10 @@ export function MobileNav({ className }: { className: string }) {
 
       {/* MENU */}
       <div
-        className={`bg-secondary-300 absolute -top-5 -right-6 flex w-[50vw] flex-col gap-4 p-5 pt-20 transition-all duration-300 ${
+        className={`bg-secondary-300 absolute -top-5 -right-6 flex w-[40vw] flex-col items-start gap-4 p-5 pt-20 transition-all duration-300 ${
           open
-            ? 'pointer-events-auto translate-y-0 opacity-100'
-            : 'pointer-events-none -translate-y-4 opacity-0'
+            ? 'pointer-events-auto translate-x-0 opacity-100'
+            : 'pointer-events-none translate-x-full opacity-0'
         }`}
       >
         {/* Separator line */}
