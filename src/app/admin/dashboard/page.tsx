@@ -1,154 +1,17 @@
-// 'use client';
-
-// import { useEffect, useState } from 'react';
-// import { useRouter } from 'next/navigation';
-
-// interface User {
-//   id: string;
-//   email: string;
-//   name: string | null;
-//   role: string;
-// }
-
-// export default function AdminDashboard() {
-//   const router = useRouter();
-//   const [user, setUser] = useState<User | null>(null);
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     checkSession();
-//   }, []);
-
-//   const checkSession = async () => {
-//     try {
-//       const response = await fetch('/api/auth/session');
-//       const data = await response.json();
-
-//       if (!data.user) {
-//         router.push('/login');
-//         return;
-//       }
-
-//       // Check if user is admin or superadmin
-//       if (data.user.role !== 'admin' && data.user.role !== 'superadmin') {
-//         router.push('/');
-//         return;
-//       }
-
-//       setUser(data.user);
-//       setLoading(false);
-//     } catch (error) {
-//       console.error('Session check error:', error);
-//       router.push('/login');
-//     }
-//   };
-
-//   const handleLogout = async () => {
-//     try {
-//       await fetch('/api/auth/logout', {
-//         method: 'POST',
-//       });
-//       router.push('/login');
-//     } catch (error) {
-//       console.error('Logout error:', error);
-//     }
-//   };
-
-//   if (loading) {
-//     return (
-//       <div className="min-h-screen flex items-center justify-center">
-//         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-//       <nav className="bg-white dark:bg-gray-800 shadow-sm">
-//         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-//           <div className="flex justify-between h-16">
-//             <div className="flex items-center">
-//               <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
-//                 Admin Dashboard
-//               </h1>
-//             </div>
-//             <div className="flex items-center space-x-4">
-//               <span className="text-sm text-gray-700 dark:text-gray-300">
-//                 {user?.name || user?.email}
-//               </span>
-//               <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200">
-//                 {user?.role}
-//               </span>
-//               <button
-//                 onClick={handleLogout}
-//                 className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-//               >
-//                 Logout
-//               </button>
-//             </div>
-//           </div>
-//         </div>
-//       </nav>
-
-//       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-//         <div className="px-4 py-6 sm:px-0">
-//           <div className="border-4 border-dashed border-gray-200 dark:border-gray-700 rounded-lg p-8">
-//             <div className="text-center">
-//               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-//                 Welcome to Admin Dashboard
-//               </h2>
-//               <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
-//                 You are logged in as {user?.role === 'superadmin' ? 'Super Admin' : 'Admin'}
-//               </p>
-              
-//               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-//                 <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-//                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-//                     Users
-//                   </h3>
-//                   <p className="text-gray-600 dark:text-gray-400">
-//                     Manage user accounts and permissions
-//                   </p>
-//                 </div>
-//                 <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-//                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-//                     Content
-//                   </h3>
-//                   <p className="text-gray-600 dark:text-gray-400">
-//                     Manage website content and settings
-//                   </p>
-//                 </div>
-//                 <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-//                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-//                     Analytics
-//                   </h3>
-//                   <p className="text-gray-600 dark:text-gray-400">
-//                     View site analytics and reports
-//                   </p>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </main>
-//     </div>
-//   );
-// }
-
-
 "use client";
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
-  Home, Users, Briefcase, List, LogOut, X, Edit, Trash2, Search, Link, ChevronDown, Plus, ChevronsLeft, ChevronLeft, ChevronRight, ChevronsRight, Eye, User, Menu, ChevronUp, CheckCircle, AlertTriangle
+  Home, Users, Briefcase, List, LogOut, X, Edit, Trash2, Search, Link, ChevronDown, Plus, ChevronsLeft, ChevronLeft, ChevronRight, ChevronsRight, Eye, User, Menu, Upload, Image as ImageIcon, AlertTriangle
 } from 'lucide-react';
+import { UploadButton } from '@uploadthing/react';
+import { useUploadThing } from "@/lib/uploadthing";
+import type { OurFileRouter } from '@/app/api/uploadthing/core';
 
 // ====================================================================
-// A. KONSTANTA, TIPE DATA, DAN DATA DUMMY (Constants, Types, & Mock Data)
+// A. KONSTANTA, TIPE DATA (Constants, Types)
 // ====================================================================
 
-// --- TIPE DATA UTAMA (Main Data Types) ---
-
-type Page = 'login' | 'home' | 'kepengurusan' | 'divisi' | 'anggota' | 'jabatan';
+type Page = 'login' | 'home' | 'kepengurusan' | 'divisi' | 'anggota' | 'jabatan' | 'detail_anggota';
 
 interface MenuItem {
   name: string;
@@ -156,103 +19,60 @@ interface MenuItem {
   page: Page;
 }
 
-interface Pengurus {
+interface Kepengurusan {
   id: number;
-  tahun: number;
-  nama: string;
+  tahun_kerja: string;
+  nama_kepengurusan: string;
 }
 
 interface Divisi {
   id: number;
-  nama: string;
+  nama_divisi: string;
+  foto_divisi: string;
 }
 
 interface Jabatan {
   id: number;
-  nama: string;
+  nama_jabatan: string;
 }
 
+// Data Dasar Anggota (tanpa relasi)
 interface Anggota {
   id: number;
-  nama: string;
-  kepengurusan: string;
-  jabatan: string;
-  divisi: string;
-  isExpanded: boolean;
-  details: {
-    linkedin: string;
-    instagram: string;
-  }
+  nama_anggota: string;
+  foto_anggota: string;
+  linkedin: string;
+  instagram: string;
 }
 
-// --- DATA DUMMY (Mockup Data) ---
+// Detail Anggota (join table)
+interface DetailAnggota {
+  id: number;
+  anggota_id: number;
+  kepengurusan_id: number;
+  divisi_id: number;
+  jabatan_id: number;
+  anggota_nama?: string;
+  kepengurusan_nama?: string;
+  divisi_nama?: string;
+  jabatan_nama?: string;
+  foto_anggota?: string;
+  linkedin?: string;
+  instagram?: string;
+}
 
-const MOCK_PENGURUSAN: Pengurus[] = [
-  { id: 111, tahun: 2025, nama: 'THE FIRST COMMIT' },
-  { id: 222, tahun: 2024, nama: 'KOMUNITAS WEB' },
-  { id: 333, tahun: 2023, nama: 'GENERASI SATU' },
-];
-
-const MOCK_DIVISI: Divisi[] = [
-  { id: 111, nama: 'UI UX DESIGNER' },
-  { id: 222, nama: 'FRONT END DEVELOPER' },
-  { id: 333, nama: 'BACK END DEVELOPER' },
-  { id: 444, nama: 'FULL STACK ENGINEER' },
-  { id: 555, nama: 'MARKETING & PROMOTION' },
-];
-
-const MOCK_JABATAN: Jabatan[] = [
-  { id: 111, nama: 'KETUA' },
-  { id: 222, nama: 'WAKIL' },
-  { id: 333, nama: 'KADIV' },
-  { id: 444, nama: 'STAFF' },
-  { id: 555, nama: 'MENTOR' },
-];
-
-const MOCK_ANGGOTA: Anggota[] = [
-  {
-    id: 111, nama: 'BARITA DAVITYA', kepengurusan: 'THE FIRST COMMIT', jabatan: 'KETUA', divisi: 'INTI', isExpanded: false,
-    details: {
-      linkedin: 'https://linkedin.com/in/barita',
-      instagram: 'https://instagram.com/barita',
-    }
-  },
-  {
-    id: 222, nama: 'NOBEL WURJAYATMA', kepengurusan: 'KOMUNITAS WEB', jabatan: 'WAKIL KETUA', divisi: 'INTI', isExpanded: false,
-    details: {
-      linkedin: 'https://linkedin.com/in/nobel',
-      instagram: 'https://instagram.com/nobel',
-    }
-  },
-  {
-    id: 333, nama: 'RIFKI DWI PRATAMA', kepengurusan: 'THE FIRST COMMIT', jabatan: 'STAFF', divisi: 'FRONT END DEVELOPER', isExpanded: false,
-    details: {
-      linkedin: 'https://linkedin.com/in/rifki',
-      instagram: 'https://instagram.com/rifki',
-    }
-  },
-];
-
-const DASHBOARD_DATA = [
-  { name: '2023 Generasi Satu', count: 28, height: 'h-1/2' },
-  { name: '2024 Komunitas Web', count: 34, height: 'h-3/5' },
-  { name: '2025 The First Commit', count: 42, height: 'h-4/5' },
-];
+const API_BASE = '/api/btw';
 
 // --- KONSTANTA WARNA UTAMA ---
-const PRIMARY_COLOR = '#0f3148'; // Warna Sidebar (Dark Teal/Blue)
-const LIGHT_BACKGROUND = '#e0f7ff'; // Warna Background Halaman (Light Cyan/Blue)
-const BUTTON_BLUE = '#3b82f6'; // Warna tombol Save Change
-const BUTTON_GREY = '#d1d5db'; // Warna tombol Cancel
-
+const PRIMARY_COLOR = '#0f3148';
+const LIGHT_BACKGROUND = '#e0f7ff';
+const BUTTON_BLUE = '#3b82f6';
+const BUTTON_GREY = '#d1d5db';
 
 // ====================================================================
 // B. KOMPONEN BERSAMA & LAYOUT (Shared & Layout Components)
 // ====================================================================
 
-// --- 1. MODAL DAN INPUT REUSABLE ---
-
-// Modal Umum untuk Form Edit/Tambah
 const CustomModal: React.FC<{ title: string, isOpen: boolean, onClose: () => void, children: React.ReactNode }> = ({ title, isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
@@ -269,7 +89,6 @@ const CustomModal: React.FC<{ title: string, isOpen: boolean, onClose: () => voi
   );
 };
 
-// Modal Konfirmasi Hapus
 const ConfirmationModal: React.FC<{ 
   title: string, 
   message: string, 
@@ -303,8 +122,7 @@ const ConfirmationModal: React.FC<{
   );
 };
 
-// Komponen Input Field Reusable
-const InputField: React.FC<{ label: string, value: string, onChange: (v: string) => void, placeholder: string, type?: 'text' | 'number' }> = ({ label, value, onChange, placeholder, type = 'text' }) => (
+const InputField: React.FC<{ label: string, value: string, onChange: (v: string) => void, placeholder: string, type?: 'text' | 'number' | 'url' }> = ({ label, value, onChange, placeholder, type = 'text' }) => (
   <div className="mb-4">
     <label className="block text-gray-700 text-xs font-semibold uppercase mb-1">{label}</label>
     <div className="relative">
@@ -320,8 +138,6 @@ const InputField: React.FC<{ label: string, value: string, onChange: (v: string)
   </div>
 );
 
-// --- 2. KOMPONEN NAVIGASI & LAYOUT ---
-
 const Sidebar: React.FC<{ currentPage: Page, onNavigate: (page: Page) => void }> = ({ currentPage, onNavigate }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   
@@ -331,11 +147,11 @@ const Sidebar: React.FC<{ currentPage: Page, onNavigate: (page: Page) => void }>
     { name: 'DIVISI', icon: List, page: 'divisi' },
     { name: 'ANGGOTA', icon: Users, page: 'anggota' },
     { name: 'JABATAN', icon: Briefcase, page: 'jabatan' },
+    { name: 'DETAIL ANGGOTA', icon: User, page: 'detail_anggota' },
   ];
 
   return (
     <>
-      {/* Tombol Menu untuk Mobile */}
       <button
         className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-full text-white shadow-lg"
         style={{ backgroundColor: PRIMARY_COLOR }}
@@ -344,7 +160,6 @@ const Sidebar: React.FC<{ currentPage: Page, onNavigate: (page: Page) => void }>
         <Menu className="w-6 h-6" />
       </button>
 
-      {/* Overlay untuk Mobile */}
       {isSidebarOpen && (
         <div
           className="lg:hidden fixed inset-0 z-40 bg-black opacity-50"
@@ -352,7 +167,6 @@ const Sidebar: React.FC<{ currentPage: Page, onNavigate: (page: Page) => void }>
         ></div>
       )}
 
-      {/* Sidebar - Penuh pada desktop, modal pada mobile */}
       <div className={`
         fixed inset-y-0 left-0 z-50 transform 
         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
@@ -360,7 +174,6 @@ const Sidebar: React.FC<{ currentPage: Page, onNavigate: (page: Page) => void }>
         w-[250px] flex flex-col justify-between text-white shadow-2xl transition-transform duration-300 ease-in-out min-h-screen
       `} style={{ backgroundColor: PRIMARY_COLOR }}>
         
-        {/* Tombol Tutup untuk Mobile */}
         <button
           className="lg:hidden absolute top-4 right-4 text-white hover:text-yellow-400 z-50"
           onClick={() => setIsSidebarOpen(false)}
@@ -370,7 +183,6 @@ const Sidebar: React.FC<{ currentPage: Page, onNavigate: (page: Page) => void }>
 
         <div>
           <div className="p-6 flex items-center space-x-2 border-b border-white/10">
-            {/* Logo Placeholder */}
             <div className="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 text-white font-bold text-sm transform rotate-12">
               <div className="w-4 h-4 bg-white rounded-sm transform -rotate-12"></div>
             </div>
@@ -415,15 +227,12 @@ const Header: React.FC<{ currentPage: Page }> = ({ currentPage }) => {
         DASHBOARD / {path}
       </div>
       <div className="text-lg font-semibold sm:hidden">{title}</div>
-      {/* Profile Icon Placeholder */}
       <div className="w-10 h-10 rounded-full bg-green-700 text-white flex items-center justify-center font-bold text-lg cursor-pointer shadow-md">
         M
       </div>
     </header>
   );
 };
-
-// --- 3. KOMPONEN DATA & PAGINASI ---
 
 const CardStats: React.FC<{ title: string, count: number, color: string, icon: React.ElementType, detail: string, onClick: () => void }> = ({ title, count, color, icon: Icon, detail, onClick }) => (
   <div onClick={onClick} className={`shadow-xl rounded-xl overflow-hidden min-w-[280px] flex-1 min-h-40 cursor-pointer transition-transform hover:scale-[1.02]`} style={{ backgroundColor: color }}>
@@ -440,7 +249,6 @@ const CardStats: React.FC<{ title: string, count: number, color: string, icon: R
   </div>
 );
 
-// Komponen Pagination Reusable
 const Pagination: React.FC<{ totalPages: number, currentPage: number, onPageChange: (page: number) => void }> = ({ totalPages, currentPage, onPageChange }) => {
   const pages = useMemo(() => {
     const p = [];
@@ -448,9 +256,9 @@ const Pagination: React.FC<{ totalPages: number, currentPage: number, onPageChan
       for (let i = 1; i <= totalPages; i++) p.push(i);
     } else {
       p.push(1);
-      if (currentPage > 3) p.push(-1); // ...
+      if (currentPage > 3) p.push(-1);
       if (currentPage > 2 && currentPage < totalPages - 1) p.push(currentPage);
-      if (currentPage < totalPages - 2) p.push(-1); // ...
+      if (currentPage < totalPages - 2) p.push(-1);
       p.push(totalPages);
     }
     return p.filter((v, i, a) => v !== -1 || a[i - 1] !== -1);
@@ -487,169 +295,114 @@ const Pagination: React.FC<{ totalPages: number, currentPage: number, onPageChan
   );
 };
 
-
 // ====================================================================
-// C. KOMPONEN HALAMAN (Page Components)
+// C. FUNGSI API SEDERHANA (Simple API Functions)
 // ====================================================================
 
-// --- 1. LOGIN PAGE ---
-
-const LoginPage: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
-  const [email, setEmail] = useState('admin');
-  const [password, setPassword] = useState('admin123');
-  const [error, setError] = useState('');
-
-  const handleLogin = () => {
-    const validEmail = 'admin';
-    const validPassword = 'admin123';
-
-    setError(''); 
-
-    if (email === validEmail && password === validPassword) {
-      onLogin(); 
-    } else {
-      setError('ID/Email atau Password salah. (Hint: admin / admin123)');
+const fetchDataFromAPI = async (endpoint: string) => {
+  try {
+    console.log(`Mengambil data dari: ${API_BASE}/${endpoint}`);
+    const response = await fetch(`${API_BASE}/${endpoint}`);
+    
+    if (!response.ok) {
+      console.error(`Error HTTP! status: ${response.status}`);
+      return [];
     }
-  };
-
-  return (
-    <div className="flex flex-col min-h-screen font-sans" style={{ backgroundColor: LIGHT_BACKGROUND }}>
-      <header className="flex items-center p-4 shadow-lg text-white" style={{ backgroundColor: PRIMARY_COLOR }}>
-        {/* Logo Placeholder */}
-        <div className="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 text-white font-bold text-sm transform rotate-12">
-            <div className="w-4 h-4 bg-white rounded-sm transform -rotate-12"></div>
-          </div>
-        <h1 className="text-xl sm:text-2xl font-bold ml-2">ADMIN DASHBOARD</h1>
-      </header>
-      <main className="flex grow items-center justify-center p-4">
-        <div className="p-8 w-full max-w-sm rounded-2xl shadow-2xl" style={{ backgroundColor: PRIMARY_COLOR }}>
-          <h2 className="text-3xl italic font-serif text-white text-center mb-8">Login</h2>
-          <div className="space-y-6">
-            <div>
-              <label className="block text-white mb-2 font-medium">ID atau Email</label>
-              <input 
-                type="text" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                // FIX: Tambahkan suppressHydrationWarning untuk mengabaikan atribut injeksi eksternal (seperti fdprocessedid)
-                suppressHydrationWarning={true}
-                className="w-full p-3 rounded-lg border-2 border-transparent focus:border-blue-500 focus:ring-0 focus:outline-none text-gray-800 bg-white"
-                placeholder="admin"
-              />
-            </div>
-            <div>
-              <label className="block text-white mb-2 font-medium">Password</label>
-              <input 
-                type="password" 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                // FIX: Tambahkan suppressHydrationWarning
-                suppressHydrationWarning={true}
-                className="w-full p-3 rounded-lg border-2 border-transparent focus:border-blue-500 focus:ring-0 focus:outline-none text-gray-800 bg-white"
-                placeholder="admin123"
-              />
-            </div>
-            {error && (
-                <div className="p-3 bg-red-500 text-white text-sm font-medium rounded-lg shadow-md text-center">
-                    {error}
-                </div>
-            )}
-            <button
-              onClick={handleLogin}
-              // FIX: Tambahkan suppressHydrationWarning
-              suppressHydrationWarning={true}
-              className="w-full py-3 mt-4 rounded-lg font-bold text-lg text-gray-800 shadow-xl transition-all hover:brightness-110"
-              style={{ backgroundColor: '#ffae00' }} // Warna orange pada contoh
-            >
-              Login
-            </button>
-          </div>
-        </div>
-      </main>
-    </div>
-  );
+    
+    const data = await response.json();
+    console.log(`Data diterima dari ${endpoint}:`, data);
+    
+    if (Array.isArray(data)) {
+      return data;
+    }
+    
+    if (data && data.data && Array.isArray(data.data)) {
+      return data.data;
+    }
+    
+    console.error('Format data tidak dikenali:', data);
+    return [];
+  } catch (error) {
+    console.error(`Error mengambil ${endpoint}:`, error);
+    return [];
+  }
 };
 
-// --- 2. DASHBOARD HOME ---
-const DashboardHome: React.FC<{ onNavigate: (page: Page) => void }> = ({ onNavigate }) => {
-  const totalAnggota = MOCK_ANGGOTA.length;
-  const totalKepengurusan = MOCK_PENGURUSAN.length;
-  const totalDivisi = MOCK_DIVISI.length;
-
-  return (
-    <div className="p-4 sm:p-8 space-y-8 min-h-[calc(100vh-69px)] bg-white rounded-xl shadow-xl">
-      <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6">Dashboard Admin Web CODE124</h2>
-      
-      {/* Kartu Statistik */}
-      <div className="flex flex-wrap gap-4 sm:gap-6 justify-center sm:justify-start">
-        <CardStats 
-          title="Kepengurusan" 
-          count={totalKepengurusan} 
-          color="#f59e0b" // Orange-500
-          icon={Briefcase} 
-          detail="Lihat Detail"
-          onClick={() => onNavigate('kepengurusan')}
-        />
-        <CardStats 
-          title="Divisi" 
-          count={totalDivisi} 
-          color="#34d399" // Green-400
-          icon={List} 
-          detail="Lihat Detail"
-          onClick={() => onNavigate('divisi')}
-        />
-        <CardStats 
-          title="Anggota" 
-          count={totalAnggota} 
-          color="#059669" // Emerald-600
-          icon={Users} 
-          detail="Lihat Detail"
-          onClick={() => onNavigate('anggota')}
-        />
-      </div>
-
-      {/* Grafik - Dibuat dengan Tailwind CSS sebagai pengganti recharts */}
-      <div className="bg-white p-4 sm:p-6 rounded-xl shadow-lg mt-8 h-96 w-full max-w-full lg:max-w-xl">
-        <h3 className="text-lg font-semibold text-gray-800 mb-6">Jumlah Anggota per Kepengurusan</h3>
-        <div className="h-full flex flex-col justify-end">
-            <div className="h-4/5 flex items-end justify-around border-b border-gray-300 pb-2">
-                {DASHBOARD_DATA.map((item, index) => (
-                    <div key={index} className="flex flex-col items-center h-full justify-end w-1/4 group">
-                        <div className={`w-2/3 bg-indigo-600 rounded-t-lg transition-all duration-500 ease-in-out ${item.height} shadow-lg hover:bg-indigo-700 relative`}>
-                            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-8 bg-gray-700 text-white text-xs px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
-                                {item.count} Anggota
-                            </div>
-                        </div>
-                        <p className="text-xs text-gray-600 mt-2 text-center w-full">{item.name.split(' ')[0]}</p>
-                    </div>
-                ))}
-            </div>
-            <div className="flex justify-around text-xs text-gray-500 pt-2">
-                {DASHBOARD_DATA.map((item, index) => (
-                    <p key={index} className="w-1/4 text-center">{item.name.split(' ').slice(1).join(' ')}</p>
-                ))}
-            </div>
-        </div>
-      </div>
-    </div>
-  );
+const saveDataToAPI = async (endpoint: string, data: any, id?: number) => {
+  try {
+    const url = id ? `${API_BASE}/${endpoint}/${id}` : `${API_BASE}/${endpoint}`;
+    const method = id ? 'PUT' : 'POST';
+    
+    console.log(`Menyimpan ke: ${url}`, data);
+    
+    const response = await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const result = await response.json();
+    console.log('Data berhasil disimpan:', result);
+    return result;
+  } catch (error) {
+    console.error(`Error menyimpan ${endpoint}:`, error);
+    throw error;
+  }
 };
 
-// --- 3. KEPENGURUSAN (Term) ---
+const deleteDataFromAPI = async (endpoint: string, id: number) => {
+  try {
+    console.log(`Menghapus dari: ${API_BASE}/${endpoint}/${id}`);
+    const response = await fetch(`${API_BASE}/${endpoint}/${id}`, {
+      method: 'DELETE',
+    });
+    
+    return response.ok;
+  } catch (error) {
+    console.error(`Error menghapus ${endpoint}/${id}:`, error);
+    return false;
+  }
+};
+
+// ====================================================================
+// D. KOMPONEN KEPENGURUSAN DENGAN API (Data Dasar)
+// ====================================================================
 
 const KepengurusanAdmin: React.FC = () => {
-  const [data, setData] = useState<Pengurus[]>(MOCK_PENGURUSAN);
+  const [data, setData] = useState<Kepengurusan[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [editingItem, setEditingItem] = useState<Pengurus | null>(null);
+  const [editingItem, setEditingItem] = useState<Kepengurusan | null>(null);
   const [itemToDeleteId, setItemToDeleteId] = useState<number | null>(null);
   const [tempTahun, setTempTahun] = useState('');
   const [tempNama, setTempNama] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
-  const handleEdit = (item: Pengurus) => {
+  useEffect(() => {
+    loadKepengurusan();
+  }, []);
+
+  const loadKepengurusan = async () => {
+    setIsLoading(true);
+    try {
+      const kepengurusanData = await fetchDataFromAPI('kepengurusan');
+      console.log('Data kepengurusan yang akan ditampilkan:', kepengurusanData);
+      setData(kepengurusanData);
+    } catch (error) {
+      console.error('Gagal memuat data kepengurusan:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleEdit = (item: Kepengurusan) => {
     setEditingItem(item);
-    setTempTahun(item.tahun.toString());
-    setTempNama(item.nama);
+    setTempTahun(item.tahun_kerja);
+    setTempNama(item.nama_kepengurusan);
     setIsModalOpen(true);
   };
 
@@ -660,17 +413,31 @@ const KepengurusanAdmin: React.FC = () => {
     setIsModalOpen(true);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!tempNama || !tempTahun) return;
 
-    if (editingItem) {
-      setData(data.map(p => p.id === editingItem.id ? { ...p, tahun: parseInt(tempTahun), nama: tempNama } : p));
-    } else {
-        const newId = Math.max(...data.map(d => d.id)) + 1;
-        const newItem: Pengurus = { id: newId, tahun: parseInt(tempTahun), nama: tempNama };
+    setIsLoading(true);
+    try {
+      const saveData = {
+        tahun_kerja: tempTahun,
+        nama_kepengurusan: tempNama,
+      };
+
+      if (editingItem) {
+        const updated = await saveDataToAPI('kepengurusan', saveData, editingItem.id);
+        setData(data.map(p => p.id === editingItem.id ? updated : p));
+      } else {
+        const newItem = await saveDataToAPI('kepengurusan', saveData);
         setData([...data, newItem]);
+      }
+      
+      handleCloseModal();
+    } catch (error) {
+      console.error('Gagal menyimpan data:', error);
+      alert('Gagal menyimpan data. Silakan coba lagi.');
+    } finally {
+      setIsLoading(false);
     }
-    handleCloseModal();
   };
 
   const handleCloseModal = () => {
@@ -685,15 +452,25 @@ const KepengurusanAdmin: React.FC = () => {
     setIsDeleteModalOpen(true);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     if (itemToDeleteId !== null) {
-      setData(data.filter(p => p.id !== itemToDeleteId));
+      setIsLoading(true);
+      try {
+        const success = await deleteDataFromAPI('kepengurusan', itemToDeleteId);
+        if (success) {
+          setData(data.filter(p => p.id !== itemToDeleteId));
+        }
+      } catch (error) {
+        console.error('Gagal menghapus data:', error);
+        alert('Gagal menghapus data. Silakan coba lagi.');
+      } finally {
+        setIsLoading(false);
+      }
     }
     setIsDeleteModalOpen(false);
     setItemToDeleteId(null);
   };
 
-  // Pagination & Search placeholder
   const itemsPerPage = 10;
   const currentPage = 1;
   const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -702,20 +479,18 @@ const KepengurusanAdmin: React.FC = () => {
     <div className="p-4 sm:p-8 space-y-6">
       <h2 className="text-xl sm:text-2xl font-bold text-gray-800">KEPENGURUSAN</h2>
       
-      {/* Area Kontrol & Tambah Baru */}
       <div className="flex justify-between items-center">
         <button
           onClick={handleAddNew}
           className="flex items-center space-x-2 px-4 py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors shadow-md"
+          disabled={isLoading}
         >
           <Plus className="w-5 h-5" />
           <span>Tambah Baru</span>
         </button>
       </div>
 
-      {/* Kontainer Utama Data */}
       <div className="bg-white p-4 sm:p-6 rounded-xl shadow-lg">
-        {/* Filter/Search Bar */}
         <div className="flex flex-wrap items-center justify-between space-y-4 md:space-y-0 mb-4">
           <div className="relative w-full md:w-1/3">
             <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
@@ -725,44 +500,60 @@ const KepengurusanAdmin: React.FC = () => {
               className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          {/* Placeholder Filter/Sort */}
         </div>
         
-        {/* Tabel Data */}
-        <div className="overflow-x-auto min-h-[300px]">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TAHUN</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NAMA</th>
-                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">ACTION</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {data.map((item) => (
-                <tr key={item.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{item.id}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.tahun}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.nama}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                    <button onClick={() => handleEdit(item)} className="text-blue-600 hover:text-blue-900 mr-3 p-2 rounded-full hover:bg-blue-100"><Edit className="w-5 h-5" /></button>
-                    <button onClick={() => handleDeleteClick(item.id)} className="text-red-600 hover:text-red-900 p-2 rounded-full hover:bg-red-100"><Trash2 className="w-5 h-5" /></button>
-                  </td>
+        {isLoading && (
+          <div className="flex justify-center items-center min-h-[300px]">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+          </div>
+        )}
+        
+        {!isLoading && (
+          <div className="overflow-x-auto min-h-[300px]">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TAHUN</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NAMA</th>
+                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">ACTION</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {data.length === 0 ? (
+                  <tr>
+                    <td colSpan={4} className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                      Tidak ada data kepengurusan
+                    </td>
+                  </tr>
+                ) : (
+                  data.map((item) => (
+                    <tr key={item.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{item.id}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.tahun_kerja}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.nama_kepengurusan}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                        <button onClick={() => handleEdit(item)} className="text-blue-600 hover:text-blue-900 mr-3 p-2 rounded-full hover:bg-blue-100" disabled={isLoading}>
+                          <Edit className="w-5 h-5" />
+                        </button>
+                        <button onClick={() => handleDeleteClick(item.id)} className="text-red-600 hover:text-red-900 p-2 rounded-full hover:bg-red-100" disabled={isLoading}>
+                          <Trash2 className="w-5 h-5" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
         
-        {/* Pagination & Show Entries */}
         <div className="flex flex-col sm:flex-row justify-between items-center mt-6 space-y-4 sm:space-y-0">
           <div className="text-sm text-gray-700">Menampilkan {data.length} entries.</div>
           <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={() => {}} />
         </div>
       </div>
 
-      {/* Pop-up Edit Kepengurusan (Modal) */}
       <CustomModal title={editingItem ? "Edit Kepengurusan" : "Tambah Kepengurusan Baru"} isOpen={isModalOpen} onClose={handleCloseModal}>
         <div className="space-y-4">
           <InputField 
@@ -770,7 +561,7 @@ const KepengurusanAdmin: React.FC = () => {
             value={tempTahun} 
             onChange={setTempTahun} 
             placeholder="2025" 
-            type="number"
+            type="text"
           />
           <InputField 
             label="NAMA" 
@@ -784,6 +575,7 @@ const KepengurusanAdmin: React.FC = () => {
             onClick={handleCloseModal}
             className={`px-6 py-2 rounded-lg text-gray-700 font-semibold transition-colors`}
             style={{ backgroundColor: BUTTON_GREY }}
+            disabled={isLoading}
           >
             Batal
           </button>
@@ -791,14 +583,13 @@ const KepengurusanAdmin: React.FC = () => {
             onClick={handleSave}
             className={`px-6 py-2 rounded-lg text-white font-semibold shadow-md transition-colors`}
             style={{ backgroundColor: BUTTON_BLUE }}
-            disabled={!tempNama || !tempTahun}
+            disabled={!tempNama || !tempTahun || isLoading}
           >
-            {editingItem ? 'Simpan Perubahan' : 'Tambah Data'}
+            {isLoading ? 'Menyimpan...' : editingItem ? 'Simpan Perubahan' : 'Tambah Data'}
           </button>
         </div>
       </CustomModal>
 
-      {/* Modal Konfirmasi Hapus */}
       <ConfirmationModal
         title="Konfirmasi Hapus"
         message={`Apakah Anda yakin ingin menghapus kepengurusan dengan ID ${itemToDeleteId}? Data ini akan hilang secara permanen.`}
@@ -810,45 +601,130 @@ const KepengurusanAdmin: React.FC = () => {
   );
 };
 
-// --- 4. DIVISI ---
+// ====================================================================
+// E. KOMPONEN DIVISI DENGAN API & UPLOADTHING (Data Dasar)
+// ====================================================================
 
 const DivisiAdmin: React.FC = () => {
-  const [data, setData] = useState<Divisi[]>(MOCK_DIVISI);
+  const [data, setData] = useState<Divisi[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<Divisi | null>(null);
   const [itemToDeleteId, setItemToDeleteId] = useState<number | null>(null);
   const [tempNama, setTempNama] = useState('');
+  const [tempFoto, setTempFoto] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  // Gunakan useUploadThing untuk imageUploader
+  const { startUpload, isUploading } = useUploadThing("imageUploader", {
+    onClientUploadComplete: (res) => {
+      if (res && res[0]) {
+        setTempFoto(res[0].url);
+      }
+      setSelectedFile(null);
+      setUploadProgress(0);
+    },
+    onUploadProgress: (progress) => {
+      setUploadProgress(progress);
+    },
+  });
+
+  useEffect(() => {
+    loadDivisi();
+  }, []);
+
+  const loadDivisi = async () => {
+    setIsLoading(true);
+    try {
+      const divisiData = await fetchDataFromAPI('divisi');
+      console.log('Data divisi yang akan ditampilkan:', divisiData);
+      setData(divisiData);
+    } catch (error) {
+      console.error('Gagal memuat data divisi:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleEdit = (item: Divisi) => {
     setEditingItem(item);
-    setTempNama(item.nama);
+    setTempNama(item.nama_divisi);
+    setTempFoto(item.foto_divisi || '');
     setIsModalOpen(true);
   };
   
   const handleAddNew = () => {
     setEditingItem(null);
     setTempNama('');
+    setTempFoto('');
     setIsModalOpen(true);
   };
 
-  const handleSave = () => {
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setSelectedFile(file);
+      
+      // Preview image
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          setTempFoto(event.target.result as string);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSave = async () => {
     if (!tempNama) return;
 
-    if (editingItem) {
-      setData(data.map(d => d.id === editingItem.id ? { ...d, nama: tempNama } : d));
-    } else {
-        const newId = Math.max(...data.map(d => d.id)) + 1;
-        const newItem: Divisi = { id: newId, nama: tempNama };
-        setData([...data, newItem]);
+    setIsLoading(true);
+    try {
+      // Jika ada file yang dipilih, upload dulu
+      let fotoUrl = tempFoto;
+      if (selectedFile) {
+        const uploadResult = await startUpload([selectedFile]);
+        if (uploadResult && uploadResult[0]) {
+          fotoUrl = uploadResult[0].url;
+        }
+      }
+
+      // <-- perbaikan: kirim field sesuai API (nama_divisi)
+      const saveData = { 
+        nama_divisi: tempNama,
+        foto_divisi: fotoUrl ?? null,
+      };
+
+      if (editingItem) {
+        const updated = await saveDataToAPI('divisi', saveData, editingItem.id);
+        // handle kemungkinan response shape { success, data } atau langsung object
+        const updatedItem = updated?.data ?? updated;
+        setData(data.map(d => d.id === editingItem.id ? updatedItem : d));
+      } else {
+        const newItem = await saveDataToAPI('divisi', saveData);
+        const created = newItem?.data ?? newItem;
+        setData([...data, created]);
+      }
+      
+      handleCloseModal();
+    } catch (error) {
+      console.error('Gagal menyimpan data:', error);
+      alert('Gagal menyimpan data. Silakan coba lagi.');
+    } finally {
+      setIsLoading(false);
     }
-    handleCloseModal();
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setEditingItem(null);
     setTempNama('');
+    setTempFoto('');
+    setSelectedFile(null);
+    setUploadProgress(0);
   };
 
   const handleDeleteClick = (id: number) => {
@@ -856,14 +732,24 @@ const DivisiAdmin: React.FC = () => {
     setIsDeleteModalOpen(true);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     if (itemToDeleteId !== null) {
-      setData(data.filter(d => d.id !== itemToDeleteId));
+      setIsLoading(true);
+      try {
+        const success = await deleteDataFromAPI('divisi', itemToDeleteId);
+        if (success) {
+          setData(data.filter(d => d.id !== itemToDeleteId));
+        }
+      } catch (error) {
+        console.error('Gagal menghapus data:', error);
+        alert('Gagal menghapus data. Silakan coba lagi.');
+      } finally {
+        setIsLoading(false);
+      }
     }
     setIsDeleteModalOpen(false);
     setItemToDeleteId(null);
   };
-
 
   const itemsPerPage = 10;
   const currentPage = 1;
@@ -877,6 +763,7 @@ const DivisiAdmin: React.FC = () => {
         <button
           onClick={handleAddNew}
           className="flex items-center space-x-2 px-4 py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors shadow-md"
+          disabled={isLoading}
         >
           <Plus className="w-5 h-5" />
           <span>Tambah Baru</span>
@@ -884,7 +771,6 @@ const DivisiAdmin: React.FC = () => {
       </div>
 
       <div className="bg-white p-4 sm:p-6 rounded-xl shadow-lg">
-        {/* Filter/Search Bar */}
         <div className="flex flex-wrap items-center justify-between space-y-4 md:space-y-0 mb-4">
           <div className="relative w-full md:w-1/3">
             <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
@@ -894,42 +780,74 @@ const DivisiAdmin: React.FC = () => {
               className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          {/* Placeholder Filter/Sort */}
         </div>
 
-        {/* Tabel Data */}
-        <div className="overflow-x-auto min-h-[300px]">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NAMA DIVISI</th>
-                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">ACTION</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {data.map((item) => (
-                <tr key={item.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{item.id}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.nama}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                    <button onClick={() => handleEdit(item)} className="text-blue-600 hover:text-blue-900 mr-3 p-2 rounded-full hover:bg-blue-100"><Edit className="w-5 h-5" /></button>
-                    <button onClick={() => handleDeleteClick(item.id)} className="text-red-600 hover:text-red-900 p-2 rounded-full hover:bg-red-100"><Trash2 className="w-5 h-5" /></button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        {isLoading && (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+          </div>
+        )}
         
-        {/* Pagination & Show Entries */}
+        {!isLoading && (
+          <div className="overflow-x-auto min-h-[300px]">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NAMA DIVISI</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">FOTO</th>
+                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">ACTION</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {data.length === 0 ? (
+                  <tr>
+                    <td colSpan={4} className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                      Tidak ada data divisi
+                    </td>
+                  </tr>
+                ) : (
+                  data.map((item) => (
+                    <tr key={item.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{item.id}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.nama_divisi}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {item.foto_divisi ? (
+                          <div className="w-10 h-10 rounded-full overflow-hidden">
+                            <img 
+                              src={item.foto_divisi} 
+                              alt={item.nama_divisi}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        ) : (
+                          <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+                            <ImageIcon className="w-5 h-5 text-gray-500" />
+                          </div>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                        <button onClick={() => handleEdit(item)} className="text-blue-600 hover:text-blue-900 mr-3 p-2 rounded-full hover:bg-blue-100" disabled={isLoading}>
+                          <Edit className="w-5 h-5" />
+                        </button>
+                        <button onClick={() => handleDeleteClick(item.id)} className="text-red-600 hover:text-red-900 p-2 rounded-full hover:bg-red-100" disabled={isLoading}>
+                          <Trash2 className="w-5 h-5" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+        
         <div className="flex flex-col sm:flex-row justify-between items-center mt-6 space-y-4 sm:space-y-0">
           <div className="text-sm text-gray-700">Menampilkan {data.length} entries.</div>
           <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={() => {}} />
         </div>
       </div>
 
-      {/* Pop-up Edit Divisi (Modal) */}
       <CustomModal title={editingItem ? "Edit Divisi" : "Tambah Divisi Baru"} isOpen={isModalOpen} onClose={handleCloseModal}>
         <div className="space-y-4">
           <InputField 
@@ -938,12 +856,64 @@ const DivisiAdmin: React.FC = () => {
             onChange={setTempNama} 
             placeholder="UI UX DESIGNER" 
           />
+          
+          <div className="mb-4">
+            <label className="block text-gray-700 text-xs font-semibold uppercase mb-1">FOTO DIVISI</label>
+            <div className="space-y-3">
+              {tempFoto && (
+                <div className="flex justify-center">
+                  <div className="w-32 h-32 rounded-lg overflow-hidden border">
+                    <img 
+                      src={tempFoto} 
+                      alt="Preview"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+              )}
+              
+              <div className="flex items-center justify-center">
+                <label className="cursor-pointer">
+                  <div className="flex items-center space-x-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                    <Upload className="w-4 h-4" />
+                    <span>Pilih Foto</span>
+                  </div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileSelect}
+                    className="hidden"
+                    disabled={isUploading}
+                  />
+                </label>
+              </div>
+              
+              {selectedFile && (
+                <p className="text-sm text-gray-600 text-center">
+                  File: {selectedFile.name}
+                </p>
+              )}
+              
+              {isUploading && (
+                <div className="space-y-2">
+                  <div className="bg-gray-200 rounded-full h-2">
+                    <div
+                      className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${uploadProgress}%` }}
+                    />
+                  </div>
+                  <p className="text-center text-xs text-gray-600">{uploadProgress}%</p>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
         <div className="flex justify-end space-x-3 mt-6">
           <button
             onClick={handleCloseModal}
             className={`px-6 py-2 rounded-lg text-gray-700 font-semibold transition-colors`}
             style={{ backgroundColor: BUTTON_GREY }}
+            disabled={isLoading || isUploading}
           >
             Batal
           </button>
@@ -951,14 +921,13 @@ const DivisiAdmin: React.FC = () => {
             onClick={handleSave}
             className={`px-6 py-2 rounded-lg text-white font-semibold shadow-md transition-colors`}
             style={{ backgroundColor: BUTTON_BLUE }}
-            disabled={!tempNama}
+            disabled={!tempNama || isLoading || isUploading}
           >
-            {editingItem ? 'Simpan Perubahan' : 'Tambah Data'}
+            {isLoading || isUploading ? 'Menyimpan...' : editingItem ? 'Simpan Perubahan' : 'Tambah Data'}
           </button>
         </div>
       </CustomModal>
       
-      {/* Modal Konfirmasi Hapus */}
       <ConfirmationModal
         title="Konfirmasi Hapus"
         message={`Apakah Anda yakin ingin menghapus divisi ini? Data ini akan hilang secara permanen.`}
@@ -970,19 +939,39 @@ const DivisiAdmin: React.FC = () => {
   );
 };
 
-// --- 5. JABATAN (Position) ---
+// ====================================================================
+// F. KOMPONEN JABATAN DENGAN API (Data Dasar)
+// ====================================================================
 
 const JabatanAdmin: React.FC = () => {
-  const [data, setData] = useState<Jabatan[]>(MOCK_JABATAN);
+  const [data, setData] = useState<Jabatan[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<Jabatan | null>(null);
   const [itemToDeleteId, setItemToDeleteId] = useState<number | null>(null);
   const [tempNama, setTempNama] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    loadJabatan();
+  }, []);
+
+  const loadJabatan = async () => {
+    setIsLoading(true);
+    try {
+      const jabatanData = await fetchDataFromAPI('jabatan');
+      console.log('Data jabatan yang akan ditampilkan:', jabatanData);
+      setData(jabatanData);
+    } catch (error) {
+      console.error('Gagal memuat data jabatan:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleEdit = (item: Jabatan) => {
     setEditingItem(item);
-    setTempNama(item.nama);
+    setTempNama(item.nama_jabatan);
     setIsModalOpen(true);
   };
   
@@ -992,17 +981,28 @@ const JabatanAdmin: React.FC = () => {
     setIsModalOpen(true);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!tempNama) return;
 
-    if (editingItem) {
-      setData(data.map(j => j.id === editingItem.id ? { ...j, nama: tempNama } : j));
-    } else {
-        const newId = Math.max(...data.map(d => d.id)) + 1;
-        const newItem: Jabatan = { id: newId, nama: tempNama };
+    setIsLoading(true);
+    try {
+      const saveData = { nama_jabatan: tempNama };
+
+      if (editingItem) {
+        const updated = await saveDataToAPI('jabatan', saveData, editingItem.id);
+        setData(data.map(j => j.id === editingItem.id ? updated : j));
+      } else {
+        const newItem = await saveDataToAPI('jabatan', saveData);
         setData([...data, newItem]);
+      }
+      
+      handleCloseModal();
+    } catch (error) {
+      console.error('Gagal menyimpan data:', error);
+      alert('Gagal menyimpan data. Silakan coba lagi.');
+    } finally {
+      setIsLoading(false);
     }
-    handleCloseModal();
   };
 
   const handleCloseModal = () => {
@@ -1016,9 +1016,20 @@ const JabatanAdmin: React.FC = () => {
     setIsDeleteModalOpen(true);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     if (itemToDeleteId !== null) {
-      setData(data.filter(j => j.id !== itemToDeleteId));
+      setIsLoading(true);
+      try {
+        const success = await deleteDataFromAPI('jabatan', itemToDeleteId);
+        if (success) {
+          setData(data.filter(j => j.id !== itemToDeleteId));
+        }
+      } catch (error) {
+        console.error('Gagal menghapus data:', error);
+        alert('Gagal menghapus data. Silakan coba lagi.');
+      } finally {
+        setIsLoading(false);
+      }
     }
     setIsDeleteModalOpen(false);
     setItemToDeleteId(null);
@@ -1036,6 +1047,7 @@ const JabatanAdmin: React.FC = () => {
         <button
           onClick={handleAddNew}
           className="flex items-center space-x-2 px-4 py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors shadow-md"
+          disabled={isLoading}
         >
           <Plus className="w-5 h-5" />
           <span>Tambah Baru</span>
@@ -1043,7 +1055,6 @@ const JabatanAdmin: React.FC = () => {
       </div>
 
       <div className="bg-white p-4 sm:p-6 rounded-xl shadow-lg">
-        {/* Filter/Search Bar */}
         <div className="flex flex-wrap items-center justify-between space-y-4 md:space-y-0 mb-4">
           <div className="relative w-full md:w-1/3">
             <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
@@ -1053,42 +1064,58 @@ const JabatanAdmin: React.FC = () => {
               className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          {/* Placeholder Filter/Sort */}
         </div>
 
-        {/* Tabel Data */}
-        <div className="overflow-x-auto min-h-[300px]">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NAMA JABATAN</th>
-                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">ACTION</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {data.map((item) => (
-                <tr key={item.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{item.id}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.nama}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                    <button onClick={() => handleEdit(item)} className="text-blue-600 hover:text-blue-900 mr-3 p-2 rounded-full hover:bg-blue-100"><Edit className="w-5 h-5" /></button>
-                    <button onClick={() => handleDeleteClick(item.id)} className="text-red-600 hover:text-red-900 p-2 rounded-full hover:bg-red-100"><Trash2 className="w-5 h-5" /></button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        {isLoading && (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+          </div>
+        )}
         
-        {/* Pagination & Show Entries */}
+        {!isLoading && (
+          <div className="overflow-x-auto min-h-[300px]">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NAMA JABATAN</th>
+                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">ACTION</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {data.length === 0 ? (
+                  <tr>
+                    <td colSpan={3} className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                      Tidak ada data jabatan
+                    </td>
+                  </tr>
+                ) : (
+                  data.map((item) => (
+                    <tr key={item.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{item.id}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.nama_jabatan}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                        <button onClick={() => handleEdit(item)} className="text-blue-600 hover:text-blue-900 mr-3 p-2 rounded-full hover:bg-blue-100" disabled={isLoading}>
+                          <Edit className="w-5 h-5" />
+                        </button>
+                        <button onClick={() => handleDeleteClick(item.id)} className="text-red-600 hover:text-red-900 p-2 rounded-full hover:bg-red-100" disabled={isLoading}>
+                          <Trash2 className="w-5 h-5" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+        
         <div className="flex flex-col sm:flex-row justify-between items-center mt-6 space-y-4 sm:space-y-0">
           <div className="text-sm text-gray-700">Menampilkan {data.length} entries.</div>
           <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={() => {}} />
         </div>
       </div>
 
-      {/* Pop-up Edit Jabatan (Modal) */}
       <CustomModal title={editingItem ? "Edit Jabatan" : "Tambah Jabatan Baru"} isOpen={isModalOpen} onClose={handleCloseModal}>
         <div className="space-y-4">
           <InputField 
@@ -1103,6 +1130,7 @@ const JabatanAdmin: React.FC = () => {
             onClick={handleCloseModal}
             className={`px-6 py-2 rounded-lg text-gray-700 font-semibold transition-colors`}
             style={{ backgroundColor: BUTTON_GREY }}
+            disabled={isLoading}
           >
             Batal
           </button>
@@ -1110,14 +1138,13 @@ const JabatanAdmin: React.FC = () => {
             onClick={handleSave}
             className={`px-6 py-2 rounded-lg text-white font-semibold shadow-md transition-colors`}
             style={{ backgroundColor: BUTTON_BLUE }}
-            disabled={!tempNama}
+            disabled={!tempNama || isLoading}
           >
-            {editingItem ? 'Simpan Perubahan' : 'Tambah Data'}
+            {isLoading ? 'Menyimpan...' : editingItem ? 'Simpan Perubahan' : 'Tambah Data'}
           </button>
         </div>
       </CustomModal>
       
-      {/* Modal Konfirmasi Hapus */}
       <ConfirmationModal
         title="Konfirmasi Hapus"
         message={`Apakah Anda yakin ingin menghapus jabatan ini? Data ini akan hilang secara permanen.`}
@@ -1129,95 +1156,147 @@ const JabatanAdmin: React.FC = () => {
   );
 };
 
-// --- 6. ANGGOTA (Member) ---
+// ====================================================================
+// G. KOMPONEN ANGGOTA DENGAN API & UPLOADTHING (Data Dasar)
+// ====================================================================
 
 const AnggotaAdmin: React.FC = () => {
-  const [data, setData] = useState<Anggota[]>(MOCK_ANGGOTA);
+  const [data, setData] = useState<Anggota[]>([]);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false); // Modal untuk Tambah/Edit
+  const [isModalOpen, setIsModalOpen] = useState(false);
   
   const [selectedAnggota, setSelectedAnggota] = useState<Anggota | null>(null);
   const [anggotaToDeleteId, setAnggotaToDeleteId] = useState<number | null>(null);
   const [editingAnggota, setEditingAnggota] = useState<Anggota | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   
   // Form State
   const EMPTY_ANGGOTA_FORM = useMemo(() => ({
-    nama: '',
-    kepengurusan: MOCK_PENGURUSAN[0]?.nama || '',
-    jabatan: MOCK_JABATAN[0]?.nama || '',
-    divisi: MOCK_DIVISI[0]?.nama || '',
+    nama_anggota: '',
     linkedin: '',
     instagram: '',
+    foto_anggota: '',
   }), []);
 
-  const [tempAnggota, setTempAnggota] = useState<typeof EMPTY_ANGGOTA_FORM | null>(null);
+  const [tempAnggota, setTempAnggota] = useState<any>(EMPTY_ANGGOTA_FORM);
 
-  const handleToggleExpand = (id: number) => {
-    setData(data.map(a => a.id === id ? { ...a, isExpanded: !a.isExpanded } : a));
+  // Gunakan useUploadThing untuk avatarUploader
+  const { startUpload, isUploading } = useUploadThing("avatarUploader", {
+    onClientUploadComplete: (res) => {
+      if (res && res[0]) {
+        setTempAnggota({...tempAnggota, foto_anggota: res[0].url});
+      }
+      setSelectedFile(null);
+      setUploadProgress(0);
+    },
+    onUploadProgress: (progress) => {
+      setUploadProgress(progress);
+    },
+  });
+
+  useEffect(() => {
+    loadAnggota();
+  }, []);
+
+  const loadAnggota = async () => {
+    setIsLoading(true);
+    try {
+      const anggotaData = await fetchDataFromAPI('anggota');
+      console.log('Data anggota yang akan ditampilkan:', anggotaData);
+      setData(anggotaData);
+    } catch (error) {
+      console.error('Gagal memuat data anggota:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setSelectedFile(file);
+      
+      // Preview image
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          setTempAnggota({...tempAnggota, foto_anggota: event.target.result as string});
+        }
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   // --- Handlers Modal Tambah/Edit ---
   const handleEdit = (anggota: Anggota) => {
     setEditingAnggota(anggota);
     setTempAnggota({
-      nama: anggota.nama,
-      kepengurusan: anggota.kepengurusan,
-      jabatan: anggota.jabatan,
-      divisi: anggota.divisi,
-      linkedin: anggota.details.linkedin,
-      instagram: anggota.details.instagram,
+      nama_anggota: anggota.nama_anggota,
+      linkedin: anggota.linkedin || '',
+      instagram: anggota.instagram || '',
+      foto_anggota: anggota.foto_anggota || '',
     });
     setIsModalOpen(true);
-    setIsProfileModalOpen(false); // Tutup modal profil jika terbuka
+    setIsProfileModalOpen(false);
+    setSelectedFile(null);
   };
 
   const handleAddNew = () => {
     setEditingAnggota(null);
     setTempAnggota(EMPTY_ANGGOTA_FORM);
+    setSelectedFile(null);
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setEditingAnggota(null);
-    setTempAnggota(null);
+    setTempAnggota(EMPTY_ANGGOTA_FORM);
+    setSelectedFile(null);
+    setUploadProgress(0);
   };
 
-  const handleSave = () => {
-    if (!tempAnggota || !tempAnggota.nama || !tempAnggota.kepengurusan || !tempAnggota.jabatan || !tempAnggota.divisi) return;
+  const handleSave = async () => {
+    if (!tempAnggota.nama_anggota) return;
 
-    if (editingAnggota) {
-      setData(data.map(a => a.id === editingAnggota.id ? {
-        ...a,
-        nama: tempAnggota.nama,
-        kepengurusan: tempAnggota.kepengurusan,
-        jabatan: tempAnggota.jabatan,
-        divisi: tempAnggota.divisi,
-        details: {
-          linkedin: tempAnggota.linkedin,
-          instagram: tempAnggota.instagram,
+    setIsLoading(true);
+    try {
+      let fotoUrl = tempAnggota.foto_anggota;
+      
+      // Jika ada file yang dipilih, upload dulu
+      if (selectedFile) {
+        const uploadResult = await startUpload([selectedFile]);
+        if (uploadResult && uploadResult[0]) {
+          fotoUrl = uploadResult[0].url;
         }
-      } : a));
-    } else {
-      const newId = Math.max(...data.map(d => d.id), 0) + 1; // ID baru
-      const newItem: Anggota = {
-        id: newId,
-        nama: tempAnggota.nama,
-        kepengurusan: tempAnggota.kepengurusan,
-        jabatan: tempAnggota.jabatan,
-        divisi: tempAnggota.divisi,
-        isExpanded: false,
-        details: {
-          linkedin: tempAnggota.linkedin,
-          instagram: tempAnggota.instagram,
-        }
+      }
+
+      const saveData = {
+        nama_anggota: tempAnggota.nama_anggota,
+        linkedin: tempAnggota.linkedin,
+        instagram: tempAnggota.instagram,
+        foto_anggota: fotoUrl,
       };
-      setData([...data, newItem]);
+
+      if (editingAnggota) {
+        const updated = await saveDataToAPI('anggota', saveData, editingAnggota.id);
+        setData(data.map(a => a.id === editingAnggota.id ? updated : a));
+      } else {
+        const newItem = await saveDataToAPI('anggota', saveData);
+        setData([...data, newItem]);
+      }
+      
+      handleCloseModal();
+    } catch (error) {
+      console.error('Gagal menyimpan data:', error);
+      alert('Gagal menyimpan data. Silakan coba lagi.');
+    } finally {
+      setIsLoading(false);
     }
-    handleCloseModal();
   };
-  // --- Akhir Handlers Modal Tambah/Edit ---
 
   const handleViewProfile = (anggota: Anggota) => {
     setSelectedAnggota(anggota);
@@ -1234,33 +1313,24 @@ const AnggotaAdmin: React.FC = () => {
     setIsDeleteModalOpen(true);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     if (anggotaToDeleteId !== null) {
-      setData(data.filter(a => a.id !== anggotaToDeleteId));
+      setIsLoading(true);
+      try {
+        const success = await deleteDataFromAPI('anggota', anggotaToDeleteId);
+        if (success) {
+          setData(data.filter(a => a.id !== anggotaToDeleteId));
+        }
+      } catch (error) {
+        console.error('Gagal menghapus data:', error);
+        alert('Gagal menghapus data. Silakan coba lagi.');
+      } finally {
+        setIsLoading(false);
+      }
     }
     setIsDeleteModalOpen(false);
     setAnggotaToDeleteId(null);
   };
-
-  // Komponen Select Reusable lokal untuk AnggotaAdmin
-  const SelectField: React.FC<{ label: string, value: string, onChange: (v: string) => void, options: string[] }> = ({ label, value, onChange, options }) => (
-    <div className="mb-4">
-      <label className="block text-gray-700 text-xs font-semibold uppercase mb-1">{label}</label>
-      <div className="relative">
-        <select
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="appearance-none w-full p-3 border border-gray-300 rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          {options.map((opt) => (
-            <option key={opt} value={opt}>{opt}</option>
-          ))}
-        </select>
-        <ChevronDown className="w-4 h-4 text-gray-500 absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
-      </div>
-    </div>
-  );
-
 
   const itemsPerPage = 10;
   const currentPage = 1;
@@ -1268,12 +1338,13 @@ const AnggotaAdmin: React.FC = () => {
 
   return (
     <div className="p-4 sm:p-8 space-y-6">
-      <h2 className="text-xl sm:text-2xl font-bold text-gray-800">ANGGOTA</h2>
+      <h2 className="text-xl sm:text-2xl font-bold text-gray-800">ANGGOTA (DATA DASAR)</h2>
       
       <div className="flex justify-between items-center">
         <button
           onClick={handleAddNew}
           className="flex items-center space-x-2 px-4 py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors shadow-md"
+          disabled={isLoading}
         >
           <Plus className="w-5 h-5" />
           <span>Tambah Baru</span>
@@ -1281,7 +1352,6 @@ const AnggotaAdmin: React.FC = () => {
       </div>
 
       <div className="bg-white p-4 sm:p-6 rounded-xl shadow-lg">
-        {/* Filter/Search Bar */}
         <div className="flex flex-wrap items-center justify-between space-y-4 md:space-y-0 mb-4">
           <div className="relative w-full md:w-1/3">
             <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
@@ -1291,136 +1361,165 @@ const AnggotaAdmin: React.FC = () => {
               className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          {/* Placeholder Filter/Sort */}
         </div>
 
-        {/* Tabel Data */}
-        <div className="overflow-x-auto min-h-[300px]">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NAMA ANGGOTA</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">KEPENGURUSAN</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">JABATAN</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">DIVISI</th>
-                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">ACTION</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {data.map((item) => (
-                <React.Fragment key={item.id}>
-                  {/* Main Row */}
-                  <tr className="bg-white border-b border-gray-100 hover:bg-gray-100 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 flex items-center">
-                      <button 
-                        onClick={() => handleToggleExpand(item.id)}
-                        className="mr-2 p-1 rounded-full hover:bg-gray-200 transition-colors"
-                      >
-                        {item.isExpanded ? <ChevronUp className="w-4 h-4 text-gray-600" /> : <ChevronDown className="w-4 h-4 text-gray-600" />}
-                      </button>
-                      {item.id}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm">
-                      <span 
-                        className="text-blue-600 cursor-pointer hover:underline flex items-center"
-                        onClick={() => handleViewProfile(item)}
-                      >
-                        <Eye className='w-4 h-4 mr-2 hidden sm:inline'/> {item.nama}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.kepengurusan}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.jabatan}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.divisi}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                      <button onClick={() => handleEdit(item)} className="text-blue-600 hover:text-blue-900 mr-3 p-2 rounded-full hover:bg-blue-200"><Edit className="w-5 h-5" /></button>
-                      <button onClick={() => handleDeleteClick(item.id)} className="text-red-600 hover:text-red-900 p-2 rounded-full hover:bg-red-200"><Trash2 className="w-5 h-5" /></button>
+        {isLoading && (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+          </div>
+        )}
+        
+        {!isLoading && (
+          <div className="overflow-x-auto min-h-[300px]">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NAMA ANGGOTA</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">FOTO</th>
+                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">ACTION</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {data.length === 0 ? (
+                  <tr>
+                    <td colSpan={4} className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                      Tidak ada data anggota
                     </td>
                   </tr>
-
-                  {/* Expanded Detail Rows (Dummy Data) */}
-                  {item.isExpanded && (
-                    <>
-                      <tr className="bg-gray-50 border-b border-gray-100 transition-colors">
-                          <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900 pl-14 text-right">2024:</td>
-                          <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500" colSpan={2}>KOMUNITAS WEB</td>
-                          <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500">STAFF</td>
-                          <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500" colSpan={2}>FRONT END DEVELOPER</td>
-                      </tr>
-                      <tr className="bg-gray-50 border-b border-gray-100 transition-colors">
-                          <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900 pl-14 text-right">2023:</td>
-                          <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500" colSpan={2}>GENERASI SATU</td>
-                          <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500">MENTOR</td>
-                          <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500" colSpan={2}>BACK END DEVELOPER</td>
-                      </tr>
-                    </>
-                  )}
-                </React.Fragment>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                ) : (
+                  data.map((item) => (
+                    <tr key={item.id} className="bg-white border-b border-gray-100 hover:bg-gray-100 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {item.id}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        <span 
+                          className="text-blue-600 cursor-pointer hover:underline flex items-center"
+                          onClick={() => handleViewProfile(item)}
+                        >
+                          <Eye className='w-4 h-4 mr-2 hidden sm:inline'/> {item.nama_anggota}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {item.foto_anggota ? (
+                          <div className="w-10 h-10 rounded-full overflow-hidden">
+                            <img 
+                              src={item.foto_anggota} 
+                              alt={item.nama_anggota}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        ) : (
+                          <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+                            <User className="w-5 h-5 text-gray-500" />
+                          </div>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                        <button onClick={() => handleEdit(item)} className="text-blue-600 hover:text-blue-900 mr-3 p-2 rounded-full hover:bg-blue-200" disabled={isLoading}>
+                          <Edit className="w-5 h-5" />
+                        </button>
+                        <button onClick={() => handleDeleteClick(item.id)} className="text-red-600 hover:text-red-900 p-2 rounded-full hover:bg-red-200" disabled={isLoading}>
+                          <Trash2 className="w-5 h-5" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
         
-        {/* Pagination & Show Entries */}
         <div className="flex flex-col sm:flex-row justify-between items-center mt-6 space-y-4 sm:space-y-0">
           <div className="text-sm text-gray-700">Menampilkan {data.length} entries.</div>
           <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={() => {}} />
         </div>
       </div>
       
-      {/* Pop-up Edit/Tambah Anggota (Modal) */}
       <CustomModal title={editingAnggota ? "Edit Anggota" : "Tambah Anggota Baru"} isOpen={isModalOpen} onClose={handleCloseModal}>
-        {tempAnggota && (
-          <div className="space-y-4">
-            <InputField 
-              label="NAMA LENGKAP" 
-              value={tempAnggota.nama} 
-              onChange={(v) => setTempAnggota({...tempAnggota, nama: v})} 
-              placeholder="Nama Anggota" 
-            />
-            
-            <SelectField
-              label="KEPENGURUSAN"
-              value={tempAnggota.kepengurusan}
-              onChange={(v) => setTempAnggota({...tempAnggota, kepengurusan: v})}
-              options={MOCK_PENGURUSAN.map(p => p.nama)}
-            />
-            
-            <SelectField
-              label="JABATAN"
-              value={tempAnggota.jabatan}
-              onChange={(v) => setTempAnggota({...tempAnggota, jabatan: v})}
-              options={MOCK_JABATAN.map(j => j.nama)}
-            />
-            
-            <SelectField
-              label="DIVISI"
-              value={tempAnggota.divisi}
-              onChange={(v) => setTempAnggota({...tempAnggota, divisi: v})}
-              options={MOCK_DIVISI.map(d => d.nama)}
-            />
-            
-            <InputField 
-              label="LINKEDIN (URL)" 
-              value={tempAnggota.linkedin} 
-              onChange={(v) => setTempAnggota({...tempAnggota, linkedin: v})} 
-              placeholder="https://linkedin.com/in/..." 
-            />
-            
-            <InputField 
-              label="INSTAGRAM (URL)" 
-              value={tempAnggota.instagram} 
-              onChange={(v) => setTempAnggota({...tempAnggota, instagram: v})} 
-              placeholder="https://instagram.com/..." 
-            />
-            
+        <div className="space-y-4">
+          <div className="mb-4">
+            <label className="block text-gray-700 text-xs font-semibold uppercase mb-1">FOTO ANGGOTA</label>
+            <div className="space-y-3">
+              {tempAnggota.foto_anggota && (
+                <div className="flex justify-center">
+                  <div className="w-32 h-32 rounded-full overflow-hidden border">
+                    <img 
+                      src={tempAnggota.foto_anggota} 
+                      alt="Preview"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+              )}
+              
+              <div className="flex items-center justify-center">
+                <label className="cursor-pointer">
+                  <div className="flex items-center space-x-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                    <Upload className="w-4 h-4" />
+                    <span>Pilih Foto</span>
+                  </div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileSelect}
+                    className="hidden"
+                    disabled={isUploading}
+                  />
+                </label>
+              </div>
+              
+              {selectedFile && (
+                <p className="text-sm text-gray-600 text-center">
+                  File: {selectedFile.name}
+                </p>
+              )}
+              
+              {isUploading && (
+                <div className="space-y-2">
+                  <div className="bg-gray-200 rounded-full h-2">
+                    <div
+                      className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${uploadProgress}%` }}
+                    />
+                  </div>
+                  <p className="text-center text-xs text-gray-600">{uploadProgress}%</p>
+                </div>
+              )}
+            </div>
           </div>
-        )}
+          
+          <InputField 
+            label="NAMA LENGKAP" 
+            value={tempAnggota.nama_anggota} 
+            onChange={(v) => setTempAnggota({...tempAnggota, nama_anggota: v})} 
+            placeholder="Nama Anggota" 
+          />
+          
+          <InputField 
+            label="LINKEDIN (URL)" 
+            value={tempAnggota.linkedin} 
+            onChange={(v) => setTempAnggota({...tempAnggota, linkedin: v})} 
+            placeholder="https://linkedin.com/in/..." 
+            type="url"
+          />
+          
+          <InputField 
+            label="INSTAGRAM (URL)" 
+            value={tempAnggota.instagram} 
+            onChange={(v) => setTempAnggota({...tempAnggota, instagram: v})} 
+            placeholder="https://instagram.com/..." 
+            type="url"
+          />
+        </div>
         <div className="flex justify-end space-x-3 mt-6">
           <button
             onClick={handleCloseModal}
             className={`px-6 py-2 rounded-lg text-gray-700 font-semibold transition-colors`}
             style={{ backgroundColor: BUTTON_GREY }}
+            disabled={isLoading || isUploading}
           >
             Batal
           </button>
@@ -1428,41 +1527,47 @@ const AnggotaAdmin: React.FC = () => {
             onClick={handleSave}
             className={`px-6 py-2 rounded-lg text-white font-semibold shadow-md transition-colors`}
             style={{ backgroundColor: BUTTON_BLUE }}
-            disabled={!tempAnggota || !tempAnggota.nama}
+            disabled={!tempAnggota.nama_anggota || isLoading || isUploading}
           >
-            {editingAnggota ? 'Simpan Perubahan' : 'Tambah Anggota'}
+            {isLoading || isUploading ? 'Menyimpan...' : editingAnggota ? 'Simpan Perubahan' : 'Tambah Anggota'}
           </button>
         </div>
       </CustomModal>
 
-
-      {/* Pop-up Profile Anggota (Modal) */}
       <CustomModal title="Detail Profil Anggota" isOpen={isProfileModalOpen} onClose={handleCloseProfileModal}>
         {selectedAnggota && (
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 items-start">
             <div className="flex flex-col items-center justify-center p-4 bg-gray-100 rounded-lg w-full sm:w-1/3 min-h-[150px]">
-              <User className="w-12 h-12 text-gray-500" />
+              {selectedAnggota.foto_anggota ? (
+                <img 
+                  src={selectedAnggota.foto_anggota} 
+                  alt={selectedAnggota.nama_anggota}
+                  className="w-24 h-24 rounded-full object-cover"
+                />
+              ) : (
+                <User className="w-12 h-12 text-gray-500" />
+              )}
             </div>
             <div className="flex-1 space-y-1">
-              <h3 className="text-xl font-bold text-gray-900">{selectedAnggota.nama}</h3>
+              <h3 className="text-xl font-bold text-gray-900">{selectedAnggota.nama_anggota}</h3>
               <p className="text-sm text-gray-500 mb-4">ID Anggota: {selectedAnggota.id}</p>
               
               <div className="text-sm space-y-2 pt-2">
                 <p className="font-semibold text-gray-700">Linkedin</p>
-                <a href={selectedAnggota.details.linkedin} target="_blank" className="text-blue-600 wrap-break-word hover:underline flex items-center">
-                    <Link className='w-4 h-4 mr-1'/> {selectedAnggota.details.linkedin}
+                <a href={selectedAnggota.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-600 wrap-break-word hover:underline flex items-center">
+                    <Link className='w-4 h-4 mr-1'/> {selectedAnggota.linkedin || 'Tidak ada'}
                 </a>
                 
                 <p className="font-semibold text-gray-700 pt-2">Instagram</p>
-                <a href={selectedAnggota.details.instagram} target="_blank" className="text-blue-600 wrap-break-word hover:underline flex items-center">
-                    <Link className='w-4 h-4 mr-1'/> {selectedAnggota.details.instagram}
+                <a href={selectedAnggota.instagram} target="_blank" rel="noopener noreferrer" className="text-blue-600 wrap-break-word hover:underline flex items-center">
+                    <Link className='w-4 h-4 mr-1'/> {selectedAnggota.instagram || 'Tidak ada'}
                 </a>
               </div>
 
               <div className="pt-4 flex space-x-3">
                 <button 
                   title="Edit" 
-                  onClick={() => handleEdit(selectedAnggota)} // <-- Diperbarui
+                  onClick={() => handleEdit(selectedAnggota)}
                   className="text-blue-600 hover:text-blue-800 p-2 rounded-full hover:bg-blue-100 transition-colors"
                 >
                   <Edit className="w-5 h-5" />
@@ -1480,10 +1585,9 @@ const AnggotaAdmin: React.FC = () => {
         )}
       </CustomModal>
       
-      {/* Modal Konfirmasi Hapus */}
       <ConfirmationModal
         title="Konfirmasi Hapus Anggota"
-        message={`Apakah Anda yakin ingin menghapus anggota ${anggotaToDeleteId ? MOCK_ANGGOTA.find(a => a.id === anggotaToDeleteId)?.nama : 'ini'}? Data ini akan hilang secara permanen.`}
+        message={`Apakah Anda yakin ingin menghapus anggota ini? Data ini akan hilang secara permanen.`}
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
         onConfirm={handleConfirmDelete}
@@ -1492,18 +1596,434 @@ const AnggotaAdmin: React.FC = () => {
   );
 };
 
+// ====================================================================
+// H. KOMPONEN DETAIL ANGGOTA (JOIN TABLE)
+// ====================================================================
+
+const DetailAnggotaAdmin: React.FC = () => {
+  const [data, setData] = useState<DetailAnggota[]>([]);
+  const [anggotaList, setAnggotaList] = useState<Anggota[]>([]);
+  const [kepengurusanList, setKepengurusanList] = useState<Kepengurusan[]>([]);
+  const [divisiList, setDivisiList] = useState<Divisi[]>([]);
+  const [jabatanList, setJabatanList] = useState<Jabatan[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [editingItem, setEditingItem] = useState<DetailAnggota | null>(null);
+  const [itemToDeleteId, setItemToDeleteId] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  // Form State
+  const EMPTY_FORM = useMemo(() => ({
+    anggota_id: '',
+    kepengurusan_id: '',
+    divisi_id: '',
+    jabatan_id: '',
+  }), []);
+
+  const [tempDetail, setTempDetail] = useState<any>(EMPTY_FORM);
+
+  useEffect(() => {
+    loadAllData();
+  }, []);
+
+  const loadAllData = async () => {
+    setIsLoading(true);
+    try {
+      const [detailData, anggotaData, kepengurusanData, divisiData, jabatanData] = await Promise.all([
+        fetchDataFromAPI('detail_anggota'),
+        fetchDataFromAPI('anggota'),
+        fetchDataFromAPI('kepengurusan'),
+        fetchDataFromAPI('divisi'),
+        fetchDataFromAPI('jabatan'),
+      ]);
+      
+      setData(detailData);
+      setAnggotaList(anggotaData);
+      setKepengurusanList(kepengurusanData);
+      setDivisiList(divisiData);
+      setJabatanList(jabatanData);
+    } catch (error) {
+      console.error('Gagal memuat data:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // --- Handlers Modal Tambah/Edit ---
+  const handleEdit = (item: DetailAnggota) => {
+    setEditingItem(item);
+    setTempDetail({
+      anggota_id: item.anggota_id.toString(),
+      kepengurusan_id: item.kepengurusan_id.toString(),
+      divisi_id: item.divisi_id.toString(),
+      jabatan_id: item.jabatan_id.toString(),
+    });
+    setIsModalOpen(true);
+  };
+
+  const handleAddNew = () => {
+    setEditingItem(null);
+    setTempDetail(EMPTY_FORM);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingItem(null);
+    setTempDetail(EMPTY_FORM);
+  };
+
+  const handleSave = async () => {
+    if (!tempDetail.anggota_id || !tempDetail.kepengurusan_id || !tempDetail.divisi_id || !tempDetail.jabatan_id) {
+      alert('Harap isi semua field!');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const saveData = {
+        anggota_id: parseInt(tempDetail.anggota_id),
+        kepengurusan_id: parseInt(tempDetail.kepengurusan_id),
+        divisi_id: parseInt(tempDetail.divisi_id),
+        jabatan_id: parseInt(tempDetail.jabatan_id),
+      };
+
+      if (editingItem) {
+        const updated = await saveDataToAPI('detail_anggota', saveData, editingItem.id);
+        setData(data.map(d => d.id === editingItem.id ? updated : d));
+      } else {
+        const newItem = await saveDataToAPI('detail_anggota', saveData);
+        setData([...data, newItem]);
+      }
+      
+      handleCloseModal();
+    } catch (error) {
+      console.error('Gagal menyimpan data:', error);
+      alert('Gagal menyimpan data. Silakan coba lagi.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  const handleDeleteClick = (id: number) => {
+    setItemToDeleteId(id);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (itemToDeleteId !== null) {
+      setIsLoading(true);
+      try {
+        const success = await deleteDataFromAPI('detail_anggota', itemToDeleteId);
+        if (success) {
+          setData(data.filter(d => d.id !== itemToDeleteId));
+        }
+      } catch (error) {
+        console.error('Gagal menghapus data:', error);
+        alert('Gagal menghapus data. Silakan coba lagi.');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    setIsDeleteModalOpen(false);
+    setItemToDeleteId(null);
+  };
+
+  const SelectField: React.FC<{ 
+    label: string, 
+    value: string, 
+    onChange: (v: string) => void, 
+    options: { id: number, name: string }[] 
+  }> = ({ label, value, onChange, options }) => (
+    <div className="mb-4">
+      <label className="block text-gray-700 text-xs font-semibold uppercase mb-1">{label}</label>
+      <div className="relative">
+        <select
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="appearance-none w-full p-3 border border-gray-300 rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">Pilih {label}</option>
+          {options.map((opt) => (
+            <option key={opt.id} value={opt.id}>{opt.name}</option>
+          ))}
+        </select>
+        <ChevronDown className="w-4 h-4 text-gray-500 absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
+      </div>
+    </div>
+  );
+
+  const itemsPerPage = 10;
+  const currentPage =  1;
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+
+  return (
+    <div className="p-4 sm:p-8 space-y-6">
+      <h2 className="text-xl sm:text-2xl font-bold text-gray-800">DETAIL ANGGOTA (JOIN DATA)</h2>
+      
+      <div className="flex justify-between items-center">
+        <button
+          onClick={handleAddNew}
+          className="flex items-center space-x-2 px-4 py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors shadow-md"
+          disabled={isLoading}
+        >
+          <Plus className="w-5 h-5" />
+          <span>Tambah Baru</span>
+        </button>
+      </div>
+
+      <div className="bg-white p-4 sm:p-6 rounded-xl shadow-lg">
+        <div className="flex flex-wrap items-center justify-between space-y-4 md:space-y-0 mb-4">
+          <div className="relative w-full md:w-1/3">
+            <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
+            <input
+              type="text"
+              placeholder="Search Detail Anggota..."
+              className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+        </div>
+
+        {isLoading && (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+          </div>
+        )}
+        
+        {!isLoading && (
+          <div className="overflow-x-auto min-h-[300px]">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NAMA ANGGOTA</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">KEPENGURUSAN</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">JABATAN</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">DIVISI</th>
+                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">ACTION</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {data.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                      Tidak ada data detail anggota
+                    </td>
+                  </tr>
+                ) : (
+                  data.map((item) => (
+                    <tr key={item.id} className="bg-white border-b border-gray-100 hover:bg-gray-100 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {item.id}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        {item.anggota_nama || 'N/A'}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {item.kepengurusan_nama || 'N/A'}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {item.jabatan_nama || 'N/A'}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {item.divisi_nama || 'N/A'}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                        <button onClick={() => handleEdit(item)} className="text-blue-600 hover:text-blue-900 mr-3 p-2 rounded-full hover:bg-blue-200" disabled={isLoading}>
+                          <Edit className="w-5 h-5" />
+                        </button>
+                        <button onClick={() => handleDeleteClick(item.id)} className="text-red-600 hover:text-red-900 p-2 rounded-full hover:bg-red-200" disabled={isLoading}>
+                          <Trash2 className="w-5 h-5" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+        
+        <div className="flex flex-col sm:flex-row justify-between items-center mt-6 space-y-4 sm:space-y-0">
+          <div className="text-sm text-gray-700">Menampilkan {data.length} entries.</div>
+          <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={() => {}} />
+        </div>
+      </div>
+      
+      <CustomModal title={editingItem ? "Edit Detail Anggota" : "Tambah Detail Anggota Baru"} isOpen={isModalOpen} onClose={handleCloseModal}>
+        <div className="space-y-4">
+          <SelectField
+            label="ANGGOTA"
+            value={tempDetail.anggota_id}
+            onChange={(v) => setTempDetail({...tempDetail, anggota_id: v})}
+            options={anggotaList.map(a => ({ id: a.id, name: a.nama_anggota }))}
+          />
+          
+          <SelectField
+            label="KEPENGURUSAN"
+            value={tempDetail.kepengurusan_id}
+            onChange={(v) => setTempDetail({...tempDetail, kepengurusan_id: v})}
+            options={kepengurusanList.map(p => ({ id: p.id, name: p.nama_kepengurusan }))}
+          />
+          
+          <SelectField
+            label="JABATAN"
+            value={tempDetail.jabatan_id}
+            onChange={(v) => setTempDetail({...tempDetail, jabatan_id: v})}
+            options={jabatanList.map(j => ({ id: j.id, name: j.nama_jabatan }))}
+          />
+          
+          <SelectField
+            label="DIVISI"
+            value={tempDetail.divisi_id}
+            onChange={(v) => setTempDetail({...tempDetail, divisi_id: v})}
+            options={divisiList.map(d => ({ id: d.id, name: d.nama_divisi }))}
+          />
+        </div>
+        <div className="flex justify-end space-x-3 mt-6">
+          <button
+            onClick={handleCloseModal}
+            className={`px-6 py-2 rounded-lg text-gray-700 font-semibold transition-colors`}
+            style={{ backgroundColor: BUTTON_GREY }}
+            disabled={isLoading}
+          >
+            Batal
+          </button>
+          <button
+            onClick={handleSave}
+            className={`px-6 py-2 rounded-lg text-white font-semibold shadow-md transition-colors`}
+            style={{ backgroundColor: BUTTON_BLUE }}
+            disabled={!tempDetail.anggota_id || !tempDetail.kepengurusan_id || !tempDetail.divisi_id || !tempDetail.jabatan_id || isLoading}
+          >
+            {isLoading ? 'Menyimpan...' : editingItem ? 'Simpan Perubahan' : 'Tambah Data'}
+          </button>
+        </div>
+      </CustomModal>
+      
+      <ConfirmationModal
+        title="Konfirmasi Hapus Detail"
+        message={`Apakah Anda yakin ingin menghapus detail anggota ini? Data ini akan hilang secara permanen.`}
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={handleConfirmDelete}
+      />
+    </div>
+  );
+};
 
 // ====================================================================
-// D. KOMPONEN APLIKASI UTAMA (Main Application Component)
+// I. DASHBOARD HOME
+// ====================================================================
+
+const DashboardHome: React.FC<{ onNavigate: (page: Page) => void }> = ({ onNavigate }) => {
+  const [stats, setStats] = useState({
+    totalAnggota: 0,
+    totalDivisi: 0,
+    totalKepengurusan: 0,
+    totalJabatan: 0,
+    totalDetailAnggota: 0,
+  });
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    loadStats();
+  }, []);
+
+  const loadStats = async () => {
+    setIsLoading(true);
+    try {
+      const [anggota, divisi, kepengurusan, jabatan, detailAnggota] = await Promise.all([
+        fetchDataFromAPI('anggota'),
+        fetchDataFromAPI('divisi'),
+        fetchDataFromAPI('kepengurusan'),
+        fetchDataFromAPI('jabatan'),
+        fetchDataFromAPI('detail_anggota'),
+      ]);
+      
+      setStats({
+        totalAnggota: anggota.length,
+        totalDivisi: divisi.length,
+        totalKepengurusan: kepengurusan.length,
+        totalJabatan: jabatan.length,
+        totalDetailAnggota: detailAnggota.length,
+      });
+    } catch (error) {
+      console.error('Gagal memuat statistik:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="p-4 sm:p-8 space-y-8 min-h-[calc(100vh-69px)] bg-white rounded-xl shadow-xl">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6">Dashboard Admin Web CODE124</h2>
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-4 sm:p-8 space-y-8 min-h-[calc(100vh-69px)] bg-white rounded-xl shadow-xl">
+      <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6">Dashboard Admin Web CODE124</h2>
+      
+      <div className="flex flex-wrap gap-4 sm:gap-6 justify-center sm:justify-start">
+        <CardStats 
+          title="Kepengurusan" 
+          count={stats.totalKepengurusan}
+          color="#f59e0b"
+          icon={Briefcase} 
+          detail="Lihat Detail"
+          onClick={() => onNavigate('kepengurusan')}
+        />
+        <CardStats 
+          title="Divisi" 
+          count={stats.totalDivisi}
+          color="#34d399"
+          icon={List} 
+          detail="Lihat Detail"
+          onClick={() => onNavigate('divisi')}
+        />
+        <CardStats 
+          title="Anggota" 
+          count={stats.totalAnggota}
+          color="#059669"
+          icon={Users} 
+          detail="Lihat Detail"
+          onClick={() => onNavigate('anggota')}
+        />
+        <CardStats 
+          title="Jabatan" 
+          count={stats.totalJabatan}
+          color="#3b82f6"
+          icon={Briefcase} 
+          detail="Lihat Detail"
+          onClick={() => onNavigate('jabatan')}
+        />
+        <CardStats 
+          title="Detail Anggota" 
+          count={stats.totalDetailAnggota}
+          color="#8b5cf6"
+          icon={User} 
+          detail="Lihat Detail"
+          onClick={() => onNavigate('detail_anggota')}
+        />
+      </div>
+    </div>
+  );
+};
+
+// ====================================================================
+// J. KOMPONEN UTAMA
 // ====================================================================
 
 export const App: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState<Page>('login'); 
+  const [currentPage, setCurrentPage] = useState<Page>('home'); 
 
   const renderContent = () => {
     switch (currentPage) {
-      // case 'login':
-      //   return <LoginPage onLogin={() => setCurrentPage('home')} />;
       case 'home':
         return <DashboardHome onNavigate={setCurrentPage} />;
       case 'kepengurusan':
@@ -1514,14 +2034,12 @@ export const App: React.FC = () => {
         return <AnggotaAdmin />;
       case 'jabatan':
         return <JabatanAdmin />;
+      case 'detail_anggota':
+        return <DetailAnggotaAdmin />;
       default:
         return <DashboardHome onNavigate={setCurrentPage} />;
     }
   };
-
-  if (currentPage === 'login') {
-    return renderContent();
-  }
 
   return (
     <div className="flex min-h-screen font-sans" style={{ backgroundColor: LIGHT_BACKGROUND }}>

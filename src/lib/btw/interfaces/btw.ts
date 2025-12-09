@@ -1,5 +1,6 @@
 // Data setiap anggota
 export interface Anggota {
+  id?: number | string;
   nama_anggota: string;
   foto_anggota: string | null;
   linkedin: string | null;
@@ -9,6 +10,7 @@ export interface Anggota {
 
 // Data divisi (sesuai output endpoint / route.ts)
 export interface Divisi {
+  id?: number | string;
   nama_divisi: string;
   foto_divisi?: string | null;
   anggota: Anggota[]; // sudah berupa array anggota sesuai route
@@ -37,4 +39,27 @@ export interface KepengurusanResponse {
 export interface YearsResponse {
   success: boolean;
   years: string[];
+}
+
+/* DTO untuk API input */
+export interface CreateAnggotaInput {
+  nama_anggota: string;
+  foto_anggota?: string | null; // URL dari uploader
+  linkedin?: string | null;
+  instagram?: string | null;
+}
+export interface UpdateAnggotaInput {
+  nama_anggota?: string;
+  foto_anggota?: string | null;
+  linkedin?: string | null;
+  instagram?: string | null;
+}
+
+export interface CreateDivisiInput {
+  nama_divisi: string;
+  foto_divisi?: string | null;
+}
+export interface UpdateDivisiInput {
+  nama_divisi?: string;
+  foto_divisi?: string | null;
 }

@@ -3,18 +3,19 @@ import { createUploadthing, type FileRouter } from "uploadthing/next";
 const f = createUploadthing();
 
 export const ourFileRouter = {
-  // Image uploader untuk foto anggota (NO AUTH)
-  imageUploader: f({ 
-    image: { 
-      maxFileSize: "1MB", 
-      maxFileCount: 1 
-    } 
+  imageUploader: f({
+    image: { maxFileSize: "1MB", maxFileCount: 1 },
   })
     .onUploadComplete(async ({ metadata, file }) => {
-      console.log("Upload complete!");
-      console.log("File URL:", file.url);
-      
-      // Return URL ke client
+      console.log("Upload complete!", file.url);
+      return { url: file.url };
+    }),
+  
+  avatarUploader: f({
+    image: { maxFileSize: "1MB", maxFileCount: 1 },
+  })
+    .onUploadComplete(async ({ metadata, file }) => {
+      console.log("Avatar upload complete!", file.url);
       return { url: file.url };
     }),
 } satisfies FileRouter;
