@@ -36,9 +36,9 @@ export default function Team() {
           {/* Desktop: left/right at edges, Mobile: top/bottom */}
           <div className="hidden md:block">
             {/* RIGHT — top of section */}
-            <div className="absolute top-55 -right-28 rotate-90">
+            <div className="absolute top-65 -right-60 rotate-90">
               <p
-                className="text-7xl leading-none whitespace-nowrap text-transparent"
+                className="text-8xl leading-none whitespace-nowrap text-transparent"
                 style={{ WebkitTextStroke: '2px var(--color-primary-400)' }}
               >
                 THE FIRST COMMIT
@@ -46,9 +46,9 @@ export default function Team() {
             </div>
 
             {/* LEFT — bottom of section */}
-            <div className="absolute bottom-55 -left-28 -rotate-90">
+            <div className="absolute bottom-75 -left-60 -rotate-90">
               <p
-                className="text-7xl leading-none whitespace-nowrap text-transparent"
+                className="text-8xl leading-none whitespace-nowrap text-transparent"
                 style={{ WebkitTextStroke: '2px var(--color-primary-400)' }}
               >
                 THE FIRST COMMIT
@@ -60,7 +60,7 @@ export default function Team() {
           <div className="flex h-full w-full flex-col justify-between md:hidden">
             <div className="flex justify-center">
               <p
-                className="text-5xl text-transparent"
+                className="text-7xl text-transparent"
                 style={{ WebkitTextStroke: '2px var(--color-primary-400)' }}
               >
                 THE FIRST COMMIT
@@ -68,7 +68,7 @@ export default function Team() {
             </div>
             <div className="flex justify-center">
               <p
-                className="text-5xl text-transparent"
+                className="text-7xl text-transparent"
                 style={{ WebkitTextStroke: '2px var(--color-primary-400)' }}
               >
                 THE FIRST COMMIT
