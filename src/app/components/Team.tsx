@@ -8,13 +8,13 @@ import Inti from '@/components/ui/Inti';
 export default function Team() {
   return (
     <>
-      <section className="text-secondary-400 flex min-h-[70vh] w-full flex-col items-center justify-center gap-8 px-6">
+      <section className="text-secondary-400 relative flex min-h-[70vh] w-full flex-col items-center justify-center gap-8 px-6">
+        {/* Title with small line accents */}
         <div className="relative w-fit">
           <h2 className="border-secondary border-b-2 px-5 pb-5 text-center text-5xl">
             MEET OUR TEAM
           </h2>
 
-          {/* Left — Bigger + Squished */}
           <Image
             src="/assets/images/line_brow_black.webp"
             alt=""
@@ -22,8 +22,6 @@ export default function Team() {
             height={200}
             className="absolute bottom-0 left-0 h-8 w-20 translate-y-[50%] object-contain"
           />
-
-          {/* Right — Bigger + Squished + Flipped */}
           <Image
             src="/assets/images/line_brow_black.webp"
             alt=""
@@ -33,25 +31,54 @@ export default function Team() {
           />
         </div>
 
-        <p className="lg:hidden">Click the photo for details</p>
-
-        <div className="mx-auto flex w-full max-w-6xl flex-wrap justify-center gap-12">
-          {/* {BOARD.map(({ nama, image, ig, linkedIn, role }) => (
-            <div key={nama} className="flex flex-col items-center gap-4">
-              <FlipCard
-                key={nama}
-                size={1}
-                imageSrc={image}
-                ig={ig}
-                linkedIn={linkedIn}
-              />
-
-              <p className="border-b-secondary w-full border-b-2 text-center text-3xl">
-                {nama}
+        {/* Full-section decorative text */}
+        <div className="pointer-events-none absolute inset-7">
+          {/* Desktop: left/right at edges, Mobile: top/bottom */}
+          <div className="hidden md:block">
+            {/* RIGHT — top of section */}
+            <div className="absolute top-55 -right-28 rotate-90">
+              <p
+                className="text-7xl leading-none whitespace-nowrap text-transparent"
+                style={{ WebkitTextStroke: '2px var(--color-primary-400)' }}
+              >
+                THE FIRST COMMIT
               </p>
-              <p className="text-center text-xl">{role}</p>
             </div>
-          ))}*/}
+
+            {/* LEFT — bottom of section */}
+            <div className="absolute bottom-55 -left-28 -rotate-90">
+              <p
+                className="text-7xl leading-none whitespace-nowrap text-transparent"
+                style={{ WebkitTextStroke: '2px var(--color-primary-400)' }}
+              >
+                THE FIRST COMMIT
+              </p>
+            </div>
+          </div>
+
+          {/* Mobile: top/bottom centered */}
+          <div className="flex h-full w-full flex-col justify-between md:hidden">
+            <div className="flex justify-center">
+              <p
+                className="text-5xl text-transparent"
+                style={{ WebkitTextStroke: '2px var(--color-primary-400)' }}
+              >
+                THE FIRST COMMIT
+              </p>
+            </div>
+            <div className="flex justify-center">
+              <p
+                className="text-5xl text-transparent"
+                style={{ WebkitTextStroke: '2px var(--color-primary-400)' }}
+              >
+                THE FIRST COMMIT
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="mx-auto flex w-full max-w-6xl flex-wrap justify-center gap-12">
           <Inti />
         </div>
       </section>
@@ -66,6 +93,17 @@ export default function Team() {
 
             {/* CARD */}
             <div className="border-secondary-300 relative w-full max-w-4xl overflow-hidden border-[1.25em]">
+              <div className="absolute top-[37%] -right-30 z-1 rotate-90 lg:-right-40">
+                <p
+                  className="text-secondary-400 text-5xl leading-none whitespace-nowrap lg:text-6xl"
+                  style={{
+                    WebkitTextStroke: '2px var(--color-secondary-300)',
+                  }}
+                >
+                  THE FIRST COMMIT
+                </p>
+              </div>
+
               <div className="relative h-[430px] w-full">
                 <Image src={image} alt={nama} fill className="object-cover" />
               </div>
@@ -79,7 +117,7 @@ export default function Team() {
 
                 <Link
                   href="/"
-                  className="border-secondary-300 bg-primary-600 pointer-events-auto relative border-[0.4em] px-4 py-1 text-center text-2xl font-bold transition-colors duration-300 hover:bg-white"
+                  className="border-secondary-300 hover:text-secondary-300 bg-primary-600 text-secondary-400 hover:bg-secondary-400 pointer-events-auto relative border-[0.4em] px-4 py-1 text-center text-2xl font-bold transition-colors duration-300"
                 >
                   SELENGKAPNYA
                 </Link>
