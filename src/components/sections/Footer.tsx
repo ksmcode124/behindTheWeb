@@ -1,11 +1,11 @@
 import React from 'react';
 import { SocialMediaLink } from '@/components/ui/SocialMediaLink';
 import Logo from '@/components/ui/Logo';
-import { SOCIAL_MEDIA } from '../data/socialMedia';
+import { SOCIAL_MEDIA } from '../socialMedia';
 
 export default function Footer() {
   return (
-    <footer className="bg-secondary-300 font-body text-secondary-400 relative min-h-[350px] w-full shadow-[inset_7px_10px_20px_rgba(0,0,0,0.7)]">
+    <footer className="bg-secondary-300 font-body text-secondary-400 relative min-h-[350px] w-full shadow-[inset_0_0_60px_rgba(0,0,0,1)]">
       <div className="mx-auto flex max-w-7xl flex-col items-start justify-start px-6 pt-10 pb-10 lg:flex-row lg:justify-between lg:pt-[65px] lg:pr-8 lg:pb-0 lg:pl-[140px]">
         {/* Kolom Kiri: Logo dan Deskripsi */}
         <div className="flex w-full flex-col space-y-4 lg:w-1/2 lg:space-y-6">

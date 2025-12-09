@@ -42,17 +42,19 @@ export function SocialMediaLink({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex w-fit items-center transition-colors duration-300 ${className}`}
+      className={`text-secondary-300 inline-flex w-fit items-center transition-colors duration-300 ${className}`}
     >
       {/* Icon circle */}
       <span
-        className={`flex items-center justify-center rounded-full transition-all duration-300 ease-in-out ${iconClassName} ${withBorder ? 'border border-white' : 'border border-transparent'} hover:text-secondary-400 hover:border-white hover:bg-white`}
+        className={`flex items-center justify-center rounded-full transition-all duration-300 ease-in-out ${iconClassName} ${withBorder ? 'border border-white text-white' : 'bg-primary-600 hover:bg-secondary-300 hover:text-primary-600 border border-transparent shadow-[4px_4px_0_var(--color-secondary-300)] hover:shadow-[4px_4px_0_var(--color-primary-600)]'}`}
       >
         <IconComponent size={iconSize} />
       </span>
 
       {/* Optional label */}
-      {label && <span className="ml-10 font-semibold">{label}</span>}
+      {label && (
+        <span className="text-secondary-400 ml-10 font-semibold">{label}</span>
+      )}
     </Link>
   );
 }

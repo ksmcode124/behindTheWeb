@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { FlipCard } from '../../components/ui/FlipCard';
 import Wrapper from '../../components/ui/Wrapper';
 import { DEVELOPERS, BOARD } from './data/team';
+import Inti from '@/components/ui/Inti';
 
 export default function Team() {
   return (
@@ -15,7 +16,7 @@ export default function Team() {
         <p className="lg:hidden">Click the photo for details</p>
 
         <div className="mx-auto flex w-full max-w-6xl flex-wrap justify-center gap-12">
-          {BOARD.map(({ nama, image, ig, linkedIn, role }) => (
+          {/* {BOARD.map(({ nama, image, ig, linkedIn, role }) => (
             <div key={nama} className="flex flex-col items-center gap-4">
               <FlipCard
                 key={nama}
@@ -30,7 +31,8 @@ export default function Team() {
               </p>
               <p className="text-center text-xl">{role}</p>
             </div>
-          ))}
+          ))}*/}
+          <Inti />
         </div>
       </section>
 
@@ -59,7 +61,7 @@ export default function Team() {
                   href="/"
                   className="border-secondary-300 bg-primary-600 pointer-events-auto relative border-[0.4em] px-4 py-1 text-center text-2xl font-bold transition-colors duration-300 hover:bg-white"
                 >
-                  SELENGKAPNYAbg-secondary-400
+                  SELENGKAPNYA
                 </Link>
               </div>
             </div>

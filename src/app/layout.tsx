@@ -28,6 +28,7 @@ export default function RootLayout({
       <body
         className={`${anton.variable} ${poppins.className} font-display antialiased`}
       >
+        {/* <div className="bg-contains bg-top-center pointer-events-none absolute top-0 left-0 z-20 h-[1000vw] min-w-screen bg-[url('/assets/images/Texture.png')]" /> */}
         {children}
       </body>
     </html>

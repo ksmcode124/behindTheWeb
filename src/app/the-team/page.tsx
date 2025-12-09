@@ -8,7 +8,7 @@ import Wrapper from '../../components/ui/Wrapper';
 import Carousel from '../../components/ui/Carousel';
 import ShadowedText from '../../components/ui/ShadowedText';
 import { SocialMediaLink } from '@/components/ui/SocialMediaLink';
-import { SOCIAL_MEDIA } from '../../components/data/socialMedia';
+import { SOCIAL_MEDIA } from '../../components/socialMedia';
 
 import { TEAM } from '../components/data/team';
 
@@ -56,10 +56,7 @@ export default function TheTeam() {
                     key={social.platform}
                     platform={social.platform}
                     href={social.href}
-                    iconClassName="
-              h-12 w-12 bg-primary-600 text-2xl text-secondary-400
-              shadow-[4px_4px_0px_#393C45]
-            "
+                    iconClassName="h-11 w-11 rounded-full text-black flex items-center justify-center transition-all duration-300 sm:h-12 sm:w-12 md:h-13 md:w-13"
                   />
                 ))}
               </div>

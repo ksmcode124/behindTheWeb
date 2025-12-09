@@ -8,7 +8,7 @@ import Wrapper from '../../components/ui/Wrapper';
 import Carousel from '../../components/ui/Carousel';
 import ShadowedText from '../../components/ui/ShadowedText';
 import { SocialMediaLink } from '../../components/ui/SocialMediaLink';
-import { SOCIAL_MEDIA } from '../../components/data/socialMedia';
+import { SOCIAL_MEDIA } from '../../components/socialMedia';
 import { TEAM, BOARD } from '../components/data/team';
 import { FlipCard } from '../../components/ui/FlipCard';
 
@@ -46,12 +46,12 @@ export default function TheTeam() {
           {/* Title Section */}
           <div className="relative z-20 flex w-full max-w-7xl flex-col items-start gap-2 px-4 text-center sm:gap-3 md:gap-4 lg:px-8 lg:text-left xl:px-12">
             <ShadowedText
-              className="-rotate-1 text-5xl font-bold sm:text-6xl md:-rotate-2 md:text-7xl lg:-rotate-3 lg:text-8xl xl:text-9xl"
+              className="-skew-3 text-5xl font-bold sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl"
               strokeWidth="1.5px sm:2px md:2.5px lg:2.87px"
             >
               CODE124
             </ShadowedText>
-            <h1 className="text-secondary-400 -rotate-1 text-4xl leading-tight sm:text-5xl md:-rotate-2 md:text-6xl lg:-rotate-3 lg:text-8xl xl:text-[9rem] 2xl:text-[10rem]">
+            <h1 className="text-secondary-400 -skew-3 text-4xl leading-tight sm:text-5xl md:text-6xl lg:text-8xl xl:text-[9rem] 2xl:text-[10rem]">
               PREVIOUS MEMBER
             </h1>
           </div>
@@ -63,7 +63,7 @@ export default function TheTeam() {
               <div className="w-full">
                 <ShadowedText
                   as="h2"
-                  className="-rotate-1 text-4xl font-bold sm:text-5xl md:-rotate-2 md:text-6xl"
+                  className="-skew-3 text-4xl font-bold sm:text-5xl md:text-6xl"
                   textShadow="3px 0.5px 0 #FFF9E6"
                   textColor="var(--color-primary-500)"
                   strokeWidth="1px"
@@ -73,13 +73,13 @@ export default function TheTeam() {
               </div>
 
               {/* Social Links */}
-              <div className="border-primary-500 flex w-full max-w-[300px] -rotate-1 flex-wrap gap-3 border-t-2 pt-3 sm:max-w-[360px] sm:gap-4 sm:pt-4 md:max-w-[420px] md:-rotate-2">
+              <div className="border-primary-500 flex w-full max-w-[300px] -skew-3 flex-wrap gap-3 border-t-2 pt-3 sm:max-w-[360px] sm:gap-4 sm:pt-4 md:max-w-[420px]">
                 {SOCIAL_MEDIA.map((social) => (
                   <SocialMediaLink
                     key={social.platform}
                     platform={social.platform}
                     href={social.href}
-                    iconClassName="h-11 w-11 bg-primary-600 text-xl text-secondary-400 shadow-[3px_3px_0px_#393C45] transition-all duration-200 hover:translate-y-[-2px] hover:shadow-[5px_5px_0px_#393C45] sm:h-12 sm:w-12 sm:text-2xl md:h-13 md:w-13"
+                    className="text-secondary-300"
                   />
                 ))}
               </div>
@@ -102,7 +102,7 @@ export default function TheTeam() {
                 <div className="flex w-full items-center justify-between gap-6">
                   <ShadowedText
                     as="h2"
-                    className="-rotate-3 text-4xl font-bold whitespace-nowrap xl:text-5xl 2xl:text-6xl"
+                    className="-skew-3 text-4xl font-bold whitespace-nowrap xl:text-5xl 2xl:text-6xl"
                     textShadow="3px 3px 0 #FFF9E6"
                     textColor="var(--color-primary-500)"
                     strokeWidth="1.5px"
@@ -160,17 +160,17 @@ export default function TheTeam() {
             {
               title: 'UI/UX Designer',
               members: TEAM,
-              rotation: '-rotate-2 sm:-rotate-3 md:-rotate-4',
+              rotation: '-skew-3',
             },
             {
               title: 'Frontend Developer',
               members: TEAM,
-              rotation: 'rotate-2 sm:rotate-3 md:rotate-4',
+              rotation: '-skew-3',
             },
             {
               title: 'Backend Developer',
               members: TEAM,
-              rotation: '-rotate-1 sm:-rotate-2 md:-rotate-3',
+              rotation: '-skew-3',
             },
           ].map((section, index) => (
             <div

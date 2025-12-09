@@ -17,7 +17,7 @@ export default function Wrapper({ children, className = '' }: WrapperProps) {
       {/* DECORATION WRAPPER — prevents overflow */}
       <div className="pointer-events-none absolute inset-0 hidden overflow-hidden lg:block">
         {/* LEFT COLUMN */}
-        <div className="absolute top-0 left-0 flex h-full flex-col justify-around opacity-20">
+        <div className="absolute top-0 left-0 flex h-full flex-col justify-around opacity-70">
           {[1, 2].map((i) => (
             <div key={i} className="flex flex-col items-start gap-[30vh]">
               <Image
@@ -39,7 +39,7 @@ export default function Wrapper({ children, className = '' }: WrapperProps) {
         </div>
 
         {/* RIGHT COLUMN */}
-        <div className="absolute top-0 right-0 flex h-full flex-col items-end justify-around opacity-20">
+        <div className="absolute top-0 right-0 flex h-full flex-col items-end justify-around opacity-70">
           {[1, 2].map((i) => (
             <div key={i} className="flex flex-col items-end gap-[30vh]">
               <Image

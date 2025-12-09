@@ -51,7 +51,7 @@ export default function InfiniteCarousel({
               alt={img.alt ?? ''}
               width={400}
               height={300}
-              className="rounded-md"
+              className="rounded-md object-contain"
             />
           </div>
         ))}

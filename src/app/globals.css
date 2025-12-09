@@ -33,7 +33,7 @@
 .animate-carousel {
   animation-name: carousel;
   animation-timing-function: linear;
-  animation-iteration-count: infinite;
+  animation-iteration-count:infinite;
 }
 
 /* @keyframes lineFloat {
@@ -54,3 +54,36 @@
 .animate-lineFloat {
   animation: lineFloat 6s ease-in-out infinite;
 } */
+
+/* .social-icon {
+  --icon-bg: var(--colors-primary-600);
+  --icon-shadow: var(--colors-secondary-300);
+
+  background-color: var(--icon-bg);
+  box-shadow: 3px 3px 0px var(--icon-shadow);
+
+  transition:
+    background-color 250ms ease,
+    box-shadow 250ms ease;
+}
+
+.social-icon:hover {
+  --icon-bg: var(--colors-secondary-300);
+  --icon-shadow: var(--colors-primary-600);
+} */
+
+.tape-element {
+  box-shadow:
+    2em 0 0 #0000,
+    4em 0 0 #0000,
+    6em 0 0 var(--color-primary-400),
+    8em 0 0 #0000,
+    10em 0 0 #0000,
+    12em 0 0 var(--color-primary-400),
+    14em 0 0 #0000,
+    16em 0 0 #0000,
+    18em 0 0 var(--color-primary-400),
+    20em 0 0 #0000,
+    22em 0 0 #0000,
+    24em 0 0 var(--color-primary-400),
+}
