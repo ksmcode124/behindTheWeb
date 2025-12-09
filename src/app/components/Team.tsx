@@ -20,14 +20,14 @@ export default function Team() {
             alt=""
             width={200}
             height={200}
-            className="absolute bottom-0 left-0 h-8 w-20 translate-y-[50%] object-contain"
+            className="absolute bottom-0 left-0 h-8 w-20 translate-y-[50%] object-cover object-right"
           />
           <Image
             src="/assets/images/line_brow_black.webp"
             alt=""
             width={200}
             height={200}
-            className="absolute right-0 bottom-0 h-8 w-20 translate-y-[50%] scale-x-[-1] object-contain"
+            className="absolute right-0 bottom-0 h-8 w-20 translate-y-[50%] scale-x-[-1] object-cover object-right"
           />
         </div>
 

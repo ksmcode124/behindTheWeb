@@ -34,7 +34,7 @@ export default function TheTeam() {
             {/* Left: Title + Tagline */}
             <div className="space-y-5 text-center lg:text-left">
               <ShadowedText className="-skew-3 text-5xl lg:text-9xl">
-                Code124
+                CODE124
               </ShadowedText>
               <h3 className="-skew-3 text-3xl text-[#e6e6e6] lg:text-7xl">
                 #TheFirstCommit
