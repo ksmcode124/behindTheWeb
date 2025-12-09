@@ -6,9 +6,9 @@ import { SOCIAL_MEDIA } from '../../components/socialMedia';
 export default function HeroSection() {
   return (
     <section className="font-display flex min-h-[87vh] flex-col items-center justify-center gap-4 bg-[url('/assets/images/hero_bg.webp')] bg-cover bg-center px-11">
-      <ShadowedText className="-skew-3 text-8xl">Code124</ShadowedText>
+      <ShadowedText className="-skew-3 text-9xl">Code124</ShadowedText>
 
-      <h3 className="h-12 -skew-3 text-4xl">#TheFirstCommit</h3>
+      <h3 className="h-12 -skew-3 text-5xl">#TheFirstCommit</h3>
 
       <div className="mx-auto max-w-5xl -skew-3">
         {/* Kiri atas */}
@@ -20,7 +20,7 @@ export default function HeroSection() {
           124
         </span>
 
-        <p className="border-b-secondary border-b-4 pb-4 text-justify leading-relaxed [text-align-last:center]">
+        <p className="border-b-secondary border-b-4 pb-4 text-justify text-xl leading-relaxed [text-align-last:center]">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae
           ratione distinctio quae accusantium qui corporis est! Libero ipsa
           nostrum quia dolorem error dolores repellendus modi ullam, quis

@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import {
@@ -14,7 +16,6 @@ interface SocialMediaProps {
   className?: string;
   iconClassName?: string;
   withBorder?: boolean;
-  iconSize?: number; // optional improvement
 }
 
 const iconMap: Record<SocialMediaProps['platform'], React.ElementType> = {
@@ -31,10 +32,8 @@ export function SocialMediaLink({
   className = '',
   iconClassName = '',
   withBorder = false,
-  iconSize = 24, // default icon size
 }: SocialMediaProps) {
   const IconComponent = iconMap[platform];
-
   if (!IconComponent) return null;
 
   return (
@@ -46,14 +45,20 @@ export function SocialMediaLink({
     >
       {/* Icon circle */}
       <span
-        className={`flex items-center justify-center rounded-full transition-all duration-300 ease-in-out ${iconClassName} ${withBorder ? 'border border-white text-white' : 'bg-primary-600 hover:bg-secondary-300 hover:text-primary-600 border border-transparent shadow-[4px_4px_0_var(--color-secondary-300)] hover:shadow-[4px_4px_0_var(--color-primary-600)]'}`}
+        className={`flex items-center justify-center rounded-full p-1 transition-all duration-300 ease-in-out md:p-2 ${iconClassName} ${
+          withBorder
+            ? 'hover:text-secondary-300 border border-white text-white hover:bg-white'
+            : 'bg-primary-600 hover:bg-secondary-300 hover:text-primary-600 border border-transparent shadow-[4px_4px_0_var(--color-secondary-300)] hover:shadow-[4px_4px_0_var(--color-primary-600)]'
+        } `}
       >
-        <IconComponent size={iconSize} />
+        <IconComponent className="h-6 w-6 md:h-8 md:w-8" />
       </span>
 
       {/* Optional label */}
       {label && (
-        <span className="text-secondary-400 ml-10 font-semibold">{label}</span>
+        <span className="text-secondary-400 ml-2 text-sm font-semibold md:ml-3 md:text-base">
+          {label}
+        </span>
       )}
     </Link>
   );

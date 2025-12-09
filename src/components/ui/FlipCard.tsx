@@ -117,18 +117,14 @@ export function FlipCard({
                     : '',
           )}
         >
-          <SocialMediaLink
-            platform="instagram"
-            href={ig ?? ''}
-            iconSize={40}
-            iconClassName="p-4"
-          />
-          <SocialMediaLink
-            platform="linkedin"
-            href={linkedIn ?? ''}
-            iconSize={40}
-            iconClassName="p-4"
-          />
+          <div className="flex gap-3">
+            <SocialMediaLink platform="instagram" href={ig ?? ''} withBorder />
+            <SocialMediaLink
+              platform="linkedin"
+              href={linkedIn ?? ''}
+              withBorder
+            />
+          </div>
         </div>
       </div>
     </div>

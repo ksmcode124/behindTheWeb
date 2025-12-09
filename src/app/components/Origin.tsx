@@ -38,11 +38,11 @@ export default function Origin() {
 
         {/* Text block */}
         <div className="flex max-w-2xl flex-col justify-start space-y-8 text-white">
-          <ShadowedText as="h2" className="-skew-3 text-6xl">
+          <ShadowedText as="h2" className="-skew-3 text-8xl">
             THE ORIGIN
           </ShadowedText>
 
-          <div className="text-secondary-400space-y-6 text-lg leading-relaxed">
+          <div className="text-secondary-400space-y-6 text-xl leading-relaxed">
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio
               facilis, est adipisci expedita recusandae architecto facere aut

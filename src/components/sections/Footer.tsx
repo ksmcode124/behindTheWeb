@@ -14,7 +14,7 @@ export default function Footer() {
           </div>
           <div>
             <h3 className="mb-2 font-bold">#TheFirstCommit</h3>
-            <p className="max-w-[300px] text-left text-[13px] leading-relaxed text-gray-300 lg:max-w-[350px] lg:text-[14px]">
+            <p className="max-w-full text-left text-[13px] leading-relaxed text-gray-300 lg:max-w-[350px] lg:text-[14px]">
               In Engineering We Trust, In Innovation We Rise. Designing Tomorrow
               Today. Powered By Knowledge, Driven By Innovation. Because Every
               Problem Has A Solution.
@@ -23,7 +23,7 @@ export default function Footer() {
         </div>
 
         {/* Kolom Kanan: Social Media */}
-        <div className="flex w-full flex-col items-start space-y-3 pt-8 lg:w-1/2 lg:space-y-4 lg:pt-0 lg:pl-5">
+        <div className="flex w-full flex-col items-start gap-3 pt-8 lg:w-1/2 lg:flex-col lg:space-y-4 lg:pt-0 lg:pl-5">
           {SOCIAL_MEDIA.map((social) => (
             <SocialMediaLink
               key={social.platform}

@@ -177,9 +177,7 @@ export default function TheTeam() {
               key={index}
               className="relative z-10 flex w-full flex-col items-center px-4 py-8 sm:px-6 sm:py-10 md:px-8 md:py-12 lg:py-16"
             >
-              <h3
-                className={`text-primary-500 mb-4 -rotate-3 text-3xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:1.5px] sm:mb-5 sm:text-4xl sm:[-webkit-text-stroke-width:2px] md:mb-6 md:text-5xl md:[-webkit-text-stroke-width:2.5px] lg:text-6xl xl:text-7xl`}
-              >
+              <h3 className="text-primary-500 mb-10 -skew-4 text-5xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:2.5px] text-shadow-[5px_4px_0_var(--color-primary-600)] lg:text-7xl">
                 {section.title}
               </h3>
               <Carousel members={section.members} />

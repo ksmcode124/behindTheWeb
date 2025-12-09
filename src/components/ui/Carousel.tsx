@@ -49,7 +49,7 @@ export default function Carousel({ members }: TeamProps) {
   };
 
   return (
-    <div className="flex items-center justify-center gap-3 p-8 pb-20 font-sans sm:p-20">
+    <div className="z-2 flex items-center justify-center gap-3 p-8 pb-20 font-sans sm:p-20">
       {batchSize === 5 ? (
         <button
           onClick={handlePrev}
