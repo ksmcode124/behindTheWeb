@@ -19,7 +19,7 @@ export default function TheTeam() {
 
       <main className="bg-secondary-300 font-display min-h-screen">
         <div className="absolute inset-0 scale-y-[-1] bg-[url('/assets/images/header_meet_team1.webp')] bg-cover bg-center" />
-        <section className="text-secondary-400 relative flex h-[80vh] w-full flex-col items-center justify-center gap-10 px-6">
+        <section className="text-secondary-400 flex min-h-[85vh] w-full flex-col items-center justify-center gap-10 px-6 py-36">
           {' '}
           {/* Title */}
           <div className="flex flex-col items-center text-right">
