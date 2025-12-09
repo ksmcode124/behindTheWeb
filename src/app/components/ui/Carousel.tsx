@@ -31,7 +31,7 @@ export default function Carousel({ members }: TeamProps) {
     } else {
       setBatchSize(5);
     }
-  }, []);
+  });
 
   console.log(batchSize);
 

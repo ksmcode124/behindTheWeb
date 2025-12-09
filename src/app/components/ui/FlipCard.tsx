@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { SocialMediaLink } from './SocialMediaLink';
@@ -46,9 +46,19 @@ export function FlipCard({
   backBg?: string;
   borderColor?: string;
 }) {
+  const [iconSize, setIconSize] = useState(30);
+  const [iconPadding, setIconPadding] = useState("p-2");
   const [hover, setHover] = useState(false);
   const hasInfo = nama || role;
-
+  useEffect(() => {
+    if (window.innerWidth < 640) {
+      setIconSize(20);
+      setIconPadding("p-1");
+    } else {
+      setIconSize(30);
+      setIconPadding("p-2");
+    }
+  }, []);
   return (
     <div
       className={cn(
@@ -105,7 +115,7 @@ export function FlipCard({
         {/* BACK */}
         <div
           className={cn(
-            'absolute flex h-full w-full [transform:rotateY(180deg)] items-center justify-center gap-2 bg-[#393c45] font-semibold text-white [backface-visibility:hidden]',
+            'absolute flex h-full w-full [transform:rotateY(180deg)] items-center justify-center gap-3 bg-[#393c45] font-semibold text-white [backface-visibility:hidden]',
             size === 0
               ? 'rounded-[22.9px] border-[5.33px] border-[#DEBC96] md:rounded-[46.62px]'
               : size === 1
@@ -120,14 +130,14 @@ export function FlipCard({
           <SocialMediaLink
             platform="instagram"
             href={ig ?? ''}
-            iconSize={40}
-            iconClassName="p-4"
+            iconSize={iconSize}
+            iconClassName={iconPadding}
           />
           <SocialMediaLink
             platform="linkedin"
             href={linkedIn ?? ''}
-            iconSize={40}
-            iconClassName="p-4"
+            iconSize={iconSize}
+            iconClassName={iconPadding}
           />
         </div>
       </div>
