@@ -1,22 +1,22 @@
-// src/app/api/btw/jabatan/[id]/route.ts
+// src/app/api/btw/divisi/[id]/route.ts
 
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-// GET /api/btw/jabatan/1 - Get one
+// GET /api/btw/divisi/1 - Get one
 export async function GET(
   request: NextRequest,
   props: { params: Promise<{ id: string }> }
 ) {
   try {
     const params = await props.params;
-    const data = await prisma.btw_jabatan.findUnique({
-      where: { id_jabatan: parseInt(params.id) },
+    const data = await prisma.btw_divisi.findUnique({
+      where: { id_divisi: parseInt(params.id) },
     });
 
     if (!data) {
       return NextResponse.json(
-        { success: false, message: 'Jabatan tidak ditemukan' },
+        { success: false, message: 'Divisi tidak ditemukan' },
         { status: 404 }
       );
     }
@@ -31,7 +31,7 @@ export async function GET(
   }
 }
 
-// PUT /api/btw/jabatan/1 - Update
+// PUT /api/btw/divisi/1 - Update
 export async function PUT(
   request: NextRequest,
   props: { params: Promise<{ id: string }> }
@@ -40,41 +40,42 @@ export async function PUT(
     const params = await props.params;
     const body = await request.json();
     
-    const data = await prisma.btw_jabatan.update({
-      where: { id_jabatan: parseInt(params.id) },
+    const data = await prisma.btw_divisi.update({
+      where: { id_divisi: parseInt(params.id) },
       data: {
-        nama_jabatan: body.nama_jabatan,
+        nama_divisi: body.nama_divisi,
+        foto_divisi: body.foto_divisi,
       },
     });
 
     return NextResponse.json({
       success: true,
-      message: 'Jabatan berhasil diupdate',
+      message: 'Divisi berhasil diupdate',
       data,
     });
   } catch (error) {
     console.error('Error:', error);
     return NextResponse.json(
-      { success: false, message: 'Gagal update jabatan' },
+      { success: false, message: 'Gagal update divisi' },
       { status: 500 }
     );
   }
 }
 
-// DELETE /api/btw/jabatan/1 - Delete
+// DELETE /api/btw/divisi/1 - Delete
 export async function DELETE(
   request: NextRequest,
   props: { params: Promise<{ id: string }> }
 ) {
   try {
     const params = await props.params;
-    await prisma.btw_jabatan.delete({
-      where: { id_jabatan: parseInt(params.id) },
+    await prisma.btw_divisi.delete({
+      where: { id_divisi: parseInt(params.id) },
     });
 
     return NextResponse.json({
       success: true,
-      message: 'Jabatan berhasil dihapus',
+      message: 'Divisi berhasil dihapus',
     });
   } catch (error) {
     console.error('Error:', error);

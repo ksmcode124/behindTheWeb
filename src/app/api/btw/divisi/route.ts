@@ -6,6 +6,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { Prisma } from '@prisma/client';
 
 // GET /api/btw/divisi - List all
 export async function GET() {
@@ -42,6 +43,21 @@ export async function POST(request: NextRequest) {
     );
   } catch (error) {
     console.error('Error:', error);
+
+    // Handle unique constraint violations (e.g., duplicate primary key)
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === 'P2002'
+    ) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Divisi sudah ada, gunakan nama atau data lain',
+        },
+        { status: 409 }
+      );
+    }
+
     return NextResponse.json(
       { success: false, message: 'Gagal membuat divisi' },
       { status: 500 }

@@ -11,15 +11,8 @@ export async function GET() {
   try {
     const data = await prisma.btw_anggota.findMany({
       orderBy: { nama_anggota: 'asc' },
-      include: {
-        detail: {
-          include: {
-            kepengurusan: true,
-            divisi: true,
-            jabatan: true,
-          },
-        },
-      },
+      // Hilangkan eager include besar untuk menghindari limit 5MB.
+      // Jika butuh detail, panggil endpoint detail terpisah.
     });
 
     return NextResponse.json({ success: true, data });

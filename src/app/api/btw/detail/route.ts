@@ -46,12 +46,25 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     
+    // Support both camelCase from frontend (anggota_id) and snake_case (id_anggota)
+    const anggotaId = body.anggota_id ?? body.id_anggota;
+    const divisiId = body.divisi_id ?? body.id_divisi;
+    const btwId = body.kepengurusan_id ?? body.id_btw;
+    const jabatanId = body.jabatan_id ?? body.id_jabatan;
+
+    if (!anggotaId || !divisiId || !btwId || !jabatanId) {
+      return NextResponse.json(
+        { success: false, message: 'Field wajib hilang (anggota, divisi, kepengurusan, jabatan).' },
+        { status: 400 }
+      );
+    }
+
     // Check if already exists
     const existing = await prisma.detail_anggota.findFirst({
       where: {
-        id_anggota: body.id_anggota,
-        id_divisi: body.id_divisi,
-        id_btw: body.id_btw,
+        id_anggota: anggotaId,
+        id_divisi: divisiId,
+        id_btw: btwId,
       },
     });
 
@@ -64,10 +77,10 @@ export async function POST(request: NextRequest) {
 
     const data = await prisma.detail_anggota.create({
       data: {
-        id_anggota: body.id_anggota,
-        id_divisi: body.id_divisi,
-        id_btw: body.id_btw,
-        id_jabatan: body.id_jabatan,
+        id_anggota: anggotaId,
+        id_divisi: divisiId,
+        id_btw: btwId,
+        id_jabatan: jabatanId,
       },
       include: {
         anggota: true,
