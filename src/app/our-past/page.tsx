@@ -26,7 +26,7 @@ export default function TheTeam() {
     [],
   );
 
-  const [currentIndex, setCurrentIndex] = useState(4);
+  const [currentIndex, setCurrentIndex] = useState(3);
 
   useEffect(() => {
     const container = document.getElementById('carousel-container');
