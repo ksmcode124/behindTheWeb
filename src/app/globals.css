@@ -30,24 +30,27 @@
   }
 }
 
-.animate-carousel {
-  animation-name: carousel;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+
+/* keyframe & helper */
+@keyframes loop {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
-/* @keyframes lineFloat {
-  0% {
-    transform: translateY(0px) scale(1);
-    opacity: 0.8;
+
+.loop-track {
+  animation-name: loop;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
   }
-  50% {
-    transform: translateY(-12px) scale(1.02);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(0px) scale(1);
-    opacity: 0.8;
+  to {
+    transform: translateX(-50%);
   }
 }
 

@@ -27,7 +27,7 @@ export default function Logo({ variant = 'black', text = 'CODE124' }: LogoProps)
         priority
       />
       <p
-        className={`font-display text-xl font-semibold md:block lg:text-3xl ${variant === 'black' ? 'text-black' : 'text-white'}`}
+        className={`font-display text-xl font-semibold md:block lg:text-3xl ${variant === 'black' ? 'text-black' : 'text-secondary-400'}`}
       >
         {text}
       </p>

@@ -1,5 +1,5 @@
 'use client';
-import GoalCard from '@/app/components/ui/GoalCard';
+import GoalCard from '@/app/components/GoalCard';
 import { useState, useEffect, useRef } from 'react';
 
 export default function AccordionParent() {
@@ -44,7 +44,7 @@ export default function AccordionParent() {
     const segments: string[] = [];
     let prevEnd = 0;
 
-    visibleCards.forEach(({ left, width }, i) => {
+    visibleCards.forEach(({ left, width }) => {
       const start = left;
       const end = left + width;
 
@@ -61,7 +61,7 @@ export default function AccordionParent() {
     segments.push(`transparent ${prevEnd}px, transparent 100%`);
 
     setMask(`linear-gradient(to right, ${segments.join(', ')})`);
-  }, [openIndex]);
+  }, [cardRefs, openIndex]);
 
   return (
     <div className="z-50 flex w-auto flex-col items-center justify-center gap-4 overflow-hidden md:flex-row">

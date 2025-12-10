@@ -27,8 +27,8 @@ export function FlipCard({
   linkedIn,
   className,
   flip = true,
-  frontBg = 'bg-white',
-  backBg = 'bg-white',
+  frontBg = 'bg-secondary-400',
+  backBg = 'bg-secondary-400',
   borderColor = 'border-secondary-300',
   ...props
 }: {
@@ -47,16 +47,16 @@ export function FlipCard({
   borderColor?: string;
 }) {
   const [iconSize, setIconSize] = useState(30);
-  const [iconPadding, setIconPadding] = useState("p-2");
+  const [iconPadding, setIconPadding] = useState('p-2');
   const [hover, setHover] = useState(false);
   const hasInfo = nama || role;
   useEffect(() => {
     if (window.innerWidth < 640) {
       setIconSize(20);
-      setIconPadding("p-1");
+      setIconPadding('p-1');
     } else {
       setIconSize(30);
-      setIconPadding("p-2");
+      setIconPadding('p-2');
     }
   }, []);
   return (
@@ -79,7 +79,7 @@ export function FlipCard({
         {/* FRONT */}
         <div
           className={cn(
-            '[backface-visibility:hidden overflow-hidden] absolute flex h-full w-full items-center justify-center bg-blue-400 bg-cover font-semibold text-white',
+            '[backface-visibility:hidden overflow-hidden] text-secondary-400 absolute flex h-full w-full items-center justify-center bg-blue-400 bg-cover font-semibold',
             size === 0
               ? 'rounded-[22.9px] border-[5.33px] border-[#DEBC96] md:rounded-[46.62px]'
               : size === 1
@@ -97,11 +97,11 @@ export function FlipCard({
               className={cn(
                 'absolute bottom-0 flex w-full flex-col items-center justify-center overflow-hidden font-semibold text-black',
                 size === 1
-                  ? 'rounded-b-[14px] bg-white/65 p-[4px] text-[10px] backdrop-blur-xs md:rounded-b-[21px] md:p-[13px] md:text-[20px]'
+                  ? 'bg-secondary-400/65 rounded-b-[14px] p-[4px] text-[10px] backdrop-blur-xs md:rounded-b-[21px] md:p-[13px] md:text-[20px]'
                   : size === 2
-                    ? 'rounded-b-[10px] bg-white/65 p-[3px] text-[8px] backdrop-blur-xs md:rounded-b-[18px] md:p-[9px] md:text-[16px]'
+                    ? 'bg-secondary-400/65 rounded-b-[10px] p-[3px] text-[8px] backdrop-blur-xs md:rounded-b-[18px] md:p-[9px] md:text-[16px]'
                     : size === 3
-                      ? 'rounded-b-[17px] bg-white/65 p-[6px] text-[12px] backdrop-blur-xs'
+                      ? 'bg-secondary-400/65 rounded-b-[17px] p-[6px] text-[12px] backdrop-blur-xs'
                       : '',
               )}
             >
@@ -115,7 +115,7 @@ export function FlipCard({
         {/* BACK */}
         <div
           className={cn(
-            'absolute flex h-full w-full [transform:rotateY(180deg)] items-center justify-center gap-3 bg-[#393c45] font-semibold text-white [backface-visibility:hidden]',
+            'text-secondary-400 absolute flex h-full w-full [transform:rotateY(180deg)] items-center justify-center gap-2 bg-[#393c45] font-semibold [backface-visibility:hidden]',
             size === 0
               ? 'rounded-[22.9px] border-[5.33px] border-[#DEBC96] md:rounded-[46.62px]'
               : size === 1
@@ -127,18 +127,14 @@ export function FlipCard({
                     : '',
           )}
         >
-          <SocialMediaLink
-            platform="instagram"
-            href={ig ?? ''}
-            iconSize={iconSize}
-            iconClassName={iconPadding}
-          />
-          <SocialMediaLink
-            platform="linkedin"
-            href={linkedIn ?? ''}
-            iconSize={iconSize}
-            iconClassName={iconPadding}
-          />
+          <div className="flex gap-3">
+            <SocialMediaLink platform="instagram" href={ig ?? ''} withBorder />
+            <SocialMediaLink
+              platform="linkedin"
+              href={linkedIn ?? ''}
+              withBorder
+            />
+          </div>
         </div>
       </div>
     </div>

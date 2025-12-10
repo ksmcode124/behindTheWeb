@@ -17,12 +17,10 @@ export default function Carousel({ members }: TeamProps) {
   const [startIndex, setStartIndex] = useState<number>(0); // index awal window
   const handlePrev = () => {
     setStartIndex((prev) => (prev - 1 < 0 ? members.length - 1 : prev - 1)); // geser window ke kanan
-    console.log('prev');
   };
 
   const handleNext = () => {
     setStartIndex((prev) => (prev + 1 >= members.length ? 0 : prev + 1)); // geser window ke kiri
-    console.log('next');
   };
 
   useEffect(() => {
@@ -32,8 +30,6 @@ export default function Carousel({ members }: TeamProps) {
       setBatchSize(5);
     }
   });
-
-  console.log(batchSize);
 
   // Fungsi untuk mengambil 5 nama (looping)
   const visibleMembers = [];
@@ -53,11 +49,11 @@ export default function Carousel({ members }: TeamProps) {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center gap-3 p-8 pb-20 font-sans sm:p-20">
+    <div className="z-2 flex items-center justify-center gap-3 p-8 pb-20 font-sans sm:p-20">
       {batchSize === 5 ? (
         <button
           onClick={handlePrev}
-          className="p-auto justify-content-center h-[70px] w-[70px] justify-items-center rounded-full bg-[#393c45] text-white"
+          className="p-auto justify-content-center text-secondary-400 h-[70px] w-[70px] justify-items-center rounded-full bg-[#393c45]"
         >
           <Image
             src="/assets/images/icon/Vector.svg"
@@ -108,7 +104,7 @@ export default function Carousel({ members }: TeamProps) {
       {batchSize === 5 ? (
         <button
           onClick={handleNext}
-          className="p-auto justify-content-center h-[70px] w-[70px] justify-items-center rounded-full bg-[#393c45] text-white"
+          className="p-auto justify-content-center text-secondary-400 h-[70px] w-[70px] justify-items-center rounded-full bg-[#393c45]"
         >
           <Image
             src="/assets/images/icon/Vector.svg"
