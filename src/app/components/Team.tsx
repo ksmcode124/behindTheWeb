@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { FlipCard } from '../../components/ui/FlipCard';
 import Wrapper from '../../components/ui/Wrapper';
-import { DEVELOPERS, BOARD } from './data/team';
 import Inti from '@/components/ui/Inti';
+import { apiGet } from '@/lib/btw/api';
+import { KepengurusanResponse } from '@/lib/btw/interfaces/btw';
 
-export default function Team() {
+export default async function Team({ divisi }: { divisi: any }) {
   return (
     <>
       <section className="text-secondary-400 relative flex min-h-[70vh] w-full flex-col items-center justify-center gap-8 px-6">
@@ -79,16 +79,16 @@ export default function Team() {
 
         {/* Content */}
         <div className="mx-auto flex w-full max-w-6xl flex-wrap justify-center gap-12">
-          <Inti />
+          <Inti divisi={divisi?.find((d) => d.nama_divisi === 'Inti')} />
         </div>
       </section>
 
       <Wrapper className="flex flex-col gap-24 py-20">
-        {DEVELOPERS.map(({ id, nama, caption, image }) => (
+        {divisi.map(({ nama_divisi, foto_divisi, id }) => (
           <div key={id} className="flex w-full flex-col items-center">
             {/* TITLE */}
             <h3 className="text-primary-500 mb-10 -skew-4 text-5xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:2.5px] text-shadow-[5px_4px_0_var(--color-primary-600)] lg:text-7xl">
-              {nama}
+              {nama_divisi}
             </h3>
 
             {/* CARD */}
@@ -105,14 +105,26 @@ export default function Team() {
               </div>
 
               <div className="relative h-[430px] w-full">
-                <Image src={image} alt={nama} fill className="object-cover" />
+                <Image
+                  src={
+                    foto_divisi && foto_divisi.trim() !== ''
+                      ? foto_divisi
+                      : '/assets/images/origin_first_commit.webp'
+                  }
+                  alt={nama_divisi}
+                  fill
+                  className="object-cover"
+                />
               </div>
 
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
 
               <div className="absolute bottom-0 left-0 flex w-full items-end justify-between gap-3">
                 <p className="text-secondary-400 max-w-[70%] p-4 text-sm">
-                  {caption}
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Ratione, sunt esse placeat iusto consequuntur quos animi, non
+                  expedita sapiente rem sint consectetur deserunt nostrum sequi
+                  saepe ipsam vitae obcaecati fugiat!
                 </p>
 
                 <Link

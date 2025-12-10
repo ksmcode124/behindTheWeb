@@ -11,13 +11,29 @@ import ShadowedText from '../../components/ui/ShadowedText';
 import { SocialMediaLink } from '@/components/ui/SocialMediaLink';
 import { SOCIAL_MEDIA } from '../../components/socialMedia';
 
-import { TEAM } from '../components/data/team';
 import InfiniteCarousel, {
   ScrollingBoxes,
 } from '../components/InfiniteCarousel';
 
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Divisi, KepengurusanResponse } from '@/lib/btw/interfaces/btw';
+
 export default function TheTeam() {
-  const dataDivisi = useBtwData();
+  const [data, setData] = useState<KepengurusanResponse | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    axios.get<KepengurusanResponse>('/api/display/btw').then((res) => {
+      if (!cancelled) setData(res.data);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -25,7 +41,6 @@ export default function TheTeam() {
       <main className="bg-secondary-300 font-display min-h-screen">
         <div className="absolute inset-0 scale-y-[-1] bg-[url('/assets/images/header_meet_team1.webp')] bg-cover bg-center" />
         <section className="text-secondary-400 flex min-h-[85vh] w-full flex-col items-center justify-center gap-10 px-6 py-36">
-          {' '}
           {/* Title */}
           <div className="flex flex-col items-center text-right">
             <h1 className="text-secondary-400 -skew-3 text-6xl leading-none md:text-7xl lg:text-[10rem]">
@@ -71,11 +86,13 @@ export default function TheTeam() {
           <section className="mb-[5vh] flex w-full flex-col gap-6 bg-[#27292D] px-4 py-6">
             <ScrollingBoxes speed={45} />
             <InfiniteCarousel
-              images={[
-                { src: '/assets/images/logo_white.png' },
-                { src: '/assets/images/logo_black.png' },
-                { src: '/assets/images/first_commit.webp' },
-              ]}
+              images={
+                data?.data.divisi.map((d: Divisi) => ({
+                  src:
+                    d.foto_divisi ?? '/assets/images/origin_first_commit.webp',
+                  alt: d.nama_divisi,
+                })) ?? []
+              }
               speed={45}
             />
             <ScrollingBoxes speed={45} />
@@ -83,31 +100,15 @@ export default function TheTeam() {
         </section>
 
         <Wrapper>
-          {[
-            {
-              Divisi: 'UI/UX Designer',
-              members: TEAM,
-              rotation: '-skew-3',
-            },
-            {
-              title: 'Frontend Developer',
-              divisi: TEAM,
-              rotation: '-skew-3',
-            },
-            {
-              title: 'Backend Developer',
-              divisi: TEAM,
-              rotation: '-skew-3',
-            },
-          ].map((section, index) => (
+          {data?.data.divisi.map(({ nama_divisi, anggota, id }, index) => (
             <div
               key={index}
               className="flex w-full flex-col items-center px-4 py-8 sm:px-6 sm:py-10 md:px-8 md:py-12 lg:py-16"
             >
               <h3 className="text-primary-500 mb-10 -skew-4 text-5xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:2.5px] text-shadow-[5px_4px_0_var(--color-primary-600)] lg:text-7xl">
-                {section.title}
+                {nama_divisi}
               </h3>
-              <Carousel divisi={section.divisi} />
+              <Carousel anggotaProp={anggota} />
             </div>
           ))}
         </Wrapper>

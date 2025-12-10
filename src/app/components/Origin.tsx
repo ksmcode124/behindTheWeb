@@ -2,8 +2,13 @@ import Image from 'next/image';
 import ShadowedText from '@/components/ui/ShadowedText';
 import AccordionParent from './Accordion';
 import InfiniteCarousel, { ScrollingBoxes } from './InfiniteCarousel';
+import { Divisi, KepengurusanResponse } from '@/lib/btw/interfaces/btw';
+import { apiGet } from '@/lib/btw/api';
 
-export default function Origin() {
+export default async function Origin() {
+  const res = await apiGet<KepengurusanResponse>('/api/display/btw');
+  const data = res.data;
+
   return (
     <>
       {/* ORIGIN INTRO */}
@@ -28,7 +33,7 @@ export default function Origin() {
         {/* Image block */}
         <div className="relative mx-auto flex aspect-square w-full max-w-md items-center justify-center bg-[url('/assets/images/origin_img_bg.webp')] bg-contain bg-center bg-no-repeat p-5">
           <Image
-            src="/assets/images/logo_black.webp"
+            src={`/assets/images/origin_first_commit.webp`}
             width={350}
             height={320}
             alt="The Developers"
@@ -81,11 +86,9 @@ export default function Origin() {
       <section className="mb-[5vh] flex w-full flex-col gap-6 bg-[#27292D] px-4 py-6">
         <ScrollingBoxes speed={45} />
         <InfiniteCarousel
-          images={[
-            { src: '/assets/images/logo_white.png' },
-            { src: '/assets/images/logo_black.png' },
-            { src: '/assets/images/first_commit.webp' },
-          ]}
+          images={data.divisi.map((d: Divisi) => ({
+            src: d.foto_divisi ?? '/assets/images/origin_first_commit.webp',
+          }))}
           speed={45}
         />
         <ScrollingBoxes speed={45} />

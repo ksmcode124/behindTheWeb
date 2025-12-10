@@ -34,7 +34,7 @@ export default function GoalCard({
     <motion.div
       onClick={onToggle}
       className={cn(
-        "bg-secondary-300/75 text-secondary-400 flex h-[361px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-[45px] border-2 border-white bg-[url('/assets/images/photo.svg')] bg-size-[700px] bg-no-repeat transition-all duration-200",
+        "bg-secondary-300/75 text-secondary-400 flex h-[361px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-[45px] border-2 border-white bg-[url('/assets/images/origin_first_commit.webp')] bg-size-[700px] bg-no-repeat transition-all duration-200",
         title === 'misi' ? 'bg-right' : '',
       )}
       layout

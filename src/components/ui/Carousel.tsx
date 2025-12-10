@@ -2,17 +2,18 @@
 import { useState, useEffect } from 'react';
 import { FlipCard } from './FlipCard';
 import Image from 'next/image';
-import { Divisi } from '../data/btw';
+import { Anggota } from '@/lib/btw/interfaces/btw';
 
-export default function Carousel({ divisi }: { divisi: Divisi }) {
+export default function Carousel({ anggotaProp }: { anggotaProp: Anggota[] }) {
   const [batchSize, setBatchSize] = useState<number>(0); // ukuran window
   const [startIndex, setStartIndex] = useState<number>(0); // index awal window
+  const anggota = anggotaProp ?? [];
   const handlePrev = () => {
-    setStartIndex((prev) => (prev - 1 < 0 ? members.length - 1 : prev - 1)); // geser window ke kanan
+    setStartIndex((prev) => (prev - 1 < 0 ? anggota.length - 1 : prev - 1)); // geser window ke kanan
   };
 
   const handleNext = () => {
-    setStartIndex((prev) => (prev + 1 >= members.length ? 0 : prev + 1)); // geser window ke kiri
+    setStartIndex((prev) => (prev + 1 >= anggota.length ? 0 : prev + 1)); // geser window ke kiri
   };
 
   useEffect(() => {
@@ -26,8 +27,8 @@ export default function Carousel({ divisi }: { divisi: Divisi }) {
   // Fungsi untuk mengambil 5 nama (looping)
   const visibleMembers = [];
   for (let i = 0; i < batchSize; i++) {
-    const index = (startIndex + i) % divisi.anggota.length; // loop jika habis
-    visibleMembers.push(divisi.anggota[index]);
+    const index = (startIndex + i) % anggota.length; // loop jika habis
+    visibleMembers.push(anggota[index]);
   }
 
   let count: number = 0;
@@ -74,22 +75,30 @@ export default function Carousel({ divisi }: { divisi: Divisi }) {
           >
             <FlipCard
               size={size}
-              imageSrc={anggota.foto_anggota}
-              nama={anggota.nama_anggota}
-              role={anggota.jabatan}
-              ig={anggota.linkedin}
-              linkedIn={anggota.linkedin}
+              imageSrc={
+                anggota?.foto_anggota && anggota.foto_anggota.trim() !== ''
+                  ? anggota.foto_anggota
+                  : '/assets/images/origin_first_commit.webp'
+              }
+              nama={anggota?.nama_anggota}
+              role={anggota?.jabatan}
+              ig={anggota?.linkedin}
+              linkedIn={anggota?.linkedin}
             />
           </button>
         ) : (
           <FlipCard
             key={i}
             size={size}
-            imageSrc={anggota.foto_anggota}
-            nama={anggota.nama_anggota}
-            role={anggota.jabatan}
-            ig={anggota.linkedin}
-            linkedIn={anggota.linkedin}
+            imageSrc={
+              anggota?.foto_anggota && anggota.foto_anggota.trim() !== ''
+                ? anggota.foto_anggota
+                : '/assets/images/origin_first_commit.webp'
+            }
+            nama={anggota?.nama_anggota}
+            role={anggota?.jabatan}
+            ig={anggota?.linkedin}
+            linkedIn={anggota?.linkedin}
           />
         );
       })}
