@@ -3,9 +3,11 @@ import React, { useState, useEffect, useMemo } from 'react';
 import {
   Home, Users, Briefcase, List, LogOut, X, Edit, Trash2, Search, Link, ChevronDown, Plus, ChevronsLeft, ChevronLeft, ChevronRight, ChevronsRight, Eye, User, Menu, Upload, Image as ImageIcon, AlertTriangle
 } from 'lucide-react';
+import { CrudAnggota, CrudKepengurusan, CrudDivisi, CrudJabatan, DetailAnggota } from '@/lib/btw/interfaces/btw'
 import { UploadButton } from '@uploadthing/react';
 import { useUploadThing } from "@/lib/uploadthing";
 import type { OurFileRouter } from '@/app/api/uploadthing/core';
+import Image from 'next/image';
 
 // ====================================================================
 // A. KONSTANTA, TIPE DATA (Constants, Types)
@@ -17,48 +19,6 @@ interface MenuItem {
   name: string;
   icon: React.ElementType;
   page: Page;
-}
-
-interface Kepengurusan {
-  id: number;
-  tahun_kerja: string;
-  nama_kepengurusan: string;
-}
-
-interface Divisi {
-  id: number;
-  nama_divisi: string;
-  foto_divisi: string;
-}
-
-interface Jabatan {
-  id: number;
-  nama_jabatan: string;
-}
-
-// Data Dasar Anggota (tanpa relasi)
-interface Anggota {
-  id: number;
-  nama_anggota: string;
-  foto_anggota: string;
-  linkedin: string;
-  instagram: string;
-}
-
-// Detail Anggota (join table)
-interface DetailAnggota {
-  id: number;
-  anggota_id: number;
-  kepengurusan_id: number;
-  divisi_id: number;
-  jabatan_id: number;
-  anggota_nama?: string;
-  kepengurusan_nama?: string;
-  divisi_nama?: string;
-  jabatan_nama?: string;
-  foto_anggota?: string;
-  linkedin?: string;
-  instagram?: string;
 }
 
 const API_BASE = '/api/btw';
@@ -422,10 +382,10 @@ const deleteDataFromAPI = async (endpoint: string, id: number) => {
 // ====================================================================
 
 const KepengurusanAdmin: React.FC = () => {
-  const [data, setData] = useState<Kepengurusan[]>([]);
+  const [data, setData] = useState<CrudKepengurusan[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [editingItem, setEditingItem] = useState<Kepengurusan | null>(null);
+  const [editingItem, setEditingItem] = useState<CrudKepengurusan | null>(null);
   const [itemToDeleteId, setItemToDeleteId] = useState<number | null>(null);
   const [tempTahun, setTempTahun] = useState('');
   const [tempNama, setTempNama] = useState('');
@@ -448,7 +408,7 @@ const KepengurusanAdmin: React.FC = () => {
     }
   };
 
-  const handleEdit = (item: Kepengurusan) => {
+  const handleEdit = (item: CrudKepengurusan) => {
     setEditingItem(item);
     setTempTahun(item.tahun_kerja);
     setTempNama(item.nama_kepengurusan);
@@ -655,10 +615,10 @@ const KepengurusanAdmin: React.FC = () => {
 // ====================================================================
 
 const DivisiAdmin: React.FC = () => {
-  const [data, setData] = useState<Divisi[]>([]);
+  const [data, setData] = useState<CrudDivisi[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [editingItem, setEditingItem] = useState<Divisi | null>(null);
+  const [editingItem, setEditingItem] = useState<CrudDivisi | null>(null);
   const [itemToDeleteId, setItemToDeleteId] = useState<number | null>(null);
   const [tempNama, setTempNama] = useState('');
   const [tempFoto, setTempFoto] = useState('');
@@ -697,7 +657,7 @@ const DivisiAdmin: React.FC = () => {
     }
   };
 
-  const handleEdit = (item: Divisi) => {
+  const handleEdit = (item: CrudDivisi) => {
     setEditingItem(item);
     setTempNama(item.nama_divisi);
     setTempFoto(item.foto_divisi || '');
@@ -912,7 +872,7 @@ const DivisiAdmin: React.FC = () => {
               {tempFoto && (
                 <div className="flex justify-center">
                   <div className="w-32 h-32 rounded-lg overflow-hidden border">
-                    <img 
+                    <Image 
                       src={tempFoto} 
                       alt="Preview"
                       className="w-full h-full object-cover"
@@ -993,10 +953,10 @@ const DivisiAdmin: React.FC = () => {
 // ====================================================================
 
 const JabatanAdmin: React.FC = () => {
-  const [data, setData] = useState<Jabatan[]>([]);
+  const [data, setData] = useState<CrudJabatan[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [editingItem, setEditingItem] = useState<Jabatan | null>(null);
+  const [editingItem, setEditingItem] = useState<CrudJabatan | null>(null);
   const [itemToDeleteId, setItemToDeleteId] = useState<number | null>(null);
   const [tempNama, setTempNama] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -1018,7 +978,7 @@ const JabatanAdmin: React.FC = () => {
     }
   };
 
-  const handleEdit = (item: Jabatan) => {
+  const handleEdit = (item: CrudJabatan) => {
     setEditingItem(item);
     setTempNama(item.nama_jabatan);
     setIsModalOpen(true);
@@ -1210,14 +1170,14 @@ const JabatanAdmin: React.FC = () => {
 // ====================================================================
 
 const AnggotaAdmin: React.FC = () => {
-  const [data, setData] = useState<Anggota[]>([]);
+  const [data, setData] = useState<CrudAnggota[]>([]);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   
-  const [selectedAnggota, setSelectedAnggota] = useState<Anggota | null>(null);
+  const [selectedAnggota, setSelectedAnggota] = useState<CrudAnggota | null>(null);
   const [anggotaToDeleteId, setAnggotaToDeleteId] = useState<number | null>(null);
-  const [editingAnggota, setEditingAnggota] = useState<Anggota | null>(null);
+  const [editingAnggota, setEditingAnggota] = useState<CrudAnggota | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -1280,7 +1240,7 @@ const AnggotaAdmin: React.FC = () => {
   };
 
   // --- Handlers Modal Tambah/Edit ---
-  const handleEdit = (anggota: Anggota) => {
+  const handleEdit = (anggota: CrudAnggota) => {
     setEditingAnggota(anggota);
     setTempAnggota({
       nama_anggota: anggota.nama_anggota,
@@ -1347,7 +1307,7 @@ const AnggotaAdmin: React.FC = () => {
     }
   };
 
-  const handleViewProfile = (anggota: Anggota) => {
+  const handleViewProfile = (anggota: CrudAnggota) => {
     setSelectedAnggota(anggota);
     setIsProfileModalOpen(true);
   };
@@ -1651,10 +1611,10 @@ const AnggotaAdmin: React.FC = () => {
 
 const DetailAnggotaAdmin: React.FC = () => {
   const [data, setData] = useState<DetailAnggota[]>([]);
-  const [anggotaList, setAnggotaList] = useState<Anggota[]>([]);
-  const [kepengurusanList, setKepengurusanList] = useState<Kepengurusan[]>([]);
-  const [divisiList, setDivisiList] = useState<Divisi[]>([]);
-  const [jabatanList, setJabatanList] = useState<Jabatan[]>([]);
+  const [anggotaList, setAnggotaList] = useState<CrudAnggota[]>([]);
+  const [kepengurusanList, setKepengurusanList] = useState<CrudKepengurusan[]>([]);
+  const [divisiList, setDivisiList] = useState<CrudDivisi[]>([]);
+  const [jabatanList, setJabatanList] = useState<CrudJabatan[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<DetailAnggota | null>(null);
@@ -1696,10 +1656,10 @@ const DetailAnggotaAdmin: React.FC = () => {
       
       const detailWithNames = detailData.map((item: DetailAnggota) => ({
         ...item,
-        anggota_nama: anggotaData.find((a: Anggota) => a.id === item.anggota_id)?.nama_anggota || item.anggota_nama,
-        kepengurusan_nama: kepengurusanData.find((k: Kepengurusan) => k.id === item.kepengurusan_id)?.nama_kepengurusan || item.kepengurusan_nama,
-        divisi_nama: divisiData.find((d: Divisi) => d.id === item.divisi_id)?.nama_divisi || item.divisi_nama,
-        jabatan_nama: jabatanData.find((j: Jabatan) => j.id === item.jabatan_id)?.nama_jabatan || item.jabatan_nama,
+        anggota_nama: anggotaData.find((a: CrudAnggota) => a.id === item.anggota_id)?.nama_anggota || item.anggota_nama,
+        kepengurusan_nama: kepengurusanData.find((k: CrudKepengurusan) => k.id === item.kepengurusan_id)?.nama_kepengurusan || item.kepengurusan_nama,
+        divisi_nama: divisiData.find((d: CrudDivisi) => d.id === item.divisi_id)?.nama_divisi || item.divisi_nama,
+        jabatan_nama: jabatanData.find((j: CrudJabatan) => j.id === item.jabatan_id)?.nama_jabatan || item.jabatan_nama,
       }));
 
       setData(detailWithNames);
@@ -2086,7 +2046,7 @@ const DashboardHome: React.FC<{ onNavigate: (page: Page) => void }> = ({ onNavig
 // J. KOMPONEN UTAMA
 // ====================================================================
 
-export const App: React.FC = () => {
+function Dashboard() {
   const [currentPage, setCurrentPage] = useState<Page>('home'); 
 
   const renderContent = () => {
@@ -2121,6 +2081,6 @@ export const App: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
-export default App;
+export default Dashboard;

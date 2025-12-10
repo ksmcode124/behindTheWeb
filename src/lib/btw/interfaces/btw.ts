@@ -41,25 +41,47 @@ export interface YearsResponse {
   years: string[];
 }
 
-/* DTO untuk API input */
-export interface CreateAnggotaInput {
-  nama_anggota: string;
-  foto_anggota?: string | null; // URL dari uploader
-  linkedin?: string | null;
-  instagram?: string | null;
-}
-export interface UpdateAnggotaInput {
-  nama_anggota?: string;
-  foto_anggota?: string | null;
-  linkedin?: string | null;
-  instagram?: string | null;
+
+/* Untuk API input */
+
+export interface CrudKepengurusan {
+  id: number;
+  tahun_kerja: string;
+  nama_kepengurusan: string;
 }
 
-export interface CreateDivisiInput {
+export interface CrudDivisi {
+  id: number;
   nama_divisi: string;
-  foto_divisi?: string | null;
+  foto_divisi: string;
 }
-export interface UpdateDivisiInput {
-  nama_divisi?: string;
-  foto_divisi?: string | null;
+
+export interface CrudJabatan {
+  id: number;
+  nama_jabatan: string;
+}
+
+// Data Dasar Anggota (tanpa relasi)
+export interface CrudAnggota {
+  id: number;
+  nama_anggota: string;
+  foto_anggota: string;
+  linkedin: string;
+  instagram: string;
+}
+
+// Detail Anggota (join table)
+export interface DetailAnggota {
+  id: number;
+  anggota_id: number;
+  kepengurusan_id: number;
+  divisi_id: number;
+  jabatan_id: number;
+  anggota_nama?: string;
+  kepengurusan_nama?: string;
+  divisi_nama?: string;
+  jabatan_nama?: string;
+  foto_anggota?: string;
+  linkedin?: string;
+  instagram?: string;
 }
