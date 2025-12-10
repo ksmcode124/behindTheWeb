@@ -11,6 +11,9 @@ import { SocialMediaLink } from '@/components/ui/SocialMediaLink';
 import { SOCIAL_MEDIA } from '../../components/socialMedia';
 
 import { TEAM } from '../components/data/team';
+import InfiniteCarousel, {
+  ScrollingBoxes,
+} from '../components/InfiniteCarousel';
 
 export default function TheTeam() {
   return (
@@ -30,13 +33,13 @@ export default function TheTeam() {
             </h1>
           </div>
           {/* Subtitle + Social Links */}
-          <div className="flex w-full max-w-6xl flex-col items-start justify-center gap-10 pl-10 lg:flex-row lg:items-center lg:pl-0">
+          <div className="flex w-full max-w-6xl flex-col items-start justify-center gap-5 pl-10 lg:flex-row lg:items-center lg:pl-0">
             {/* Left: Title + Tagline */}
-            <div className="space-y-5 text-center lg:text-left">
+            <div className="space-y-5 text-left">
               <ShadowedText className="-skew-3 text-5xl lg:text-9xl">
                 CODE124
               </ShadowedText>
-              <h3 className="-skew-3 text-3xl text-[#e6e6e6] lg:text-7xl">
+              <h3 className="-skew-3 text-4xl text-[#e6e6e6] lg:text-7xl">
                 #TheFirstCommit
               </h3>
             </div>
@@ -63,6 +66,18 @@ export default function TheTeam() {
               </div>
             </div>
           </div>
+          <section className="mb-[5vh] flex w-full flex-col gap-6 bg-[#27292D] px-4 py-6">
+            <ScrollingBoxes speed={45} />
+            <InfiniteCarousel
+              images={[
+                { src: '/assets/images/logo_white.png' },
+                { src: '/assets/images/logo_black.png' },
+                { src: '/assets/images/first_commit.webp' },
+              ]}
+              speed={45}
+            />
+            <ScrollingBoxes speed={45} />
+          </section>
         </section>
 
         <Wrapper>
@@ -70,17 +85,17 @@ export default function TheTeam() {
             {
               title: 'UI/UX Designer',
               members: TEAM,
-              rotation: '-rotate-2 sm:-rotate-3 md:-rotate-4',
+              rotation: '-rotate-3',
             },
             {
               title: 'Frontend Developer',
               members: TEAM,
-              rotation: 'rotate-2 sm:rotate-3 md:rotate-4',
+              rotation: 'rotate-3',
             },
             {
               title: 'Backend Developer',
               members: TEAM,
-              rotation: '-rotate-1 sm:-rotate-2 md:-rotate-3',
+              rotation: '-rotate-3',
             },
           ].map((section, index) => (
             <div
