@@ -29,9 +29,9 @@ export default function Inti() {
                         className="justify-center items-center mx-auto"
                     />
                     <div className="py-6 justify-center items-center text-center">
-                        <h3 className="text-base font-normal text-[#FFF9E6]">{player.nama}</h3>
+                        <h3 className="text-base md:text-[27px] font-normal text-[#FFF9E6]">{player.nama}</h3>
                         <div className="h-0.5 bg-[#DEBB95] w-full mx-auto mt-1 mb-2"></div>
-                        <p className="text-xs font-normal text-[#FFF9E6]">{player.role}</p>
+                        <p className="text-xs md:text-lg font-normal text-[#FFF9E6]">{player.role}</p>
                     </div>
                 </div>
             ))}
