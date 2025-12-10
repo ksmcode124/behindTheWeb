@@ -12,33 +12,33 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import Logo from "@/app/components/ui/Logo"
+import Logo from "@/components/ui/Logo"
 
 // Menu items.
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "/admin",
     icon: Home,
   },
   {
     title: "Kepengurusan",
-    url: "#",
+    url: "/admin/kepengurusan",
     icon: Building,
   },
   {
     title: "Divisi",
-    url: "#",
+    url: "/admin/divisi",
     icon: Users,
   },
   {
     title: "Anggota",
-    url: "#",
+    url: "/admin/anggota",
     icon: UserIcon,
   },
   {
     title: "Jabatan",
-    url: "#",
+    url: "/admin/jabatan",
     icon: Star,
   },
 ]
