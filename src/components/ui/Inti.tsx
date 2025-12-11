@@ -10,7 +10,7 @@ const size = 0;
 export default function Inti({ divisi }: IntiProps) {
   return (
     <div className="flex items-center justify-center gap-15 md:gap-48">
-      {divisi.anggota.map((anggota) => (
+      {divisi?.anggota.map((anggota) => (
         <div key={anggota.nama_anggota} className="items-center justify-center">
           <FlipCard
             size={size}

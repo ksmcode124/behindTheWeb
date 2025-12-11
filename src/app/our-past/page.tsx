@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 
-import Navbar from '@/components/sections/Navigation/Navbar';
+import Navbar from '@/components/sections/Navbar';
 import Footer from '@/components/sections/Footer';
 import OurPast from '@/components/sections/OurPast';
 
@@ -26,8 +26,8 @@ export default function TheTeam() {
     helper: {
       years: string[];
       index: number;
-      prev: string;
-      next: string;
+      prev: string | null;
+      next: string | null;
     };
   } | null>(null);
 
@@ -36,34 +36,51 @@ export default function TheTeam() {
   useEffect(() => {
     let cancelled = false;
 
-    axios.get('/api/display/btw?tahun=[${currentIindex}]').then((res) => {
-      if (!cancelled) {
+    if (!kepengurusan) {
+      axios.get('/api/display/btw').then((res) => {
         setKepengurusan(res.data);
-        setCurrentIndex(res.data.helper.index || 0);
-      }
-    });
+      });
+    }
+
+    console.log(
+      `/api/display/btw?tahun=${kepengurusan?.helper.years[currentIndex]}`,
+    );
+
+    axios
+      .get(`/api/display/btw?tahun=${kepengurusan?.helper.years[currentIndex]}`)
+      .then((res) => {
+        if (cancelled) return;
+
+        const newIndex = res.data.helper.index ?? 0;
+
+        setKepengurusan(res.data);
+
+        if (newIndex !== currentIndex) {
+          setCurrentIndex(newIndex);
+        }
+      });
 
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [currentIndex]);
 
   const scrollToIndex = (index: number) => {
     if (!kepengurusan) return;
-    const clampedIndex = Math.max(
-      0,
-      Math.min(index, kepengurusan.helper.years.length - 1),
-    );
-    setCurrentIndex(clampedIndex);
+
+    const max = kepengurusan.helper.years.length - 1;
+    const clamped = Math.max(0, Math.min(index, max));
+
+    setCurrentIndex(clamped);
   };
 
   const carouselRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!carouselRef.current || !kepengurusan?.helper?.years) return;
 
     const container = carouselRef.current;
-    const children = container.children;
-    const target = children[currentIndex] as HTMLElement;
+    const target = container.children[currentIndex] as HTMLElement;
 
     if (target) {
       container.scrollTo({
@@ -281,7 +298,7 @@ export default function TheTeam() {
                 <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-wrap justify-center gap-12 px-4">
                   {(
                     kepengurusan?.data.divisi.find(
-                      (d) => d.nama_divisi === 'Inti',
+                      (d) => d.nama_divisi === 'INTI',
                     )?.anggota || []
                   ).map(
                     ({
@@ -315,7 +332,7 @@ export default function TheTeam() {
                     key={index}
                     className="relative z-10 flex w-full flex-col items-center px-4 py-8 sm:px-6 sm:py-10 md:px-8 md:py-12 lg:py-16"
                   >
-                    <h3 className="text-primary-500 mb-4 -rotate-3 text-3xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:1.5px] sm:mb-5 sm:text-4xl sm:[-webkit-text-stroke-width:2px] md:mb-6 md:text-5xl md:[-webkit-text-stroke-width:2.5px] lg:text-6xl xl:text-7xl">
+                    <h3 className="text-primary-500 mb-10 -skew-4 text-5xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:2.5px] text-shadow-[5px_4px_0_var(--color-primary-600)] lg:text-7xl">
                       {divisi.nama_divisi}
                     </h3>
                     <Carousel anggotaProp={divisi.anggota} />

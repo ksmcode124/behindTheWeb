@@ -1,6 +1,6 @@
 import Footer from '@/components/sections/Footer';
 import Hero from './components/Hero';
-import Navbar from '../components/sections/Navigation/Navbar';
+import Navbar from '../components/sections/Navbar';
 import Origin from './components/Origin';
 import OurPast from '../components/sections/OurPast';
 import Team from './components/Team';

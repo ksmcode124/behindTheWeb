@@ -1,13 +1,16 @@
 import Image from 'next/image';
-import Code124Black from '/public/assets/images/logo_black.png';
-import Code124White from '/public/assets/images/logo_white.png';
+import Code124Black from '/public/assets/images/logo_black.webp';
+import Code124White from '/public/assets/images/logo_white.webp';
 
 interface LogoProps {
   variant?: 'black' | 'white';
   text?: string;
 }
 
-export default function Logo({ variant = 'black', text = 'CODE124' }: LogoProps) {
+export default function Logo({
+  variant = 'black',
+  text = 'CODE124',
+}: LogoProps) {
   const logoConfig = {
     black: Code124Black,
     white: Code124White,
