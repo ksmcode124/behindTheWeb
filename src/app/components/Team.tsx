@@ -2,8 +2,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Wrapper from '../../components/ui/Wrapper';
 import Inti from '@/components/ui/Inti';
-import { apiGet } from '@/lib/btw/api';
-import { KepengurusanResponse } from '@/lib/btw/interfaces/btw';
 
 export default async function Team({ divisi }: { divisi: any }) {
   return (
@@ -79,64 +77,66 @@ export default async function Team({ divisi }: { divisi: any }) {
 
         {/* Content */}
         <div className="mx-auto flex w-full max-w-6xl flex-wrap justify-center gap-12">
-          <Inti divisi={divisi?.find((d) => d.nama_divisi === 'Inti')} />
+          <Inti divisi={divisi?.find((d) => d.nama_divisi === 'INTI')} />
         </div>
       </section>
 
       <Wrapper className="flex flex-col gap-24 py-20">
-        {divisi.map(({ nama_divisi, foto_divisi, id }) => (
-          <div key={id} className="flex w-full flex-col items-center">
-            {/* TITLE */}
-            <h3 className="text-primary-500 mb-10 -skew-4 text-5xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:2.5px] text-shadow-[5px_4px_0_var(--color-primary-600)] lg:text-7xl">
-              {nama_divisi}
-            </h3>
+        {divisi
+          .filter((d) => d.nama_divisi !== 'INTI')
+          .map(({ nama_divisi, foto_divisi, id }) => (
+            <div key={id} className="flex w-full flex-col items-center">
+              {/* TITLE */}
+              <h3 className="text-primary-500 mb-10 -skew-4 text-5xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:2.5px] text-shadow-[5px_4px_0_var(--color-primary-600)] lg:text-7xl">
+                {nama_divisi}
+              </h3>
 
-            {/* CARD */}
-            <div className="border-secondary-300 relative w-full max-w-4xl overflow-hidden border-[1.25em]">
-              <div className="absolute top-[37%] -right-30 z-1 rotate-90 lg:-right-40">
-                <p
-                  className="text-secondary-400 text-5xl leading-none whitespace-nowrap lg:text-6xl"
-                  style={{
-                    WebkitTextStroke: '2px var(--color-secondary-300)',
-                  }}
-                >
-                  THE FIRST COMMIT
-                </p>
-              </div>
+              {/* CARD */}
+              <div className="border-secondary-300 relative w-full max-w-4xl overflow-hidden border-[1.25em]">
+                <div className="absolute top-[37%] -right-30 z-1 rotate-90 lg:-right-40">
+                  <p
+                    className="text-secondary-400 text-5xl leading-none whitespace-nowrap lg:text-6xl"
+                    style={{
+                      WebkitTextStroke: '2px var(--color-secondary-300)',
+                    }}
+                  >
+                    THE FIRST COMMIT
+                  </p>
+                </div>
 
-              <div className="relative h-[430px] w-full">
-                <Image
-                  src={
-                    foto_divisi && foto_divisi.trim() !== ''
-                      ? foto_divisi
-                      : '/assets/images/origin_first_commit.webp'
-                  }
-                  alt={nama_divisi}
-                  fill
-                  className="object-cover"
-                />
-              </div>
+                <div className="relative h-[430px] w-full">
+                  <Image
+                    src={
+                      foto_divisi && foto_divisi.trim() !== ''
+                        ? foto_divisi
+                        : '/assets/images/origin_first_commit.webp'
+                    }
+                    alt={nama_divisi}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
 
-              <div className="absolute bottom-0 left-0 flex w-full items-end justify-between gap-3">
-                <p className="text-secondary-400 max-w-[70%] p-4 text-sm">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Ratione, sunt esse placeat iusto consequuntur quos animi, non
-                  expedita sapiente rem sint consectetur deserunt nostrum sequi
-                  saepe ipsam vitae obcaecati fugiat!
-                </p>
+                <div className="absolute bottom-0 left-0 flex w-full items-end justify-between gap-3">
+                  <p className="text-secondary-400 max-w-[70%] p-4 text-sm">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                    Ratione, sunt esse placeat iusto consequuntur quos animi,
+                    non expedita sapiente rem sint consectetur deserunt nostrum
+                    sequi saepe ipsam vitae obcaecati fugiat!
+                  </p>
 
-                <Link
-                  href="/"
-                  className="border-secondary-300 hover:text-secondary-300 bg-primary-600 text-secondary-400 hover:bg-secondary-400 pointer-events-auto relative border-[0.4em] px-4 py-1 text-center text-2xl font-bold transition-colors duration-300"
-                >
-                  SELENGKAPNYA
-                </Link>
+                  <Link
+                    href="/"
+                    className="border-secondary-300 hover:text-secondary-300 bg-primary-600 text-secondary-400 hover:bg-secondary-400 pointer-events-auto relative border-[0.4em] px-4 py-1 text-center text-2xl font-bold transition-colors duration-300"
+                  >
+                    SELENGKAPNYA
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
       </Wrapper>
     </>
   );
