@@ -12,7 +12,7 @@ import { SocialMediaLink } from '@/components/ui/SocialMediaLink';
 import { TEAM, BOARD } from '../components/data/team';
 import { FlipCard } from '@/components/ui/FlipCard';
 import { SOCIAL_MEDIA } from '@/components/socialMedia';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import axios from 'axios';
 import { Divisi } from '@/lib/btw/interfaces/btw';
 
@@ -31,15 +31,15 @@ export default function TheTeam() {
     };
   } | null>(null);
 
-  const [currentIndex, setCurrentIndex] = useState(kepengurusan?.helper.index);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
 
-    axios.get('/api/display/btw').then((res) => {
+    axios.get('/api/display/btw?tahun=[${currentIindex}]').then((res) => {
       if (!cancelled) {
         setKepengurusan(res.data);
-        setCurrentIndex(res.data.helper.index);
+        setCurrentIndex(res.data.helper.index || 0);
       }
     });
 
@@ -50,8 +50,28 @@ export default function TheTeam() {
 
   const scrollToIndex = (index: number) => {
     if (!kepengurusan) return;
-    setCurrentIndex(index);
+    const clampedIndex = Math.max(
+      0,
+      Math.min(index, kepengurusan.helper.years.length - 1),
+    );
+    setCurrentIndex(clampedIndex);
   };
+
+  const carouselRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!carouselRef.current || !kepengurusan?.helper?.years) return;
+
+    const container = carouselRef.current;
+    const children = container.children;
+    const target = children[currentIndex] as HTMLElement;
+
+    if (target) {
+      container.scrollTo({
+        left: target.offsetLeft,
+        behavior: 'smooth',
+      });
+    }
+  }, [currentIndex, kepengurusan?.helper?.years]);
 
   return (
     <>
@@ -176,7 +196,7 @@ export default function TheTeam() {
         <Wrapper>
           {/* Dots Indicator */}
           <div className="relative z-10 flex justify-center gap-2">
-            {kepengurusan?.helper.years.map((_, idx) => (
+            {kepengurusan?.helper?.years?.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => scrollToIndex(idx)}
@@ -243,6 +263,7 @@ export default function TheTeam() {
 
           {/* Scrollable Container - Each year is a page */}
           <div
+            ref={carouselRef}
             id="carousel-container"
             className="relative z-10 flex w-full snap-x snap-mandatory overflow-x-auto scroll-smooth"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
@@ -258,36 +279,38 @@ export default function TheTeam() {
               <div key={idx} className="w-full flex-shrink-0 snap-center">
                 {/* Ketua & Wakil Section */}
                 <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-wrap justify-center gap-12 px-4">
-                  {kepengurusan?.data.divisi
-                    .find((d) => d.nama_divisi == 'Inti')
-                    ?.anggota.map(
-                      ({
-                        nama_anggota,
-                        foto_anggota,
-                        instagram,
-                        linkedin,
-                        jabatan,
-                        id,
-                      }) => (
-                        <div
-                          key={id}
-                          className="flex flex-col items-center gap-4"
-                        >
-                          <FlipCard
-                            size={1}
-                            nama={nama_anggota}
-                            role={jabatan}
-                            imageSrc={foto_anggota}
-                            ig={instagram}
-                            linkedIn={linkedin}
-                          />
-                        </div>
-                      ),
-                    )}
+                  {(
+                    kepengurusan?.data.divisi.find(
+                      (d) => d.nama_divisi === 'Inti',
+                    )?.anggota || []
+                  ).map(
+                    ({
+                      nama_anggota,
+                      foto_anggota,
+                      instagram,
+                      linkedin,
+                      jabatan,
+                      id,
+                    }) => (
+                      <div
+                        key={id}
+                        className="flex flex-col items-center gap-4"
+                      >
+                        <FlipCard
+                          size={1}
+                          nama={nama_anggota}
+                          role={jabatan}
+                          imageSrc={foto_anggota}
+                          ig={instagram}
+                          linkedIn={linkedin}
+                        />
+                      </div>
+                    ),
+                  )}
                 </div>
 
                 {/* Developer Carousels */}
-                {kepengurusan?.data.divisi.map((divisi, index) => (
+                {(kepengurusan?.data.divisi || []).map((divisi, index) => (
                   <div
                     key={index}
                     className="relative z-10 flex w-full flex-col items-center px-4 py-8 sm:px-6 sm:py-10 md:px-8 md:py-12 lg:py-16"

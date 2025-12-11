@@ -76,7 +76,7 @@ export default function Carousel({ anggotaProp }: { anggotaProp: Anggota[] }) {
             <FlipCard
               size={size}
               imageSrc={
-                anggota?.foto_anggota && anggota.foto_anggota.trim() !== ''
+                anggota?.foto_anggota && anggota.foto_anggota.trim() !== null
                   ? anggota.foto_anggota
                   : '/assets/images/origin_first_commit.webp'
               }
@@ -91,7 +91,7 @@ export default function Carousel({ anggotaProp }: { anggotaProp: Anggota[] }) {
             key={i}
             size={size}
             imageSrc={
-              anggota?.foto_anggota && anggota.foto_anggota.trim() !== ''
+              anggota?.foto_anggota && anggota.foto_anggota.trim() !== null
                 ? anggota.foto_anggota
                 : '/assets/images/origin_first_commit.webp'
             }
