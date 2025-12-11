@@ -1,3 +1,5 @@
+// api/display/btw/route.ts
+
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { mapKepengurusan } from '@/lib/btw/map';
@@ -33,7 +35,7 @@ export async function GET(request: NextRequest) {
       orderBy: { nama_divisi: 'asc' },
       include: {
         detail: {
-          where: { id_btw: kepengurusan.id_btw },
+          where: { id_btw: kepengurusan.id_btw }, // ✅ Filter by tahun
           include: {
             anggota: true,
             jabatan: true,
@@ -46,25 +48,28 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    // Map hasil query ke bentuk yang diharapkan oleh mapKepengurusan
-    const mappedDivisi = divisi.map((d: any) => ({
-      nama_divisi: d.nama_divisi,
-      foto_divisi: d.foto_divisi ?? null,
-      anggota: Array.isArray(d.detail)
-        ? d.detail.map((detail: any) => ({
-            nama_anggota: detail.anggota?.nama_anggota ?? '',
-            foto_anggota: detail.anggota?.foto_anggota ?? null,
-            linkedin: detail.anggota?.linkedin ?? null,
-            instagram: detail.anggota?.instagram ?? null,
-            jabatan: detail.jabatan?.nama_jabatan ?? '',
-          }))
-        : [],
-    }));
+    // ✅ FILTER: Hanya divisi yang punya anggota di tahun ini
+    const divisiWithMembers = divisi
+      .filter((d: any) => d.detail && d.detail.length > 0) // ✅ Filter divisi kosong
+      .map((d: any) => ({
+        nama_divisi: d.nama_divisi,
+        foto_divisi: d.foto_divisi ?? null,
+        anggota: d.detail.map((detail: any) => ({
+          nama_anggota: detail.anggota?.nama_anggota ?? '',
+          foto_anggota: detail.anggota?.foto_anggota ?? null,
+          linkedin: detail.anggota?.linkedin ?? null,
+          instagram: detail.anggota?.instagram ?? null,
+          jabatan: detail.jabatan?.nama_jabatan ?? '',
+        })),
+      }));
 
-    // Gunakan mapper (opsi B)
+    // Gunakan mapper
     const response = mapKepengurusan(
-      { tahun_kerja: kepengurusan.tahun_kerja, nama_kepengurusan: kepengurusan.nama_kepengurusan },
-      mappedDivisi,
+      { 
+        tahun_kerja: kepengurusan.tahun_kerja, 
+        nama_kepengurusan: kepengurusan.nama_kepengurusan 
+      },
+      divisiWithMembers, // ✅ Pass filtered divisi
       tahunList
     );
 
