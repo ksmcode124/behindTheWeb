@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Anton, Poppins } from 'next/font/google';
 import '@/app/globals.css';
+import Navbar from '@/components/sections/Navbar';
+import Footer from '@/components/sections/Footer';
 
 const anton = Anton({
   subsets: ['latin'],
@@ -28,8 +30,9 @@ export default function RootLayout({
       <body
         className={`${anton.variable} ${poppins.className} font-display antialiased`}
       >
-        {/* <div className="bg-contains bg-top-center pointer-events-none absolute top-0 left-0 z-20 h-[1000vw] min-w-screen bg-[url('/assets/images/Texture.png')]" /> */}
+        <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

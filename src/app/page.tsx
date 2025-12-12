@@ -12,17 +12,11 @@ export default async function Index() {
   const data = res.data;
 
   return (
-    <>
-      <Navbar />
-
-      <main className="bg-secondary-300 font-display min-h-screen">
-        <Hero />
-        <Origin />
-        <Team divisi={data.divisi} />
-        <OurPast />
-      </main>
-
-      <Footer />
-    </>
+    <main className="bg-secondary-300 font-display min-h-screen">
+      <Hero />
+      <Origin />
+      <Team divisi={data.divisi} />
+      <OurPast />
+    </main>
   );
 }

@@ -6,7 +6,6 @@ interface ShadowedTextProps {
   className?: string;
   textShadow?: string;
   textColor?: string;
-  /** Custom stroke width (will be responsive automatically) */
   strokeWidth?: string;
 }
 
