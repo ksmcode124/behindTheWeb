@@ -79,7 +79,7 @@ export function FlipCard({
         {/* FRONT */}
         <div
           className={cn(
-            '[backface-visibility:hidden overflow-hidden] text-secondary-400 absolute flex h-full w-full items-center justify-center bg-blue-400 bg-cover font-semibold',
+            '[backface-visibility:hidden overflow-hidden] text-secondary-400 absolute flex h-full w-full items-center justify-center bg-blue-400 bg-cover bg-center font-semibold',
             size === 0
               ? 'rounded-[22.9px] border-[5.33px] border-[#DEBC96] md:rounded-[46.62px]'
               : size === 1

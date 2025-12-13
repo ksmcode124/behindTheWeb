@@ -1,0 +1,54 @@
+import Image from 'next/image';
+import Wrapper from '@/components/common/Wrapper';
+import Inti from '@/features/home/Inti';
+import { Divisi } from '@/lib/btw/interfaces/btw';
+import { isInti } from '@/lib/utils';
+import SingleDivisiCard from './SingleDivisiCard';
+import DecorativeText from './DecorativeText';
+
+export default async function DivisionsSection({
+  divisi,
+}: {
+  divisi: Divisi[];
+}) {
+  return (
+    <>
+      <section className="text-secondary-400 relative flex min-h-[70vh] w-full flex-col items-center justify-center gap-8 px-6">
+        {/* Title with small line accents */}
+        <div className="relative w-fit">
+          <h2 className="border-secondary border-b-2 px-5 pb-5 text-center text-5xl">
+            MEET OUR TEAM
+          </h2>
+
+          <Image
+            src="/images/line_brow_black.webp"
+            alt=""
+            width={200}
+            height={200}
+            className="absolute bottom-0 left-0 h-8 w-20 translate-y-[50%] object-cover object-right"
+          />
+          <Image
+            src="/images/line_brow_black.webp"
+            alt=""
+            width={200}
+            height={200}
+            className="absolute right-0 bottom-0 h-8 w-20 translate-y-[50%] scale-x-[-1] object-cover object-right"
+          />
+        </div>
+        <DecorativeText />
+        {/* Content */}
+        <div className="mx-auto flex w-full max-w-6xl flex-wrap justify-center gap-12">
+          <Inti divisi={divisi.find((d) => isInti(d))} />
+        </div>
+      </section>
+
+      <Wrapper className="flex flex-col gap-24 py-20">
+        {divisi
+          .filter((d) => !isInti(d))
+          .map((divisi, index) => (
+            <SingleDivisiCard divisi={divisi} key={index} />
+          ))}
+      </Wrapper>
+    </>
+  );
+}

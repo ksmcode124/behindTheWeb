@@ -3,15 +3,15 @@ import { FlipCard } from '../../components/common/FlipCard';
 import { Divisi } from '@/lib/btw/interfaces/btw';
 
 interface IntiProps {
-  divisi: Divisi;
+  divisi?: Divisi;
 }
 
 const size = 0;
 export default function Inti({ divisi }: IntiProps) {
   return (
     <div className="flex items-center justify-center gap-15 md:gap-48">
-      {divisi?.anggota.map((anggota) => (
-        <div key={anggota.id} className="items-center justify-center">
+      {divisi?.anggota.map((anggota, index) => (
+        <div key={index} className="items-center justify-center">
           <FlipCard
             size={size}
             imageSrc={anggota.foto_anggota}

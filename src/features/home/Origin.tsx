@@ -1,12 +1,9 @@
 import Image from 'next/image';
 import ShadowedText from '@/components/ui/ShadowedText';
 import AccordionParent from './Accordion';
-import InfiniteCarousel, {
-  ScrollingBoxes,
-} from '../../components/common/InfiniteCarousel';
-import { Divisi, KepengurusanResponse } from '@/lib/btw/interfaces/btw';
+import CodeLens from '@/components/common/CodeLens';
+import { KepengurusanResponse } from '@/lib/btw/interfaces/btw';
 import { apiGet } from '@/lib/btw/api';
-import { IMAGES } from '@/lib/constants';
 
 const ORIGIN_DESCRIPTION = [
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio facilis, est adipisci expedita recusandae architecto facere aut eligendi non consectetur nulla tempore inventore, aperiam fugiat vitae? Magni aliquid ut assumenda?',
@@ -15,14 +12,14 @@ const ORIGIN_DESCRIPTION = [
 ];
 
 export default async function Origin() {
-  const res = await apiGet<KepengurusanResponse>('/api/display/btw');
-  const data = res.data;
+  const kepengurusanResponse =
+    await apiGet<KepengurusanResponse>('/api/display/btw');
 
   return (
     <>
       <OriginIntro />
       <OriginStory />
-      <DivisionCarousel divisions={data.divisi} />
+      <CodeLens data={kepengurusanResponse} />
       <AccordionSection />
     </>
   );
@@ -48,8 +45,6 @@ function OriginIntro() {
     </div>
   );
 }
-
-// ==================== ORIGIN STORY SECTION ====================
 
 function OriginImage() {
   return (
@@ -109,26 +104,12 @@ function OriginStory() {
   );
 }
 
-function DivisionCarousel({ divisions }: { divisions: Divisi[] }) {
-  const carouselImages = divisions.map((division) => ({
-    src: division.foto_divisi ? division.foto_divisi : IMAGES.FALLBACK,
-  }));
-
-  return (
-    <section className="bg-secondary-300 mb-[5vh] flex w-full flex-col gap-6 px-4 py-6">
-      <ScrollingBoxes speed={45} />
-      <InfiniteCarousel images={carouselImages} speed={45} />
-      <ScrollingBoxes speed={45} />
-    </section>
-  );
-}
-
 function AccordionHeader() {
   return (
     <div className="relative top-11 z-2 flex w-full justify-between lg:top-15">
       <ShadowedText
         className="pl-15 text-7xl lg:text-9xl"
-        textShadow="6px 6px 0 var(--color-primary-300)"
+        textShadow="6px 6px 0 #5EAA9E"
       >
         124
       </ShadowedText>
@@ -143,50 +124,29 @@ function AccordionHeader() {
   );
 }
 
-interface DecorativeBarsProps {
-  position: 'left' | 'right';
-}
-
-function DecorativeBars({ position }: DecorativeBarsProps) {
-  const bars =
-    position === 'left'
-      ? [
-          { height: '60%', lgHeight: '120%', color: 'bg-primary-500' },
-          { height: '45%', lgHeight: '95%', color: 'bg-primary-300' },
-          { height: '25%', lgHeight: '75%', color: 'bg-primary-200' },
-        ]
-      : [
-          { height: '25%', lgHeight: '75%', color: 'bg-primary-200' },
-          { height: '45%', lgHeight: '95%', color: 'bg-primary-300' },
-          { height: '60%', lgHeight: '120%', color: 'bg-primary-500' },
-        ];
-
-  return (
-    <div
-      className={`absolute bottom-[-4vw] ${position}-5 flex h-40 items-end gap-3`}
-    >
-      {bars.map((bar, index) => (
-        <div
-          key={index}
-          className={`${bar.color} w-8 rounded-md lg:w-16 lg:h-[${bar.lgHeight}] h-[${bar.height}]`}
-        />
-      ))}
-    </div>
-  );
-}
-
 function AccordionSection() {
   return (
     <>
       <AccordionHeader />
       <section className="flex w-full items-center justify-center px-[11vw] py-[11vw] lg:mb-10">
-        <div className="relative flex h-full w-full items-center justify-center bg-[url('/images/hero_bg.webp')] bg-cover bg-center p-[4vw] shadow-[0_0_0_4vw_var(--color-primary-200),0_0_0_8vw_var(--color-primary-500),0_0_0_12vw_var(--color-primary-400)]">
+        <div className="relative flex h-full w-full items-center justify-center bg-[url('/images/hero_bg.webp')] bg-cover bg-center p-[4vw] shadow-[0_0_0_4vw_var(--color-primary-200),0_0_0_8vw_#FEB863,0_0_0_12vw_#F2D3A5]">
           <div className="relative w-full max-w-[800px]">
             <AccordionParent />
+
+            {/* BOTTOM-LEFT BARS */}
+          </div>
+          <div className="absolute bottom-[-4vw] left-5 flex h-40 items-end gap-3">
+            <div className="bg-primary-500 h-[60%] w-8 rounded-md lg:h-[120%] lg:w-16" />
+            <div className="bg-primary-300 h-[45%] w-8 rounded-md lg:h-[95%] lg:w-16" />
+            <div className="bg-primary-200 h-[25%] w-8 rounded-md lg:h-[75%] lg:w-16" />
           </div>
 
-          <DecorativeBars position="left" />
-          <DecorativeBars position="right" />
+          {/* BOTTOM-RIGHT BARS (REVERSED) */}
+          <div className="absolute right-5 bottom-[-4vw] flex h-40 items-end gap-3">
+            <div className="bg-primary-200 h-[25%] w-8 rounded-md lg:h-[75%] lg:w-16" />
+            <div className="bg-primary-300 h-[45%] w-8 rounded-md lg:h-[95%] lg:w-16" />
+            <div className="bg-primary-500 h-[60%] w-8 rounded-md lg:h-[120%] lg:w-16" />
+          </div>
         </div>
       </section>
     </>

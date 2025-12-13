@@ -48,12 +48,7 @@ export default function Carousel({ anggotaProp }: { anggotaProp: Anggota[] }) {
           onClick={handlePrev}
           className="p-auto justify-content-center text-secondary-400 h-[70px] w-[70px] justify-items-center rounded-full bg-[#393c45]"
         >
-          <Image
-            src="/images/icon/Vector.svg"
-            alt="Previous"
-            width={17}
-            height={28}
-          />
+          <Image src="/icon/Vector.svg" alt="Previous" width={17} height={28} />
         </button>
       ) : null}
 
@@ -108,7 +103,7 @@ export default function Carousel({ anggotaProp }: { anggotaProp: Anggota[] }) {
           className="p-auto justify-content-center text-secondary-400 h-[70px] w-[70px] justify-items-center rounded-full bg-[#393c45]"
         >
           <Image
-            src="/images/icon/Vector.svg"
+            src="/icon/Vector.svg"
             alt="Next"
             className="rotate-180"
             width={17}
