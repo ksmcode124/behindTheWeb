@@ -2,8 +2,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Wrapper from '@/components/common/Wrapper';
 import Inti from '@/features/home/Inti';
+import { Divisi } from '@/lib/btw/interfaces/btw';
 
-export default async function Team({ divisi }: { divisi: any }) {
+export default async function Team({ divisi }: { divisi: Divisi[] }) {
   return (
     <>
       <section className="text-secondary-400 relative flex min-h-[70vh] w-full flex-col items-center justify-center gap-8 px-6">
@@ -82,8 +83,8 @@ export default async function Team({ divisi }: { divisi: any }) {
       </section>
 
       <Wrapper className="flex flex-col gap-24 py-20">
-        {divisi.map(({ nama_divisi, foto_divisi, id }) => (
-          <div key={id} className="flex w-full flex-col items-center">
+        {divisi.map(({ nama_divisi, foto_divisi, id }, index) => (
+          <div key={index} className="flex w-full flex-col items-center">
             {/* TITLE */}
             <h3 className="text-primary-500 mb-10 -skew-4 text-5xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:2.5px] text-shadow-[5px_4px_0_var(--color-primary-600)] lg:text-7xl">
               {nama_divisi}

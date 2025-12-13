@@ -1,3 +1,6 @@
+export const KSM_NAME = "CODE124";
+export const KSM_TAGLINE = "#TheFirstCommit";
+
 export const SOCIAL_MEDIA = [
   {
     platform: 'instagram' as const,
@@ -65,10 +68,9 @@ export const ROUTES = {
 };
 
 export const NAV_ITEMS = [
-  { label: 'Home', href: ROUTES.HOME },
-  { label: 'The Team', href: ROUTES.THE_TEAM },
-  { label: 'Our Past', href: ROUTES.OUR_PAST },
+  { label: 'HOME', href: ROUTES.HOME },
+  { label: 'THE TEAM', href: ROUTES.THE_TEAM },
+  { label: 'OUR PAST', href: ROUTES.OUR_PAST },
 ];
-
 
 export const CAROUSEL_SPEED = 45;

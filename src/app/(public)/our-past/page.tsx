@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Wrapper from '@/components/common/Wrapper';
 import Carousel from '@/components/common/Carousel';
 import ShadowedText from '@/components/ui/ShadowedText';
-import { SocialMediaLink } from '@/components/common/SocialMediaLink';
+import { SocialMediaLink } from '@/components/ui/SocialMediaLink';
 import { FlipCard } from '@/components/common/FlipCard';
 import { SOCIAL_MEDIA } from '@/lib/constants';
 import { useEffect, useRef, useState } from 'react';

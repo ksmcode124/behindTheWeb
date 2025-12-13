@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { SocialMediaLink } from '@/components/common/SocialMediaLink';
+import { SocialMediaLink } from '@/components/ui/SocialMediaLink';
 import ShadowedText from '@/components/ui/ShadowedText';
 import { SOCIAL_MEDIA } from '@/lib/constants';
 

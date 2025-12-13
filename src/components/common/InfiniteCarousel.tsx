@@ -1,5 +1,6 @@
 'use client';
 
+import { IMAGES } from '@/lib/constants';
 import Image from 'next/image';
 import { useRef, useEffect, useState } from 'react';
 

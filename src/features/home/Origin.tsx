@@ -6,6 +6,7 @@ import InfiniteCarousel, {
 } from '../../components/common/InfiniteCarousel';
 import { Divisi, KepengurusanResponse } from '@/lib/btw/interfaces/btw';
 import { apiGet } from '@/lib/btw/api';
+import { IMAGES } from '@/lib/constants';
 
 const ORIGIN_DESCRIPTION = [
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio facilis, est adipisci expedita recusandae architecto facere aut eligendi non consectetur nulla tempore inventore, aperiam fugiat vitae? Magni aliquid ut assumenda?',
@@ -110,7 +111,7 @@ function OriginStory() {
 
 function DivisionCarousel({ divisions }: { divisions: Divisi[] }) {
   const carouselImages = divisions.map((division) => ({
-    src: division.foto_divisi ?? '/images/origin_first_commit.webp',
+    src: division.foto_divisi ? division.foto_divisi : IMAGES.FALLBACK,
   }));
 
   return (

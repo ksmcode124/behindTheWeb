@@ -8,8 +8,8 @@ import OurPast from '@/components/layout/OurPast';
 import Wrapper from '@/components/common/Wrapper';
 import Carousel from '@/components/common/Carousel';
 import ShadowedText from '@/components/ui/ShadowedText';
-import { SocialMediaLink } from '@/components/common/SocialMediaLink';
-import { SOCIAL_MEDIA } from '@/lib/constants';
+import { SocialMediaLink } from '@/components/ui/SocialMediaLink';
+import { IMAGES, SOCIAL_MEDIA } from '@/lib/constants';
 
 import InfiniteCarousel, {
   ScrollingBoxes,
@@ -80,12 +80,12 @@ export default function TheTeam() {
             </div>
           </div>
         </div>
-        <section className="mb-[5vh] flex w-full flex-col gap-6 bg-[#27292D] px-4 py-6">
+        <section className="mb-[5vh] flex w-full flex-col gap-6 bg-[#27292D] py-6">
           <ScrollingBoxes speed={45} />
           <InfiniteCarousel
             images={
               data?.data.divisi.map((d: Divisi) => ({
-                src: d.foto_divisi ?? '/images/origin_first_commit.webp',
+                src: d.foto_divisi ? d.foto_divisi : IMAGES.FALLBACK,
                 alt: d.nama_divisi,
               })) ?? []
             }
@@ -96,17 +96,19 @@ export default function TheTeam() {
       </section>
 
       <Wrapper>
-        {data?.data.divisi.map(({ nama_divisi, anggota, id }) => (
-          <div
-            key={id}
-            className="flex w-full flex-col items-center px-4 py-8 sm:px-6 sm:py-10 md:px-8 md:py-12 lg:py-16"
-          >
-            <h3 className="text-primary-500 mb-10 -skew-4 text-5xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:2.5px] text-shadow-[5px_4px_0_var(--color-primary-600)] lg:text-7xl">
-              {nama_divisi}
-            </h3>
-            <Carousel anggotaProp={anggota} />
-          </div>
-        ))}
+        {data?.data.divisi
+          .filter((d) => d.nama_divisi.toLowerCase() != 'inti')
+          .map(({ nama_divisi, anggota, id }, index) => (
+            <div
+              key={index}
+              className="flex w-full flex-col items-center px-4 py-8 sm:px-6 sm:py-10 md:px-8 md:py-12 lg:py-16"
+            >
+              <h3 className="text-primary-500 mb-10 -skew-4 text-5xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:2.5px] text-shadow-[5px_4px_0_var(--color-primary-600)] lg:text-7xl">
+                {nama_divisi}
+              </h3>
+              <Carousel anggotaProp={anggota} />
+            </div>
+          ))}
       </Wrapper>
 
       <OurPast />

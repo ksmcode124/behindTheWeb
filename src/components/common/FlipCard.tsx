@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
-import { SocialMediaLink } from './SocialMediaLink';
+import { SocialMediaLink } from '../ui/SocialMediaLink';
 const cardVariant = cva('', {
   variants: {
     size: {
