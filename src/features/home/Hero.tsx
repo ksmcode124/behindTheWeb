@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { SocialMediaLink } from '@/components/ui/SocialMediaLink';
 import ShadowedText from '@/components/ui/ShadowedText';
-import { SOCIAL_MEDIA } from '@/lib/constants';
+import { SOCIAL_MEDIA, TEXTURES } from '@/lib/constants';
 
 const HERO_TEXT = `Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae
 ratione distinctio quae accusantium qui corporis est! Libero ipsa
@@ -13,11 +13,13 @@ const ICON_STYLE =
 
 export default function Hero() {
   return (
-    <section className="font-display flex min-h-[87vh] flex-col items-center justify-center gap-4 bg-[url('/images/hero_bg.webp')] bg-cover bg-center px-11">
-      <HeroTitle />
-      <HeroDescription />
-      <HeroFooter />
-    </section>
+    <>
+      <section className="font-display relative flex min-h-[87vh] flex-col items-center justify-center gap-4 bg-cover bg-center px-11">
+        <HeroTitle />
+        <HeroDescription />
+        <HeroFooter />
+      </section>
+    </>
   );
 }
 

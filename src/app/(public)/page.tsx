@@ -5,6 +5,8 @@ import OurPast from '@/components/layout/OurPast';
 import { fetchCurrentKepengurusan } from '@/lib/btw/api';
 import DivisionsSection from '@/features/home/DivisionsSection';
 import { Skeleton } from '@/components/ui/skeleton';
+import { IMAGES, TEXTURES } from '@/lib/constants';
+import TexturedSection from '@/components/ui/TexturedSection';
 
 // Skeleton component for DivisionsSection
 function DivisionsSkeleton() {
@@ -37,8 +39,10 @@ async function DivisionsData() {
 
 export default function HOME() {
   return (
-    <main className="bg-secondary-300 font-display min-h-screen">
-      <Hero />
+    <main className="bg-secondary-300 font-display relative min-h-screen">
+      <TexturedSection background={IMAGES.HERO_BG} texture={TEXTURES.TEXTURE1}>
+        <Hero />
+      </TexturedSection>
       <Origin />
       <Suspense fallback={<DivisionsSkeleton />}>
         <DivisionsData />

@@ -42,7 +42,7 @@ export default function Carousel({ anggotaProp }: { anggotaProp: Anggota[] }) {
   };
 
   return (
-    <div className="bg-blue relative z-2 flex max-w-full items-center justify-center gap-3 overflow-x-hidden px-4 pb-20 font-sans sm:p-20 sm:px-20">
+    <div className="relative z-2 flex max-w-full items-center justify-center gap-3 overflow-x-hidden px-4 pb-20 font-sans sm:p-20 sm:px-20">
       {batchSize === 5 ? (
         <button
           onClick={handlePrev}

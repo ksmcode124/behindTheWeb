@@ -50,16 +50,14 @@ export const IMAGES = {
   FALLBACK: '/images/origin_first_commit.webp',
 } as const;
 
-export const TEXTURE = {
+export const TEXTURES = {
   TEXTURE1: "/textures/texture_1.webp",
   TEXTURE2: "/textures/texture_2.webp",
   TEXTURE3: "/textures/texture_3.webp",
   TEXTURE4: "/textures/texture_4.webp",
   TEXTURE5: "/textures/texture_5.webp",
   TEXTURE6: "/textures/texture_6.webp",
-  TEXTURE7: "/textures/texture_7.webp",
-  TEXTURE8: "/textures/texture_8.webp",
-}
+} as const;
 
 export const ROUTES = {
   HOME: '/',

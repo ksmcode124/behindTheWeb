@@ -4,6 +4,8 @@ import AccordionParent from './Accordion';
 import CodeLens from '@/components/common/CodeLens';
 import { KepengurusanResponse } from '@/lib/btw/interfaces/btw';
 import { apiGet } from '@/lib/btw/api';
+import TexturedSection from '@/components/ui/TexturedSection';
+import { IMAGES, TEXTURES } from '@/lib/constants';
 
 const ORIGIN_DESCRIPTION = [
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio facilis, est adipisci expedita recusandae architecto facere aut eligendi non consectetur nulla tempore inventore, aperiam fugiat vitae? Magni aliquid ut assumenda?',
@@ -18,9 +20,13 @@ export default async function Origin() {
   return (
     <>
       <OriginIntro />
-      <OriginStory />
-      <CodeLens data={kepengurusanResponse} />
-      <AccordionSection />
+      <TexturedSection texture={TEXTURES.TEXTURE4}>
+        <OriginStory />
+        <CodeLens data={kepengurusanResponse} />
+      </TexturedSection>
+      <TexturedSection texture={TEXTURES.TEXTURE3}>
+        <AccordionSection />
+      </TexturedSection>
     </>
   );
 }
@@ -48,13 +54,13 @@ function OriginIntro() {
 
 function OriginImage() {
   return (
-    <div className="relative mx-auto flex aspect-square w-full max-w-md items-center justify-center bg-[url('/images/origin_img_bg.webp')] bg-contain bg-center bg-no-repeat p-5">
+    <div className="relative mx-auto flex aspect-square w-full max-w-lg items-center justify-center bg-[url('/images/origin_img_bg.webp')] bg-contain bg-center bg-no-repeat p-2 sm:p-4 md:max-w-xl md:p-6 lg:max-w-2xl">
       <Image
         src="/images/origin_first_commit.webp"
-        width={350}
-        height={320}
         alt="The Developers"
-        className="max-h-[55%] max-w-[95%] object-contain"
+        fill
+        className="scale-x-[0.86] scale-y-[0.9] object-contain"
+        priority
       />
     </div>
   );
@@ -106,7 +112,7 @@ function OriginStory() {
 
 function AccordionHeader() {
   return (
-    <div className="relative top-11 z-2 flex w-full justify-between lg:top-15">
+    <div className="relative top-[clamp(2.75rem,4vw,3.75rem)] z-2 flex w-full justify-between">
       <ShadowedText
         className="pl-15 text-7xl lg:text-9xl"
         textShadow="6px 6px 0 #5EAA9E"

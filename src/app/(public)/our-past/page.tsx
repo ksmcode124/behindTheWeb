@@ -6,6 +6,8 @@ import HeaderSection from '@/features/our-past/HeaderSection';
 import YearNavigation from '@/features/our-past/YearsNavigation';
 import YearCarouselContainer from '@/features/our-past/YearCarouselContainer';
 import { Skeleton } from '@/components/ui/skeleton';
+import TexturedSection from '@/components/ui/TexturedSection';
+import { TEXTURES } from '@/lib/constants';
 
 function ContentSkeleton() {
   return (
@@ -105,7 +107,9 @@ export default function OurPastTeam() {
 
   return (
     <main className="bg-secondary-300 font-display min-h-screen">
-      <HeaderSection />
+      <TexturedSection texture={TEXTURES.TEXTURE5}>
+        <HeaderSection />
+      </TexturedSection>
       <Wrapper>
         {isLoading ? (
           <ContentSkeleton />

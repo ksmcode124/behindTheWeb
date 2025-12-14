@@ -15,15 +15,15 @@ export default function OurPast() {
 
 function BackgroundLines() {
   return (
-    <div className="pointer-events-none absolute inset-0 bg-[url('/images/line.webp')] bg-contain bg-center bg-no-repeat" />
+    <div className="pointer-events-none absolute inset-0 bg-[url('/images/line.webp')] bg-[length:200%] bg-center bg-no-repeat sm:bg-[length:180%] md:bg-[length:140%] lg:bg-contain" />
   );
 }
 
 function LeftColumn() {
   return (
-    <div className="grid grid-rows-2 lg:-ml-20">
+    <div className="-ml-4 grid grid-rows-2 lg:-ml-20">
       <div /> {/* empty top space */}
-      <div className="flex flex-col items-start gap-6 self-end">
+      <div className="flex flex-col items-start gap-6">
         <CodePrevious />
         <MemberTags />
       </div>
@@ -33,20 +33,20 @@ function LeftColumn() {
 
 function CodePrevious() {
   return (
-    <div className="flex -skew-3 gap-x-6 md:gap-x-10">
-      <ShadowedText className="text-4xl md:text-5xl lg:text-8xl">
+    <div className="flex -skew-3 items-center gap-x-6 md:gap-x-10">
+      <ShadowedText className="text-4xl md:text-5xl lg:text-7xl">
         {KSM_NAME}
       </ShadowedText>
-      <p className="text-3xl md:text-4xl lg:text-7xl">PREVIOUS</p>
+      <p className="text-4xl md:text-5xl lg:text-7xl">PREVIOUS</p>
     </div>
   );
 }
 
 function MemberTags() {
   return (
-    <div className="flex -skew-3 items-center gap-x-8 pl-5 md:gap-x-20 md:pl-10">
+    <div className="flex -skew-3 items-center gap-x-8 md:gap-x-20">
       <p className="text-3xl md:text-4xl lg:text-7xl">MEMBER</p>
-      <div className="flex flex-col text-sm leading-none md:text-lg lg:text-4xl">
+      <div className="flex flex-col text-lg leading-none md:text-lg lg:text-4xl">
         <p className="text-primary-500 [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:1px] text-shadow-[1.5px_1.5px_0_#FEB863]">
           {KSM_TAGLINE}
         </p>
@@ -60,11 +60,11 @@ function MemberTags() {
 
 function RightColumn() {
   return (
-    <div className="grid grid-rows-2 px-5 lg:pl-40">
-      <div className="flex flex-col justify-start">
-        <p className="flex -skew-3 flex-col text-left text-xl leading-tight md:text-3xl lg:text-6xl">
-          <span>CHECKOUT OUR</span>
-          <span>PAST TEAM</span>
+    <div className="grid-rows- grid w-full lg:ml-20">
+      <div className="flex flex-col justify-start px-6 sm:px-8">
+        <p className="-skew-3 text-left text-3xl leading-tight font-bold tracking-tight sm:text-4xl sm:leading-tight md:text-5xl md:leading-snug lg:text-7xl lg:leading-none">
+          <span className="block">CHECKOUT OUR</span>
+          <span className="block">PAST TEAM</span>
         </p>
 
         <Link

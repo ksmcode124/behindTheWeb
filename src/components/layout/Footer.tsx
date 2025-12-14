@@ -18,8 +18,8 @@ function FooterBranding() {
   return (
     <div className="flex w-full flex-col items-start gap-4 pr-8">
       <Logo variant="white" />
-      <h3 className="mb-2 font-bold">{KSM_TAGLINE}</h3>
-      <p className="max-w-full text-left text-xl leading-relaxed text-gray-300 lg:max-w-[350px] lg:text-[14px]">
+      <h3 className="mb-2 text-xl font-bold">{KSM_TAGLINE}</h3>
+      <p className="text-md max-w-full text-left leading-relaxed text-gray-300 lg:max-w-[350px] lg:text-[14px]">
         In Engineering We Trust, In Innovation We Rise. Designing Tomorrow
         Today. Powered By Knowledge, Driven By Innovation. Because Every Problem
         Has A Solution.

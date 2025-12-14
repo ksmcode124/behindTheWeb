@@ -10,7 +10,7 @@ interface ShadowedTextProps {
 }
 
 const DEFAULT_TEXT_SHADOW =
-  '4px 4px 0 #FEB863, 6px 6px 0 #F3D199, 8px 8px 0 #F2D39C, 10px 10px 0 #AEBC8B, 12px 12px 0 #5EAA9E';
+  '7px 7px 0 #FEB863, 12px 12px 0 #F3D199, 14px 14px 0 #F2D39C, 16px 16px 0 #AEBC8B, 18px 18px 0 #5EAA9E';
 
 const DEFAULT_TEXT_COLOR = 'var(--color-secondary-400)';
 
@@ -29,7 +29,7 @@ export default function ShadowedText({
     <Component
       className={`font-display ${className}`}
       style={{
-        WebkitTextStroke: `${strokeWidth || '2.87px'} var(--color-primary-500)`,
+        WebkitTextStroke: `${strokeWidth || '2px'} var(--color-primary-500)`,
         textShadow: shadowValue,
         color: colorValue,
       }}

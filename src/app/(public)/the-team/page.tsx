@@ -10,6 +10,8 @@ import OurPast from '@/components/layout/OurPast';
 import Wrapper from '@/components/common/Wrapper';
 import Developers from '@/components/common/Developers';
 import { Skeleton } from '@/components/ui/skeleton';
+import TexturedSection from '@/components/ui/TexturedSection';
+import { TEXTURES } from '@/lib/constants';
 
 function CodeLensSkeleton() {
   return (
@@ -71,15 +73,26 @@ export default function TheTeam() {
 
   return (
     <main className="bg-secondary-300 font-display min-h-screen">
-      <HeroSection />
+      <TexturedSection texture={TEXTURES.TEXTURE4}>
+        <HeroSection />
+      </TexturedSection>
 
-      {isLoading ? <CodeLensSkeleton /> : data && <CodeLens data={data} />}
+      {isLoading ? (
+        <CodeLensSkeleton />
+      ) : (
+        data && <CodeLens data={data} className="lg:hidden" />
+      )}
 
       <Wrapper>
         {isLoading ? (
           <DevelopersSkeleton />
         ) : (
-          data?.data.divisi && <Developers divisi={data.data.divisi} />
+          <>
+            <p className="text-secondary-400 text-xl lg:hidden">
+              Click the photo for details
+            </p>
+            {data?.data.divisi && <Developers divisi={data?.data.divisi} />}
+          </>
         )}
       </Wrapper>
 
