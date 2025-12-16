@@ -13,6 +13,7 @@ export interface Divisi {
   id?: number | string;
   nama_divisi: string;
   foto_divisi?: string | null;
+  deskripsi: string;
   anggota: Anggota[]; // sudah berupa array anggota sesuai route
 }
 

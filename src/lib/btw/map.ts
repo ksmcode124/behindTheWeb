@@ -16,6 +16,7 @@ export function mapKepengurusan(
     ? divisiList.map(d => ({
         nama_divisi: d.nama_divisi,
         foto_divisi: d.foto_divisi ?? null,
+        deskripsi: d.deskripsi ?? '',
         anggota: Array.isArray(d.anggota) ? d.anggota.map(a => ({
           nama_anggota: a.nama_anggota,
           foto_anggota: a.foto_anggota ?? null,
