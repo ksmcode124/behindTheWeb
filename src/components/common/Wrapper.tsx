@@ -56,7 +56,7 @@ export default function Wrapper({ children, className = '' }: WrapperProps) {
         <div className="border-secondary-400 absolute -top-6 left-0 h-10 w-full rounded-t-[15em] border-x border-t-2" />
 
         {/* DECORATION WRAPPER — prevents overflow */}
-        <div className="pointer-events-none absolute inset-0 z-30 hidden overflow-hidden lg:block">
+        <div className="pointer-events-none absolute inset-0 z-10 hidden overflow-hidden lg:block">
           <DecorationColumn side="left" />
           <DecorationColumn side="right" />
         </div>

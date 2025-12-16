@@ -1,11 +1,12 @@
 import Image from 'next/image';
 import ShadowedText from '@/components/ui/ShadowedText';
 import AccordionParent from './Accordion';
-import CodeLens from '@/components/common/CodeLens';
+import CodeLens, { CodeLensSkeleton } from '@/components/common/CodeLens';
 import { KepengurusanResponse } from '@/lib/btw/interfaces/btw';
 import { apiGet } from '@/lib/btw/api';
 import TexturedSection from '@/components/ui/TexturedSection';
 import { IMAGES, TEXTURES } from '@/lib/constants';
+import { Suspense } from 'react';
 
 const ORIGIN_DESCRIPTION = [
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio facilis, est adipisci expedita recusandae architecto facere aut eligendi non consectetur nulla tempore inventore, aperiam fugiat vitae? Magni aliquid ut assumenda?',
@@ -22,7 +23,9 @@ export default async function Origin() {
       <OriginIntro />
       <TexturedSection texture={TEXTURES.TEXTURE4}>
         <OriginStory />
-        <CodeLens data={kepengurusanResponse} />
+        <Suspense fallback={<CodeLensSkeleton />}>
+          <CodeLens data={kepengurusanResponse} />
+        </Suspense>
       </TexturedSection>
       <TexturedSection texture={TEXTURES.TEXTURE3}>
         <AccordionSection />
@@ -33,13 +36,13 @@ export default async function Origin() {
 
 function OriginIntro() {
   return (
-    <div className="relative top-[-5vh] flex w-full items-center justify-between lg:top-[-8vh]">
+    <div className="relative top-[-4vh] flex w-full items-center justify-between lg:top-[-8vh]">
       <Image
         src="/images/first_commit.webp"
         alt="The First Commit"
         width={300}
         height={200}
-        className="h-[10vh] w-[60vw] lg:h-[15vh] lg:w-[40vw]"
+        className="h-[7vh] w-[55vw] sm:h-[8vh] sm:w-[50vw] lg:h-[15vh] lg:w-[40vw]"
       />
       <Image
         src="/images/line_brow_white.webp"
@@ -54,7 +57,7 @@ function OriginIntro() {
 
 function OriginImage() {
   return (
-    <div className="relative mx-auto flex aspect-square w-full max-w-lg items-center justify-center bg-[url('/images/origin_img_bg.webp')] bg-contain bg-center bg-no-repeat p-2 sm:p-4 md:max-w-xl md:p-6 lg:max-w-2xl">
+    <div className="relative mx-auto flex aspect-square w-full max-w-lg items-center justify-center bg-[url('/images/origin_img_bg.webp')] bg-contain bg-center bg-no-repeat p-1.5 sm:p-3 md:max-w-xl md:p-6 lg:max-w-2xl">
       <Image
         src="/images/origin_first_commit.webp"
         alt="The Developers"
@@ -68,12 +71,15 @@ function OriginImage() {
 
 function OriginContent() {
   return (
-    <div className="flex max-w-2xl flex-col justify-start space-y-8 text-white">
-      <ShadowedText as="h2" className="-skew-3 text-8xl">
+    <div className="flex max-w-2xl flex-col justify-start space-y-6 text-white sm:space-y-8">
+      <ShadowedText
+        as="h2"
+        className="-skew-3 text-3xl sm:text-5xl md:text-7xl lg:text-8xl"
+      >
         THE ORIGIN
       </ShadowedText>
 
-      <div className="text-secondary-400 space-y-6 text-xl leading-relaxed">
+      <div className="text-secondary-400 space-y-5 text-xs leading-relaxed sm:text-base md:text-xl">
         {ORIGIN_DESCRIPTION.map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
         ))}
@@ -90,7 +96,7 @@ function DecorativeLine() {
         alt="Decorative line"
         width={300}
         height={200}
-        className="h-[5vh] w-[40vw] lg:h-[10vh] lg:w-[25vw]"
+        className="h-[3vh] w-[32vw] sm:h-[4vh] sm:w-[38vw] lg:h-[10vh] lg:w-[25vw]"
       />
     </div>
   );
@@ -98,12 +104,12 @@ function DecorativeLine() {
 
 function OriginStory() {
   return (
-    <section className="flex min-h-screen w-full flex-col gap-10 px-6 py-12 lg:grid lg:min-h-screen lg:grid-cols-2 lg:items-center lg:gap-12">
+    <section className="flex min-h-screen w-full flex-col gap-8 px-6 sm:gap-10 sm:py-8 lg:grid lg:min-h-screen lg:grid-cols-2 lg:items-center lg:gap-12 lg:py-12">
       <OriginImage />
       <OriginContent />
       <DecorativeLine />
 
-      <h2 className="text-secondary-400 col-span-full mt-6 text-right text-4xl lg:text-6xl">
+      <h2 className="text-secondary-400 col-span-full mt-6 text-right text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
         THROUGH THE LENS OF US...
       </h2>
     </section>
@@ -112,9 +118,9 @@ function OriginStory() {
 
 function AccordionHeader() {
   return (
-    <div className="relative top-[clamp(2.75rem,4vw,3.75rem)] z-2 flex w-full justify-between">
+    <div className="relative top-[clamp(1.75rem,4vw,3.75rem)] z-2 flex w-full justify-between">
       <ShadowedText
-        className="pl-15 text-7xl lg:text-9xl"
+        className="pl-15 text-5xl sm:text-6xl lg:text-9xl"
         textShadow="6px 6px 0 #5EAA9E"
       >
         124
@@ -141,17 +147,17 @@ function AccordionSection() {
 
             {/* BOTTOM-LEFT BARS */}
           </div>
-          <div className="absolute bottom-[-4vw] left-5 flex h-40 items-end gap-3">
-            <div className="bg-primary-500 h-[60%] w-8 rounded-md lg:h-[120%] lg:w-16" />
-            <div className="bg-primary-300 h-[45%] w-8 rounded-md lg:h-[95%] lg:w-16" />
-            <div className="bg-primary-200 h-[25%] w-8 rounded-md lg:h-[75%] lg:w-16" />
+          <div className="absolute bottom-[-4vw] left-2 flex h-40 items-end gap-2 sm:gap-4 md:left-5 md:gap-5 lg:gap-6">
+            <div className="bg-primary-500 h-[35%] w-4 rounded-md sm:w-6 md:h-[60%] lg:h-[120%] lg:w-16" />
+            <div className="bg-primary-300 h-[25%] w-4 rounded-md sm:w-6 md:h-[45%] lg:h-[95%] lg:w-16" />
+            <div className="bg-primary-200 h-[15%] w-4 rounded-md sm:w-6 md:h-[25%] lg:h-[75%] lg:w-16" />
           </div>
 
           {/* BOTTOM-RIGHT BARS (REVERSED) */}
-          <div className="absolute right-5 bottom-[-4vw] flex h-40 items-end gap-3">
-            <div className="bg-primary-200 h-[25%] w-8 rounded-md lg:h-[75%] lg:w-16" />
-            <div className="bg-primary-300 h-[45%] w-8 rounded-md lg:h-[95%] lg:w-16" />
-            <div className="bg-primary-500 h-[60%] w-8 rounded-md lg:h-[120%] lg:w-16" />
+          <div className="absolute right-2 bottom-[-4vw] flex h-40 items-end gap-2 sm:gap-4 md:right-5 md:gap-5 lg:gap-6">
+            <div className="bg-primary-200 h-[15%] w-4 rounded-md sm:w-6 md:h-[25%] lg:h-[75%] lg:w-16" />
+            <div className="bg-primary-300 h-[25%] w-4 rounded-md sm:w-6 md:h-[45%] lg:h-[95%] lg:w-16" />
+            <div className="bg-primary-500 h-[35%] w-4 rounded-md sm:w-6 md:h-[60%] lg:h-[120%] lg:w-16" />
           </div>
         </div>
       </section>

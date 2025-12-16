@@ -21,9 +21,9 @@ function BackgroundLines() {
 
 function LeftColumn() {
   return (
-    <div className="-ml-4 grid grid-rows-2 lg:-ml-20">
+    <div className="z-30 -ml-4 -ml-5 grid grid-rows-2 md:-ml-15 lg:-ml-20">
       <div /> {/* empty top space */}
-      <div className="flex flex-col items-start gap-6">
+      <div className="flex flex-col items-start gap-y-2 md:gap-6">
         <CodePrevious />
         <MemberTags />
       </div>
@@ -34,19 +34,23 @@ function LeftColumn() {
 function CodePrevious() {
   return (
     <div className="flex -skew-3 items-center gap-x-6 md:gap-x-10">
-      <ShadowedText className="text-4xl md:text-5xl lg:text-7xl">
+      <ShadowedText className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl">
         {KSM_NAME}
       </ShadowedText>
-      <p className="text-4xl md:text-5xl lg:text-7xl">PREVIOUS</p>
+      <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl">
+        PREVIOUS
+      </p>
     </div>
   );
 }
 
 function MemberTags() {
   return (
-    <div className="flex -skew-3 items-center gap-x-8 md:gap-x-20">
-      <p className="text-3xl md:text-4xl lg:text-7xl">MEMBER</p>
-      <div className="flex flex-col text-lg leading-none md:text-lg lg:text-4xl">
+    <div className="flex -skew-3 items-center gap-x-6 md:gap-x-10">
+      <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl">
+        MEMBER
+      </p>
+      <div className="flex flex-col leading-none sm:text-base md:text-lg lg:text-2xl xl:text-4xl">
         <p className="text-primary-500 [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:1px] text-shadow-[1.5px_1.5px_0_#FEB863]">
           {KSM_TAGLINE}
         </p>
@@ -60,16 +64,16 @@ function MemberTags() {
 
 function RightColumn() {
   return (
-    <div className="grid-rows- grid w-full lg:ml-20">
+    <div className="z-30 ml-5 grid w-full md:ml-20 lg:ml-25">
       <div className="flex flex-col justify-start px-6 sm:px-8">
-        <p className="-skew-3 text-left text-3xl leading-tight font-bold tracking-tight sm:text-4xl sm:leading-tight md:text-5xl md:leading-snug lg:text-7xl lg:leading-none">
+        <p className="-skew-3 text-left text-xl leading-tight font-bold tracking-tight sm:text-2xl sm:leading-tight md:text-3xl md:leading-snug lg:text-5xl lg:leading-none xl:text-7xl">
           <span className="block">CHECKOUT OUR</span>
           <span className="block">PAST TEAM</span>
         </p>
 
         <Link
           href={ROUTES.OUR_PAST}
-          className="bg-primary-500 hover:text-secondary-300 mt-6 self-end border px-3 py-2 text-xl font-bold shadow-[0_3px_5px_#000] transition-colors duration-300 hover:bg-white md:px-6 md:py-3 md:text-2xl lg:px-5 lg:py-3"
+          className="bg-primary-500 hover:text-secondary-300 mt-6 self-end border px-3 py-2 text-base font-bold shadow-[0_3px_5px_#000] transition-colors duration-300 hover:bg-white sm:text-lg md:px-6 md:py-3 md:text-xl lg:px-5 lg:py-3 lg:text-2xl"
         >
           LIHAT DI SINI
         </Link>

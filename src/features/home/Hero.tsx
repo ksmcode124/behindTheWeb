@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { SocialMediaLink } from '@/components/ui/SocialMediaLink';
 import ShadowedText from '@/components/ui/ShadowedText';
-import { SOCIAL_MEDIA, TEXTURES } from '@/lib/constants';
+import { SOCIAL_MEDIA, KSM_NAME, KSM_TAGLINE } from '@/lib/constants';
 
 const HERO_TEXT = `Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae
 ratione distinctio quae accusantium qui corporis est! Libero ipsa
@@ -14,7 +14,7 @@ const ICON_STYLE =
 export default function Hero() {
   return (
     <>
-      <section className="font-display relative flex min-h-[87vh] flex-col items-center justify-center gap-4 bg-cover bg-center px-11">
+      <section className="font-display relative flex min-h-[87vh] flex-col items-center justify-center gap-4 bg-cover bg-center px-11 sm:gap-6">
         <HeroTitle />
         <HeroDescription />
         <HeroFooter />
@@ -26,10 +26,12 @@ export default function Hero() {
 function HeroTitle() {
   return (
     <>
-      <ShadowedText className="-skew-3 text-9xl uppercase">
-        Code124
+      <ShadowedText className="-skew-3 text-5xl uppercase sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
+        {KSM_NAME}
       </ShadowedText>
-      <h3 className="h-12 -skew-3 text-5xl">#TheFirstCommit</h3>
+      <h3 className="h-12 -skew-3 text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
+        {KSM_TAGLINE}
+      </h3>
     </>
   );
 }
@@ -50,7 +52,7 @@ function HeroDescription() {
   return (
     <div className="relative mx-auto max-w-5xl -skew-3">
       <DecorativeNumbers />
-      <p className="border-b-secondary-600 border-b-4 pb-4 text-justify text-xl leading-relaxed [text-align-last:center]">
+      <p className="border-b-secondary-600 border-b-4 pb-4 text-justify text-base leading-relaxed [text-align-last:center] sm:text-lg md:text-xl">
         {HERO_TEXT}
       </p>
     </div>

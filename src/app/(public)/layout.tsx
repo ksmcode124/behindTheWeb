@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="behind-the-web">
+    <html lang="en">
       <body
         className={`${anton.variable} ${poppins.className} font-display antialiased`}
       >

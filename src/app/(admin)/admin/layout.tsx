@@ -13,13 +13,14 @@ import ClientGuard from '@/features/admin/client-guard';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="behind-the-web">
+    <html lang="en">
       <body className={`font-display antialiased`}>
         <ClientGuard>
           <SidebarProvider>
-            <AppSidebar />
-            <main className="w-full p-8">
-              <Breadcrumb>
+            {/* <AppSidebar /> */}
+            {/* <main className="w-full p-8"> */}
+            <main className="w-full">
+              {/* <Breadcrumb>
                 <BreadcrumbList>
                   <BreadcrumbItem>
                     <BreadcrumbLink href="/admin">Dashboard</BreadcrumbLink>
@@ -29,7 +30,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     <BreadcrumbPage>Home</BreadcrumbPage>
                   </BreadcrumbItem>
                 </BreadcrumbList>
-              </Breadcrumb>
+              </Breadcrumb> */}
               {children}
             </main>
           </SidebarProvider>

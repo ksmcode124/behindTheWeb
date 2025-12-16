@@ -5,28 +5,13 @@ import axios from 'axios';
 import { KepengurusanResponse } from '@/lib/btw/interfaces/btw';
 
 import HeroSection from '@/features/the-team/HeroSection';
-import CodeLens from '@/components/common/CodeLens';
+import CodeLens, { CodeLensSkeleton } from '@/components/common/CodeLens';
 import OurPast from '@/components/layout/OurPast';
 import Wrapper from '@/components/common/Wrapper';
 import Developers from '@/components/common/Developers';
 import { Skeleton } from '@/components/ui/skeleton';
 import TexturedSection from '@/components/ui/TexturedSection';
 import { TEXTURES } from '@/lib/constants';
-
-function CodeLensSkeleton() {
-  return (
-    <div className="w-full px-4 py-16">
-      <div className="mx-auto max-w-6xl space-y-6">
-        <Skeleton className="mx-auto h-8 w-64" />
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {[...Array(9)].map((_, i) => (
-            <Skeleton key={i} className="h-32 w-full" />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function DevelopersSkeleton() {
   return (

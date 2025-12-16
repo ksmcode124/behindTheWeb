@@ -1,54 +1,64 @@
 interface DecorativeTextProps {
   text?: string;
-  desktopSize?: string;
-  mobileSize?: string;
   strokeColor?: string;
 }
 
 export default function DecorativeText({
   text = 'THE FIRST COMMIT',
-  desktopSize = '8xl',
-  mobileSize = '7xl',
   strokeColor = 'var(--color-primary-400)',
 }: DecorativeTextProps) {
-  const commonStyle = { WebkitTextStroke: `2px ${strokeColor}` };
-
   return (
-    <div className="pointer-events-none absolute inset-7">
-      {/* Desktop: left/right at edges */}
-      <div className="hidden md:block">
-        <div className="absolute top-65 -right-60 rotate-90">
+    <div className="pointer-events-none absolute inset-0 z-0">
+      {/* DESKTOP */}
+      <div className="hidden lg:block">
+        {/* RIGHT BORDER – higher */}
+        <div className="absolute top-[35%] right-0 rotate-90">
           <p
-            className={`text-${desktopSize} leading-none whitespace-nowrap text-transparent`}
-            style={commonStyle}
+            className="leading-none whitespace-nowrap text-transparent"
+            style={{
+              WebkitTextStroke: `1.5px ${strokeColor}`,
+              fontSize: 'clamp(2rem, 3.5vw, 4.25rem)',
+            }}
           >
             {text}
           </p>
         </div>
-        <div className="absolute bottom-75 -left-60 -rotate-90">
+
+        {/* LEFT BORDER – lower */}
+        <div className="absolute top-[65%] left-0 -rotate-90">
           <p
-            className={`text-${desktopSize} leading-none whitespace-nowrap text-transparent`}
-            style={commonStyle}
+            className="leading-none whitespace-nowrap text-transparent"
+            style={{
+              WebkitTextStroke: `1.5px ${strokeColor}`,
+              fontSize: 'clamp(2rem, 3.5vw, 4.25rem)',
+            }}
           >
             {text}
           </p>
         </div>
       </div>
 
-      {/* Mobile: top/bottom centered */}
-      <div className="flex h-full w-full flex-col justify-between md:hidden">
-        <div className="flex justify-center">
+      {/* MOBILE – full screen feel */}
+      <div className="flex h-full w-full flex-col justify-between lg:hidden">
+        <div className="flex justify-center pt-3">
           <p
-            className={`text-${mobileSize} text-transparent`}
-            style={commonStyle}
+            className="leading-none whitespace-nowrap text-transparent"
+            style={{
+              WebkitTextStroke: `1px ${strokeColor}`,
+              fontSize: 'clamp(2.25rem, 11vw, 3.5rem)',
+            }}
           >
             {text}
           </p>
         </div>
-        <div className="flex justify-center">
+
+        <div className="flex justify-center pb-3">
           <p
-            className={`text-${mobileSize} text-transparent`}
-            style={commonStyle}
+            className="leading-none whitespace-nowrap text-transparent"
+            style={{
+              WebkitTextStroke: `1px ${strokeColor}`,
+              fontSize: 'clamp(2.25rem, 11vw, 3.5rem)',
+            }}
           >
             {text}
           </p>

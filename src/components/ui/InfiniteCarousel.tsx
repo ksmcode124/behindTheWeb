@@ -49,14 +49,14 @@ export default function InfiniteCarousel({
         {[...images, ...images].map((img, i) => (
           <div
             key={i}
-            className="flex flex-none items-center justify-center px-6"
+            className="flex flex-none items-center justify-center px-3 sm:px-5 lg:px-8"
           >
             <Image
               src={img.src}
               alt={img.alt ?? ''}
-              width={300}
-              height={200}
-              className="object-contain"
+              width={400}
+              height={260}
+              className="h-[clamp(80px,12vw,160px)] w-auto object-contain"
             />
           </div>
         ))}

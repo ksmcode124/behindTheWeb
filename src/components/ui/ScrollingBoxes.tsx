@@ -8,42 +8,40 @@ interface ScrollingBoxesProps {
   gap?: number; // px
 }
 
-export default function ScrollingBoxes({
-  speed = 60,
-  boxSize = 32,
-  gap = 16,
-}: ScrollingBoxesProps) {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [items, setItems] = useState<string[]>([]);
+export default function ScrollingBoxes({ speed = 60 }: ScrollingBoxesProps) {
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const [items, setItems] = useState(0);
 
   useEffect(() => {
     const calculate = () => {
-      const screen = window.innerWidth;
-      const fullBox = boxSize + gap;
-      const minBoxes = 10;
-      const needed = Math.ceil(screen / fullBox) + 4;
-      setItems(Array(Math.max(minBoxes, needed)).fill(''));
+      const root = document.documentElement;
+      const box = parseFloat(
+        getComputedStyle(root).getPropertyValue('--box-size'),
+      );
+      const gap = parseFloat(
+        getComputedStyle(root).getPropertyValue('--box-gap'),
+      );
+
+      const full = box + gap;
+      const needed = Math.ceil(window.innerWidth / full) + 4;
+      setItems(Math.max(10, needed));
     };
 
     calculate();
     window.addEventListener('resize', calculate);
     return () => window.removeEventListener('resize', calculate);
-  }, [boxSize, gap]);
+  }, []);
 
   useLoopScroll(trackRef, speed);
 
   return (
-    <div className="relative w-full overflow-hidden py-4">
+    <div className="relative w-full overflow-hidden py-3 sm:py-4">
       <div
         ref={trackRef}
-        className="loop-track flex w-max gap-4"
-        style={{ animationDuration: 'var(--loop-duration)' }}
+        className="loop-track flex w-max gap-[var(--box-gap)]"
       >
-        {items.map((_, i) => (
+        {Array.from({ length: items * 2 }).map((_, i) => (
           <Box key={i} />
-        ))}
-        {items.map((_, i) => (
-          <Box key={`dup-${i}`} />
         ))}
       </div>
     </div>
@@ -52,6 +50,6 @@ export default function ScrollingBoxes({
 
 function Box() {
   return (
-    <div className="bg-secondary-400 h-8 w-8 rounded-sm md:h-10 md:w-10 lg:h-12 lg:w-12" />
+    <div className="bg-secondary-400 h-[var(--box-size)] w-[var(--box-size)] rounded-sm" />
   );
 }

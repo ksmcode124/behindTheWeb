@@ -12,7 +12,7 @@ export default function SingleDivisiCard({ divisi }: SingleDivisiCardProps) {
   const { nama_divisi, foto_divisi } = divisi;
 
   return (
-    <div className="flex w-full flex-col items-center">
+    <div className="z-20 flex w-full flex-col items-center">
       {/* TITLE */}
       <h3 className="text-primary-500 mb-10 -skew-4 text-5xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:2.5px] text-shadow-[5px_4px_0_var(--color-primary-600)] lg:text-7xl">
         {nama_divisi}
@@ -20,16 +20,18 @@ export default function SingleDivisiCard({ divisi }: SingleDivisiCardProps) {
 
       {/* CARD */}
       <div className="border-secondary-300 relative w-full max-w-4xl overflow-hidden border-[1.25em]">
-        <div className="absolute top-[37%] -right-30 z-1 rotate-90 lg:-right-40">
+        <div className="pointer-events-none absolute top-1/2 right-2 z-10 translate-x-[45%] -translate-y-[85%] rotate-90 sm:right-8 sm:translate-x-[50%] sm:-translate-y-[70%] md:translate-x-[55%] lg:right-12 lg:translate-x-[55%] lg:-translate-y-[60%]">
           <p
-            className="text-secondary-400 text-5xl leading-none whitespace-nowrap lg:text-6xl"
-            style={{ WebkitTextStroke: '2px var(--color-secondary-300)' }}
+            className="text-secondary-400 text-base leading-none whitespace-nowrap sm:text-2xl md:text-4xl lg:text-5xl"
+            style={{
+              WebkitTextStroke: '1px var(--color-secondary-300)',
+            }}
           >
             THE FIRST COMMIT
           </p>
         </div>
 
-        <div className="relative h-[430px] w-full">
+        <div className="relative aspect-video w-full">
           <Image
             src={foto_divisi?.trim() ? foto_divisi : IMAGES.FALLBACK}
             alt={nama_divisi}
@@ -41,7 +43,7 @@ export default function SingleDivisiCard({ divisi }: SingleDivisiCardProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
 
         <div className="absolute bottom-0 left-0 flex w-full items-end justify-between gap-3">
-          <p className="text-secondary-400 max-w-[70%] p-4 text-sm">
+          <p className="text-secondary-400 line-clamp-1 max-w-[70%] px-5 pb-5 text-sm">
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione,
             sunt esse placeat iusto consequuntur quos animi, non expedita
             sapiente rem sint consectetur deserunt nostrum sequi saepe ipsam
@@ -49,7 +51,7 @@ export default function SingleDivisiCard({ divisi }: SingleDivisiCardProps) {
           </p>
 
           <Link
-            href="/"
+            href="/the-team"
             className="border-secondary-300 hover:text-secondary-300 bg-primary-600 text-secondary-400 hover:bg-secondary-400 pointer-events-auto relative border-[0.4em] px-4 py-1 text-center text-2xl font-bold transition-colors duration-300"
           >
             SELENGKAPNYA

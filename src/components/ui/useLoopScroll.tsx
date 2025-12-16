@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 
 export function useLoopScroll(
-  ref: React.RefObject<HTMLDivElement>,
+  ref: RefObject<HTMLDivElement | null>,
   speed: number,
 ) {
   useEffect(() => {
-    const el = ref.current;
+    const el = ref?.current;
     if (!el) return;
 
     let raf = 0;

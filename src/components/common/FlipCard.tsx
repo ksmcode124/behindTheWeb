@@ -46,27 +46,29 @@ export function FlipCard({
   backBg?: string;
   borderColor?: string;
 }) {
-  const [iconSize, setIconSize] = useState(30);
-  const [iconPadding, setIconPadding] = useState('p-2');
   const [hover, setHover] = useState(false);
+  const [isTouch, setIsTouch] = useState(false);
   const hasInfo = nama || role;
+
   useEffect(() => {
-    if (window.innerWidth < 640) {
-      setIconSize(20);
-      setIconPadding('p-1');
-    } else {
-      setIconSize(30);
-      setIconPadding('p-2');
-    }
+    setIsTouch('ontouchstart' in window || navigator.maxTouchPoints > 0);
   }, []);
+
   return (
     <div
       className={cn(
-        'relative w-auto justify-items-center [perspective:1000px]',
+        'relative w-auto justify-items-center perspective-[1000px]',
         className,
       )}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
+      onMouseEnter={() => {
+        if (!isTouch) setHover(true);
+      }}
+      onMouseLeave={() => {
+        if (!isTouch) setHover(false);
+      }}
+      onClick={() => {
+        if (isTouch) setHover((prev) => !prev);
+      }}
       {...props}
     >
       <div
@@ -79,7 +81,7 @@ export function FlipCard({
         {/* FRONT */}
         <div
           className={cn(
-            '[backface-visibility:hidden overflow-hidden] text-secondary-400 absolute flex h-full w-full items-center justify-center bg-blue-400 bg-cover bg-center font-semibold',
+            '[backface-visibility:hidden overflow-hidden] text-secondary-400 bg-secondary-300 absolute flex h-full w-full items-center justify-center bg-cover bg-center font-semibold',
             size === 0
               ? 'rounded-[22.9px] border-[5.33px] border-[#DEBC96] md:rounded-[46.62px]'
               : size === 1
@@ -128,11 +130,17 @@ export function FlipCard({
           )}
         >
           <div className="flex gap-3">
-            <SocialMediaLink platform="instagram" href={ig ?? ''} withBorder />
+            <SocialMediaLink
+              platform="instagram"
+              href={ig ?? ''}
+              withBorder
+              className="scale-90 sm:scale-100"
+            />
             <SocialMediaLink
               platform="linkedin"
               href={linkedIn ?? ''}
               withBorder
+              className="scale-90 sm:scale-100"
             />
           </div>
         </div>

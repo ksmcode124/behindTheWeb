@@ -9,25 +9,32 @@ import { IMAGES, TEXTURES } from '@/lib/constants';
 import TexturedSection from '@/components/ui/TexturedSection';
 
 // Skeleton component for DivisionsSection
+// DivisionsSectionSkeleton.tsx
 function DivisionsSkeleton() {
   return (
-    <div className="w-full px-4 py-16">
-      <div className="mx-auto max-w-7xl">
-        <Skeleton className="mx-auto mb-4 h-12 w-64" />
-        <Skeleton className="mx-auto mb-12 h-6 w-96" />
+    <>
+      <section className="relative flex min-h-[70vh] w-full flex-col items-center justify-center gap-8 px-6 py-15">
+        {/* title */}
+        <div className="bg-secondary/20 h-12 w-64 animate-pulse rounded" />
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="space-y-3">
-              <Skeleton className="h-48 w-full" />
-              <Skeleton className="h-6 w-3/4" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-5/6" />
-            </div>
-          ))}
+        {/* hint text */}
+        <div className="bg-secondary/10 h-5 w-48 animate-pulse rounded" />
+
+        {/* inti card */}
+        <div className="flex w-full max-w-6xl justify-center">
+          <div className="bg-secondary/15 h-80 w-64 animate-pulse rounded-xl" />
         </div>
+      </section>
+
+      <div className="mx-auto mt-10 flex max-w-6xl flex-col gap-24 py-20">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div
+            key={i}
+            className="bg-secondary/10 h-96 w-full animate-pulse rounded-xl"
+          />
+        ))}
       </div>
-    </div>
+    </>
   );
 }
 
