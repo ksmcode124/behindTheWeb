@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* ======================================================
+   ROOT VARIABLES (SINGLE SOURCE OF TRUTH)
+   ====================================================== */
 :root {
   @theme inline {
   --color-foreground: var(--foreground);
@@ -20,7 +23,7 @@
   --color-sidebar-primary-foreground: var(--primary-foreground);
   --color-sidebar-border: var(--border);
   --color-sidebar-ring: var(--ring);
-
+  /* === BTW COLORS === */
   --color-primary-600: #F59A47;
   --color-primary-500: #FEB863;
   --color-primary-400: #F2D39C;
@@ -34,6 +37,7 @@
   --color-secondary-300: #393C45;
   --color-secondary: #DEBB95;
 
+  /* === TYPOGRAPHY === */
   --font-display: "Anton", serif;
   --font-body: "Poppins", sans-serif;
   --font-sans: Inter, sans-serif;
@@ -41,9 +45,11 @@
   --font-mono: JetBrains Mono, monospace;
 }
 
+  /* === BOX SYSTEM (RESPONSIVE) === */
   --box-size: 28px;
   --box-gap: 12px;
 
+  /* === BASE UI TOKENS === */
   --background: oklch(1 0 0);
   --foreground: oklch(0.3211 0 0);
   --card: oklch(1 0 0);
@@ -67,6 +73,7 @@
   --input: oklch(0.9276 0.0058 264.5313);
   --ring: oklch(0.6231 0.188 259.8145);
 
+  /* === SHADOWS === */
   --shadow-2xs: 0 1px 3px hsl(0 0% 0% / 0.05);
   --shadow-xs: var(--shadow-2xs);
   --shadow-sm: 0 1px 3px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
@@ -80,6 +87,9 @@
   --spacing: 0.25rem;
 }
 
+/* ======================================================
+   RESPONSIVE BOX SYSTEM
+   ====================================================== */
 @media (min-width: 640px) {
   :root {
     --box-size: 36px;
@@ -94,6 +104,9 @@
   }
 }
 
+/* ======================================================
+   ANIMATIONS
+   ====================================================== */
 @keyframes loop {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
@@ -107,4 +120,34 @@
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
+}
+
+.carousel-slide-left {
+  animation: slideLeft 0.3s ease-out;
+}
+
+.carousel-slide-right {
+  animation: slideRight 0.3s ease-out;
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(30px);
+    opacity: 0.6;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(-30px);
+    opacity: 0.6;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }

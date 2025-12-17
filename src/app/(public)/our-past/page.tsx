@@ -14,17 +14,26 @@ function ContentSkeleton() {
     <div className="space-y-8 py-12">
       {/* Year Navigation Skeleton */}
       <div className="flex items-center justify-center gap-4">
-        <Skeleton className="h-10 w-10 rounded-full" />
+        <Skeleton className="h-10 w-10" />
         <div className="flex gap-2">
-          {[...Array(5)].map((_, i) => (
-            <Skeleton key={i} className="h-12 w-20" />
+          {[...Array(2)].map((_, i) => (
+            <Skeleton key={i} className="h-12 w-50" />
           ))}
         </div>
-        <Skeleton className="h-10 w-10 rounded-full" />
+        <Skeleton className="h-10 w-10" />
       </div>
 
       {/* Carousel Skeleton */}
       <div className="space-y-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          {[...Array(2)].map((_, i) => (
+            <div key={i} className="space-y-3">
+              <Skeleton className="h-64 w-full" />
+              <Skeleton className="mx-auto h-5 w-3/4" />
+              <Skeleton className="mx-auto h-4 w-1/2" />
+            </div>
+          ))}
+        </div>
         <Skeleton className="mx-auto h-10 w-48" />
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

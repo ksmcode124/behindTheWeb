@@ -31,9 +31,10 @@ import {
   CrudJabatan,
   DetailAnggota,
 } from '@/lib/btw/interfaces/btw';
+import { UploadButton } from '@uploadthing/react';
 import { useUploadThing } from '@/lib/uploadthing';
+import type { OurFileRouter } from '@/app/api/uploadthing/core';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
 // ====================================================================
 // A. KONSTANTA, TIPE DATA (Constants, Types)
@@ -166,23 +167,6 @@ const Sidebar: React.FC<{
     { name: 'JABATAN', icon: Briefcase, page: 'jabatan' },
     { name: 'DETAIL ANGGOTA', icon: User, page: 'detail_anggota' },
   ];
-  const router = useRouter();
-  const handleLogout = async () => {
-    try {
-      console.log('Try to logout');
-      await fetch('/api/auth/logout', {
-        method: 'POST',
-        credentials: 'include',
-      });
-    } catch (e) {
-      // ignore — still force logout UX
-    }
-
-    // close sidebar
-    setIsSidebarOpen(false);
-
-    router.replace('/login');
-  };
 
   return (
     <>
@@ -241,7 +225,9 @@ const Sidebar: React.FC<{
         </div>
         <div
           onClick={() => {
-            handleLogout();
+            const res = fetch('/api/auth/logout', { method: 'POST' });
+            if (res.ok) onNavigate('login');
+            setIsSidebarOpen(false);
           }}
           className="mb-4 flex cursor-pointer items-center space-x-4 p-4 hover:bg-white/10"
         >

@@ -20,7 +20,7 @@ export default function HeaderSection() {
           >
             {KSM_NAME}
           </ShadowedText>
-          <h1 className="text-secondary-400 -skew-3 text-5xl leading-tight sm:text-6xl md:text-7xl lg:text-9xl">
+          <h1 className="text-secondary-400 -skew-3 text-5xl leading-tight sm:text-6xl md:text-7xl lg:text-9xl xl:text-[9rem] 2xl:text-[10rem]">
             PREVIOUS MEMBER
           </h1>
         </div>

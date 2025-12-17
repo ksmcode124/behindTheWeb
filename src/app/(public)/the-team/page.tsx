@@ -5,7 +5,7 @@ import axios from 'axios';
 import { KepengurusanResponse } from '@/lib/btw/interfaces/btw';
 
 import HeroSection from '@/features/the-team/HeroSection';
-import CodeLens, { CodeLensSkeleton } from '@/components/common/CodeLens';
+import CodeLens from '@/components/common/CodeLens';
 import OurPast from '@/components/layout/OurPast';
 import Wrapper from '@/components/common/Wrapper';
 import Developers from '@/components/common/Developers';
@@ -13,12 +13,27 @@ import { Skeleton } from '@/components/ui/skeleton';
 import TexturedSection from '@/components/ui/TexturedSection';
 import { TEXTURES } from '@/lib/constants';
 
+function CodeLensSkeleton() {
+  return (
+    <div className="w-full px-4 py-16 lg:hidden">
+      <div className="mx-auto max-w-6xl space-y-6">
+        <Skeleton className="mx-auto h-8 w-64" />
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {[...Array(3)].map((_, i) => (
+            <Skeleton key={i} className="h-32 w-full" />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function DevelopersSkeleton() {
   return (
-    <div className="space-y-8 py-12">
+    <div className="w-1/2 space-y-8 py-12">
       <Skeleton className="mx-auto h-10 w-56" />
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {[...Array(12)].map((_, i) => (
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {[...Array(3)].map((_, i) => (
           <div key={i} className="space-y-3">
             <Skeleton className="h-72 w-full" />
             <Skeleton className="mx-auto h-6 w-3/4" />
