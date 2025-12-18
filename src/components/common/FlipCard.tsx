@@ -68,9 +68,9 @@ export function FlipCard({
     >
       <div
         className={cn(
-          'relative h-full w-full transition-transform duration-500 [transform-style:preserve-3d]',
+          'relative h-full w-full transition-transform duration-500 transform-3d',
           cardVariant({ size }),
-          hover && (size === 1 || size === 0) && '[transform:rotateY(180deg)]',
+          hover && (size === 1 || size === 0) && 'transform-[rotateY(180deg)]',
         )}
       >
         {/* FRONT */}
@@ -80,7 +80,7 @@ export function FlipCard({
             size === 0
               ? 'rounded-[22.9px] border-[5.33px] border-[#DEBC96] md:rounded-[46.62px]'
               : size === 1
-                ? 'rounded-[20px] border-[4px] border-[#393c45] md:rounded-[35px] md:border-[13px]'
+                ? 'rounded-[20px] border-4 border-[#393c45] md:rounded-[35px] md:border-13'
                 : size === 2
                   ? 'rounded-[15px] border-[3px] border-[#393c45] md:rounded-[30px] md:border-[9px]'
                   : size === 3
@@ -94,11 +94,11 @@ export function FlipCard({
               className={cn(
                 'absolute bottom-0 flex w-full flex-col items-center justify-center overflow-hidden font-semibold text-black',
                 size === 1
-                  ? 'bg-secondary-400/65 rounded-b-[14px] p-[4px] text-[10px] backdrop-blur-xs md:rounded-b-[21px] md:p-[13px] md:text-[20px]'
+                  ? 'bg-secondary-400/65 rounded-b-[14px] p-1 text-[10px] backdrop-blur-xs md:rounded-b-[21px] md:p-[13px] md:text-[20px]'
                   : size === 2
                     ? 'bg-secondary-400/65 rounded-b-[10px] p-[3px] text-[8px] backdrop-blur-xs md:rounded-b-[18px] md:p-[9px] md:text-[16px]'
                     : size === 3
-                      ? 'bg-secondary-400/65 rounded-b-[17px] p-[6px] text-[12px] backdrop-blur-xs'
+                      ? 'bg-secondary-400/65 rounded-b-[17px] p-1.5 text-[12px] backdrop-blur-xs'
                       : '',
               )}
             >
@@ -112,11 +112,11 @@ export function FlipCard({
         {/* BACK */}
         <div
           className={cn(
-            'text-secondary-400 absolute flex h-full w-full [transform:rotateY(180deg)] items-center justify-center gap-2 bg-[#393c45] font-semibold [backface-visibility:hidden]',
+            'text-secondary-400 absolute flex h-full w-full transform-[rotateY(180deg)] items-center justify-center gap-2 bg-[#393c45] font-semibold backface-hidden',
             size === 0
               ? 'rounded-[22.9px] border-[5.33px] border-[#DEBC96] md:rounded-[46.62px]'
               : size === 1
-                ? 'rounded-[20px] border-[4px] border-[#393c45] md:rounded-[35px] md:border-[13px]'
+                ? 'rounded-[20px] border-4 border-[#393c45] md:rounded-[35px] md:border-13'
                 : size === 2
                   ? 'rounded-[15px] border-[3px] border-[#393c45] md:rounded-[30px] md:border-[9px]'
                   : size === 3
