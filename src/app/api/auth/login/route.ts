@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Find credential account
-    const account = user.accounts.find((acc) => acc.type === 'credential');
+    const account = user.accounts.find((acc:any) => acc.type === 'credential');
 
     if (!account || !account.password) {
       return NextResponse.json(
