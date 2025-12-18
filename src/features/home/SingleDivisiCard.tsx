@@ -9,7 +9,7 @@ interface SingleDivisiCardProps {
 }
 
 export default function SingleDivisiCard({ divisi }: SingleDivisiCardProps) {
-  const { nama_divisi, foto_divisi } = divisi;
+  const { nama_divisi, foto_divisi, deskripsi } = divisi;
 
   return (
     <div className="z-20 flex w-full flex-col items-center">
@@ -44,10 +44,7 @@ export default function SingleDivisiCard({ divisi }: SingleDivisiCardProps) {
 
         <div className="absolute bottom-0 left-0 flex w-full items-end justify-between gap-3">
           <p className="text-secondary-400 line-clamp-1 max-w-[70%] px-5 pb-5 text-sm">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione,
-            sunt esse placeat iusto consequuntur quos animi, non expedita
-            sapiente rem sint consectetur deserunt nostrum sequi saepe ipsam
-            vitae obcaecati fugiat!
+            {deskripsi}
           </p>
 
           <Link

@@ -1,5 +1,7 @@
 export const KSM_NAME = "CODE124";
 export const KSM_TAGLINE = "#TheFirstCommit";
+export const KSM_VISI = "Lorem ipsum dolor sit amet";
+export const KSM_MISI = "Lorem ipsum dolor sit amet lorem"
 
 export const SOCIAL_MEDIA = [
   {

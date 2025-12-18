@@ -1,5 +1,6 @@
 'use client';
 import GoalCard from '@/features/home/GoalCard';
+import { KSM_MISI, KSM_VISI } from '@/lib/constants';
 import { useState, useEffect, useRef, useMemo } from 'react';
 
 export default function AccordionParent() {
@@ -43,7 +44,7 @@ export default function AccordionParent() {
       <div ref={cardRefs[0]}>
         <GoalCard
           title="visi"
-          content="lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          content={KSM_VISI}
           expanded={openIndex === 0}
           onToggle={() => handleToggle(0)}
         />
@@ -52,7 +53,7 @@ export default function AccordionParent() {
       <div ref={cardRefs[1]}>
         <GoalCard
           title="misi"
-          content="lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          content={KSM_MISI}
           expanded={openIndex === 1}
           onToggle={() => handleToggle(1)}
         />
