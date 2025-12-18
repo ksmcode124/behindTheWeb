@@ -54,6 +54,7 @@ export async function GET(request: NextRequest) {
       .map((d: any) => ({
         nama_divisi: d.nama_divisi,
         foto_divisi: d.foto_divisi ?? null,
+        deskripsi: d.deskripsi ?? '',
         anggota: d.detail.map((detail: any) => ({
           nama_anggota: detail.anggota?.nama_anggota ?? '',
           foto_anggota: detail.anggota?.foto_anggota ?? null,
