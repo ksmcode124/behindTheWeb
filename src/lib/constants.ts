@@ -30,7 +30,7 @@ export interface ActivityProps {
   alt: string
 }
 
-export const ACTIVITY = [
+export const ACTIVITY: ActivityProps[] = [
   {
     src:
     "/activity/activity-1.webp",

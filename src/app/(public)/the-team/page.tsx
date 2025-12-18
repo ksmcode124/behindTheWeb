@@ -11,7 +11,7 @@ import Wrapper from '@/components/common/Wrapper';
 import Developers from '@/components/common/Developers';
 import { Skeleton } from '@/components/ui/skeleton';
 import TexturedSection from '@/components/ui/TexturedSection';
-import { TEXTURES } from '@/lib/constants';
+import { ACTIVITY, TEXTURES } from '@/lib/constants';
 
 function CodeLensSkeleton() {
   return (
@@ -80,7 +80,7 @@ export default function TheTeam() {
       {isLoading ? (
         <CodeLensSkeleton />
       ) : (
-        data && <CodeLens data={data} className="lg:hidden" />
+        data && <CodeLens data={ACTIVITY} className="lg:hidden" />
       )}
 
       <Wrapper>

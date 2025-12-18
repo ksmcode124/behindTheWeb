@@ -1,6 +1,4 @@
-import { Divisi, KepengurusanResponse } from '@/lib/btw/interfaces/btw';
-import { IMAGES } from '@/lib/constants';
-import { ActivityProps, useMemo } from 'react';
+import { ActivityProps } from '@/lib/constants';
 import ScrollingBoxes from '@/components/ui/ScrollingBoxes';
 import InfiniteCarousel from '@/components/ui/InfiniteCarousel';
 
