@@ -14,7 +14,7 @@ export default function YearNavigation({
   return (
     <div>
       <div className="relative z-10 flex items-center justify-center gap-2">
-        {kepengurusan?.helper?.years?.map((_, idx) => (
+        {kepengurusan?.helper?.years?.map((_: number, idx: number) => (
           <div
             key={idx}
             className={`h-2 w-2 rounded-full transition-all ${

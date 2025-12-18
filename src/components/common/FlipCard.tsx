@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { SocialMediaLink } from '../ui/SocialMediaLink';
 const cardVariant = cva('', {
@@ -26,10 +26,6 @@ export function FlipCard({
   ig,
   linkedIn,
   className,
-  flip = true,
-  frontBg = 'bg-secondary-400',
-  backBg = 'bg-secondary-400',
-  borderColor = 'border-secondary-300',
   ...props
 }: {
   size?: 0 | 1 | 2 | 3;
@@ -48,7 +44,6 @@ export function FlipCard({
 }) {
   const [hover, setHover] = useState(false);
   const [isTouch, setIsTouch] = useState(false);
-  const hasInfo = nama || role;
 
   useEffect(() => {
     setIsTouch('ontouchstart' in window || navigator.maxTouchPoints > 0);

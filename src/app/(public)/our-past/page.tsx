@@ -80,7 +80,7 @@ export default function OurPastTeam() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [kepengurusan]);
 
   useEffect(() => {
     if (!kepengurusan?.helper?.years) return;

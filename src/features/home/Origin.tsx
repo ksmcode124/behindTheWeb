@@ -5,7 +5,7 @@ import CodeLens from '@/components/common/CodeLens';
 import { KepengurusanResponse } from '@/lib/btw/interfaces/btw';
 import { apiGet } from '@/lib/btw/api';
 import TexturedSection from '@/components/ui/TexturedSection';
-import { IMAGES, TEXTURES } from '@/lib/constants';
+import { TEXTURES } from '@/lib/constants';
 
 const ORIGIN_DESCRIPTION = [
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio facilis, est adipisci expedita recusandae architecto facere aut eligendi non consectetur nulla tempore inventore, aperiam fugiat vitae? Magni aliquid ut assumenda?',

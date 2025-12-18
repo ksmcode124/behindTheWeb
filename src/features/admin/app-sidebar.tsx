@@ -1,14 +1,4 @@
-import {
-  Building,
-  Calendar,
-  Home,
-  Inbox,
-  Search,
-  Settings,
-  Star,
-  UserIcon,
-  Users,
-} from 'lucide-react';
+import { Building, Home, Star, UserIcon, Users } from 'lucide-react';
 
 import {
   Sidebar,
@@ -16,7 +6,6 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
