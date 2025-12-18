@@ -25,7 +25,58 @@ export const SOCIAL_MEDIA = [
     label: 'code124',
   },
 ];
+export interface ActivityProps {
+  src: string,
+  alt: string
+}
 
+export const ACTIVITY = [
+  {
+    src:
+    "/activity/activity-1.webp",
+    alt: "activity-1"
+  },
+  {
+    src:
+    "/activity/activity-2.webp",
+    alt: "activity-2"
+  },
+  {
+    src:
+    "/activity/activity-3.webp",
+    alt: "activity"
+  },
+  {
+    src:
+    "/activity/activity-4.webp",
+    alt: "activity"
+  },
+  {
+    src:
+    "/activity/activity-5.webp",
+    alt: "activity"
+  },
+  {
+    src:
+    "/activity/activity-6.webp",
+    alt: "activity"
+  },
+  {
+    src:
+    "/activity/activity-7.webp",
+    alt: "activity"
+  },
+  {
+    src:
+    "/activity/activity-8.webp",
+    alt: "activity"
+  },
+  {
+    src:
+    "/activity/activity-9.webp",
+    alt: "activity"
+  },
+]
 
 export const IMAGES = {
   LOGO_WHITE: '/images/logo_white.webp',

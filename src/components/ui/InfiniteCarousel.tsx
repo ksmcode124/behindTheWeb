@@ -1,9 +1,10 @@
 'use client';
 import Image from 'next/image';
 import { useRef, useEffect } from 'react';
+import { ActivityProps } from '@/lib/constants';
 
 interface InfiniteCarouselProps {
-  images: { src: string; alt?: string }[];
+  images: ActivityProps[];
   speed?: number; // px per second
 }
 
@@ -46,17 +47,17 @@ export default function InfiniteCarousel({
       className="relative w-full overflow-hidden whitespace-nowrap"
     >
       <div ref={trackRef} className="flex">
-        {[...images, ...images].map((img, i) => (
+        {images.map((image, i) => (
           <div
             key={i}
             className="flex flex-none items-center justify-center px-3 sm:px-5 lg:px-8"
           >
             <Image
-              src={img.src}
-              alt={img.alt ?? ''}
+              src={image.src}
+              alt={image.alt ?? ''}
               width={400}
-              height={260}
-              className="h-[clamp(80px,12vw,160px)] w-auto object-contain"
+              height={300}
+              className="aspect-3/2 h-[clamp(80px,12vw,160px)] object-cover object-center"
             />
           </div>
         ))}
