@@ -12,6 +12,7 @@ export interface Anggota {
 export interface Divisi {
   id?: number | string;
   nama_divisi: string;
+  deskripsi: string;
   foto_divisi?: string | null;
   anggota: Anggota[]; // sudah berupa array anggota sesuai route
 }

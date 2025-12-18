@@ -51,7 +51,7 @@ export function SocialMediaLink({
             : 'bg-primary-600 hover:bg-secondary-300 hover:text-primary-600 border border-transparent shadow-[4px_4px_0_var(--color-secondary-300)] hover:shadow-[4px_4px_0_var(--color-primary-600)]'
         } `}
       >
-        <IconComponent className="h-6 w-6 md:h-8 md:w-8" />
+        <IconComponent className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 lg:h-10 lg:w-10" />
       </span>
 
       {/* Optional label */}
