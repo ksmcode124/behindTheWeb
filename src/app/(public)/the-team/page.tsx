@@ -59,7 +59,7 @@ export default function TheTeam() {
           setData(res.data);
           setIsLoading(false);
         }
-      } catch (error) {
+      } catch {
         if (!cancelled) {
           setIsLoading(false);
         }

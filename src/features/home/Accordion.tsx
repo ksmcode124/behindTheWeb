@@ -1,12 +1,14 @@
 'use client';
 import GoalCard from '@/features/home/GoalCard';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 
 export default function AccordionParent() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const [mask, setMask] = useState<string>('none');
 
-  const cardRefs = [useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null)];
+  const cardRef1 = useRef<HTMLDivElement>(null);
+  const cardRef2 = useRef<HTMLDivElement>(null);
+
+  const cardRefs = useMemo(() => [cardRef1, cardRef2], []);
 
   const handleToggle = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -34,37 +36,10 @@ export default function AccordionParent() {
         height: rect.height,
       });
     });
-
-    if (visibleCards.length === 0 && visibleCardsHeight.length === 0) {
-      setMask('none');
-      return;
-    }
-
-    // bangun mask gradient dari area setiap card
-    const segments: string[] = [];
-    let prevEnd = 0;
-
-    visibleCards.forEach(({ left, width }) => {
-      const start = left;
-      const end = left + width;
-
-      // area sebelum card → transparan
-      if (start > prevEnd) {
-        segments.push(`transparent ${prevEnd}px, transparent ${start}px`);
-      }
-      // area card → putih (terlihat)
-      segments.push(`white ${start}px, white ${end}px`);
-      prevEnd = end;
-    });
-
-    // area setelah card terakhir → transparan
-    segments.push(`transparent ${prevEnd}px, transparent 100%`);
-
-    setMask(`linear-gradient(to right, ${segments.join(', ')})`);
   }, [cardRefs, openIndex]);
 
   return (
-    <div className="z-50 flex w-auto flex-col items-center justify-center gap-4 overflow-hidden md:flex-row">
+    <div className="relative z-50 flex w-auto flex-col items-center justify-center gap-4 overflow-hidden md:flex-row">
       <div ref={cardRefs[0]}>
         <GoalCard
           title="visi"

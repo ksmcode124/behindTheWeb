@@ -1,7 +1,5 @@
-import Image from 'next/image';
 import ShadowedText from '@/components/ui/ShadowedText';
-import { SocialMediaLink } from '@/components/ui/SocialMediaLink';
-import { KSM_NAME, KSM_TAGLINE, SOCIAL_MEDIA } from '@/lib/constants';
+import { KSM_NAME, KSM_TAGLINE } from '@/lib/constants';
 import SocialMediaLinks from '@/components/common/SocialMediaLinks';
 import PixelImage from '@/components/common/PixelImage';
 

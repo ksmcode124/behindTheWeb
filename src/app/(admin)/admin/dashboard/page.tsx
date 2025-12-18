@@ -31,9 +31,7 @@ import {
   CrudJabatan,
   DetailAnggota,
 } from '@/lib/btw/interfaces/btw';
-import { UploadButton } from '@uploadthing/react';
 import { useUploadThing } from '@/lib/uploadthing';
-import type { OurFileRouter } from '@/app/api/uploadthing/core';
 import Image from 'next/image';
 
 // ====================================================================
@@ -224,8 +222,8 @@ const Sidebar: React.FC<{
           </nav>
         </div>
         <div
-          onClick={() => {
-            const res = fetch('/api/auth/logout', { method: 'POST' });
+          onClick={async () => {
+            const res = await fetch('/api/auth/logout', { method: 'POST' });
             if (res.ok) onNavigate('login');
             setIsSidebarOpen(false);
           }}
@@ -1013,7 +1011,7 @@ const DivisiAdmin: React.FC = () => {
                       <td className="px-6 py-4 whitespace-nowrap">
                         {item.foto_divisi ? (
                           <div className="h-10 w-10 overflow-hidden rounded-full">
-                            <img
+                            <Image
                               src={item.foto_divisi}
                               alt={item.nama_divisi}
                               className="h-full w-full object-cover"
@@ -1704,7 +1702,7 @@ const AnggotaAdmin: React.FC = () => {
                       <td className="px-6 py-4 whitespace-nowrap">
                         {item.foto_anggota ? (
                           <div className="h-10 w-10 overflow-hidden rounded-full">
-                            <img
+                            <Image
                               src={item.foto_anggota}
                               alt={item.nama_anggota}
                               className="h-full w-full object-cover"
@@ -1766,7 +1764,7 @@ const AnggotaAdmin: React.FC = () => {
               {tempAnggota.foto_anggota && (
                 <div className="flex justify-center">
                   <div className="h-32 w-32 overflow-hidden rounded-full border">
-                    <img
+                    <Image
                       src={tempAnggota.foto_anggota}
                       alt="Preview"
                       className="h-full w-full object-cover"
@@ -1871,7 +1869,7 @@ const AnggotaAdmin: React.FC = () => {
           <div className="flex flex-col items-start space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
             <div className="flex min-h-[150px] w-full flex-col items-center justify-center rounded-lg bg-gray-100 p-4 sm:w-1/3">
               {selectedAnggota.foto_anggota ? (
-                <img
+                <Image
                   src={selectedAnggota.foto_anggota}
                   alt={selectedAnggota.nama_anggota}
                   className="h-24 w-24 rounded-full object-cover"
