@@ -1,0 +1,87 @@
+// src/app/api/btw/divisi/[id]/route.ts
+
+import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+
+// GET /api/btw/divisi/1 - Get one
+export async function GET(
+  request: NextRequest,
+  props: { params: Promise<{ id: string }> }
+) {
+  try {
+    const params = await props.params;
+    const data = await prisma.btw_divisi.findUnique({
+      where: { id_divisi: parseInt(params.id) },
+    });
+
+    if (!data) {
+      return NextResponse.json(
+        { success: false, message: 'Divisi tidak ditemukan' },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({ success: true, data });
+  } catch (error) {
+    console.error('Error:', error);
+    return NextResponse.json(
+      { success: false, message: 'Gagal mengambil data' },
+      { status: 500 }
+    );
+  }
+}
+
+// PUT /api/btw/divisi/1 - Update
+export async function PUT(
+  request: NextRequest,
+  props: { params: Promise<{ id: string }> }
+) {
+  try {
+    const params = await props.params;
+    const body = await request.json();
+    
+    const data = await prisma.btw_divisi.update({
+      where: { id_divisi: parseInt(params.id) },
+      data: {
+        nama_divisi: body.nama_divisi,
+        foto_divisi: body.foto_divisi,
+      },
+    });
+
+    return NextResponse.json({
+      success: true,
+      message: 'Divisi berhasil diupdate',
+      data,
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    return NextResponse.json(
+      { success: false, message: 'Gagal update divisi' },
+      { status: 500 }
+    );
+  }
+}
+
+// DELETE /api/btw/divisi/1 - Delete
+export async function DELETE(
+  request: NextRequest,
+  props: { params: Promise<{ id: string }> }
+) {
+  try {
+    const params = await props.params;
+    await prisma.btw_divisi.delete({
+      where: { id_divisi: parseInt(params.id) },
+    });
+
+    return NextResponse.json({
+      success: true,
+      message: 'Divisi berhasil dihapus',
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    return NextResponse.json(
+      { success: false, message: 'Gagal menghapus jabatan' },
+      { status: 500 }
+    );
+  }
+}

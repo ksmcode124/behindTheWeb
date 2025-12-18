@@ -1,0 +1,132 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model btw_anggota {
+  id_anggota   Int               @id @default(autoincrement())
+  nama_anggota String
+  foto_anggota String?
+  linkedin     String?
+  instagram     String?
+  detail     detail_anggota[]
+
+  @@map("btw_anggota")
+}
+
+model btw_divisi {
+  id_divisi   Int               @id @default(autoincrement())
+  nama_divisi String
+  foto_divisi String?
+  deskripsi  String?
+  detail    detail_anggota[]
+
+  @@map("btw_divisi")
+}
+
+model btw_kepengurusan {
+  id_btw        Int               @id @default(autoincrement())
+  tahun_kerja   String
+  nama_kepengurusan String
+  detail      detail_anggota[]
+
+  @@map("btw_kepengurusan")
+}
+
+model btw_jabatan {
+  id_jabatan   Int               @id @default(autoincrement())
+  nama_jabatan String
+  detail     detail_anggota[]
+
+  @@map("btw_jabatan")
+}
+
+model detail_anggota {
+  id         Int              @id @default(autoincrement())
+  id_anggota Int
+  id_divisi  Int
+  id_btw     Int
+  id_jabatan Int
+
+  anggota      btw_anggota      @relation(fields: [id_anggota], references: [id_anggota], onDelete: Cascade)
+  divisi       btw_divisi       @relation(fields: [id_divisi], references: [id_divisi], onDelete: Cascade)
+  kepengurusan btw_kepengurusan @relation(fields: [id_btw], references: [id_btw], onDelete: Cascade)
+  jabatan      btw_jabatan      @relation(fields: [id_jabatan], references: [id_jabatan], onDelete: Cascade)
+
+  @@map("detail_anggota")
+}
+
+model user {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  role          Role      @default(user)
+
+  accounts Account[]
+  sessions Session[]
+}
+
+model Account {
+  id                String    @id @default(cuid())
+  userId            String
+  accountId         String
+  providerId        String
+  accessToken       String?
+  refreshToken      String?
+  idToken           String?
+  expiresAt         DateTime?
+  password          String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  accessTokenExpiresAt DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope             String?
+  type              String    @default("credential") //  Fix dari error sebelumnya
+
+  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([providerId, accountId])
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_token")
+}
+
+enum Role {
+  superadmin
+  admin
+  user
+}
