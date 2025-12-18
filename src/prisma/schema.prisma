@@ -28,7 +28,6 @@ model btw_divisi {
   id_divisi   Int               @id @default(autoincrement())
   nama_divisi String
   foto_divisi String?
-  deskripsi  String?
   detail    detail_anggota[]
 
   @@map("btw_divisi")

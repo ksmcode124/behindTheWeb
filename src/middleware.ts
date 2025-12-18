@@ -1,4 +1,3 @@
-// middleware.ts
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
@@ -6,55 +5,22 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const sessionToken = request.cookies.get('session_token')?.value;
 
-  // 1. PUBLIC ROUTES (tidak perlu auth)
-  const publicRoutes = [
-    '/login',
-    '/api/auth/login',
-    '/api/auth/logout',
-    '/api/display/btw', // Public API untuk frontend
-  ];
-  
+  // Public routes that don't require authentication
+  const publicRoutes = ['/login', '/api/auth/login'];
   const isPublicRoute = publicRoutes.some((route) => pathname.startsWith(route));
 
-  if (isPublicRoute) {
-    return NextResponse.next();
-  }
-
-  // 2. PROTECTED API ROUTES (perlu auth)
-  const protectedApiRoutes = [
-    '/api/btw/kepengurusan',
-    '/api/btw/anggota',
-    '/api/btw/divisi',
-    '/api/btw/jabatan',
-    '/api/btw/detail',
-  ];
-
-  const isProtectedApi = protectedApiRoutes.some((route) => 
-    pathname.startsWith(route)
-  );
-
-  if (isProtectedApi && !sessionToken) {
-    //  Return 401 Unauthorized untuk API
-    return NextResponse.json(
-      { success: false, message: 'Unauthorized' },
-      { status: 401 }
-    );
-  }
-
-  // 3. PROTECTED ADMIN PAGES (perlu auth)
+  // Admin routes that require admin role
   const adminRoutes = ['/admin'];
-  const isAdminRoute = adminRoutes.some((route) => 
-    pathname.startsWith(route)
-  );
+  const isAdminRoute = adminRoutes.some((route) => pathname.startsWith(route));
 
+  // If accessing admin route without session, redirect to login
   if (isAdminRoute && !sessionToken) {
-    //  Redirect ke login untuk pages
     const loginUrl = new URL('/login', request.url);
     loginUrl.searchParams.set('redirect', pathname);
     return NextResponse.redirect(loginUrl);
   }
 
-  // 4. LOGIN PAGE REDIRECT (kalau sudah login)
+  // If accessing login page with valid session, redirect to admin dashboard
   if (pathname === '/login' && sessionToken) {
     return NextResponse.redirect(new URL('/admin/dashboard', request.url));
   }
@@ -64,6 +30,14 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - public folder
+     */
     '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 };
+
