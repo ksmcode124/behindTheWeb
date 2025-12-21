@@ -1,29 +1,13 @@
-import { Anton, Poppins } from 'next/font/google';
-import '@/app/globals.css';
+import ClientGuard from '@/features/admin/client-guard';
 
-const anton = Anton({
-  subsets: ['latin'],
-  weight: '400',
-  variable: '--font-anton',
-});
-
-const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-});
-
-export default function RootLayout({
+export default function RootAdminLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
-      <body
-        className={`${anton.variable} ${poppins.className} font-display antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <>
+      <ClientGuard>{children}</ClientGuard>
+    </>
   );
 }

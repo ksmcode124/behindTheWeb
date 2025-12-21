@@ -81,7 +81,7 @@ function MobileMenu({ open }: { open: boolean }) {
           : 'pointer-events-none translate-x-full opacity-0'
       }`}
     >
-      <div className="bg-secondary-400 mb-2 h-[2px] w-full opacity-40" />
+      <div className="bg-secondary-400 mb-2 h-0.5 w-full opacity-40" />
       {NAV_ITEMS.map((item) => (
         <NavLink key={item.href} href={item.href}>
           {item.label.toUpperCase()}

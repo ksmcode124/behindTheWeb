@@ -64,9 +64,9 @@ function MemberTags() {
 
 function RightColumn() {
   return (
-    <div className="ml-4 grid w-full sm:ml-6 md:ml-8 lg:ml-12">
+    <div className="z-30 ml-4 grid w-full sm:ml-6 md:ml-8 lg:ml-12">
       <div className="flex flex-col justify-start px-6 sm:px-8">
-        <p className="-skew-3 text-left text-xl leading-tight font-bold tracking-tight sm:text-2xl sm:leading-tight md:text-3xl md:leading-snug lg:text-5xl lg:leading-none xl:text-7xl">
+        <p className="-skew-3 text-left text-sm leading-tight font-bold tracking-tight sm:text-xl sm:leading-tight md:text-3xl md:leading-snug lg:text-5xl lg:leading-none xl:text-7xl">
           <span className="block">CHECKOUT OUR</span>
           <span className="block">PAST TEAM</span>
         </p>
