@@ -1,9 +1,7 @@
 import { Suspense } from 'react';
-import Hero from '@/features/home/Hero';
-import Origin from '@/features/home/Origin';
-import OurPast from '@/components/layout/OurPast';
+import OurPastSection from '@/components/layout/OurPastSection';
 import { fetchCurrentKepengurusan } from '@/lib/btw/api';
-import DivisionsSection from '@/features/home/DivisionsSection';
+import { HeroSection, DivisionsSection, OriginSection } from '@/features/home';
 import { Skeleton } from '@/components/ui/skeleton';
 import { IMAGES, TEXTURES } from '@/lib/constants';
 import TexturedSection from '@/components/ui/TexturedSection';
@@ -41,13 +39,13 @@ export default function HOME() {
   return (
     <main className="bg-secondary-300 font-display relative min-h-screen">
       <TexturedSection background={IMAGES.HERO_BG} texture={TEXTURES.TEXTURE1}>
-        <Hero />
+        <HeroSection />
       </TexturedSection>
-      <Origin />
+      <OriginSection />
       <Suspense fallback={<DivisionsSkeleton />}>
         <DivisionsData />
       </Suspense>
-      <OurPast />
+      <OurPastSection />
     </main>
   );
 }

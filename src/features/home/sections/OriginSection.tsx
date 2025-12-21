@@ -1,9 +1,7 @@
 import Image from 'next/image';
 import ShadowedText from '@/components/ui/ShadowedText';
-import AccordionParent from './Accordion';
+import VisiMisiCardContainer from '@/features/home/components/VisiMisiCardContainer';
 import CodeLens from '@/components/common/CodeLens';
-import { KepengurusanResponse } from '@/lib/btw/interfaces/btw';
-import { apiGet } from '@/lib/btw/api';
 import TexturedSection from '@/components/ui/TexturedSection';
 import { ACTIVITY, TEXTURES } from '@/lib/constants';
 
@@ -13,10 +11,7 @@ const ORIGIN_DESCRIPTION = [
   'Aliquam voluptate unde nemo sed rerum expedita dignissimos architecto, incidunt iste perspiciatis illum ex eius distinctio, commodi at tempore magnam explicabo?',
 ];
 
-export default async function Origin() {
-  const kepengurusanResponse =
-    await apiGet<KepengurusanResponse>('/api/display/btw');
-
+export default async function OriginSection() {
   return (
     <>
       <OriginIntro />
@@ -137,10 +132,10 @@ function AccordionSection() {
   return (
     <>
       <AccordionHeader />
-      <section className="flex w-full items-center justify-center px-[11vw] py-[11vw] lg:mb-10">
+      <section className="flex w-full items-center justify-center overflow-hidden px-[min(11vw,4rem)] py-[11vw] lg:mb-10">
         <div className="relative flex h-full w-full items-center justify-center bg-[url('/images/hero_bg.webp')] bg-cover bg-center p-[4vw] shadow-[0_0_0_4vw_var(--color-primary-200),0_0_0_8vw_#FEB863,0_0_0_12vw_#F2D3A5]">
           <div className="relative w-full max-w-[800px]">
-            <AccordionParent />
+            <VisiMisiCardContainer />
 
             {/* BOTTOM-LEFT BARS */}
           </div>

@@ -13,7 +13,7 @@ interface CardProps {
   imageMask?: string;
 }
 
-export default function GoalCard({
+export default function GoalCardItem({
   expanded,
   onToggle,
   title,

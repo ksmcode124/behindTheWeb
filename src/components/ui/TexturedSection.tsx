@@ -35,7 +35,7 @@ export default function TexturedSection({
       {ready && (
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 z-20 h-full w-screen bg-cover bg-center mix-blend-multiply transition-opacity duration-300"
+          className="pointer-events-none absolute inset-0 z-20 h-full w-screen overflow-hidden bg-cover bg-center mix-blend-multiply transition-opacity duration-300"
           style={{
             backgroundImage: `url(${texture})`,
             opacity: textureOpacity,

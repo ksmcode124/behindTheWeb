@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import Wrapper from '@/components/common/Wrapper';
-import Inti from '@/features/home/Inti';
+import IntiList from '@/features/home/components/IntiList';
 import { Divisi } from '@/lib/btw/interfaces/btw';
 import { isInti } from '@/lib/utils';
-import SingleDivisiCard from './SingleDivisiCard';
-import DecorativeText from './DecorativeText';
+import DecorativeText from '../components/DecorativeText';
+import DivisionCardItem from '../components/DivisionCardItem';
 import TexturedSection from '@/components/ui/TexturedSection';
 import { TEXTURES } from '@/lib/constants';
 
@@ -43,7 +43,7 @@ export default async function DivisionsSection({
           </p>
           {/* Content */}
           <div className="mx-auto flex w-full max-w-6xl flex-wrap justify-center gap-12">
-            <Inti divisi={divisi.find((d) => isInti(d))} />
+            <IntiList divisi={divisi.find((d) => isInti(d))} />
           </div>
           <DecorativeText />
         </section>
@@ -53,7 +53,7 @@ export default async function DivisionsSection({
         {divisi
           .filter((d) => !isInti(d))
           .map((divisi, index) => (
-            <SingleDivisiCard divisi={divisi} key={index} />
+            <DivisionCardItem divisi={divisi} key={index} />
           ))}
       </Wrapper>
     </>

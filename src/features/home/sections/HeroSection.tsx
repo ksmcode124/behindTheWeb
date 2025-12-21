@@ -11,7 +11,7 @@ nesciunt perferendis iusto!`;
 const ICON_STYLE =
   'h-12 w-12 text-2xl bg-primary-600 text-secondary-300 shadow-[4px_4px_0px_#393C45]';
 
-export default function Hero() {
+export default function HeroSection() {
   return (
     <>
       <section className="font-display relative flex min-h-[87vh] flex-col items-center justify-center gap-4 bg-cover bg-center px-11 sm:gap-6">

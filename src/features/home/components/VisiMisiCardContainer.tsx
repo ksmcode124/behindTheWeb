@@ -1,9 +1,9 @@
 'use client';
-import GoalCard from '@/features/home/GoalCard';
+import GoalCardItem from '@/features/home/components/GoalCardItem';
 import { KSM_MISI, KSM_VISI } from '@/lib/constants';
 import { useState, useEffect, useRef, useMemo } from 'react';
 
-export default function AccordionParent() {
+export default function VisiMisiCardContainer() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const cardRef1 = useRef<HTMLDivElement>(null);
@@ -42,7 +42,7 @@ export default function AccordionParent() {
   return (
     <div className="relative z-50 flex w-auto flex-col items-center justify-center gap-4 overflow-hidden md:flex-row">
       <div ref={cardRefs[0]}>
-        <GoalCard
+        <GoalCardItem
           title="visi"
           content={KSM_VISI}
           expanded={openIndex === 0}
@@ -51,7 +51,7 @@ export default function AccordionParent() {
       </div>
 
       <div ref={cardRefs[1]}>
-        <GoalCard
+        <GoalCardItem
           title="misi"
           content={KSM_MISI}
           expanded={openIndex === 1}

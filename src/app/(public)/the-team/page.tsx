@@ -6,7 +6,7 @@ import { KepengurusanResponse } from '@/lib/btw/interfaces/btw';
 
 import HeroSection from '@/features/the-team/HeroSection';
 import CodeLens from '@/components/common/CodeLens';
-import OurPast from '@/components/layout/OurPast';
+import OurPastSection from '@/components/layout/OurPastSection';
 import Wrapper from '@/components/common/Wrapper';
 import Developers from '@/components/common/Developers';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -96,7 +96,7 @@ export default function TheTeam() {
         )}
       </Wrapper>
 
-      <OurPast />
+      <OurPastSection />
     </main>
   );
 }

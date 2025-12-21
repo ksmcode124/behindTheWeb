@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlipCard } from '../../components/common/FlipCard';
+import { FlipCard } from '@/components/common/FlipCard';
 import { Divisi } from '@/lib/btw/interfaces/btw';
 
 interface IntiProps {
@@ -7,7 +7,7 @@ interface IntiProps {
 }
 
 const size = 0;
-export default function Inti({ divisi }: IntiProps) {
+export default function IntiList({ divisi }: IntiProps) {
   return (
     <div className="flex items-center justify-center gap-15 md:gap-48">
       {divisi?.anggota.map((anggota, index) => (
@@ -22,11 +22,11 @@ export default function Inti({ divisi }: IntiProps) {
             className="mx-auto items-center justify-center"
           />
           <div className="items-center justify-center py-6 text-center">
-            <h3 className="text-xl font-normal text-[#FFF9E6]">
+            <h3 className="text-secondary-400 text-xl font-normal">
               {anggota.nama_anggota}
             </h3>
             <div className="mx-auto mt-1 mb-2 h-0.5 w-full bg-[#DEBB95]"></div>
-            <p className="text-base font-normal text-[#FFF9E6]">
+            <p className="text-secondary-400 text-base font-normal">
               {anggota.jabatan}
             </p>
           </div>

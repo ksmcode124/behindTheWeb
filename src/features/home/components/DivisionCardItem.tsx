@@ -8,7 +8,7 @@ interface SingleDivisiCardProps {
   divisi: Divisi;
 }
 
-export default function SingleDivisiCard({ divisi }: SingleDivisiCardProps) {
+export default function DivisionCardItem({ divisi }: SingleDivisiCardProps) {
   const { nama_divisi, foto_divisi, deskripsi } = divisi;
 
   return (
@@ -40,7 +40,7 @@ export default function SingleDivisiCard({ divisi }: SingleDivisiCardProps) {
           />
         </div>
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/70 via-transparent to-transparent" />
 
         <div className="absolute bottom-0 left-0 flex w-full items-end justify-between gap-3">
           <p className="text-secondary-400 line-clamp-1 max-w-[70%] px-5 pb-5 text-sm">

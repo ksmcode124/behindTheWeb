@@ -2,7 +2,7 @@ import Link from 'next/link';
 import ShadowedText from '@/components/ui/ShadowedText';
 import { ROUTES, KSM_NAME, KSM_TAGLINE } from '@/lib/constants';
 
-export default function OurPast() {
+export default function OurPastSection() {
   return (
     <div className="bg-secondary-300 text-secondary-400 relative grid grid-cols-2 gap-x-16 px-6 py-10 md:px-16 md:py-14 lg:gap-x-20 lg:px-56 lg:py-20">
       <BackgroundLines />
