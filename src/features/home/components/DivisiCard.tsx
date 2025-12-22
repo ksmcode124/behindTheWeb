@@ -3,14 +3,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Divisi } from '@/lib/btw/interfaces/btw';
 import { IMAGES } from '@/lib/constants';
-import Copy from '../data/home.copy.json';
+import Content from '../data/home-content.json';
 
 interface SingleDivisiCardProps {
   divisi: Divisi;
   kepengurusan: string;
 }
 
-export default function DivisionCardItem({
+export default function DivisiCard({
   divisi,
   kepengurusan,
 }: SingleDivisiCardProps) {
@@ -56,7 +56,7 @@ export default function DivisionCardItem({
             href="/the-team"
             className="border-secondary-300 hover:text-secondary-300 bg-primary-600 text-secondary-400 hover:bg-secondary-400 pointer-events-auto relative border-[0.4em] px-4 py-1 text-center text-2xl font-bold transition-colors duration-300"
           >
-            {Copy.division.cta.divisionCard}
+            {Content.division.cta.divisionCard}
           </Link>
         </div>
       </div>

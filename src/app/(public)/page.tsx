@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import OurPastSection from '@/components/layout/OurPastSection';
 import { fetchCurrentKepengurusan } from '@/lib/btw/api';
 import { HeroSection, DivisionsSection, OriginSection } from '@/features/home';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { IMAGES, TEXTURES } from '@/lib/constants';
 import TexturedSection from '@/components/ui/TexturedSection';
 

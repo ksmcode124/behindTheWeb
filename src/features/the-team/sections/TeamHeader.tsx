@@ -3,9 +3,9 @@
 import ShadowedText from '@/components/ui/ShadowedText';
 import PixelImage from '@/components/common/PixelImage';
 import SocialMediaLinks from '@/components/common/SocialMediaLinks';
-import { KSM_NAME, KSM_TAGLINE } from '@/lib/constants';
+import { Brand } from '@/lib/data';
 
-export default function HeroSection() {
+export default function TeamHeader() {
   return (
     <section className="text-secondary-400 relative flex min-h-[50vh] w-full flex-col items-center justify-center gap-10 px-6 py-36">
       {/* Background */}
@@ -28,10 +28,10 @@ export default function HeroSection() {
             className="-skew-3 text-5xl font-bold sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-9xl"
             strokeWidth="1.5px sm:2px md:2.5px lg:2.87px"
           >
-            {KSM_NAME}
+            {Brand.name}
           </ShadowedText>
           <h3 className="-skew-3 text-4xl text-[#e6e6e6] lg:text-7xl">
-            {KSM_TAGLINE}
+            {Brand.tagline}
           </h3>
         </div>
 

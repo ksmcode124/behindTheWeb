@@ -7,7 +7,7 @@ interface IntiProps {
 }
 
 const size = 0;
-export default function IntiList({ divisi }: IntiProps) {
+export default function DivisiIntiList({ divisi }: IntiProps) {
   return (
     <div className="flex items-center justify-center gap-15 md:gap-48">
       {divisi?.anggota.map((anggota, index) => (

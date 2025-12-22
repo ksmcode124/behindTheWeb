@@ -1014,6 +1014,8 @@ const DivisiAdmin: React.FC = () => {
                             <Image
                               src={item.foto_divisi}
                               alt={item.nama_divisi}
+                              width={10}
+                              height={10}
                               className="h-full w-full object-cover"
                             />
                           </div>
@@ -1083,6 +1085,8 @@ const DivisiAdmin: React.FC = () => {
                     <Image
                       src={tempFoto}
                       alt="Preview"
+                      width={32}
+                      height={32}
                       className="h-full w-full object-cover"
                     />
                   </div>
@@ -1703,6 +1707,8 @@ const AnggotaAdmin: React.FC = () => {
                         {item.foto_anggota ? (
                           <div className="h-10 w-10 overflow-hidden rounded-full">
                             <Image
+                              width={10}
+                              height={10}
                               src={item.foto_anggota}
                               alt={item.nama_anggota}
                               className="h-full w-full object-cover"
@@ -1765,6 +1771,8 @@ const AnggotaAdmin: React.FC = () => {
                 <div className="flex justify-center">
                   <div className="h-32 w-32 overflow-hidden rounded-full border">
                     <Image
+                      width={32}
+                      height={32}
                       src={tempAnggota.foto_anggota}
                       alt="Preview"
                       className="h-full w-full object-cover"
@@ -1872,6 +1880,8 @@ const AnggotaAdmin: React.FC = () => {
                 <Image
                   src={selectedAnggota.foto_anggota}
                   alt={selectedAnggota.nama_anggota}
+                  width={24}
+                  height={24}
                   className="h-24 w-24 rounded-full object-cover"
                 />
               ) : (

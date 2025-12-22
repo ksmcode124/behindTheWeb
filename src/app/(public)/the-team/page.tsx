@@ -4,47 +4,16 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { KepengurusanResponse } from '@/lib/btw/interfaces/btw';
 
-import HeroSection from '@/features/the-team/HeroSection';
-import CodeLens from '@/components/common/CodeLens';
+import TeamHeader from '@/features/the-team/sections/TeamHeader';
+import CodeLens, { CodeLensSkeleton } from '@/components/common/CodeLens';
 import OurPastSection from '@/components/layout/OurPastSection';
-import Wrapper from '@/components/common/Wrapper';
-import Developers from '@/components/common/Developers';
-import { Skeleton } from '@/components/ui/skeleton';
+import DivisiWrapper from '@/components/common/DivisiWrapper';
+import DevelopersList, {
+  DevelopersSkeleton,
+} from '@/components/common/DevelopersList';
 import TexturedSection from '@/components/ui/TexturedSection';
-import { ACTIVITY, TEXTURES } from '@/lib/constants';
-
-function CodeLensSkeleton() {
-  return (
-    <div className="w-full px-4 py-16 lg:hidden">
-      <div className="mx-auto max-w-6xl space-y-6">
-        <Skeleton className="mx-auto h-8 w-64" />
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {[...Array(3)].map((_, i) => (
-            <Skeleton key={i} className="h-32 w-full" />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function DevelopersSkeleton() {
-  return (
-    <div className="w-1/2 space-y-8 py-12">
-      <Skeleton className="mx-auto h-10 w-56" />
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {[...Array(3)].map((_, i) => (
-          <div key={i} className="space-y-3">
-            <Skeleton className="h-72 w-full" />
-            <Skeleton className="mx-auto h-6 w-3/4" />
-            <Skeleton className="mx-auto h-4 w-1/2" />
-            <Skeleton className="mx-auto h-4 w-2/3" />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+import { TEXTURES } from '@/lib/constants';
+import { CodeLensImages } from '@/lib/data';
 
 export default function TheTeam() {
   const [data, setData] = useState<KepengurusanResponse | null>(null);
@@ -74,16 +43,18 @@ export default function TheTeam() {
   return (
     <main className="bg-secondary-300 font-display min-h-screen">
       <TexturedSection texture={TEXTURES.TEXTURE4}>
-        <HeroSection />
+        <TeamHeader />
       </TexturedSection>
 
       {isLoading ? (
         <CodeLensSkeleton />
       ) : (
-        data && <CodeLens data={ACTIVITY} className="lg:hidden" />
+        data && (
+          <CodeLens data={CodeLensImages[0].activities} className="lg:hidden" />
+        )
       )}
 
-      <Wrapper>
+      <DivisiWrapper>
         {isLoading ? (
           <DevelopersSkeleton />
         ) : (
@@ -91,10 +62,10 @@ export default function TheTeam() {
             <p className="text-secondary-400 text-xl lg:hidden">
               Click the photo for details
             </p>
-            {data?.data.divisi && <Developers divisi={data?.data.divisi} />}
+            {data?.data.divisi && <DevelopersList divisi={data?.data.divisi} />}
           </>
         )}
-      </Wrapper>
+      </DivisiWrapper>
 
       <OurPastSection />
     </main>

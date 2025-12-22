@@ -1,6 +1,7 @@
 import { ActivityProps } from '@/lib/constants';
 import ScrollingBoxes from '@/components/ui/ScrollingBoxes';
 import InfiniteCarousel from '@/components/ui/InfiniteCarousel';
+import { Skeleton } from '../ui/Skeleton';
 
 interface CodeLensProps {
   className?: string;
@@ -21,5 +22,20 @@ export default function CodeLens({
       <InfiniteCarousel images={data} speed={speed} />
       <ScrollingBoxes speed={speed} boxSize={20} />
     </section>
+  );
+}
+
+export function CodeLensSkeleton() {
+  return (
+    <div className="w-full px-4 py-16 lg:hidden">
+      <div className="mx-auto max-w-6xl space-y-6">
+        <Skeleton className="mx-auto h-8 w-64" />
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {[...Array(3)].map((_, i) => (
+            <Skeleton key={i} className="h-32 w-full" />
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }

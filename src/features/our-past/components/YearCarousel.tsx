@@ -1,13 +1,13 @@
 import { FlipCard } from '@/components/common/FlipCard';
 import { isInti } from '@/lib/utils';
 import { KepengurusanResponse } from '@/lib/btw/interfaces/btw';
-import Developers from '@/components/common/Developers';
+import DevelopersList from '@/components/common/DevelopersList';
 
 type Props = {
   kepengurusan: KepengurusanResponse | null;
 };
 
-export default function YearCarouselContainer({ kepengurusan }: Props) {
+export default function YearCarousel({ kepengurusan }: Props) {
   return (
     <div
       className="relative z-10 flex"
@@ -44,7 +44,7 @@ export default function YearCarouselContainer({ kepengurusan }: Props) {
 
         {/* Developer Carousels */}
         {kepengurusan?.data.divisi && (
-          <Developers divisi={kepengurusan?.data.divisi} />
+          <DevelopersList divisi={kepengurusan?.data.divisi} />
         )}
       </div>
     </div>

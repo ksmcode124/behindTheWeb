@@ -46,7 +46,10 @@ function DecorationColumn({ side }: { side: 'left' | 'right' }) {
   );
 }
 
-export default function Wrapper({ children, className = '' }: WrapperProps) {
+export default function DivisiWrapper({
+  children,
+  className = '',
+}: WrapperProps) {
   return (
     <TexturedSection texture={TEXTURES.TEXTURE6}>
       <div

@@ -1,9 +1,9 @@
 import ShadowedText from '@/components/ui/ShadowedText';
-import { KSM_NAME, KSM_TAGLINE } from '@/lib/constants';
 import SocialMediaLinks from '@/components/common/SocialMediaLinks';
 import PixelImage from '@/components/common/PixelImage';
+import { Brand } from '@/lib/data';
 
-export default function HeaderSection() {
+export default function OurPastHeader() {
   return (
     <section className="relative flex min-h-[70vh] w-full flex-col items-start justify-center gap-4 overflow-hidden py-12 text-white sm:min-h-[75vh] sm:gap-6 sm:py-14 md:min-h-[80vh] md:gap-8 md:py-16 lg:min-h-[85vh] lg:gap-10 lg:py-20">
       <div className="mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-12">
@@ -16,7 +16,7 @@ export default function HeaderSection() {
             className="-skew-3 text-5xl font-bold sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-9xl"
             strokeWidth="1.5px sm:2px md:2.5px lg:2.87px"
           >
-            {KSM_NAME}
+            {Brand.name}
           </ShadowedText>
           <h1 className="text-secondary-400 -skew-3 text-5xl leading-tight sm:text-6xl md:text-7xl lg:text-9xl xl:text-[9rem] 2xl:text-[10rem]">
             PREVIOUS MEMBER
@@ -35,7 +35,7 @@ export default function HeaderSection() {
                 textColor="var(--color-primary-500)"
                 strokeWidth="1px"
               >
-                {KSM_TAGLINE}
+                {Brand.tagline}
               </ShadowedText>
             </div>
             <SocialMediaLinks />
@@ -53,7 +53,7 @@ export default function HeaderSection() {
                   textColor="var(--color-primary-500)"
                   strokeWidth="1.5px"
                 >
-                  {KSM_TAGLINE}
+                  {Brand.tagline}
                 </ShadowedText>
                 <PixelImage />
               </div>

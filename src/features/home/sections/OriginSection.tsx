@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import ShadowedText from '@/components/ui/ShadowedText';
-import VisiMisiCardContainer from '@/features/home/components/VisiMisiCardContainer';
+import VisiMisiCardContainer from '@/features/home/components/VisiMisiCards';
 import CodeLens from '@/components/common/CodeLens';
 import TexturedSection from '@/components/ui/TexturedSection';
 import { ActivityProps, TEXTURES } from '@/lib/constants';
 import { CodeLensImages } from '@/lib/data';
-import Copy from '../data/home.copy.json';
+import Content from '../data/home-content.json';
 
 export default async function OriginSection() {
   const activities: ActivityProps[] = CodeLensImages[0].activities;
@@ -65,11 +65,11 @@ function OriginContent() {
         as="h2"
         className="-skew-3 text-3xl uppercase sm:text-5xl md:text-7xl lg:text-8xl"
       >
-        {Copy.origin.headline}
+        {Content.origin.headline}
       </ShadowedText>
 
       <div className="text-secondary-400 space-y-5 text-xs leading-relaxed sm:text-base md:text-xl">
-        {Copy.origin.paragraphs.map((paragraph, index) => (
+        {Content.origin.paragraphs.map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
         ))}
       </div>
@@ -99,7 +99,7 @@ function OriginStory() {
       <DecorativeLine />
 
       <h2 className="text-secondary-400 col-span-full mt-6 text-right text-2xl uppercase sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
-        {Copy.origin.subHeadline}
+        {Content.origin.subHeadline}
       </h2>
     </section>
   );
@@ -112,7 +112,7 @@ function AccordionHeader() {
         className="pl-15 text-5xl sm:text-6xl lg:text-9xl"
         textShadow="6px 6px 0 #5EAA9E"
       >
-        {Copy.origin.decorativeText}
+        {Content.origin.decorativeText}
       </ShadowedText>
       <Image
         src="/images/pixel_border.webp"

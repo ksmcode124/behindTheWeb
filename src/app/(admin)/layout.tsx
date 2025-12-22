@@ -1,4 +1,4 @@
-import ClientGuard from '@/features/admin/client-guard';
+import ClientGuard from '@/features/admin/ClientGuard';
 
 export default function RootAdminLayout({
   children,

@@ -1,6 +1,6 @@
 import '@/app/globals.css';
-import { SidebarProvider } from '@/components/ui/sidebar';
-import { AppSidebar } from '@/features/admin/app-sidebar';
+import { SidebarProvider } from '@/components/ui/Sidebar';
+import { AppSidebar } from '@/features/admin/AppSidebar';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,7 +8,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
+} from '@/components/ui/Breadcrumb';
 
 export default function DashboardLayout({
   children,

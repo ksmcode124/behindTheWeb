@@ -2,10 +2,10 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import Logo from '../common/Logo';
-import { NavLink } from '@/components/ui/NavLink';
+import { NavigationLink } from '@/components/ui/NavigationLink';
 import { NAV_ITEMS } from '@/lib/constants';
 
-export default function Navbar() {
+export default function SiteNavbar() {
   return (
     <header className="bg-background/70 fixed inset-x-0 top-0 z-50">
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-20">
@@ -27,9 +27,9 @@ function DesktopNav({ className = '' }: { className?: string }) {
   return (
     <nav className={`flex gap-x-7 ${className}`} aria-label="Main navigation">
       {NAV_ITEMS.map((item) => (
-        <NavLink key={item.href} href={item.href}>
+        <NavigationLink key={item.href} href={item.href}>
           {item.label}
-        </NavLink>
+        </NavigationLink>
       ))}
     </nav>
   );
@@ -83,9 +83,9 @@ function MobileMenu({ open }: { open: boolean }) {
     >
       <div className="bg-secondary-400 mb-2 h-0.5 w-full opacity-40" />
       {NAV_ITEMS.map((item) => (
-        <NavLink key={item.href} href={item.href}>
+        <NavigationLink key={item.href} href={item.href}>
           {item.label.toUpperCase()}
-        </NavLink>
+        </NavigationLink>
       ))}
     </div>
   );

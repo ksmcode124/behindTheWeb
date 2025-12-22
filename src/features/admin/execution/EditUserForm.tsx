@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import {
   Dialog,
@@ -7,10 +7,10 @@ import {
   DialogTitle,
   DialogFooter,
   DialogClose,
-} from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from '@/components/ui/Dialog';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
+import { Label } from '@/components/ui/Label';
 
 export function EditUserForm({
   user,
@@ -18,20 +18,20 @@ export function EditUserForm({
   onClose,
   onSubmit,
 }: {
-  user: any
-  fields: { key: string; label: string; type?: string }[]
-  onClose: () => void
-  onSubmit?: (data: any) => void
+  user: any;
+  fields: { key: string; label: string; type?: string }[];
+  onClose: () => void;
+  onSubmit?: (data: any) => void;
 }) {
   function handleSubmit(e: any) {
-    e.preventDefault()
+    e.preventDefault();
 
-    const formData: any = {}
-    fields.forEach(f => {
-      formData[f.key] = e.target[f.key].value
-    })
+    const formData: any = {};
+    fields.forEach((f) => {
+      formData[f.key] = e.target[f.key].value;
+    });
 
-    onSubmit?.(formData)
+    onSubmit?.(formData);
   }
 
   return (
@@ -41,14 +41,14 @@ export function EditUserForm({
           <DialogTitle>Edit Data</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="grid gap-4 mt-4">
-          {fields.map(field => (
+        <form onSubmit={handleSubmit} className="mt-4 grid gap-4">
+          {fields.map((field) => (
             <div key={field.key} className="grid gap-2">
               <Label htmlFor={field.key}>{field.label}</Label>
               <Input
                 id={field.key}
                 name={field.key}
-                type={field.type || "text"}
+                type={field.type || 'text'}
                 defaultValue={user[field.key]}
               />
             </div>
@@ -63,5 +63,5 @@ export function EditUserForm({
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

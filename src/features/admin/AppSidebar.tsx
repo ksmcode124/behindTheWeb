@@ -10,7 +10,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from '@/components/ui/sidebar';
+} from '@/components/ui/Sidebar';
 import Logo from '@/components/common/Logo';
 
 // Menu items.

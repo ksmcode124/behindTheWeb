@@ -3,7 +3,7 @@ import { SocialMediaLink } from '@/components/ui/SocialMediaLink';
 import Logo from '@/components/common/Logo';
 import { Brand, SocialMedia } from '@/lib/data';
 
-export default function Footer() {
+export default function SiteFooter() {
   return (
     <footer className="bg-secondary-300 p font-body text-secondary-400 relative flex w-full items-center px-8 py-16 shadow-[inset_0_0_60px_rgba(0,0,0,1)] md:px-36">
       <div className="flex h-full w-full flex-col items-center gap-16 md:flex-row">

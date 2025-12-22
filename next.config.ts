@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
     return config;
   },
   images: {
-    remotePatterns: [new URL('https://ef40sz0w6l.ufs.sh/f/**')], //agar bisa load gambar dari github 
+    remotePatterns: [new URL('https://ef40sz0w6l.ufs.sh/f/**'), new URL('https://utfs.io/f/**')], //agar bisa load gambar dari github  
   },
 };
 

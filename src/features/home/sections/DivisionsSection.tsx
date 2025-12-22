@@ -1,13 +1,13 @@
 import Image from 'next/image';
-import Wrapper from '@/components/common/Wrapper';
-import IntiList from '../components/IntiList';
+import DivisiWrapper from '@/components/common/DivisiWrapper';
+import DivisiIntiList from '../components/DivisiIntiList';
 import { Divisi } from '@/lib/btw/interfaces/btw';
 import { isInti } from '@/lib/utils';
 import DecorativeText from '../components/DecorativeText';
-import DivisionCardItem from '../components/DivisionCardItem';
+import DivisiCard from '../components/DivisiCard';
 import TexturedSection from '@/components/ui/TexturedSection';
 import { TEXTURES } from '@/lib/constants';
-import Copy from '../data/home.copy.json';
+import Content from '../data/home-content.json';
 
 export default async function DivisionsSection({
   divisi,
@@ -23,7 +23,7 @@ export default async function DivisionsSection({
           {/* Title with small line accents */}
           <div className="relative w-fit">
             <h2 className="border-secondary border-b-2 px-5 pb-5 text-center text-3xl sm:text-4xl md:text-5xl lg:text-5xl">
-              {Copy.division.headline}
+              {Content.division.headline}
             </h2>
 
             <Image
@@ -42,27 +42,27 @@ export default async function DivisionsSection({
             />
           </div>
           <p className="text-secondary-400 text-base sm:text-lg md:text-xl lg:hidden">
-            {Copy.division.cta.flipCard}
+            {Content.division.cta.flipCard}
           </p>
           {/* Content */}
           <div className="mx-auto flex w-full max-w-6xl flex-wrap justify-center gap-12">
-            <IntiList divisi={divisi.find((d) => isInti(d))} />
+            <DivisiIntiList divisi={divisi.find((d) => isInti(d))} />
           </div>
           <DecorativeText text={kepengurusan} />
         </section>
       </TexturedSection>
 
-      <Wrapper className="mt-10 flex flex-col gap-24 py-20">
+      <DivisiWrapper className="mt-10 flex flex-col gap-24 py-20">
         {divisi
           .filter((d) => !isInti(d))
           .map((divisi, index) => (
-            <DivisionCardItem
+            <DivisiCard
               divisi={divisi}
               kepengurusan={kepengurusan}
               key={index}
             />
           ))}
-      </Wrapper>
+      </DivisiWrapper>
     </>
   );
 }

@@ -21,11 +21,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from '@/components/ui/Table';
 
-import { Input } from '@/components/ui/input';
-import { DataTablePagination } from './data-table-pagination';
-import { DataTableViewOptions } from './column-toggle';
+import { Input } from '@/components/ui/Input';
+import { DataTablePagination } from './DataTablePagination';
+import { DataTableViewOptions } from './ColumnToggle';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { SocialMediaLink, ShadowedText } from '@/components/ui/';
-import Copy from '../data/home.copy.json';
+import Content from '../data/home-content.json';
 import { Brand, SocialMedia } from '@/lib/data/';
 
 const ICON_STYLE =
@@ -38,10 +38,10 @@ function DecorativeNumbers() {
   return (
     <>
       <span className={`${numberStyle} -left-10`}>
-        {Copy.hero.decorativeText}
+        {Content.hero.decorativeText}
       </span>
       <span className={`${numberStyle} -right-10`}>
-        {Copy.hero.decorativeText}
+        {Content.hero.decorativeText}
       </span>
     </>
   );
@@ -52,7 +52,7 @@ function HeroDescription() {
     <div className="relative mx-auto max-w-5xl -skew-3">
       <DecorativeNumbers />
       <p className="border-b-secondary-600 border-b-4 pb-4 text-justify text-base leading-relaxed [text-align-last:center] sm:text-lg md:text-xl">
-        {Copy.hero.description}
+        {Content.hero.description}
       </p>
     </div>
   );

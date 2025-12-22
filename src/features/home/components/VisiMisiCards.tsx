@@ -1,5 +1,5 @@
 'use client';
-import GoalCardItem from '@/features/home/components/GoalCardItem';
+import GoalCardItem from '@/features/home/components/GoalCard';
 import { Brand } from '@/lib/data';
 import { useState, useEffect, useRef, useMemo } from 'react';
 

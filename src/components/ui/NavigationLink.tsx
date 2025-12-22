@@ -7,7 +7,7 @@ interface NavProps {
   children?: React.ReactNode;
 }
 
-export function NavLink({ href, children }: NavProps) {
+export function NavigationLink({ href, children }: NavProps) {
   return (
     <Link
       href={href}

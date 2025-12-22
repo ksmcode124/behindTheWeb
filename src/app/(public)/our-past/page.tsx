@@ -1,11 +1,11 @@
 'use client';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Wrapper from '@/components/common/Wrapper';
-import HeaderSection from '@/features/our-past/HeaderSection';
-import YearNavigation from '@/features/our-past/YearsNavigation';
-import YearCarouselContainer from '@/features/our-past/YearCarouselContainer';
-import { Skeleton } from '@/components/ui/skeleton';
+import DivisiWrapper from '@/components/common/DivisiWrapper';
+import OurPastHeader from '@/features/our-past/sections/OurPastHeader';
+import YearNavigation from '@/features/our-past/components/YearsNavigation';
+import YearCarousel from '@/features/our-past/components/YearCarousel';
+import { Skeleton } from '@/components/ui/Skeleton';
 import TexturedSection from '@/components/ui/TexturedSection';
 import { TEXTURES } from '@/lib/constants';
 
@@ -117,9 +117,9 @@ export default function OurPastTeam() {
   return (
     <main className="bg-secondary-300 font-display min-h-screen">
       <TexturedSection texture={TEXTURES.TEXTURE5}>
-        <HeaderSection />
+        <OurPastHeader />
       </TexturedSection>
-      <Wrapper>
+      <DivisiWrapper>
         {isLoading ? (
           <ContentSkeleton />
         ) : kepengurusan ? (
@@ -135,10 +135,10 @@ export default function OurPastTeam() {
               currentIndex={currentIndex}
               scrollToIndex={scrollToIndex}
             />
-            <YearCarouselContainer kepengurusan={kepengurusan} />
+            <YearCarousel kepengurusan={kepengurusan} />
           </div>
         ) : null}
-      </Wrapper>
+      </DivisiWrapper>
     </main>
   );
 }

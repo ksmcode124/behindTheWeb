@@ -1,8 +1,9 @@
 import { Divisi } from '@/lib/btw/interfaces/btw';
 import Carousel from './Carousel';
 import { isInti } from '@/lib/utils';
+import { Skeleton } from '../ui/Skeleton';
 
-export default function Developers({ divisi = [] }: { divisi: Divisi[] }) {
+export default function DevelopersList({ divisi = [] }: { divisi: Divisi[] }) {
   return (
     <>
       {divisi
@@ -19,5 +20,23 @@ export default function Developers({ divisi = [] }: { divisi: Divisi[] }) {
           </div>
         ))}
     </>
+  );
+}
+
+export function DevelopersSkeleton() {
+  return (
+    <div className="w-1/2 space-y-8 py-12">
+      <Skeleton className="mx-auto h-10 w-56" />
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {[...Array(3)].map((_, i) => (
+          <div key={i} className="space-y-3">
+            <Skeleton className="h-72 w-full" />
+            <Skeleton className="mx-auto h-6 w-3/4" />
+            <Skeleton className="mx-auto h-4 w-1/2" />
+            <Skeleton className="mx-auto h-4 w-2/3" />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
