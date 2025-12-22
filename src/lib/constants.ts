@@ -1,82 +1,8 @@
-export const KSM_NAME = "CODE124";
-export const KSM_TAGLINE = "#TheFirstCommit";
-export const KSM_VISI = "Lorem ipsum dolor sit amet";
-export const KSM_MISI = "Lorem ipsum dolor sit amet lorem"
 
-export const SOCIAL_MEDIA = [
-  {
-    platform: 'instagram' as const,
-    href: 'https://instagram.com/the.code124',
-    label: 'the.code124',
-  },
-  {
-    platform: 'whatsapp' as const,
-    href: 'https://wa.me/6285777700124',
-    label: '+6285-777-700-124',
-  },
-  {
-    platform: 'email' as const,
-    href: 'mailto:ksm.code124@gmail.com',
-    label: 'ksm.code124@gmail.com',
-  },
-  {
-    platform: 'linkedin' as const,
-    href: 'https://linkedin.com/in/code124',
-    label: 'code124',
-  },
-];
 export interface ActivityProps {
   src: string,
   alt: string
 }
-
-export const ACTIVITY: ActivityProps[] = [
-  {
-    src:
-    "/activity/activity-1.webp",
-    alt: "activity-1"
-  },
-  {
-    src:
-    "/activity/activity-2.webp",
-    alt: "activity-2"
-  },
-  {
-    src:
-    "/activity/activity-3.webp",
-    alt: "activity"
-  },
-  {
-    src:
-    "/activity/activity-4.webp",
-    alt: "activity"
-  },
-  {
-    src:
-    "/activity/activity-5.webp",
-    alt: "activity"
-  },
-  {
-    src:
-    "/activity/activity-6.webp",
-    alt: "activity"
-  },
-  {
-    src:
-    "/activity/activity-7.webp",
-    alt: "activity"
-  },
-  {
-    src:
-    "/activity/activity-8.webp",
-    alt: "activity"
-  },
-  {
-    src:
-    "/activity/activity-9.webp",
-    alt: "activity"
-  },
-]
 
 export const IMAGES = {
   LOGO_WHITE: '/images/logo_white.webp',

@@ -31,11 +31,17 @@ function DivisionsSkeleton() {
 
 // Async component for divisions
 async function DivisionsData() {
-  const divisi = (await fetchCurrentKepengurusan())?.divisi;
-  return <DivisionsSection divisi={divisi} />;
+  const kepengurusan = await fetchCurrentKepengurusan();
+  const divisi = kepengurusan?.divisi;
+  return (
+    <DivisionsSection
+      divisi={divisi}
+      kepengurusan={kepengurusan.nama_kepengurusan}
+    />
+  );
 }
 
-export default function HOME() {
+export default function HomePage() {
   return (
     <main className="bg-secondary-300 font-display relative min-h-screen">
       <TexturedSection background={IMAGES.HERO_BG} texture={TEXTURES.TEXTURE1}>

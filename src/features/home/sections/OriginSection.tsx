@@ -3,21 +3,18 @@ import ShadowedText from '@/components/ui/ShadowedText';
 import VisiMisiCardContainer from '@/features/home/components/VisiMisiCardContainer';
 import CodeLens from '@/components/common/CodeLens';
 import TexturedSection from '@/components/ui/TexturedSection';
-import { ACTIVITY, TEXTURES } from '@/lib/constants';
-
-const ORIGIN_DESCRIPTION = [
-  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio facilis, est adipisci expedita recusandae architecto facere aut eligendi non consectetur nulla tempore inventore, aperiam fugiat vitae? Magni aliquid ut assumenda?',
-  'Nam laudantium placeat soluta obcaecati at sed, consequatur repellat velit optio a. Ad repudiandae eaque iure similique, praesentium fugit aperiam alias et blanditiis commodi officia placeat ex distinctio vitae labore.',
-  'Aliquam voluptate unde nemo sed rerum expedita dignissimos architecto, incidunt iste perspiciatis illum ex eius distinctio, commodi at tempore magnam explicabo?',
-];
+import { ActivityProps, TEXTURES } from '@/lib/constants';
+import { CodeLensImages } from '@/lib/data';
+import Copy from '../data/home.copy.json';
 
 export default async function OriginSection() {
+  const activities: ActivityProps[] = CodeLensImages[0].activities;
   return (
     <>
       <OriginIntro />
       <TexturedSection texture={TEXTURES.TEXTURE4}>
         <OriginStory />
-        <CodeLens data={ACTIVITY} />
+        <CodeLens data={activities} />
       </TexturedSection>
       <TexturedSection texture={TEXTURES.TEXTURE3}>
         <AccordionSection />
@@ -66,13 +63,13 @@ function OriginContent() {
     <div className="flex max-w-2xl flex-col justify-start space-y-6 text-white sm:space-y-8">
       <ShadowedText
         as="h2"
-        className="-skew-3 text-3xl sm:text-5xl md:text-7xl lg:text-8xl"
+        className="-skew-3 text-3xl uppercase sm:text-5xl md:text-7xl lg:text-8xl"
       >
-        THE ORIGIN
+        {Copy.origin.headline}
       </ShadowedText>
 
       <div className="text-secondary-400 space-y-5 text-xs leading-relaxed sm:text-base md:text-xl">
-        {ORIGIN_DESCRIPTION.map((paragraph, index) => (
+        {Copy.origin.paragraphs.map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
         ))}
       </div>
@@ -101,8 +98,8 @@ function OriginStory() {
       <OriginContent />
       <DecorativeLine />
 
-      <h2 className="text-secondary-400 col-span-full mt-6 text-right text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
-        THROUGH THE LENS OF US...
+      <h2 className="text-secondary-400 col-span-full mt-6 text-right text-2xl uppercase sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
+        {Copy.origin.subHeadline}
       </h2>
     </section>
   );
@@ -115,7 +112,7 @@ function AccordionHeader() {
         className="pl-15 text-5xl sm:text-6xl lg:text-9xl"
         textShadow="6px 6px 0 #5EAA9E"
       >
-        124
+        {Copy.origin.decorativeText}
       </ShadowedText>
       <Image
         src="/images/pixel_border.webp"

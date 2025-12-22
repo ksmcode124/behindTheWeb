@@ -1,17 +1,20 @@
 import Image from 'next/image';
 import Wrapper from '@/components/common/Wrapper';
-import IntiList from '@/features/home/components/IntiList';
+import IntiList from '../components/IntiList';
 import { Divisi } from '@/lib/btw/interfaces/btw';
 import { isInti } from '@/lib/utils';
 import DecorativeText from '../components/DecorativeText';
 import DivisionCardItem from '../components/DivisionCardItem';
 import TexturedSection from '@/components/ui/TexturedSection';
 import { TEXTURES } from '@/lib/constants';
+import Copy from '../data/home.copy.json';
 
 export default async function DivisionsSection({
   divisi,
+  kepengurusan,
 }: {
   divisi: Divisi[];
+  kepengurusan: string;
 }) {
   return (
     <>
@@ -20,7 +23,7 @@ export default async function DivisionsSection({
           {/* Title with small line accents */}
           <div className="relative w-fit">
             <h2 className="border-secondary border-b-2 px-5 pb-5 text-center text-3xl sm:text-4xl md:text-5xl lg:text-5xl">
-              MEET OUR TEAM
+              {Copy.division.headline}
             </h2>
 
             <Image
@@ -39,13 +42,13 @@ export default async function DivisionsSection({
             />
           </div>
           <p className="text-secondary-400 text-base sm:text-lg md:text-xl lg:hidden">
-            Click the photo for details
+            {Copy.division.cta.flipCard}
           </p>
           {/* Content */}
           <div className="mx-auto flex w-full max-w-6xl flex-wrap justify-center gap-12">
             <IntiList divisi={divisi.find((d) => isInti(d))} />
           </div>
-          <DecorativeText />
+          <DecorativeText text={kepengurusan} />
         </section>
       </TexturedSection>
 
@@ -53,7 +56,11 @@ export default async function DivisionsSection({
         {divisi
           .filter((d) => !isInti(d))
           .map((divisi, index) => (
-            <DivisionCardItem divisi={divisi} key={index} />
+            <DivisionCardItem
+              divisi={divisi}
+              kepengurusan={kepengurusan}
+              key={index}
+            />
           ))}
       </Wrapper>
     </>

@@ -1,0 +1,43 @@
+[
+  {
+    "year": 2025,
+    "activities": [
+      {
+        "src": "/activity/activity-1.webp",
+        "alt": "activity-1"
+      },
+      {
+        "src": "/activity/activity-2.webp",
+        "alt": "activity-2"
+      },
+      {
+        "src": "/activity/activity-3.webp",
+        "alt": "activity"
+      },
+      {
+        "src": "/activity/activity-4.webp",
+        "alt": "activity"
+      },
+      {
+        "src": "/activity/activity-5.webp",
+        "alt": "activity"
+      },
+      {
+        "src": "/activity/activity-6.webp",
+        "alt": "activity"
+      },
+      {
+        "src": "/activity/activity-7.webp",
+        "alt": "activity"
+      },
+      {
+        "src": "/activity/activity-8.webp",
+        "alt": "activity"
+      },
+      {
+        "src": "/activity/activity-9.webp",
+        "alt": "activity"
+      }
+    ]
+  }
+]

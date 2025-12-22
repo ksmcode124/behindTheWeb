@@ -1,6 +1,6 @@
 'use client';
 import GoalCardItem from '@/features/home/components/GoalCardItem';
-import { KSM_MISI, KSM_VISI } from '@/lib/constants';
+import { Brand } from '@/lib/data';
 import { useState, useEffect, useRef, useMemo } from 'react';
 
 export default function VisiMisiCardContainer() {
@@ -44,7 +44,7 @@ export default function VisiMisiCardContainer() {
       <div ref={cardRefs[0]}>
         <GoalCardItem
           title="visi"
-          content={KSM_VISI}
+          content={Brand.visi}
           expanded={openIndex === 0}
           onToggle={() => handleToggle(0)}
         />
@@ -53,7 +53,7 @@ export default function VisiMisiCardContainer() {
       <div ref={cardRefs[1]}>
         <GoalCardItem
           title="misi"
-          content={KSM_MISI}
+          content={Brand.misi}
           expanded={openIndex === 1}
           onToggle={() => handleToggle(1)}
         />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { SocialMediaLink } from '@/components/ui/SocialMediaLink';
 import Logo from '@/components/common/Logo';
-import { KSM_TAGLINE, SOCIAL_MEDIA } from '@/lib/constants';
+import { Brand, SocialMedia } from '@/lib/data';
 
 export default function Footer() {
   return (
@@ -18,11 +18,9 @@ function FooterBranding() {
   return (
     <div className="flex w-full flex-col items-start gap-4 pr-8">
       <Logo variant="white" />
-      <h3 className="mb-2 text-xl font-bold">{KSM_TAGLINE}</h3>
+      <h3 className="mb-2 text-xl font-bold">{Brand.tagline}</h3>
       <p className="text-md max-w-full text-left leading-relaxed text-gray-300 lg:max-w-[350px] lg:text-[14px]">
-        In Engineering We Trust, In Innovation We Rise. Designing Tomorrow
-        Today. Powered By Knowledge, Driven By Innovation. Because Every Problem
-        Has A Solution.
+        {Brand.quote}
       </p>
     </div>
   );
@@ -31,7 +29,7 @@ function FooterBranding() {
 function FooterSocialLinks() {
   return (
     <div className="flex w-full flex-col items-start gap-4 md:border-l md:ps-25">
-      {SOCIAL_MEDIA.map((social) => (
+      {SocialMedia.map((social) => (
         <SocialMediaLink
           key={social.platform}
           platform={social.platform}

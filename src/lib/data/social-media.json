@@ -1,0 +1,22 @@
+[
+  {
+    "platform": "instagram",
+    "href": "https://instagram.com/the.code124",
+    "label": "the.code124"
+  },
+  {
+    "platform": "whatsapp",
+    "href": "https://wa.me/6285777700124",
+    "label": "+6285-777-700-124"
+  },
+  {
+    "platform": "email",
+    "href": "mailto:ksm.code124@gmail.com",
+    "label": "ksm.code124@gmail.com"
+  },
+  {
+    "platform": "linkedin",
+    "href": "https://linkedin.com/in/code124",
+    "label": "code124"
+  }
+]

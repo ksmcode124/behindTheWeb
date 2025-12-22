@@ -1,0 +1,23 @@
+{
+  "hero": {
+    "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae. ratione distinctio quae accusantium qui corporis est! Libero ipsa. nostrum quia dolorem error dolores repellendus modi ullam, quis .nesciunt perferendis iusto!",
+    "decorativeText": "124"
+  },
+  "origin": {
+    "headline": "The Origin",
+    "paragraphs": [
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit.",
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit.",
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit."
+    ],
+    "decorativeText": "124",
+    "subHeadline": "Through The Lens of Us..."
+  },
+  "division": {
+    "headline": "Meet Our Team",
+    "cta": {
+      "flipCard": "Click the photo for details",
+      "divisionCard": "Selengkapnya"
+    }
+  }
+}

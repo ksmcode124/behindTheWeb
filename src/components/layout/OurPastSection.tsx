@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import ShadowedText from '@/components/ui/ShadowedText';
-import { ROUTES, KSM_NAME, KSM_TAGLINE } from '@/lib/constants';
+import { ROUTES } from '@/lib/constants';
+import { Brand } from '@/lib/data';
 
 export default function OurPastSection() {
   return (
@@ -21,7 +22,7 @@ function BackgroundLines() {
 
 function LeftColumn() {
   return (
-    <div className="-ml-4 grid grid-rows-2 lg:-ml-20">
+    <div className="z-30 -ml-4 grid grid-rows-2 lg:-ml-20">
       <div /> {/* empty top space */}
       <div className="flex flex-col items-start">
         <CodePrevious />
@@ -35,7 +36,7 @@ function CodePrevious() {
   return (
     <div className="flex -skew-3 items-center gap-x-6">
       <ShadowedText className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl">
-        {KSM_NAME}
+        {Brand.name}
       </ShadowedText>
       <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl">
         PREVIOUS
@@ -52,10 +53,10 @@ function MemberTags() {
       </p>
       <div className="flex flex-col leading-none sm:text-base md:text-lg lg:text-2xl xl:text-4xl">
         <p className="text-primary-500 [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:1px] text-shadow-[1.5px_1.5px_0_#FEB863]">
-          {KSM_TAGLINE}
+          {Brand.tagline}
         </p>
         <p className="text-primary-500 [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:1px] text-shadow-[1.5px_1.5px_0_#FEB863]">
-          {KSM_TAGLINE}
+          {Brand.tagline}
         </p>
       </div>
     </div>
