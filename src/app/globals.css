@@ -151,3 +151,7 @@
     opacity: 1;
   }
 }
+
+html, body {
+  background-color: var(--color-secondary-300)
+}

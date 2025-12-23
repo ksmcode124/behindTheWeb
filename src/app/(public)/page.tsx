@@ -43,7 +43,7 @@ async function DivisionsData() {
 
 export default function HomePage() {
   return (
-    <main className="bg-secondary-300 font-display relative min-h-screen">
+    <main className="font-display relative min-h-screen">
       <TexturedSection background={IMAGES.HERO_BG} texture={TEXTURES.TEXTURE1}>
         <HeroSection />
       </TexturedSection>

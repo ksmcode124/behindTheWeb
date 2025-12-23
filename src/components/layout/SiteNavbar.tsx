@@ -41,7 +41,7 @@ function MobileNav({ className }: { className: string }) {
   return (
     <div className={`${className} relative`}>
       <MobileMenuButton open={open} setOpen={setOpen} />
-      <MobileMenu open={open} />
+      <MobileMenu open={open} setOpen={setOpen} />
     </div>
   );
 }
@@ -72,7 +72,13 @@ function MobileMenuButton({
   );
 }
 
-function MobileMenu({ open }: { open: boolean }) {
+function MobileMenu({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: (val: boolean) => void;
+}) {
   return (
     <div
       className={`bg-secondary-300 absolute -top-5 -right-6 flex w-[40vw] flex-col items-start gap-4 p-5 pt-20 transition-all duration-300 ${
@@ -83,7 +89,11 @@ function MobileMenu({ open }: { open: boolean }) {
     >
       <div className="bg-secondary-400 mb-2 h-0.5 w-full opacity-40" />
       {NAV_ITEMS.map((item) => (
-        <NavigationLink key={item.href} href={item.href}>
+        <NavigationLink
+          key={item.href}
+          href={item.href}
+          onClick={() => setOpen(false)}
+        >
           {item.label.toUpperCase()}
         </NavigationLink>
       ))}

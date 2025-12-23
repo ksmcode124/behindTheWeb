@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${anton.variable} ${poppins.className} font-display overflow-x-hidden antialiased`}
+        className={`${anton.variable} ${poppins.className} font-display bg-secondary-300 overflow-x-hidden antialiased`}
       >
         {children}
       </body>
