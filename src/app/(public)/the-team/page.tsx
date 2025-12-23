@@ -49,7 +49,13 @@ export default function TheTeam() {
       {isLoading ? (
         <CodeLensSkeleton />
       ) : (
-        data && (
+        // data && (
+        //   <CodeLens
+        //     data={CodeLensImages[0].activities}
+        //     className="lg:hidden"
+        //   />
+        // )
+        CodeLensImages[0]?.activities && (
           <CodeLens data={CodeLensImages[0].activities} className="lg:hidden" />
         )
       )}

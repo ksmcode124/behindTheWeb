@@ -8,7 +8,7 @@ import { CodeLensImages } from '@/lib/data';
 import Content from '../data/home-content.json';
 
 export default async function OriginSection() {
-  const activities: ActivityProps[] = CodeLensImages[0].activities;
+  const activities: ActivityProps[] = CodeLensImages[0]?.activities || [];
   return (
     <>
       <OriginIntro />

@@ -1990,21 +1990,51 @@ const DetailAnggotaAdmin: React.FC = () => {
     loadAllData();
   }, []);
 
-  const enrichDetail = (detail: DetailAnggota) => ({
-    ...detail,
-    anggota_nama:
-      anggotaList.find((a) => a.id === detail.anggota_id)?.nama_anggota ||
-      detail.anggota_nama,
-    kepengurusan_nama:
+  // const enrichDetail = (detail: DetailAnggota) => ({
+  //   ...detail,
+  //   anggota_nama:
+  //     anggotaList.find((a) => a.id === detail.anggota_id)?.nama_anggota ||
+  //     detail.anggota_nama,
+  //   kepengurusan_nama:
+  //     kepengurusanList.find((k) => k.id === detail.kepengurusan_id)
+  //       ?.nama_kepengurusan || detail.kepengurusan_nama,
+  //   divisi_nama:
+  //     divisiList.find((d) => d.id === detail.divisi_id)?.nama_divisi ||
+  //     detail.divisi_nama,
+  //   jabatan_nama:
+  //     jabatanList.find((j) => j.id === detail.jabatan_id)?.nama_jabatan ||
+  //     detail.jabatan_nama,
+  // });
+  const enrichDetail = (detail: DetailAnggota): DetailAnggota => {
+    const anggotaNama =
+      anggotaList.find((a) => a.id === detail.anggota_id)?.nama_anggota ??
+      detail.anggota_nama ??
+      '';
+
+    const kepengurusanNama =
       kepengurusanList.find((k) => k.id === detail.kepengurusan_id)
-        ?.nama_kepengurusan || detail.kepengurusan_nama,
-    divisi_nama:
-      divisiList.find((d) => d.id === detail.divisi_id)?.nama_divisi ||
-      detail.divisi_nama,
-    jabatan_nama:
-      jabatanList.find((j) => j.id === detail.jabatan_id)?.nama_jabatan ||
-      detail.jabatan_nama,
-  });
+        ?.nama_kepengurusan ??
+      detail.kepengurusan_nama ??
+      '';
+
+    const divisiNama =
+      divisiList.find((d) => d.id === detail.divisi_id)?.nama_divisi ??
+      detail.divisi_nama ??
+      '';
+
+    const jabatanNama =
+      jabatanList.find((j) => j.id === detail.jabatan_id)?.nama_jabatan ??
+      detail.jabatan_nama ??
+      '';
+
+    return {
+      ...detail,
+      anggota_nama: anggotaNama,
+      kepengurusan_nama: kepengurusanNama,
+      divisi_nama: divisiNama,
+      jabatan_nama: jabatanNama,
+    };
+  };
 
   const loadAllData = async () => {
     setIsLoading(true);

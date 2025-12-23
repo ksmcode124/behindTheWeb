@@ -28,22 +28,22 @@ function DecorationColumn({ side }: { side: 'left' | 'right' }) {
           } gap-[30vh]`}
         >
           <Image
-            width={360}
-            height={360}
-            alt=""
             src={
               isLeft ? '/images/logo_white.webp' : '/images/white_accent.webp'
             }
+            width={360}
+            height={360}
+            alt=""
             className="w-[180px] rotate-60 select-none xl:w-[250px]"
             priority={false}
           />
           <Image
-            width={360}
-            height={200}
-            alt=""
             src={
               isLeft ? '/images/white_accent.webp' : '/images/logo_white.webp'
             }
+            width={360}
+            height={200}
+            alt=""
             className={`w-[180px] select-none xl:w-[250px] ${
               isLeft ? 'scale-x-[-1]' : ''
             }`}
@@ -55,6 +55,10 @@ function DecorationColumn({ side }: { side: 'left' | 'right' }) {
   );
 }
 
+/* =========================
+   TEXTURE BACKGROUND LAYER
+   (async, lowest layer)
+========================= */
 function TextureLayer({
   texture,
   opacity = 0.25,
@@ -75,7 +79,7 @@ function TextureLayer({
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute inset-0 -z-10 bg-cover bg-center mix-blend-multiply transition-opacity duration-300"
+      className="pointer-events-none absolute inset-0 z-0 bg-cover bg-center mix-blend-multiply transition-opacity duration-300"
       style={{
         backgroundImage: `url(${texture})`,
         opacity,
@@ -90,25 +94,24 @@ export default function DivisiWrapper({
 }: WrapperProps) {
   return (
     <section className="relative isolate">
-      {/* CONTENT — RENDER FIRST */}
-      <div
-        className={`relative z-10 flex flex-col items-center rounded-t-[5em] bg-[linear-gradient(to_right,#FFF9E6_0%,#DEBB95_30%,#DEBB95_80%,#FFF9E6_100%)] px-6 py-20 md:px-10 md:py-30 ${className}`}
-      >
-        {/* top border */}
-        <div className="border-secondary-400 absolute -top-6 left-0 h-10 w-full rounded-t-[15em] border-x border-t-2" />
-
-        {/* CONTENT */}
-        {children}
-      </div>
-
-      {/* DECORATION — NON BLOCKING */}
-      <div className="pointer-events-none absolute inset-0 z-20 hidden overflow-hidden lg:block">
-        <DecorationColumn side="left" />
-        <DecorationColumn side="right" />
-      </div>
-
-      {/* TEXTURE — LOAD BELAKANGAN */}
+      {/* TEXTURE — LOWEST */}
       <TextureLayer texture={TEXTURES.TEXTURE6} />
+
+      {/* CONTENT — TOP PRIORITY */}
+      <div
+        className={`relative z-20 flex flex-col items-center rounded-t-[5em] bg-[linear-gradient(to_right,#FFF9E6_0%,#DEBB95_30%,#DEBB95_80%,#FFF9E6_100%)] px-6 py-20 md:px-10 md:py-30 ${className}`}
+      >
+        {/* DECORATION — BELOW CONTENT */}
+        <div className="pointer-events-none absolute inset-0 z-10 hidden overflow-hidden lg:block">
+          <DecorationColumn side="left" />
+          <DecorationColumn side="right" />
+        </div>
+        {/* top border */}
+        <div className="border-secondary-400 absolute -top-6 left-0 z-10 h-10 w-full rounded-t-[15em] border-x border-t-2" />
+
+        {/* ACTUAL CONTENT */}
+        <div className="relative z-20 w-full">{children}</div>
+      </div>
     </section>
   );
 }
