@@ -14,7 +14,7 @@ export default async function OriginSection() {
       <OriginIntro />
       <OriginBlock activities={activities} />
       <TexturedSection texture={TEXTURES.TEXTURE3}>
-        <AccordionSection />
+        <VisiMisiSection />
       </TexturedSection>
     </>
   );
@@ -28,14 +28,14 @@ function OriginIntro() {
         alt="The First Commit"
         width={300}
         height={200}
-        className="h-[7vh] w-[55vw] sm:h-[8vh] sm:w-[50vw] lg:h-[15vh] lg:w-[40vw]"
+        className="pointer-events-none h-[7vh] w-[55vw] select-none sm:h-[8vh] sm:w-[50vw] lg:h-[15vh] lg:w-[40vw]"
       />
       <Image
         src="/images/line_brow_white.webp"
         alt="Decorative line"
         width={200}
         height={100}
-        className="lg:w-[15vw} h-[3vh] w-[25vw] lg:h-[5vh]"
+        className="lg:w-[15vw} pointer-events-none h-[3vh] w-[25vw] select-none lg:h-[5vh]"
       />
     </div>
   );
@@ -95,7 +95,7 @@ function DecorativeLine() {
         alt="Decorative line"
         width={300}
         height={200}
-        className="h-[3vh] w-[32vw] sm:h-[4vh] sm:w-[38vw] lg:h-[10vh] lg:w-[25vw]"
+        className="pointer-events-none h-[3vh] w-[32vw] select-none sm:h-[4vh] sm:w-[38vw] lg:h-[10vh] lg:w-[25vw]"
       />
     </div>
   );
@@ -115,11 +115,11 @@ function OriginStory() {
   );
 }
 
-function AccordionHeader() {
+function VisiMisiHeader() {
   return (
     <div className="relative top-[clamp(1.75rem,4vw,3.75rem)] z-2 flex w-full justify-between">
       <ShadowedText
-        className="pl-15 text-5xl sm:text-6xl lg:text-9xl"
+        className="pointer-events-none pl-15 text-5xl select-none sm:text-6xl lg:text-9xl"
         textShadow="6px 6px 0 #5EAA9E"
       >
         {Content.origin.decorativeText}
@@ -129,23 +129,23 @@ function AccordionHeader() {
         alt="Decorative border"
         width={200}
         height={100}
-        className="h-[4vh] w-[60vw] lg:h-[8vh] lg:w-[40vw]"
+        className="pointer-events-none relative top-[clamp(0.3rem,2vw,1.6rem)] h-[4vh] w-[60vw] select-none lg:h-[8vh] lg:w-[40vw]"
       />
     </div>
   );
 }
 
-function AccordionSection() {
+function VisiMisiSection() {
   return (
     <>
-      <AccordionHeader />
+      <VisiMisiHeader />
       <section className="flex w-full items-center justify-center overflow-hidden px-[min(11vw,4rem)] py-[11vw] lg:mb-10">
         <div className="relative flex h-full w-full items-center justify-center bg-[url('/images/hero_bg.webp')] bg-cover bg-center p-[4vw] shadow-[0_0_0_4vw_var(--color-primary-200),0_0_0_8vw_#FEB863,0_0_0_12vw_#F2D3A5]">
           <div className="relative w-full max-w-[800px]">
             <VisiMisiCardContainer />
-
-            {/* BOTTOM-LEFT BARS */}
           </div>
+
+          {/* BOTTOM-LEFT BARS */}
           <div className="absolute bottom-[-4vw] left-2 flex h-40 items-end gap-2 sm:gap-4 md:left-5 md:gap-5 lg:gap-6">
             <div className="bg-primary-500 h-[35%] w-4 rounded-md sm:w-6 md:h-[60%] lg:h-[120%] lg:w-16" />
             <div className="bg-primary-300 h-[25%] w-4 rounded-md sm:w-6 md:h-[45%] lg:h-[95%] lg:w-16" />

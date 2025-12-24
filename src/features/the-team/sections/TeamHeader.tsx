@@ -25,7 +25,7 @@ export default function TeamHeader() {
         {/* Left */}
         <div className="space-y-5 text-left">
           <ShadowedText
-            className="-skew-3 text-5xl font-bold sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-9xl"
+            className="-skew-3 text-5xl font-bold uppercase sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-9xl"
             strokeWidth="1.5px sm:2px md:2.5px lg:2.87px"
           >
             {Brand.name}

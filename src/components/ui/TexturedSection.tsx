@@ -29,7 +29,7 @@ export default function TexturedSection({
       {background && (
         <div
           aria-hidden
-          className="absolute inset-0 -z-20 bg-neutral-900 bg-cover bg-center"
+          className="bg-secondary-300 absolute inset-0 -z-20 bg-cover bg-center"
           style={{ backgroundImage: `url(${background})` }}
         />
       )}
@@ -38,7 +38,7 @@ export default function TexturedSection({
       {textureReady && (
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 bg-cover bg-center mix-blend-multiply transition-opacity duration-300"
+          className="pointer-events-none absolute inset-0 -z-10 bg-cover bg-center mix-blend-multiply transition-opacity duration-300 select-none"
           style={{
             backgroundImage: `url(${texture})`,
             opacity: textureOpacity,

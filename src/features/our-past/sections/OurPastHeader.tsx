@@ -13,12 +13,12 @@ export default function OurPastHeader() {
         {/* Title */}
         <div className="relative z-20 flex w-full max-w-7xl flex-col items-start gap-2 px-4 sm:gap-3 md:gap-4 lg:px-8 lg:text-left xl:px-12">
           <ShadowedText
-            className="-skew-3 text-5xl font-bold sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-9xl"
+            className="-skew-3 text-5xl font-bold uppercase sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-9xl"
             strokeWidth="1.5px sm:2px md:2.5px lg:2.87px"
           >
             {Brand.name}
           </ShadowedText>
-          <h1 className="text-secondary-400 -skew-3 text-5xl leading-tight sm:text-6xl md:text-7xl lg:text-9xl xl:text-[9rem] 2xl:text-[10rem]">
+          <h1 className="text-secondary-400 -skew-3 text-5xl leading-tight sm:text-6xl md:text-7xl lg:text-9xl">
             PREVIOUS MEMBER
           </h1>
         </div>

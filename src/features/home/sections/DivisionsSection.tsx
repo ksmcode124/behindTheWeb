@@ -54,16 +54,16 @@ export default function DivisionsSection() {
             <Image
               src="/images/line_brow_black.webp"
               alt=""
-              width={200}
-              height={200}
-              className="absolute bottom-0 left-0 h-8 w-20 translate-y-[50%] object-cover object-right"
+              width={250}
+              height={250}
+              className="pointer-events-none absolute bottom-0 -left-1 h-8 w-21 translate-y-[50%] object-cover object-right select-none [clip-path:polygon(0_0,100%_0,100%_100%,9%_100%,0_0)]"
             />
             <Image
               src="/images/line_brow_black.webp"
               alt=""
-              width={200}
-              height={200}
-              className="absolute right-0 bottom-0 h-8 w-20 translate-y-[50%] scale-x-[-1] object-cover object-right"
+              width={250}
+              height={250}
+              className="pointer-events-none absolute -right-1 bottom-0 h-8 w-21 translate-y-[50%] scale-x-[-1] object-cover object-right select-none [clip-path:polygon(0_0,100%_0,100%_100%,9%_100%,0_0)]"
             />
           </div>
           <p className="text-secondary-400 text-base sm:text-lg md:text-xl lg:hidden">

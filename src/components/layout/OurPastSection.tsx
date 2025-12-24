@@ -24,7 +24,7 @@ function LeftColumn() {
   return (
     <div className="z-30 -ml-4 grid grid-rows-2 lg:-ml-20">
       <div /> {/* empty top space */}
-      <div className="flex flex-col items-start">
+      <div className="flex flex-col items-start gap-y-2">
         <CodePrevious />
         <MemberTags />
       </div>
@@ -34,7 +34,7 @@ function LeftColumn() {
 
 function CodePrevious() {
   return (
-    <div className="flex -skew-3 items-center gap-x-6">
+    <div className="flex -skew-3 items-center gap-x-6 uppercase">
       <ShadowedText className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl">
         {Brand.name}
       </ShadowedText>
