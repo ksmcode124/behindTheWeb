@@ -1,5 +1,7 @@
 import { ActivityProps } from '@/lib/constants';
-import ScrollingBoxes from '@/components/ui/ScrollingBoxes';
+import ScrollingBoxes, {
+  ScrollingBoxesSkeleton,
+} from '@/components/ui/ScrollingBoxes';
 import InfiniteCarousel from '@/components/ui/InfiniteCarousel';
 import { Skeleton } from '../ui/Skeleton';
 
@@ -25,17 +27,28 @@ export default function CodeLens({
   );
 }
 
-export function CodeLensSkeleton() {
+export function CodeLensSkeleton({ count = 8 }: { count?: number }) {
   return (
-    <div className="w-full px-4 py-16 lg:hidden">
-      <div className="mx-auto max-w-6xl space-y-6">
-        <Skeleton className="mx-auto h-8 w-64" />
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {[...Array(3)].map((_, i) => (
-            <Skeleton key={i} className="h-32 w-full" />
+    <section className="relative mb-6 flex w-full flex-col gap-4 bg-[#27292D] py-4 shadow-2xl sm:mb-[4vh] sm:gap-6 sm:py-6 lg:hidden lg:py-8">
+      {/* ScrollingBoxes (top) */}
+      <ScrollingBoxesSkeleton />
+
+      {/* InfiniteCarousel */}
+      <div className="relative w-full overflow-hidden whitespace-nowrap">
+        <div className="flex">
+          {Array.from({ length: count }).map((_, i) => (
+            <div
+              key={i}
+              className="relative mx-1 aspect-3/2 h-[clamp(80px,12vw,160px)] flex-none px-3 sm:mx-2 sm:px-5 md:mx-3 lg:mx-5 lg:px-8"
+            >
+              <Skeleton className="h-full w-full" />
+            </div>
           ))}
         </div>
       </div>
-    </div>
+
+      {/* ScrollingBoxes (bottom) */}
+      <ScrollingBoxesSkeleton />
+    </section>
   );
 }

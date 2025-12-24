@@ -1,21 +1,18 @@
 import Image from 'next/image';
 import ShadowedText from '@/components/ui/ShadowedText';
 import VisiMisiCardContainer from '@/features/home/components/VisiMisiCards';
-import CodeLens from '@/components/common/CodeLens';
+import CodeLens, { CodeLensSkeleton } from '@/components/common/CodeLens';
 import TexturedSection from '@/components/ui/TexturedSection';
 import { ActivityProps, TEXTURES } from '@/lib/constants';
 import { CodeLensImages } from '@/lib/data';
 import Content from '../data/home-content.json';
 
 export default async function OriginSection() {
-  const activities: ActivityProps[] = CodeLensImages[0]?.activities || [];
+  const activities: ActivityProps[] = CodeLensImages[0]?.activities;
   return (
     <>
       <OriginIntro />
-      <TexturedSection texture={TEXTURES.TEXTURE4}>
-        <OriginStory />
-        <CodeLens data={activities} />
-      </TexturedSection>
+      <OriginBlock activities={activities} />
       <TexturedSection texture={TEXTURES.TEXTURE3}>
         <AccordionSection />
       </TexturedSection>
@@ -55,6 +52,19 @@ function OriginImage() {
         priority
       />
     </div>
+  );
+}
+
+function OriginBlock({ activities }: { activities?: ActivityProps[] }) {
+  if (!activities) {
+    return <CodeLensSkeleton />;
+  }
+
+  return (
+    <TexturedSection texture={TEXTURES.TEXTURE4}>
+      <OriginStory />
+      <CodeLens data={activities} />
+    </TexturedSection>
   );
 }
 

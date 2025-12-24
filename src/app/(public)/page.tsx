@@ -1,45 +1,11 @@
-import { Suspense } from 'react';
+import { useEffect, useState } from 'react';
 import OurPastSection from '@/components/layout/OurPastSection';
 import { fetchCurrentKepengurusan } from '@/lib/btw/api';
 import { HeroSection, DivisionsSection, OriginSection } from '@/features/home';
-import { Skeleton } from '@/components/ui/Skeleton';
 import { IMAGES, TEXTURES } from '@/lib/constants';
 import TexturedSection from '@/components/ui/TexturedSection';
-
-// Skeleton component for DivisionsSection
-function DivisionsSkeleton() {
-  return (
-    <div className="w-full px-4 py-16">
-      <div className="mx-auto max-w-7xl">
-        <Skeleton className="mx-auto mb-4 h-12 w-64" />
-        <Skeleton className="mx-auto mb-12 h-6 w-96" />
-
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="space-y-3">
-              <Skeleton className="h-48 w-full" />
-              <Skeleton className="h-6 w-3/4" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-5/6" />
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// Async component for divisions
-async function DivisionsData() {
-  const kepengurusan = await fetchCurrentKepengurusan();
-  const divisi = kepengurusan?.divisi;
-  return (
-    <DivisionsSection
-      divisi={divisi}
-      kepengurusan={kepengurusan.nama_kepengurusan}
-    />
-  );
-}
+import { DivisiIntiListSkeleton } from '@/features/home/components/DivisiIntiList';
+import { DivisiCardSkeleton } from '@/features/home/sections/DivisionsSection';
 
 export default function HomePage() {
   return (
@@ -48,10 +14,13 @@ export default function HomePage() {
         <HeroSection />
       </TexturedSection>
       <OriginSection />
-      <Suspense fallback={<DivisionsSkeleton />}>
-        <DivisionsData />
-      </Suspense>
+      <DivisionsBlock />
       <OurPastSection />
     </main>
   );
+}
+
+// Async component for divisions
+function DivisionsBlock() {
+  return <DivisionsSection />;
 }

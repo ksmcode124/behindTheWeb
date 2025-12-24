@@ -110,7 +110,7 @@ export default function DivisiWrapper({
         <div className="border-secondary-400 absolute -top-6 left-0 z-10 h-10 w-full rounded-t-[15em] border-x border-t-2" />
 
         {/* ACTUAL CONTENT */}
-        <div className="relative z-20 w-full">{children}</div>
+        <div className="relative z-20 w-full gap-5">{children}</div>
       </div>
     </section>
   );

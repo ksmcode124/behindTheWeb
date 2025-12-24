@@ -1,7 +1,9 @@
-import { FlipCard } from '@/components/common/FlipCard';
+import { FlipCard, FlipCardSkeleton } from '@/components/common/FlipCard';
 import { isInti } from '@/lib/utils';
 import { KepengurusanResponse } from '@/lib/btw/interfaces/btw';
-import DevelopersList from '@/components/common/DevelopersList';
+import DevelopersList, {
+  DevelopersSkeleton,
+} from '@/components/common/DevelopersList';
 
 type Props = {
   kepengurusan: KepengurusanResponse | null;
@@ -46,6 +48,29 @@ export default function YearCarousel({ kepengurusan }: Props) {
         {kepengurusan?.data.divisi && (
           <DevelopersList divisi={kepengurusan?.data.divisi} />
         )}
+      </div>
+    </div>
+  );
+}
+
+export function YearCarouselSkeleton() {
+  return (
+    <div
+      className="relative z-10 flex"
+      style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+    >
+      <div className="w-full snap-center">
+        {/* Ketua & Wakil skeleton */}
+        <div className="relative z-10 mx-auto mb-15 flex w-full max-w-6xl flex-wrap justify-center gap-12 px-4 lg:mb-20">
+          {Array.from({ length: 2 }).map((_, i) => (
+            <div key={i} className="flex flex-col items-center gap-4">
+              <FlipCardSkeleton size={1} />
+            </div>
+          ))}
+        </div>
+
+        {/* Developers list skeleton */}
+        <DevelopersSkeleton />
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ export default function DivisiCard({
   const { nama_divisi, foto_divisi, deskripsi } = divisi;
 
   return (
-    <div className="z-20 flex w-full flex-col items-center">
+    <div className="z-20 mt-5 flex w-full flex-col items-center lg:mt-20">
       {/* TITLE */}
       <h3 className="text-primary-500 mb-10 -skew-4 text-5xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:2.5px] text-shadow-[5px_4px_0_var(--color-primary-600)] lg:text-7xl">
         {nama_divisi}

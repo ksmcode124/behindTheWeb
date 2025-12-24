@@ -1,6 +1,7 @@
 'use client';
 import { useRef, useEffect, useState } from 'react';
 import { useLoopScroll } from './useLoopScroll';
+import { Skeleton } from './Skeleton';
 
 interface ScrollingBoxesProps {
   speed?: number;
@@ -48,5 +49,19 @@ export default function ScrollingBoxes({ speed = 60 }: ScrollingBoxesProps) {
 function Box() {
   return (
     <div className="bg-secondary-400 h-(--box-size) w-(--box-size) rounded-sm" />
+  );
+}
+
+export function ScrollingBoxesSkeleton() {
+  return (
+    <div className="relative w-full overflow-hidden py-2 sm:py-3">
+      <div className="loop-track flex w-max gap-(--box-gap)">
+        {Array.from({ length: 38 }).map((_: any, i: number) => (
+          <div key={i} className="h-(--box-size) w-(--box-size) rounded-sm">
+            <Skeleton className="h-full w-full" />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

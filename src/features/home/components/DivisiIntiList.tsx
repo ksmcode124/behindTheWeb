@@ -1,6 +1,7 @@
 import React from 'react';
 import { FlipCard } from '@/components/common/FlipCard';
 import { Divisi } from '@/lib/btw/interfaces/btw';
+import { Skeleton } from '@/components/ui/Skeleton';
 
 interface IntiProps {
   divisi?: Divisi;
@@ -29,6 +30,29 @@ export default function DivisiIntiList({ divisi }: IntiProps) {
             <p className="text-secondary-400 text-base font-normal">
               {anggota.jabatan}
             </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function DivisiIntiListSkeleton({ count = 2 }: { count?: number }) {
+  return (
+    <div className="flex items-center justify-center gap-15 md:gap-48">
+      {Array.from({ length: count }).map((_, index) => (
+        <div key={index} className="flex flex-col items-center justify-center">
+          {/* FlipCard */}
+          <Skeleton className="h-48 w-48 rounded-xl" />
+
+          {/* Text */}
+          <div className="flex w-full flex-col items-center justify-center py-6 text-center">
+            <Skeleton className="h-5 w-32" />
+
+            {/* Divider */}
+            <Skeleton className="mt-2 mb-2 h-0.5 w-full" />
+
+            <Skeleton className="h-4 w-24" />
           </div>
         </div>
       ))}
