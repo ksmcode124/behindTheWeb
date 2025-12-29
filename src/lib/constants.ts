@@ -22,9 +22,12 @@ export const IMAGES = {
   // Common
   LINE_BROWN_BLACK: '/images/line_brow_black.webp',
   LINE_BROWN_WHITE: '/images/line_brow_white.webp',
-  LINE: '/images/line.webp',
   PIXEL_BORDER: '/images/pixel_border.webp',
   
+  // OurPast
+  LINE: '/images/line.webp',
+  TV: '/images/tv.webp',
+
   // Fallback
   FALLBACK: '/images/origin_first_commit.webp',
 } as const;

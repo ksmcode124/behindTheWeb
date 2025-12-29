@@ -22,9 +22,9 @@ function BackgroundLines() {
 
 function LeftColumn() {
   return (
-    <div className="z-30 -ml-4 grid grid-rows-2 lg:-ml-20">
+    <div className="z-30 -mr-7 grid grid-rows-2 justify-end lg:mr-20">
       <div /> {/* empty top space */}
-      <div className="flex flex-col items-start gap-y-2">
+      <div className="flex max-w-2xl flex-col items-start gap-y-1 lg:gap-y-2">
         <CodePrevious />
         <MemberTags />
       </div>
@@ -34,7 +34,7 @@ function LeftColumn() {
 
 function CodePrevious() {
   return (
-    <div className="flex -skew-3 items-center gap-x-6 uppercase">
+    <div className="flex -skew-3 items-center gap-x-3 uppercase lg:gap-x-6">
       <ShadowedText className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl">
         {Brand.name}
       </ShadowedText>
@@ -47,7 +47,7 @@ function CodePrevious() {
 
 function MemberTags() {
   return (
-    <div className="flex -skew-3 items-center gap-x-6">
+    <div className="flex -skew-3 items-center gap-x-3 lg:gap-x-6">
       <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl">
         MEMBER
       </p>
@@ -65,9 +65,9 @@ function MemberTags() {
 
 function RightColumn() {
   return (
-    <div className="z-30 ml-4 grid w-full sm:ml-6 md:ml-8 lg:ml-20">
+    <div className="z-30 ml-4 grid w-full max-w-xl sm:ml-6 md:ml-8 lg:ml-20">
       <div className="flex flex-col justify-start px-6 sm:px-8">
-        <p className="-skew-3 text-left text-sm leading-tight font-bold tracking-tight sm:text-xl sm:leading-tight md:text-3xl md:leading-snug lg:text-5xl lg:leading-none xl:text-7xl">
+        <p className="-skew-3 text-left text-xl leading-tight font-bold tracking-tight sm:text-3xl sm:leading-tight md:text-4xl md:leading-snug lg:text-5xl lg:leading-none xl:text-7xl">
           <span className="block">CHECKOUT OUR</span>
           <span className="block">PAST TEAM</span>
         </p>
