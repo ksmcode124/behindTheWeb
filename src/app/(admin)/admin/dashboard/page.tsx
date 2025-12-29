@@ -791,6 +791,7 @@ const DivisiAdmin: React.FC = () => {
   const [editingItem, setEditingItem] = useState<CrudDivisi | null>(null);
   const [itemToDeleteId, setItemToDeleteId] = useState<number | null>(null);
   const [tempNama, setTempNama] = useState('');
+  const [tempDeskripsi, setTempDeskripsi] = useState('');
   const [tempFoto, setTempFoto] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -830,7 +831,7 @@ const DivisiAdmin: React.FC = () => {
   const handleEdit = (item: CrudDivisi) => {
     setEditingItem(item);
     setTempNama(item.nama_divisi);
-    setTempFoto(item.foto_divisi || '');
+    setTempDeskripsi(item.deskripsi || '');
     setIsModalOpen(true);
   };
 
@@ -901,7 +902,7 @@ const DivisiAdmin: React.FC = () => {
     setIsModalOpen(false);
     setEditingItem(null);
     setTempNama('');
-    setTempFoto('');
+    setTempDeskripsi('');
     setSelectedFile(null);
     setUploadProgress(0);
   };
@@ -1007,21 +1008,6 @@ const DivisiAdmin: React.FC = () => {
                       </td>
                       <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
                         {item.nama_divisi}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {item.foto_divisi ? (
-                          <div className="h-10 w-10 overflow-hidden rounded-full">
-                            <Image
-                              src={item.foto_divisi}
-                              alt={item.nama_divisi}
-                              className="h-full w-full object-cover"
-                            />
-                          </div>
-                        ) : (
-                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200">
-                            <ImageIcon className="h-5 w-5 text-gray-500" />
-                          </div>
-                        )}
                       </td>
                       <td className="px-6 py-4 text-center text-sm font-medium whitespace-nowrap">
                         <button

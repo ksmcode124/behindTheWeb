@@ -23,10 +23,10 @@ export function middleware(request: NextRequest) {
   // 2. PROTECTED API ROUTES (perlu auth)
   const protectedApiRoutes = [
     '/api/btw/kepengurusan',
-    '/api/btw/anggota',
-    '/api/btw/divisi',
-    '/api/btw/jabatan',
-    '/api/btw/detail',
+    // '/api/btw/anggota',
+    // '/api/btw/divisi',
+    // '/api/btw/jabatan',
+    // '/api/btw/detail',
   ];
 
   const isProtectedApi = protectedApiRoutes.some((route) => 
