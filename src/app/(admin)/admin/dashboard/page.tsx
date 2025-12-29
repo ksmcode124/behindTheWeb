@@ -45,7 +45,8 @@ type Page =
   | 'divisi'
   | 'anggota'
   | 'jabatan'
-  | 'detail_anggota';
+  | 'detail_anggota'
+  | 'divisi_galeri';
 
 interface MenuItem {
   name: string;
@@ -164,6 +165,7 @@ const Sidebar: React.FC<{
     { name: 'ANGGOTA', icon: Users, page: 'anggota' },
     { name: 'JABATAN', icon: Briefcase, page: 'jabatan' },
     { name: 'DETAIL ANGGOTA', icon: User, page: 'detail_anggota' },
+    { name: 'DIVISI GALERI', icon: User, page: 'divisi_galeri' },
   ];
 
   return (
@@ -373,44 +375,70 @@ const normalizeItem = (endpoint: string, item: any) => {
       return {
         id: item.id_divisi ?? item.id,
         nama_divisi: item.nama_divisi,
-        foto_divisi: item.foto_divisi,
+        // SKEMA BARU: Foto dihapus, diganti deskripsi
+        deskripsi: item.deskripsi,
       };
+
     case 'jabatan':
       return {
         id: item.id_jabatan ?? item.id,
         nama_jabatan: item.nama_jabatan,
       };
+
     case 'kepengurusan':
       return {
         id: item.id_btw ?? item.id,
         tahun_kerja: item.tahun_kerja,
         nama_kepengurusan: item.nama_kepengurusan,
       };
+
     case 'anggota':
       return {
         id: item.id_anggota ?? item.id,
         nama_anggota: item.nama_anggota,
-        foto_anggota: item.foto_anggota,
+        // SKEMA BARU: Foto anggota dihapus dari tabel master anggota
         linkedin: item.linkedin,
         instagram: item.instagram,
       };
+
     case 'detail_anggota':
     case 'detail':
       return {
         id: item.id,
+        // Mapping Foreign Keys
         anggota_id: item.id_anggota ?? item.anggota_id,
         kepengurusan_id: item.id_btw ?? item.kepengurusan_id,
         divisi_id: item.id_divisi ?? item.divisi_id,
         jabatan_id: item.id_jabatan ?? item.jabatan_id,
+
+        // Mapping Nama dari Relasi
         anggota_nama: item.anggota?.nama_anggota ?? item.anggota_nama,
         kepengurusan_nama:
           item.kepengurusan?.nama_kepengurusan ?? item.kepengurusan_nama,
         divisi_nama: item.divisi?.nama_divisi ?? item.divisi_nama,
         jabatan_nama: item.jabatan?.nama_jabatan ?? item.jabatan_nama,
-        foto_anggota: item.anggota?.foto_anggota ?? item.foto_anggota,
+
+        // SKEMA BARU:
+        // 1. Foto diambil langsung dari tabel detail (item.foto_anggota)
+        foto_anggota: item.foto_anggota,
+
+        // 2. Sosmed tetap diambil dari relasi tabel anggota
         linkedin: item.anggota?.linkedin ?? item.linkedin,
         instagram: item.anggota?.instagram ?? item.instagram,
       };
+
+    case 'divisi_galeri':
+      return {
+        id: item.id_fotoDiv ?? item.id, // Mapping Primary Key
+        divisi_id: item.id_divisi ?? item.divisi_id,
+        kepengurusan_id: item.id_btw ?? item.kepengurusan_id,
+        foto_divisi: item.foto_divisi, // URL Foto
+
+        // Data Join/Relasi (Untuk ditampilkan di Tabel)
+        divisi_nama: item.divisi?.nama_divisi ?? 'N/A',
+        kepengurusan_nama: item.kepengurusan?.nama_kepengurusan ?? 'N/A',
+      };
+
     default:
       return item;
   }
@@ -788,28 +816,15 @@ const DivisiAdmin: React.FC = () => {
   const [data, setData] = useState<CrudDivisi[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
   const [editingItem, setEditingItem] = useState<CrudDivisi | null>(null);
   const [itemToDeleteId, setItemToDeleteId] = useState<number | null>(null);
+
+  // State form
   const [tempNama, setTempNama] = useState('');
   const [tempDeskripsi, setTempDeskripsi] = useState('');
-  const [tempFoto, setTempFoto] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  // Gunakan useUploadThing untuk imageUploader
-  const { startUpload, isUploading } = useUploadThing('imageUploader', {
-    onClientUploadComplete: (res) => {
-      if (res && res[0]) {
-        setTempFoto(res[0].url);
-      }
-      setSelectedFile(null);
-      setUploadProgress(0);
-    },
-    onUploadProgress: (progress) => {
-      setUploadProgress(progress);
-    },
-  });
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     loadDivisi();
@@ -831,6 +846,7 @@ const DivisiAdmin: React.FC = () => {
   const handleEdit = (item: CrudDivisi) => {
     setEditingItem(item);
     setTempNama(item.nama_divisi);
+    // Menggunakan deskripsi dari item (atau string kosong jika null)
     setTempDeskripsi(item.deskripsi || '');
     setIsModalOpen(true);
   };
@@ -838,24 +854,8 @@ const DivisiAdmin: React.FC = () => {
   const handleAddNew = () => {
     setEditingItem(null);
     setTempNama('');
-    setTempFoto('');
+    setTempDeskripsi('');
     setIsModalOpen(true);
-  };
-
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setSelectedFile(file);
-
-      // Preview image
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        if (event.target?.result) {
-          setTempFoto(event.target.result as string);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
   };
 
   const handleSave = async () => {
@@ -863,24 +863,14 @@ const DivisiAdmin: React.FC = () => {
 
     setIsLoading(true);
     try {
-      // Jika ada file yang dipilih, upload dulu
-      let fotoUrl = tempFoto;
-      if (selectedFile) {
-        const uploadResult = await startUpload([selectedFile]);
-        if (uploadResult && uploadResult[0]) {
-          fotoUrl = uploadResult[0].url;
-        }
-      }
-
-      // <-- perbaikan: kirim field sesuai API (nama_divisi)
+      // Payload disesuaikan dengan skema baru: nama_divisi & deskripsi
       const saveData = {
         nama_divisi: tempNama,
-        foto_divisi: fotoUrl ?? null,
+        deskripsi: tempDeskripsi, // Kirim deskripsi, bukan foto
       };
 
       if (editingItem) {
         const updated = await saveDataToAPI('divisi', saveData, editingItem.id);
-        // handle kemungkinan response shape { success, data } atau langsung object
         const updatedItem = updated?.data ?? updated;
         setData(data.map((d) => (d.id === editingItem.id ? updatedItem : d)));
       } else {
@@ -903,8 +893,6 @@ const DivisiAdmin: React.FC = () => {
     setEditingItem(null);
     setTempNama('');
     setTempDeskripsi('');
-    setSelectedFile(null);
-    setUploadProgress(0);
   };
 
   const handleDeleteClick = (id: number) => {
@@ -980,7 +968,7 @@ const DivisiAdmin: React.FC = () => {
                     NAMA DIVISI
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                    FOTO
+                    DESKRIPSI
                   </th>
                   <th className="px-6 py-3 text-center text-xs font-medium tracking-wider text-gray-500 uppercase">
                     ACTION
@@ -1008,6 +996,10 @@ const DivisiAdmin: React.FC = () => {
                       </td>
                       <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
                         {item.nama_divisi}
+                      </td>
+                      <td className="max-w-xs truncate px-6 py-4 text-sm text-gray-500">
+                        {/* Menampilkan deskripsi (truncate jika terlalu panjang) */}
+                        {item.deskripsi || '-'}
                       </td>
                       <td className="px-6 py-4 text-center text-sm font-medium whitespace-nowrap">
                         <button
@@ -1058,59 +1050,17 @@ const DivisiAdmin: React.FC = () => {
             placeholder="UI UX DESIGNER"
           />
 
+          {/* Mengganti Upload Foto dengan Input Deskripsi */}
           <div className="mb-4">
             <label className="mb-1 block text-xs font-semibold text-gray-700 uppercase">
-              FOTO DIVISI
+              DESKRIPSI
             </label>
-            <div className="space-y-3">
-              {tempFoto && (
-                <div className="flex justify-center">
-                  <div className="h-32 w-32 overflow-hidden rounded-lg border">
-                    <Image
-                      src={tempFoto}
-                      alt="Preview"
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                </div>
-              )}
-
-              <div className="flex items-center justify-center">
-                <label className="cursor-pointer">
-                  <div className="flex items-center space-x-2 rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600">
-                    <Upload className="h-4 w-4" />
-                    <span>Pilih Foto</span>
-                  </div>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileSelect}
-                    className="hidden"
-                    disabled={isUploading}
-                  />
-                </label>
-              </div>
-
-              {selectedFile && (
-                <p className="text-center text-sm text-gray-600">
-                  File: {selectedFile.name}
-                </p>
-              )}
-
-              {isUploading && (
-                <div className="space-y-2">
-                  <div className="h-2 rounded-full bg-gray-200">
-                    <div
-                      className="h-2 rounded-full bg-blue-600 transition-all duration-300"
-                      style={{ width: `${uploadProgress}%` }}
-                    />
-                  </div>
-                  <p className="text-center text-xs text-gray-600">
-                    {uploadProgress}%
-                  </p>
-                </div>
-              )}
-            </div>
+            <textarea
+              value={tempDeskripsi}
+              onChange={(e) => setTempDeskripsi(e.target.value)}
+              placeholder="Deskripsi singkat divisi..."
+              className="h-24 w-full resize-none rounded-lg border border-gray-300 bg-gray-100 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
           </div>
         </div>
         <div className="mt-6 flex justify-end space-x-3">
@@ -1118,7 +1068,7 @@ const DivisiAdmin: React.FC = () => {
             onClick={handleCloseModal}
             className={`rounded-lg px-6 py-2 font-semibold text-gray-700 transition-colors`}
             style={{ backgroundColor: BUTTON_GREY }}
-            disabled={isLoading || isUploading}
+            disabled={isLoading}
           >
             Batal
           </button>
@@ -1126,9 +1076,9 @@ const DivisiAdmin: React.FC = () => {
             onClick={handleSave}
             className={`rounded-lg px-6 py-2 font-semibold text-white shadow-md transition-colors`}
             style={{ backgroundColor: BUTTON_BLUE }}
-            disabled={!tempNama || isLoading || isUploading}
+            disabled={!tempNama || isLoading}
           >
-            {isLoading || isUploading
+            {isLoading
               ? 'Menyimpan...'
               : editingItem
                 ? 'Simpan Perubahan'
@@ -1408,11 +1358,19 @@ const JabatanAdmin: React.FC = () => {
 };
 
 // ====================================================================
-// G. KOMPONEN ANGGOTA DENGAN API & UPLOADTHING (Data Dasar)
+// G. KOMPONEN ANGGOTA DENGAN API & UPLOADTHING (MODIFIED: DENGAN INPUT DETAIL)
 // ====================================================================
 
 const AnggotaAdmin: React.FC = () => {
   const [data, setData] = useState<CrudAnggota[]>([]);
+
+  // State untuk data dropdown
+  const [kepengurusanList, setKepengurusanList] = useState<CrudKepengurusan[]>(
+    [],
+  );
+  const [divisiList, setDivisiList] = useState<CrudDivisi[]>([]);
+  const [jabatanList, setJabatanList] = useState<CrudJabatan[]>([]);
+
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -1426,28 +1384,43 @@ const AnggotaAdmin: React.FC = () => {
   const [editingAnggota, setEditingAnggota] = useState<CrudAnggota | null>(
     null,
   );
+
   const [isLoading, setIsLoading] = useState(true);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  // Form State
+  // State sementara untuk preview foto (sebelum diupload ke detail)
+  const [tempFotoPreview, setTempFotoPreview] = useState('');
+
+  // Form State Anggota (Hanya data teks sesuai tabel btw_anggota)
   const EMPTY_ANGGOTA_FORM = useMemo(
     () => ({
       nama_anggota: '',
       linkedin: '',
       instagram: '',
-      foto_anggota: '',
+    }),
+    [],
+  );
+
+  // Form State Detail
+  const EMPTY_DETAIL_FORM = useMemo(
+    () => ({
+      kepengurusan_id: '',
+      divisi_id: '',
+      jabatan_id: '',
     }),
     [],
   );
 
   const [tempAnggota, setTempAnggota] = useState<any>(EMPTY_ANGGOTA_FORM);
+  const [tempDetail, setTempDetail] = useState<any>(EMPTY_DETAIL_FORM);
 
-  // Gunakan useUploadThing untuk avatarUploader
+  // Gunakan useUploadThing
   const { startUpload, isUploading } = useUploadThing('avatarUploader', {
     onClientUploadComplete: (res) => {
       if (res && res[0]) {
-        setTempAnggota({ ...tempAnggota, foto_anggota: res[0].url });
+        // Simpan URL ke state preview sementara
+        setTempFotoPreview(res[0].url);
       }
       setSelectedFile(null);
       setUploadProgress(0);
@@ -1458,17 +1431,27 @@ const AnggotaAdmin: React.FC = () => {
   });
 
   useEffect(() => {
-    loadAnggota();
+    loadAllData();
   }, []);
 
-  const loadAnggota = async () => {
+  const loadAllData = async () => {
     setIsLoading(true);
     try {
-      const anggotaData = await fetchDataFromAPI('anggota');
-      console.log('Data anggota yang akan ditampilkan:', anggotaData);
+      const [anggotaData, kepengurusanData, divisiData, jabatanData] =
+        await Promise.all([
+          fetchDataFromAPI('anggota'),
+          fetchDataFromAPI('kepengurusan'),
+          fetchDataFromAPI('divisi'),
+          fetchDataFromAPI('jabatan'),
+        ]);
+
+      console.log('Data loaded for AnggotaAdmin');
       setData(anggotaData);
+      setKepengurusanList(kepengurusanData);
+      setDivisiList(divisiData);
+      setJabatanList(jabatanData);
     } catch (error) {
-      console.error('Gagal memuat data anggota:', error);
+      console.error('Gagal memuat data:', error);
     } finally {
       setIsLoading(false);
     }
@@ -1478,30 +1461,27 @@ const AnggotaAdmin: React.FC = () => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       setSelectedFile(file);
-
-      // Preview image
       const reader = new FileReader();
       reader.onload = (event) => {
         if (event.target?.result) {
-          setTempAnggota({
-            ...tempAnggota,
-            foto_anggota: event.target.result as string,
-          });
+          setTempFotoPreview(event.target.result as string);
         }
       };
       reader.readAsDataURL(file);
     }
   };
 
-  // --- Handlers Modal Tambah/Edit ---
+  // --- Handlers Modal ---
   const handleEdit = (anggota: CrudAnggota) => {
     setEditingAnggota(anggota);
+    // Load data teks saja. Foto tidak diload karena tidak ada di tabel anggota.
     setTempAnggota({
       nama_anggota: anggota.nama_anggota,
       linkedin: anggota.linkedin || '',
       instagram: anggota.instagram || '',
-      foto_anggota: anggota.foto_anggota || '',
     });
+    setTempDetail(EMPTY_DETAIL_FORM);
+    setTempFotoPreview(''); // Reset preview foto
     setIsModalOpen(true);
     setIsProfileModalOpen(false);
     setSelectedFile(null);
@@ -1510,6 +1490,8 @@ const AnggotaAdmin: React.FC = () => {
   const handleAddNew = () => {
     setEditingAnggota(null);
     setTempAnggota(EMPTY_ANGGOTA_FORM);
+    setTempDetail(EMPTY_DETAIL_FORM);
+    setTempFotoPreview('');
     setSelectedFile(null);
     setIsModalOpen(true);
   };
@@ -1518,42 +1500,81 @@ const AnggotaAdmin: React.FC = () => {
     setIsModalOpen(false);
     setEditingAnggota(null);
     setTempAnggota(EMPTY_ANGGOTA_FORM);
+    setTempDetail(EMPTY_DETAIL_FORM);
+    setTempFotoPreview('');
     setSelectedFile(null);
     setUploadProgress(0);
   };
 
   const handleSave = async () => {
-    if (!tempAnggota.nama_anggota) return;
+    if (!tempAnggota.nama_anggota) {
+      alert('Nama Anggota wajib diisi');
+      return;
+    }
+
+    // Validasi saat Create New: Wajib isi Detail
+    if (
+      !editingAnggota &&
+      (!tempDetail.kepengurusan_id ||
+        !tempDetail.divisi_id ||
+        !tempDetail.jabatan_id)
+    ) {
+      alert('Harap lengkapi Data Jabatan, Divisi, dan Kepengurusan');
+      return;
+    }
 
     setIsLoading(true);
     try {
-      let fotoUrl = tempAnggota.foto_anggota;
-
-      // Jika ada file yang dipilih, upload dulu
-      if (selectedFile) {
-        const uploadResult = await startUpload([selectedFile]);
-        if (uploadResult && uploadResult[0]) {
-          fotoUrl = uploadResult[0].url;
-        }
-      }
-
-      const saveData = {
+      // 1. Siapkan Data Anggota (Tabel Dasar - Tanpa Foto)
+      const saveDataAnggota = {
         nama_anggota: tempAnggota.nama_anggota,
         linkedin: tempAnggota.linkedin,
         instagram: tempAnggota.instagram,
-        foto_anggota: fotoUrl,
       };
 
       if (editingAnggota) {
+        // === MODE EDIT (Update btw_anggota) ===
         const updated = await saveDataToAPI(
           'anggota',
-          saveData,
+          saveDataAnggota,
           editingAnggota.id,
         );
         setData(data.map((a) => (a.id === editingAnggota.id ? updated : a)));
       } else {
-        const newItem = await saveDataToAPI('anggota', saveData);
-        setData([...data, newItem]);
+        // === MODE TAMBAH BARU (Sequential: Upload -> Anggota -> Detail) ===
+
+        // A. Upload Foto (Hanya saat create baru karena masuk ke tabel detail)
+        let fotoUrl = null;
+        if (selectedFile) {
+          const uploadResult = await startUpload([selectedFile]);
+          if (uploadResult && uploadResult[0]) {
+            fotoUrl = uploadResult[0].url;
+          }
+        } else if (tempFotoPreview) {
+          // Handle case jika user pakai URL langsung/preview yg sudah ada (jarang terjadi di create)
+          fotoUrl = tempFotoPreview;
+        }
+
+        // B. Input ke API Anggota (Dapatkan ID Baru)
+        const newAnggota = await saveDataToAPI('anggota', saveDataAnggota);
+        const newAnggotaId = newAnggota.id || newAnggota.data?.id;
+
+        if (newAnggotaId) {
+          // C. Input ke API Detail Anggota (Dengan Foto & ID Relasi)
+          const saveDataDetail = {
+            id_anggota: newAnggotaId, // Key sesuai Prisma: id_anggota
+            id_btw: parseInt(tempDetail.kepengurusan_id), // Key sesuai Prisma: id_btw
+            id_divisi: parseInt(tempDetail.divisi_id), // Key sesuai Prisma: id_divisi
+            id_jabatan: parseInt(tempDetail.jabatan_id), // Key sesuai Prisma: id_jabatan
+            foto_anggota: fotoUrl, // Foto disimpan di sini sekarang
+          };
+
+          await saveDataToAPI('detail_anggota', saveDataDetail);
+          console.log('Detail anggota berhasil dibuat otomatis dengan foto');
+        }
+
+        // Refresh data
+        setData([...data, newAnggota]);
       }
 
       handleCloseModal();
@@ -1565,21 +1586,19 @@ const AnggotaAdmin: React.FC = () => {
     }
   };
 
+  // ... (handleViewProfile, handleCloseProfileModal, handleDeleteClick, handleConfirmDelete sama) ...
   const handleViewProfile = (anggota: CrudAnggota) => {
     setSelectedAnggota(anggota);
     setIsProfileModalOpen(true);
   };
-
   const handleCloseProfileModal = () => {
     setIsProfileModalOpen(false);
     setSelectedAnggota(null);
   };
-
   const handleDeleteClick = (id: number) => {
     setAnggotaToDeleteId(id);
     setIsDeleteModalOpen(true);
   };
-
   const handleConfirmDelete = async () => {
     if (anggotaToDeleteId !== null) {
       setIsLoading(true);
@@ -1599,6 +1618,36 @@ const AnggotaAdmin: React.FC = () => {
     setAnggotaToDeleteId(null);
   };
 
+  const SelectFieldLocal: React.FC<{
+    label: string;
+    value: string;
+    onChange: (v: string) => void;
+    options: { id: number; name: string }[];
+    disabled?: boolean;
+  }> = ({ label, value, onChange, options, disabled }) => (
+    <div className="mb-4">
+      <label className="mb-1 block text-xs font-semibold text-gray-700 uppercase">
+        {label}
+      </label>
+      <div className="relative">
+        <select
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          disabled={disabled}
+          className="w-full appearance-none rounded-lg border border-gray-300 bg-gray-100 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none disabled:opacity-50"
+        >
+          <option value="">Pilih {label}</option>
+          {options.map((opt) => (
+            <option key={opt.id} value={opt.id}>
+              {opt.name}
+            </option>
+          ))}
+        </select>
+        <ChevronDown className="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 transform text-gray-500" />
+      </div>
+    </div>
+  );
+
   const itemsPerPage = 10;
   const currentPage = 1;
   const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -1608,7 +1657,6 @@ const AnggotaAdmin: React.FC = () => {
       <h2 className="text-xl font-bold text-gray-800 sm:text-2xl">
         ANGGOTA (DATA DASAR)
       </h2>
-
       <div className="flex items-center justify-between">
         <button
           onClick={handleAddNew}
@@ -1621,6 +1669,7 @@ const AnggotaAdmin: React.FC = () => {
       </div>
 
       <div className="rounded-xl bg-white p-4 shadow-lg sm:p-6">
+        {/* ... Search ... */}
         <div className="mb-4 flex flex-wrap items-center justify-between space-y-4 md:space-y-0">
           <div className="relative w-full md:w-1/3">
             <Search className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
@@ -1649,9 +1698,7 @@ const AnggotaAdmin: React.FC = () => {
                   <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
                     NAMA ANGGOTA
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                    FOTO
-                  </th>
+                  {/* Kolom FOTO dihapus dari tabel ini karena btw_anggota tidak punya foto */}
                   <th className="px-6 py-3 text-center text-xs font-medium tracking-wider text-gray-500 uppercase">
                     ACTION
                   </th>
@@ -1661,7 +1708,7 @@ const AnggotaAdmin: React.FC = () => {
                 {data.length === 0 ? (
                   <tr>
                     <td
-                      colSpan={4}
+                      colSpan={3}
                       className="px-6 py-4 text-center text-sm whitespace-nowrap text-gray-500"
                     >
                       Tidak ada data anggota
@@ -1684,21 +1731,6 @@ const AnggotaAdmin: React.FC = () => {
                           <Eye className="mr-2 hidden h-4 w-4 sm:inline" />{' '}
                           {item.nama_anggota}
                         </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {item.foto_anggota ? (
-                          <div className="h-10 w-10 overflow-hidden rounded-full">
-                            <Image
-                              src={item.foto_anggota}
-                              alt={item.nama_anggota}
-                              className="h-full w-full object-cover"
-                            />
-                          </div>
-                        ) : (
-                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200">
-                            <User className="h-5 w-5 text-gray-500" />
-                          </div>
-                        )}
                       </td>
                       <td className="px-6 py-4 text-center text-sm font-medium whitespace-nowrap">
                         <button
@@ -1724,6 +1756,7 @@ const AnggotaAdmin: React.FC = () => {
           </div>
         )}
 
+        {/* Pagination ... */}
         <div className="mt-6 flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
           <div className="text-sm text-gray-700">
             Menampilkan {data.length} entries.
@@ -1737,65 +1770,73 @@ const AnggotaAdmin: React.FC = () => {
       </div>
 
       <CustomModal
-        title={editingAnggota ? 'Edit Anggota' : 'Tambah Anggota Baru'}
+        title={
+          editingAnggota
+            ? 'Edit Anggota (Info Dasar)'
+            : 'Tambah Anggota Lengkap'
+        }
         isOpen={isModalOpen}
         onClose={handleCloseModal}
       >
-        <div className="space-y-4">
-          <div className="mb-4">
-            <label className="mb-1 block text-xs font-semibold text-gray-700 uppercase">
-              FOTO ANGGOTA
-            </label>
-            <div className="space-y-3">
-              {tempAnggota.foto_anggota && (
-                <div className="flex justify-center">
-                  <div className="h-32 w-32 overflow-hidden rounded-full border">
-                    <Image
-                      src={tempAnggota.foto_anggota}
-                      alt="Preview"
-                      className="h-full w-full object-cover"
-                    />
+        <div className="h-[70vh] space-y-4 overflow-y-auto pr-2">
+          {/* PERUBAHAN UI: 
+              Upload Foto HANYA muncul jika NOT editing (alias Create New).
+              Karena foto sekarang ada di tabel Detail, bukan Anggota.
+          */}
+          {!editingAnggota && (
+            <div className="mb-4 rounded-lg border border-blue-100 bg-blue-50 p-4">
+              <label className="mb-1 block text-xs font-semibold text-blue-800 uppercase">
+                FOTO PROFIL (Disimpan ke Detail Jabatan)
+              </label>
+              <div className="mt-2 space-y-3">
+                {tempFotoPreview && (
+                  <div className="flex justify-center">
+                    <div className="h-32 w-32 overflow-hidden rounded-full border-2 border-white shadow-sm">
+                      <Image
+                        src={tempFotoPreview}
+                        alt="Preview"
+                        className="h-full w-full object-cover"
+                        width={128}
+                        height={128}
+                      />
+                    </div>
                   </div>
+                )}
+                <div className="flex items-center justify-center">
+                  <label className="cursor-pointer">
+                    <div className="flex items-center space-x-2 rounded-lg border border-blue-200 bg-white px-4 py-2 text-blue-600 shadow-sm transition-colors hover:bg-blue-50">
+                      <Upload className="h-4 w-4" />
+                      <span>
+                        {tempFotoPreview ? 'Ganti Foto' : 'Pilih Foto'}
+                      </span>
+                    </div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileSelect}
+                      className="hidden"
+                      disabled={isUploading}
+                    />
+                  </label>
                 </div>
-              )}
-
-              <div className="flex items-center justify-center">
-                <label className="cursor-pointer">
-                  <div className="flex items-center space-x-2 rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600">
-                    <Upload className="h-4 w-4" />
-                    <span>Pilih Foto</span>
-                  </div>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileSelect}
-                    className="hidden"
-                    disabled={isUploading}
-                  />
-                </label>
-              </div>
-
-              {selectedFile && (
-                <p className="text-center text-sm text-gray-600">
-                  File: {selectedFile.name}
-                </p>
-              )}
-
-              {isUploading && (
-                <div className="space-y-2">
-                  <div className="h-2 rounded-full bg-gray-200">
-                    <div
-                      className="h-2 rounded-full bg-blue-600 transition-all duration-300"
-                      style={{ width: `${uploadProgress}%` }}
-                    />
-                  </div>
-                  <p className="text-center text-xs text-gray-600">
-                    {uploadProgress}%
+                {selectedFile && (
+                  <p className="text-center text-xs text-gray-500">
+                    File: {selectedFile.name}
                   </p>
-                </div>
-              )}
+                )}
+                {isUploading && (
+                  <div className="space-y-2">
+                    <div className="h-2 rounded-full bg-gray-200">
+                      <div
+                        className="h-2 rounded-full bg-blue-600 transition-all duration-300"
+                        style={{ width: `${uploadProgress}%` }}
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          )}
 
           <InputField
             label="NAMA LENGKAP"
@@ -1805,7 +1846,6 @@ const AnggotaAdmin: React.FC = () => {
             }
             placeholder="Nama Anggota"
           />
-
           <InputField
             label="LINKEDIN (URL)"
             value={tempAnggota.linkedin}
@@ -1813,7 +1853,6 @@ const AnggotaAdmin: React.FC = () => {
             placeholder="https://linkedin.com/in/..."
             type="url"
           />
-
           <InputField
             label="INSTAGRAM (URL)"
             value={tempAnggota.instagram}
@@ -1821,8 +1860,55 @@ const AnggotaAdmin: React.FC = () => {
             placeholder="https://instagram.com/..."
             type="url"
           />
+
+          {/* --- BAGIAN DETAIL (Hanya tampil saat Create New) --- */}
+          {!editingAnggota && (
+            <>
+              <div className="my-4 border-t border-gray-300 pt-4">
+                <h3 className="mb-2 text-sm font-bold text-gray-800">
+                  DETAIL JABATAN & POSISI
+                </h3>
+                <p className="mb-4 text-xs text-gray-500">
+                  Lengkapi data ini untuk otomatis membuat relasi.
+                </p>
+              </div>
+
+              <SelectFieldLocal
+                label="KEPENGURUSAN"
+                value={tempDetail.kepengurusan_id}
+                onChange={(v) =>
+                  setTempDetail({ ...tempDetail, kepengurusan_id: v })
+                }
+                options={kepengurusanList.map((p) => ({
+                  id: p.id,
+                  name: p.nama_kepengurusan,
+                }))}
+              />
+              <SelectFieldLocal
+                label="DIVISI"
+                value={tempDetail.divisi_id}
+                onChange={(v) => setTempDetail({ ...tempDetail, divisi_id: v })}
+                options={divisiList.map((d) => ({
+                  id: d.id,
+                  name: d.nama_divisi,
+                }))}
+              />
+              <SelectFieldLocal
+                label="JABATAN"
+                value={tempDetail.jabatan_id}
+                onChange={(v) =>
+                  setTempDetail({ ...tempDetail, jabatan_id: v })
+                }
+                options={jabatanList.map((j) => ({
+                  id: j.id,
+                  name: j.nama_jabatan,
+                }))}
+              />
+            </>
+          )}
         </div>
-        <div className="mt-6 flex justify-end space-x-3">
+
+        <div className="mt-6 flex justify-end space-x-3 border-t pt-4">
           <button
             onClick={handleCloseModal}
             className={`rounded-lg px-6 py-2 font-semibold text-gray-700 transition-colors`}
@@ -1846,6 +1932,7 @@ const AnggotaAdmin: React.FC = () => {
         </div>
       </CustomModal>
 
+      {/* Profile Modal & Delete Confirmation - Logika sama, hanya field foto menyesuaikan */}
       <CustomModal
         title="Detail Profil Anggota"
         isOpen={isProfileModalOpen}
@@ -1853,16 +1940,13 @@ const AnggotaAdmin: React.FC = () => {
       >
         {selectedAnggota && (
           <div className="flex flex-col items-start space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
+            {/* Note: selectedAnggota dari API 'anggota' skema baru tidak punya foto. 
+                 Jadi ini akan selalu fallback ke icon User, kecuali Anda fetch detailnya. */}
             <div className="flex min-h-[150px] w-full flex-col items-center justify-center rounded-lg bg-gray-100 p-4 sm:w-1/3">
-              {selectedAnggota.foto_anggota ? (
-                <Image
-                  src={selectedAnggota.foto_anggota}
-                  alt={selectedAnggota.nama_anggota}
-                  className="h-24 w-24 rounded-full object-cover"
-                />
-              ) : (
-                <User className="h-12 w-12 text-gray-500" />
-              )}
+              <User className="h-12 w-12 text-gray-500" />
+              <p className="mt-2 text-center text-[10px] text-gray-400">
+                Foto tersedia di menu Detail Anggota
+              </p>
             </div>
             <div className="flex-1 space-y-1">
               <h3 className="text-xl font-bold text-gray-900">
@@ -1871,7 +1955,7 @@ const AnggotaAdmin: React.FC = () => {
               <p className="mb-4 text-sm text-gray-500">
                 ID Anggota: {selectedAnggota.id}
               </p>
-
+              {/* ... Links Linkedin/IG ... */}
               <div className="space-y-2 pt-2 text-sm">
                 <p className="font-semibold text-gray-700">Linkedin</p>
                 <a
@@ -1883,7 +1967,6 @@ const AnggotaAdmin: React.FC = () => {
                   <Link className="mr-1 h-4 w-4" />{' '}
                   {selectedAnggota.linkedin || 'Tidak ada'}
                 </a>
-
                 <p className="pt-2 font-semibold text-gray-700">Instagram</p>
                 <a
                   href={selectedAnggota.instagram}
@@ -1895,17 +1978,14 @@ const AnggotaAdmin: React.FC = () => {
                   {selectedAnggota.instagram || 'Tidak ada'}
                 </a>
               </div>
-
               <div className="flex space-x-3 pt-4">
                 <button
-                  title="Edit"
                   onClick={() => handleEdit(selectedAnggota)}
                   className="rounded-full p-2 text-blue-600 transition-colors hover:bg-blue-100 hover:text-blue-800"
                 >
                   <Edit className="h-5 w-5" />
                 </button>
                 <button
-                  title="Delete"
                   onClick={() => {
                     handleCloseProfileModal();
                     handleDeleteClick(selectedAnggota.id);
@@ -1937,17 +2017,26 @@ const AnggotaAdmin: React.FC = () => {
 
 const DetailAnggotaAdmin: React.FC = () => {
   const [data, setData] = useState<DetailAnggota[]>([]);
+
+  // Data Dropdowns
   const [anggotaList, setAnggotaList] = useState<CrudAnggota[]>([]);
   const [kepengurusanList, setKepengurusanList] = useState<CrudKepengurusan[]>(
     [],
   );
   const [divisiList, setDivisiList] = useState<CrudDivisi[]>([]);
   const [jabatanList, setJabatanList] = useState<CrudJabatan[]>([]);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<DetailAnggota | null>(null);
   const [itemToDeleteId, setItemToDeleteId] = useState<number | null>(null);
+
   const [isLoading, setIsLoading] = useState(true);
+
+  // State untuk Upload Foto
+  const [tempFoto, setTempFoto] = useState('');
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   // Form State
   const EMPTY_FORM = useMemo(
@@ -1962,10 +2051,26 @@ const DetailAnggotaAdmin: React.FC = () => {
 
   const [tempDetail, setTempDetail] = useState<any>(EMPTY_FORM);
 
+  // Gunakan useUploadThing
+  const { startUpload, isUploading } = useUploadThing('imageUploader', {
+    // Pastikan endpoint di core.ts cocok (imageUploader atau avatarUploader)
+    onClientUploadComplete: (res) => {
+      if (res && res[0]) {
+        setTempFoto(res[0].url);
+      }
+      setSelectedFile(null);
+      setUploadProgress(0);
+    },
+    onUploadProgress: (progress) => {
+      setUploadProgress(progress);
+    },
+  });
+
   useEffect(() => {
     loadAllData();
   }, []);
 
+  // Helper untuk memperbarui tampilan tabel setelah edit tanpa reload page
   const enrichDetail = (detail: DetailAnggota) => ({
     ...detail,
     anggota_nama:
@@ -1980,6 +2085,7 @@ const DetailAnggotaAdmin: React.FC = () => {
     jabatan_nama:
       jabatanList.find((j) => j.id === detail.jabatan_id)?.nama_jabatan ||
       detail.jabatan_nama,
+    foto_anggota: detail.foto_anggota, // Pastikan foto terupdate
   });
 
   const loadAllData = async () => {
@@ -2028,6 +2134,20 @@ const DetailAnggotaAdmin: React.FC = () => {
     }
   };
 
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setSelectedFile(file);
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          setTempFoto(event.target.result as string);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   // --- Handlers Modal Tambah/Edit ---
   const handleEdit = (item: DetailAnggota) => {
     setEditingItem(item);
@@ -2037,19 +2157,27 @@ const DetailAnggotaAdmin: React.FC = () => {
       divisi_id: item.divisi_id.toString(),
       jabatan_id: item.jabatan_id.toString(),
     });
+    // Load foto eksisting dari tabel detail
+    setTempFoto(item.foto_anggota || '');
     setIsModalOpen(true);
+    setSelectedFile(null);
   };
 
   const handleAddNew = () => {
     setEditingItem(null);
     setTempDetail(EMPTY_FORM);
+    setTempFoto('');
     setIsModalOpen(true);
+    setSelectedFile(null);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setEditingItem(null);
     setTempDetail(EMPTY_FORM);
+    setTempFoto('');
+    setSelectedFile(null);
+    setUploadProgress(0);
   };
 
   const handleSave = async () => {
@@ -2065,11 +2193,22 @@ const DetailAnggotaAdmin: React.FC = () => {
 
     setIsLoading(true);
     try {
+      // 1. Upload Foto (Jika ada file baru)
+      let fotoUrl = tempFoto;
+      if (selectedFile) {
+        const uploadResult = await startUpload([selectedFile]);
+        if (uploadResult && uploadResult[0]) {
+          fotoUrl = uploadResult[0].url;
+        }
+      }
+
+      // 2. Siapkan Payload dengan Key sesuai Prisma Baru
       const saveData = {
-        anggota_id: parseInt(tempDetail.anggota_id),
-        kepengurusan_id: parseInt(tempDetail.kepengurusan_id),
-        divisi_id: parseInt(tempDetail.divisi_id),
-        jabatan_id: parseInt(tempDetail.jabatan_id),
+        id_anggota: parseInt(tempDetail.anggota_id),
+        id_btw: parseInt(tempDetail.kepengurusan_id),
+        id_divisi: parseInt(tempDetail.divisi_id),
+        id_jabatan: parseInt(tempDetail.jabatan_id),
+        foto_anggota: fotoUrl, // Foto disimpan di sini
       };
 
       if (editingItem) {
@@ -2198,6 +2337,9 @@ const DetailAnggotaAdmin: React.FC = () => {
                     ID
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                    FOTO
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
                     NAMA ANGGOTA
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
@@ -2218,7 +2360,7 @@ const DetailAnggotaAdmin: React.FC = () => {
                 {data.length === 0 ? (
                   <tr>
                     <td
-                      colSpan={6}
+                      colSpan={7}
                       className="px-6 py-4 text-center text-sm whitespace-nowrap text-gray-500"
                     >
                       Tidak ada data detail anggota
@@ -2232,6 +2374,23 @@ const DetailAnggotaAdmin: React.FC = () => {
                     >
                       <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-gray-900">
                         {item.id}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {item.foto_anggota ? (
+                          <div className="h-10 w-10 overflow-hidden rounded-full">
+                            <Image
+                              src={item.foto_anggota}
+                              alt="Foto"
+                              className="h-full w-full object-cover"
+                              width={40}
+                              height={40}
+                            />
+                          </div>
+                        ) : (
+                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200">
+                            <User className="h-5 w-5 text-gray-500" />
+                          </div>
+                        )}
                       </td>
                       <td className="px-6 py-4 text-sm whitespace-nowrap">
                         {item.anggota_nama || 'N/A'}
@@ -2289,6 +2448,61 @@ const DetailAnggotaAdmin: React.FC = () => {
         onClose={handleCloseModal}
       >
         <div className="space-y-4">
+          {/* FORM UPLOAD FOTO DI DETAIL */}
+          <div className="mb-4">
+            <label className="mb-1 block text-xs font-semibold text-gray-700 uppercase">
+              FOTO ANGGOTA (PER JABATAN)
+            </label>
+            <div className="space-y-3">
+              {tempFoto && (
+                <div className="flex justify-center">
+                  <div className="h-32 w-32 overflow-hidden rounded-full border">
+                    <Image
+                      src={tempFoto}
+                      alt="Preview"
+                      className="h-full w-full object-cover"
+                      width={128}
+                      height={128}
+                    />
+                  </div>
+                </div>
+              )}
+              <div className="flex items-center justify-center">
+                <label className="cursor-pointer">
+                  <div className="flex items-center space-x-2 rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600">
+                    <Upload className="h-4 w-4" />
+                    <span>Pilih Foto</span>
+                  </div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileSelect}
+                    className="hidden"
+                    disabled={isUploading}
+                  />
+                </label>
+              </div>
+              {selectedFile && (
+                <p className="text-center text-sm text-gray-600">
+                  File: {selectedFile.name}
+                </p>
+              )}
+              {isUploading && (
+                <div className="space-y-2">
+                  <div className="h-2 rounded-full bg-gray-200">
+                    <div
+                      className="h-2 rounded-full bg-blue-600 transition-all duration-300"
+                      style={{ width: `${uploadProgress}%` }}
+                    />
+                  </div>
+                  <p className="text-center text-xs text-gray-600">
+                    {uploadProgress}%
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+
           <SelectField
             label="ANGGOTA"
             value={tempDetail.anggota_id}
@@ -2333,7 +2547,7 @@ const DetailAnggotaAdmin: React.FC = () => {
             onClick={handleCloseModal}
             className={`rounded-lg px-6 py-2 font-semibold text-gray-700 transition-colors`}
             style={{ backgroundColor: BUTTON_GREY }}
-            disabled={isLoading}
+            disabled={isLoading || isUploading}
           >
             Batal
           </button>
@@ -2346,10 +2560,11 @@ const DetailAnggotaAdmin: React.FC = () => {
               !tempDetail.kepengurusan_id ||
               !tempDetail.divisi_id ||
               !tempDetail.jabatan_id ||
-              isLoading
+              isLoading ||
+              isUploading
             }
           >
-            {isLoading
+            {isLoading || isUploading
               ? 'Menyimpan...'
               : editingItem
                 ? 'Simpan Perubahan'
@@ -2382,6 +2597,7 @@ const DashboardHome: React.FC<{ onNavigate: (page: Page) => void }> = ({
     totalKepengurusan: 0,
     totalJabatan: 0,
     totalDetailAnggota: 0,
+    totalDivisiGaleri: 0,
   });
   const [isLoading, setIsLoading] = useState(true);
 
@@ -2392,14 +2608,21 @@ const DashboardHome: React.FC<{ onNavigate: (page: Page) => void }> = ({
   const loadStats = async () => {
     setIsLoading(true);
     try {
-      const [anggota, divisi, kepengurusan, jabatan, detailAnggota] =
-        await Promise.all([
-          fetchDataFromAPI('anggota'),
-          fetchDataFromAPI('divisi'),
-          fetchDataFromAPI('kepengurusan'),
-          fetchDataFromAPI('jabatan'),
-          fetchDataFromAPI('detail_anggota'),
-        ]);
+      const [
+        anggota,
+        divisi,
+        kepengurusan,
+        jabatan,
+        detailAnggota,
+        divisiGaleri,
+      ] = await Promise.all([
+        fetchDataFromAPI('anggota'),
+        fetchDataFromAPI('divisi'),
+        fetchDataFromAPI('kepengurusan'),
+        fetchDataFromAPI('jabatan'),
+        fetchDataFromAPI('detail_anggota'),
+        fetchDataFromAPI('divisi_galeri'),
+      ]);
 
       setStats({
         totalAnggota: anggota.length,
@@ -2407,6 +2630,7 @@ const DashboardHome: React.FC<{ onNavigate: (page: Page) => void }> = ({
         totalKepengurusan: kepengurusan.length,
         totalJabatan: jabatan.length,
         totalDetailAnggota: detailAnggota.length,
+        totalDivisiGaleri: divisiGaleri.length, // <-- Set State
       });
     } catch (error) {
       console.error('Gagal memuat statistik:', error);
@@ -2475,7 +2699,521 @@ const DashboardHome: React.FC<{ onNavigate: (page: Page) => void }> = ({
           detail="Lihat Detail"
           onClick={() => onNavigate('detail_anggota')}
         />
+        <CardStats
+          title="Galeri Divisi"
+          count={stats.totalDivisiGaleri}
+          color="#ec4899" // Pink atau warna lain
+          icon={ImageIcon}
+          detail="Lihat Detail"
+          onClick={() => onNavigate('divisi_galeri')}
+        />
       </div>
+    </div>
+  );
+};
+
+// ====================================================================
+// K. KOMPONEN GALERI DIVISI (New Schema: divisi_galeri)
+// ====================================================================
+const DivisiGaleriAdmin: React.FC = () => {
+  const [data, setData] = useState<any[]>([]); // Menggunakan any atau interface baru jika sudah dibuat
+
+  // Data Dropdowns
+  const [divisiList, setDivisiList] = useState<CrudDivisi[]>([]);
+  const [kepengurusanList, setKepengurusanList] = useState<CrudKepengurusan[]>(
+    [],
+  );
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [editingItem, setEditingItem] = useState<any | null>(null);
+  const [itemToDeleteId, setItemToDeleteId] = useState<number | null>(null);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  // State untuk Upload Foto
+  const [tempFoto, setTempFoto] = useState('');
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  // Form State
+  const EMPTY_FORM = useMemo(
+    () => ({
+      divisi_id: '',
+      kepengurusan_id: '',
+    }),
+    [],
+  );
+
+  const [tempForm, setTempForm] = useState<any>(EMPTY_FORM);
+
+  // Gunakan useUploadThing
+  const { startUpload, isUploading } = useUploadThing('imageUploader', {
+    onClientUploadComplete: (res) => {
+      if (res && res[0]) {
+        setTempFoto(res[0].url);
+      }
+      setSelectedFile(null);
+      setUploadProgress(0);
+    },
+    onUploadProgress: (progress) => {
+      setUploadProgress(progress);
+    },
+  });
+
+  useEffect(() => {
+    loadAllData();
+  }, []);
+
+  // Helper untuk memperbarui tampilan tabel (Mapping Nama) setelah Add/Edit
+  const enrichItem = (item: any) => ({
+    ...item,
+    divisi_nama:
+      divisiList.find((d) => d.id === item.divisi_id)?.nama_divisi ||
+      item.divisi_nama,
+    kepengurusan_nama:
+      kepengurusanList.find((k) => k.id === item.kepengurusan_id)
+        ?.nama_kepengurusan || item.kepengurusan_nama,
+    foto_divisi: item.foto_divisi, // Pastikan foto terupdate
+  });
+
+  const loadAllData = async () => {
+    setIsLoading(true);
+    try {
+      const [galeriData, divisiData, kepengurusanData] = await Promise.all([
+        fetchDataFromAPI('divisi_galeri'), // Pastikan normalizeItem sudah handle ini
+        fetchDataFromAPI('divisi'),
+        fetchDataFromAPI('kepengurusan'),
+      ]);
+
+      // Mapping nama manual di client-side (jika API tidak include relation)
+      const mappedData = galeriData.map((item: any) => ({
+        ...item,
+        divisi_nama:
+          divisiData.find((d: CrudDivisi) => d.id === item.divisi_id)
+            ?.nama_divisi || item.divisi_nama,
+        kepengurusan_nama:
+          kepengurusanData.find(
+            (k: CrudKepengurusan) => k.id === item.kepengurusan_id,
+          )?.nama_kepengurusan || item.kepengurusan_nama,
+      }));
+
+      setData(mappedData);
+      setDivisiList(divisiData);
+      setKepengurusanList(kepengurusanData);
+    } catch (error) {
+      console.error('Gagal memuat data galeri:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setSelectedFile(file);
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          setTempFoto(event.target.result as string);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // --- Handlers Modal ---
+  const handleEdit = (item: any) => {
+    setEditingItem(item);
+    setTempForm({
+      divisi_id: item.divisi_id.toString(),
+      kepengurusan_id: item.kepengurusan_id.toString(),
+    });
+    setTempFoto(item.foto_divisi || '');
+    setIsModalOpen(true);
+    setSelectedFile(null);
+  };
+
+  const handleAddNew = () => {
+    setEditingItem(null);
+    setTempForm(EMPTY_FORM);
+    setTempFoto('');
+    setIsModalOpen(true);
+    setSelectedFile(null);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingItem(null);
+    setTempForm(EMPTY_FORM);
+    setTempFoto('');
+    setSelectedFile(null);
+    setUploadProgress(0);
+  };
+
+  const handleSave = async () => {
+    if (!tempForm.divisi_id || !tempForm.kepengurusan_id) {
+      alert('Harap pilih Divisi dan Kepengurusan!');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      // 1. Upload Foto
+      let fotoUrl = tempFoto;
+      if (selectedFile) {
+        const uploadResult = await startUpload([selectedFile]);
+        if (uploadResult && uploadResult[0]) {
+          fotoUrl = uploadResult[0].url;
+        }
+      }
+
+      if (!fotoUrl) {
+        alert('Foto Galeri Wajib Diupload!');
+        setIsLoading(false);
+        return;
+      }
+
+      // 2. Payload (Sesuai Skema Prisma: id_divisi, id_btw, foto_divisi)
+      const saveData = {
+        id_divisi: parseInt(tempForm.divisi_id),
+        id_btw: parseInt(tempForm.kepengurusan_id),
+        foto_divisi: fotoUrl,
+      };
+
+      if (editingItem) {
+        const updated = await saveDataToAPI(
+          'divisi_galeri',
+          saveData,
+          editingItem.id,
+        );
+        const enriched = enrichItem(updated);
+        setData(data.map((d) => (d.id === editingItem.id ? enriched : d)));
+      } else {
+        const newItem = await saveDataToAPI('divisi_galeri', saveData);
+        const enriched = enrichItem(newItem);
+        setData([...data, enriched]);
+      }
+
+      handleCloseModal();
+    } catch (error) {
+      console.error('Gagal menyimpan data:', error);
+      alert('Gagal menyimpan data. Silakan coba lagi.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDeleteClick = (id: number) => {
+    setItemToDeleteId(id);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (itemToDeleteId !== null) {
+      setIsLoading(true);
+      try {
+        const success = await deleteDataFromAPI(
+          'divisi_galeri',
+          itemToDeleteId,
+        );
+        if (success) {
+          setData(data.filter((d) => d.id !== itemToDeleteId));
+        }
+      } catch (error) {
+        console.error('Gagal menghapus data:', error);
+        alert('Gagal menghapus data. Silakan coba lagi.');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    setIsDeleteModalOpen(false);
+    setItemToDeleteId(null);
+  };
+
+  // Helper Select
+  const SelectField: React.FC<{
+    label: string;
+    value: string;
+    onChange: (v: string) => void;
+    options: { id: number; name: string }[];
+  }> = ({ label, value, onChange, options }) => (
+    <div className="mb-4">
+      <label className="mb-1 block text-xs font-semibold text-gray-700 uppercase">
+        {label}
+      </label>
+      <div className="relative">
+        <select
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="w-full appearance-none rounded-lg border border-gray-300 bg-gray-100 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        >
+          <option value="">Pilih {label}</option>
+          {options.map((opt) => (
+            <option key={opt.id} value={opt.id}>
+              {opt.name}
+            </option>
+          ))}
+        </select>
+        <ChevronDown className="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 transform text-gray-500" />
+      </div>
+    </div>
+  );
+
+  const itemsPerPage = 10;
+  const currentPage = 1;
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+
+  return (
+    <div className="space-y-6 p-4 sm:p-8">
+      <h2 className="text-xl font-bold text-gray-800 sm:text-2xl">
+        GALERI DIVISI
+      </h2>
+
+      <div className="flex items-center justify-between">
+        <button
+          onClick={handleAddNew}
+          className="flex items-center space-x-2 rounded-lg bg-blue-500 px-4 py-2 font-semibold text-white shadow-md transition-colors hover:bg-blue-600"
+          disabled={isLoading}
+        >
+          <Plus className="h-5 w-5" />
+          <span>Tambah Baru</span>
+        </button>
+      </div>
+
+      <div className="rounded-xl bg-white p-4 shadow-lg sm:p-6">
+        <div className="mb-4 flex flex-wrap items-center justify-between space-y-4 md:space-y-0">
+          <div className="relative w-full md:w-1/3">
+            <Search className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search Galeri..."
+              className="w-full rounded-xl border border-gray-300 p-3 pl-10 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+          </div>
+        </div>
+
+        {isLoading && (
+          <div className="flex h-64 items-center justify-center">
+            <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-blue-500"></div>
+          </div>
+        )}
+
+        {!isLoading && (
+          <div className="min-h-[300px] overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                    ID
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                    FOTO
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                    DIVISI
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                    KEPENGURUSAN
+                  </th>
+                  <th className="px-6 py-3 text-center text-xs font-medium tracking-wider text-gray-500 uppercase">
+                    ACTION
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200 bg-white">
+                {data.length === 0 ? (
+                  <tr>
+                    <td
+                      colSpan={5}
+                      className="px-6 py-4 text-center text-sm whitespace-nowrap text-gray-500"
+                    >
+                      Tidak ada data galeri
+                    </td>
+                  </tr>
+                ) : (
+                  data.map((item) => (
+                    <tr
+                      key={item.id}
+                      className="border-b border-gray-100 bg-white transition-colors hover:bg-gray-100"
+                    >
+                      <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-gray-900">
+                        {item.id}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {item.foto_divisi ? (
+                          <div className="h-16 w-24 overflow-hidden rounded-lg border shadow-sm">
+                            <Image
+                              src={item.foto_divisi}
+                              alt="Galeri"
+                              className="h-full w-full object-cover"
+                              width={96}
+                              height={64}
+                            />
+                          </div>
+                        ) : (
+                          <div className="flex h-16 w-24 items-center justify-center rounded-lg bg-gray-200">
+                            <ImageIcon className="h-6 w-6 text-gray-500" />
+                          </div>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-gray-700">
+                        {item.divisi_nama || 'N/A'}
+                      </td>
+                      <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
+                        {item.kepengurusan_nama || 'N/A'}
+                      </td>
+                      <td className="px-6 py-4 text-center text-sm font-medium whitespace-nowrap">
+                        <button
+                          onClick={() => handleEdit(item)}
+                          className="mr-3 rounded-full p-2 text-blue-600 hover:bg-blue-200 hover:text-blue-900"
+                          disabled={isLoading}
+                        >
+                          <Edit className="h-5 w-5" />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteClick(item.id)}
+                          className="rounded-full p-2 text-red-600 hover:bg-red-200 hover:text-red-900"
+                          disabled={isLoading}
+                        >
+                          <Trash2 className="h-5 w-5" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        <div className="mt-6 flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
+          <div className="text-sm text-gray-700">
+            Menampilkan {data.length} entries.
+          </div>
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={() => {}}
+          />
+        </div>
+      </div>
+
+      <CustomModal
+        title={editingItem ? 'Edit Galeri Divisi' : 'Tambah Galeri Baru'}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      >
+        <div className="space-y-4">
+          {/* UPLOAD FOTO */}
+          <div className="mb-4">
+            <label className="mb-1 block text-xs font-semibold text-gray-700 uppercase">
+              FOTO GALERI
+            </label>
+            <div className="space-y-3">
+              {tempFoto && (
+                <div className="flex justify-center">
+                  <div className="h-40 w-full overflow-hidden rounded-lg border bg-gray-50">
+                    <Image
+                      src={tempFoto}
+                      alt="Preview"
+                      className="h-full w-full object-contain"
+                      width={300}
+                      height={200}
+                    />
+                  </div>
+                </div>
+              )}
+              <div className="flex items-center justify-center">
+                <label className="cursor-pointer">
+                  <div className="flex items-center space-x-2 rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600">
+                    <Upload className="h-4 w-4" />
+                    <span>Pilih Foto</span>
+                  </div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileSelect}
+                    className="hidden"
+                    disabled={isUploading}
+                  />
+                </label>
+              </div>
+              {selectedFile && (
+                <p className="text-center text-sm text-gray-600">
+                  File: {selectedFile.name}
+                </p>
+              )}
+              {isUploading && (
+                <div className="space-y-2">
+                  <div className="h-2 rounded-full bg-gray-200">
+                    <div
+                      className="h-2 rounded-full bg-blue-600 transition-all duration-300"
+                      style={{ width: `${uploadProgress}%` }}
+                    />
+                  </div>
+                  <p className="text-center text-xs text-gray-600">
+                    {uploadProgress}%
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <SelectField
+            label="DIVISI"
+            value={tempForm.divisi_id}
+            onChange={(v) => setTempForm({ ...tempForm, divisi_id: v })}
+            options={divisiList.map((d) => ({ id: d.id, name: d.nama_divisi }))}
+          />
+
+          <SelectField
+            label="KEPENGURUSAN"
+            value={tempForm.kepengurusan_id}
+            onChange={(v) => setTempForm({ ...tempForm, kepengurusan_id: v })}
+            options={kepengurusanList.map((p) => ({
+              id: p.id,
+              name: p.nama_kepengurusan,
+            }))}
+          />
+        </div>
+
+        <div className="mt-6 flex justify-end space-x-3">
+          <button
+            onClick={handleCloseModal}
+            className={`rounded-lg px-6 py-2 font-semibold text-gray-700 transition-colors`}
+            style={{ backgroundColor: BUTTON_GREY }}
+            disabled={isLoading || isUploading}
+          >
+            Batal
+          </button>
+          <button
+            onClick={handleSave}
+            className={`rounded-lg px-6 py-2 font-semibold text-white shadow-md transition-colors`}
+            style={{ backgroundColor: BUTTON_BLUE }}
+            disabled={
+              !tempForm.divisi_id ||
+              !tempForm.kepengurusan_id ||
+              isLoading ||
+              isUploading
+            }
+          >
+            {isLoading || isUploading
+              ? 'Menyimpan...'
+              : editingItem
+                ? 'Simpan Perubahan'
+                : 'Tambah Data'}
+          </button>
+        </div>
+      </CustomModal>
+
+      <ConfirmationModal
+        title="Konfirmasi Hapus"
+        message={`Apakah Anda yakin ingin menghapus foto galeri ini?`}
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={handleConfirmDelete}
+      />
     </div>
   );
 };
@@ -2501,6 +3239,8 @@ function Dashboard() {
         return <JabatanAdmin />;
       case 'detail_anggota':
         return <DetailAnggotaAdmin />;
+      case 'divisi_galeri':
+        return <DivisiGaleriAdmin />; // Nanti akan error merah sampai komponen dibuat
       default:
         return <DashboardHome onNavigate={setCurrentPage} />;
     }
