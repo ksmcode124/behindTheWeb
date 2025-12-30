@@ -430,8 +430,8 @@ const normalizeItem = (endpoint: string, item: any) => {
     case 'divisi_galeri':
       return {
         id: item.id_fotoDiv ?? item.id, // Mapping Primary Key
-        divisi_id: item.id_divisi ?? item.divisi_id,
-        kepengurusan_id: item.id_btw ?? item.kepengurusan_id,
+        id_divisi: item.id_divisi ?? item.divisi_id,
+        id_btw: item.id_btw ?? item.kepengurusan_id,
         foto_divisi: item.foto_divisi, // URL Foto
 
         // Data Join/Relasi (Untuk ditampilkan di Tabel)
@@ -1507,25 +1507,78 @@ const AnggotaAdmin: React.FC = () => {
   };
 
   const handleSave = async () => {
-    if (!tempAnggota.nama_anggota) {
-      alert('Nama Anggota wajib diisi');
+    // ==========================================
+    // 1. VALIDASI INPUT FORM (PRE-CHECK)
+    // ==========================================
+
+    // Validasi A: Nama Anggota Wajib
+    if (!tempAnggota.nama_anggota || tempAnggota.nama_anggota.trim() === '') {
+      alert('VALIDASI GAGAL: Nama Anggota wajib diisi.');
       return;
     }
 
-    // Validasi saat Create New: Wajib isi Detail
-    if (
-      !editingAnggota &&
-      (!tempDetail.kepengurusan_id ||
+    // Validasi B: Kelengkapan Detail (Khusus Tambah Baru)
+    // Kita cek ini DULUAN sebelum capek-capek upload foto.
+    if (!editingAnggota) {
+      if (
+        !tempDetail.kepengurusan_id ||
         !tempDetail.divisi_id ||
-        !tempDetail.jabatan_id)
-    ) {
-      alert('Harap lengkapi Data Jabatan, Divisi, dan Kepengurusan');
-      return;
+        !tempDetail.jabatan_id
+      ) {
+        alert(
+          'VALIDASI GAGAL: Harap lengkapi data Kepengurusan, Divisi, dan Jabatan sebelum menyimpan.',
+        );
+        return;
+      }
+
+      // Validasi C: Keberadaan File Foto (Khusus Tambah Baru)
+      // Wajib punya file yang dipilih ATAU preview (jika case tertentu), karena foto wajib di tabel detail
+      if (!selectedFile && !tempFotoPreview) {
+        alert('VALIDASI GAGAL: Foto Anggota wajib diupload untuk data baru.');
+        return;
+      }
     }
 
     setIsLoading(true);
+
     try {
-      // 1. Siapkan Data Anggota (Tabel Dasar - Tanpa Foto)
+      // ==========================================
+      // 2. PROSES UPLOAD FOTO
+      // ==========================================
+      let finalFotoUrl = tempAnggota.foto_anggota || ''; // Default string kosong
+
+      if (selectedFile) {
+        // Upload file...
+        const uploadResult = await startUpload([selectedFile]);
+
+        // Cek hasil upload
+        if (!uploadResult || !uploadResult[0] || !uploadResult[0].url) {
+          throw new Error(
+            'Gagal mengupload foto ke server. Silakan cek koneksi internet Anda.',
+          );
+        }
+
+        finalFotoUrl = uploadResult[0].url;
+      } else if (tempFotoPreview) {
+        // Jika tidak ada file baru tapi ada preview (misal dari state sebelumnya)
+        finalFotoUrl = tempFotoPreview;
+      }
+
+      // ==========================================
+      // 3. VALIDASI URL FOTO (FINAL CHECK)
+      // ==========================================
+      // Khusus Create New, kita pastikan URL benar-benar ada string-nya
+      if (!editingAnggota && !finalFotoUrl) {
+        throw new Error(
+          'URL Foto tidak valid atau gagal digenerate. Data tidak akan disimpan.',
+        );
+      }
+
+      // ==========================================
+      // 4. EKSEKUSI API (DATABASE)
+      // ==========================================
+
+      // Payload Dasar (btw_anggota)
       const saveDataAnggota = {
         nama_anggota: tempAnggota.nama_anggota,
         linkedin: tempAnggota.linkedin,
@@ -1533,54 +1586,49 @@ const AnggotaAdmin: React.FC = () => {
       };
 
       if (editingAnggota) {
-        // === MODE EDIT (Update btw_anggota) ===
+        // --- LOGIC EDIT (Hanya Update Profil) ---
         const updated = await saveDataToAPI(
           'anggota',
           saveDataAnggota,
           editingAnggota.id,
         );
+        // Update state lokal
         setData(data.map((a) => (a.id === editingAnggota.id ? updated : a)));
       } else {
-        // === MODE TAMBAH BARU (Sequential: Upload -> Anggota -> Detail) ===
+        // --- LOGIC CREATE (Sequential: Anggota -> Detail) ---
 
-        // A. Upload Foto (Hanya saat create baru karena masuk ke tabel detail)
-        let fotoUrl = null;
-        if (selectedFile) {
-          const uploadResult = await startUpload([selectedFile]);
-          if (uploadResult && uploadResult[0]) {
-            fotoUrl = uploadResult[0].url;
-          }
-        } else if (tempFotoPreview) {
-          // Handle case jika user pakai URL langsung/preview yg sudah ada (jarang terjadi di create)
-          fotoUrl = tempFotoPreview;
-        }
-
-        // B. Input ke API Anggota (Dapatkan ID Baru)
+        // A. Simpan Anggota
         const newAnggota = await saveDataToAPI('anggota', saveDataAnggota);
+
+        // Validasi ID Anggota Baru
         const newAnggotaId = newAnggota.id || newAnggota.data?.id;
-
-        if (newAnggotaId) {
-          // C. Input ke API Detail Anggota (Dengan Foto & ID Relasi)
-          const saveDataDetail = {
-            id_anggota: newAnggotaId, // Key sesuai Prisma: id_anggota
-            id_btw: parseInt(tempDetail.kepengurusan_id), // Key sesuai Prisma: id_btw
-            id_divisi: parseInt(tempDetail.divisi_id), // Key sesuai Prisma: id_divisi
-            id_jabatan: parseInt(tempDetail.jabatan_id), // Key sesuai Prisma: id_jabatan
-            foto_anggota: fotoUrl, // Foto disimpan di sini sekarang
-          };
-
-          await saveDataToAPI('detail_anggota', saveDataDetail);
-          console.log('Detail anggota berhasil dibuat otomatis dengan foto');
+        if (!newAnggotaId) {
+          throw new Error('Gagal mendapatkan ID Anggota dari server.');
         }
 
-        // Refresh data
+        // B. Simpan Detail (Data sudah dijamin lengkap & valid di tahap 1 & 3)
+        const saveDataDetail = {
+          id_anggota: newAnggotaId,
+          id_btw: parseInt(tempDetail.kepengurusan_id),
+          id_divisi: parseInt(tempDetail.divisi_id),
+          id_jabatan: parseInt(tempDetail.jabatan_id),
+          foto_anggota: finalFotoUrl, // URL Foto masuk sini
+        };
+
+        await saveDataToAPI('detail_anggota', saveDataDetail);
+        console.log('Sukses: Data Anggota dan Detail tersimpan.');
+
+        // Update state lokal (tambah data baru ke tabel)
         setData([...data, newAnggota]);
       }
 
+      // Tutup Modal hanya jika semua sukses
       handleCloseModal();
-    } catch (error) {
-      console.error('Gagal menyimpan data:', error);
-      alert('Gagal menyimpan data. Silakan coba lagi.');
+    } catch (error: any) {
+      console.error('Terjadi Kesalahan:', error);
+      // Ini adalah "Soft Error" (Alert) yang Anda inginkan
+      // User tetap di modal, data input tidak hilang, bisa coba lagi
+      alert(error.message || 'Terjadi kesalahan sistem saat menyimpan data.');
     } finally {
       setIsLoading(false);
     }
@@ -2621,7 +2669,7 @@ const DashboardHome: React.FC<{ onNavigate: (page: Page) => void }> = ({
         fetchDataFromAPI('kepengurusan'),
         fetchDataFromAPI('jabatan'),
         fetchDataFromAPI('detail_anggota'),
-        fetchDataFromAPI('divisi_galeri'),
+        fetchDataFromAPI('divisi-galeri'),
       ]);
 
       setStats({
@@ -2715,8 +2763,12 @@ const DashboardHome: React.FC<{ onNavigate: (page: Page) => void }> = ({
 // ====================================================================
 // K. KOMPONEN GALERI DIVISI (New Schema: divisi_galeri)
 // ====================================================================
+
+// ====================================================================
+// K. KOMPONEN GALERI DIVISI (Updated: Match API Route)
+// ====================================================================
 const DivisiGaleriAdmin: React.FC = () => {
-  const [data, setData] = useState<any[]>([]); // Menggunakan any atau interface baru jika sudah dibuat
+  const [data, setData] = useState<any[]>([]);
 
   // Data Dropdowns
   const [divisiList, setDivisiList] = useState<CrudDivisi[]>([]);
@@ -2765,40 +2817,36 @@ const DivisiGaleriAdmin: React.FC = () => {
     loadAllData();
   }, []);
 
-  // Helper untuk memperbarui tampilan tabel (Mapping Nama) setelah Add/Edit
-  const enrichItem = (item: any) => ({
-    ...item,
-    divisi_nama:
-      divisiList.find((d) => d.id === item.divisi_id)?.nama_divisi ||
-      item.divisi_nama,
-    kepengurusan_nama:
-      kepengurusanList.find((k) => k.id === item.kepengurusan_id)
-        ?.nama_kepengurusan || item.kepengurusan_nama,
-    foto_divisi: item.foto_divisi, // Pastikan foto terupdate
-  });
-
   const loadAllData = async () => {
     setIsLoading(true);
     try {
-      const [galeriData, divisiData, kepengurusanData] = await Promise.all([
-        fetchDataFromAPI('divisi_galeri'), // Pastikan normalizeItem sudah handle ini
+      // 1. Fetch Data Master untuk Dropdown
+      const [divisiData, kepengurusanData] = await Promise.all([
         fetchDataFromAPI('divisi'),
         fetchDataFromAPI('kepengurusan'),
       ]);
 
-      // Mapping nama manual di client-side (jika API tidak include relation)
-      const mappedData = galeriData.map((item: any) => ({
-        ...item,
-        divisi_nama:
-          divisiData.find((d: CrudDivisi) => d.id === item.divisi_id)
-            ?.nama_divisi || item.divisi_nama,
-        kepengurusan_nama:
-          kepengurusanData.find(
-            (k: CrudKepengurusan) => k.id === item.kepengurusan_id,
-          )?.nama_kepengurusan || item.kepengurusan_nama,
-      }));
+      // 2. Fetch Data Galeri dari Endpoint khusus
+      // Perhatikan: Endpoint menggunakan 'divisi-galeri' sesuai nama file route.ts Anda
+      console.log('Mengambil data galeri...');
+      const response = await fetch(`${API_BASE}/divisi-galeri`);
+      const result = await response.json();
 
-      setData(mappedData);
+      let formattedData = [];
+      if (result.success && Array.isArray(result.data)) {
+        // Mapping data dari struktur API ke struktur Tabel Dashboard
+        formattedData = result.data.map((item: any) => ({
+          id: item.id_fotoDiv, // Mapping id_fotoDiv -> id
+          divisi_id: item.divisi?.id_divisi,
+          kepengurusan_id: item.kepengurusan?.id_btw,
+          foto_divisi: item.foto_divisi,
+          // Nama diambil langsung dari relasi API (sudah include)
+          divisi_nama: item.divisi?.nama_divisi || 'N/A',
+          kepengurusan_nama: item.kepengurusan?.nama_kepengurusan || 'N/A',
+        }));
+      }
+
+      setData(formattedData);
       setDivisiList(divisiData);
       setKepengurusanList(kepengurusanData);
     } catch (error) {
@@ -2859,7 +2907,7 @@ const DivisiGaleriAdmin: React.FC = () => {
 
     setIsLoading(true);
     try {
-      // 1. Upload Foto
+      // 1. Upload Foto (Jika ada file baru)
       let fotoUrl = tempFoto;
       if (selectedFile) {
         const uploadResult = await startUpload([selectedFile]);
@@ -2874,31 +2922,67 @@ const DivisiGaleriAdmin: React.FC = () => {
         return;
       }
 
-      // 2. Payload (Sesuai Skema Prisma: id_divisi, id_btw, foto_divisi)
-      const saveData = {
+      // 2. Siapkan Payload (Sesuai validasi API: id_divisi, id_btw, foto_divisi)
+      const payload = {
         id_divisi: parseInt(tempForm.divisi_id),
         id_btw: parseInt(tempForm.kepengurusan_id),
         foto_divisi: fotoUrl,
       };
 
+      const endpointUrl = `${API_BASE}/divisi-galeri`; // Endpoint dengan dash (-)
+
+      let response;
       if (editingItem) {
-        const updated = await saveDataToAPI(
-          'divisi_galeri',
-          saveData,
-          editingItem.id,
-        );
-        const enriched = enrichItem(updated);
-        setData(data.map((d) => (d.id === editingItem.id ? enriched : d)));
+        // UPDATE (PUT)
+        // Note: API PUT harus tersedia di route.ts /api/btw/divisi-galeri/[id]
+        // Jika belum ada, gunakan saveDataToAPI standar dengan endpoint 'divisi-galeri'
+        response = await fetch(`${endpointUrl}/${editingItem.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
       } else {
-        const newItem = await saveDataToAPI('divisi_galeri', saveData);
-        const enriched = enrichItem(newItem);
-        setData([...data, enriched]);
+        // CREATE (POST)
+        response = await fetch(endpointUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+      }
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        // Tangkap pesan error dari API (misal: "Foto sudah ada")
+        throw new Error(result.message || 'Gagal menyimpan data');
+      }
+
+      // 3. Update State Lokal (Optimistic UI update / Reload)
+      // Karena API mengembalikan data lengkap dengan relasi (include), kita bisa langsung pakai
+      const newItem = result.data;
+
+      const normalizedItem = {
+        id: newItem.id_fotoDiv,
+        divisi_id: newItem.divisi?.id_divisi,
+        kepengurusan_id: newItem.kepengurusan?.id_btw,
+        foto_divisi: newItem.foto_divisi,
+        divisi_nama: newItem.divisi?.nama_divisi,
+        kepengurusan_nama: newItem.kepengurusan?.nama_kepengurusan,
+      };
+
+      if (editingItem) {
+        setData(
+          data.map((d) => (d.id === editingItem.id ? normalizedItem : d)),
+        );
+      } else {
+        setData([...data, normalizedItem]);
       }
 
       handleCloseModal();
-    } catch (error) {
+      alert(result.message); // "Foto divisi berhasil ditambahkan"
+    } catch (error: any) {
       console.error('Gagal menyimpan data:', error);
-      alert('Gagal menyimpan data. Silakan coba lagi.');
+      alert(error.message || 'Gagal menyimpan data. Silakan coba lagi.');
     } finally {
       setIsLoading(false);
     }
@@ -2913,12 +2997,20 @@ const DivisiGaleriAdmin: React.FC = () => {
     if (itemToDeleteId !== null) {
       setIsLoading(true);
       try {
-        const success = await deleteDataFromAPI(
-          'divisi_galeri',
-          itemToDeleteId,
+        // Menggunakan endpoint 'divisi-galeri'
+        const response = await fetch(
+          `${API_BASE}/divisi-galeri/${itemToDeleteId}`,
+          {
+            method: 'DELETE',
+          },
         );
-        if (success) {
+
+        const result = await response.json();
+
+        if (result.success || response.ok) {
           setData(data.filter((d) => d.id !== itemToDeleteId));
+        } else {
+          alert('Gagal menghapus data: ' + result.message);
         }
       } catch (error) {
         console.error('Gagal menghapus data:', error);
@@ -2937,7 +3029,10 @@ const DivisiGaleriAdmin: React.FC = () => {
     value: string;
     onChange: (v: string) => void;
     options: { id: number; name: string }[];
-  }> = ({ label, value, onChange, options }) => (
+    disabled?: boolean; // <-- Tambahkan tipe ini
+  }> = (
+    { label, value, onChange, options, disabled }, // <-- Terima props disabled
+  ) => (
     <div className="mb-4">
       <label className="mb-1 block text-xs font-semibold text-gray-700 uppercase">
         {label}
@@ -2946,7 +3041,8 @@ const DivisiGaleriAdmin: React.FC = () => {
         <select
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full appearance-none rounded-lg border border-gray-300 bg-gray-100 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          disabled={disabled} // <-- Pasang di sini
+          className="w-full appearance-none rounded-lg border border-gray-300 bg-gray-100 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
         >
           <option value="">Pilih {label}</option>
           {options.map((opt) => (
@@ -3105,7 +3201,6 @@ const DivisiGaleriAdmin: React.FC = () => {
         onClose={handleCloseModal}
       >
         <div className="space-y-4">
-          {/* UPLOAD FOTO */}
           <div className="mb-4">
             <label className="mb-1 block text-xs font-semibold text-gray-700 uppercase">
               FOTO GALERI
@@ -3160,7 +3255,7 @@ const DivisiGaleriAdmin: React.FC = () => {
             </div>
           </div>
 
-          <SelectField
+          {/* <SelectField
             label="DIVISI"
             value={tempForm.divisi_id}
             onChange={(v) => setTempForm({ ...tempForm, divisi_id: v })}
@@ -3175,6 +3270,33 @@ const DivisiGaleriAdmin: React.FC = () => {
               id: p.id,
               name: p.nama_kepengurusan,
             }))}
+          /> */}
+          <SelectField
+            label="DIVISI"
+            value={tempForm.divisi_id}
+            onChange={(v) => setTempForm({ ...tempForm, divisi_id: v })}
+            options={divisiList.map((d) => ({ id: d.id, name: d.nama_divisi }))}
+            // TAMBAHAN: Disable jika sedang Edit
+            disabled={!!editingItem}
+          />
+
+          {editingItem && (
+            <p className="-mt-3 mb-2 ml-1 text-[10px] text-red-500">
+              *Divisi tidak dapat diubah saat Edit. Hapus dan buat baru jika
+              salah.
+            </p>
+          )}
+
+          <SelectField
+            label="KEPENGURUSAN"
+            value={tempForm.kepengurusan_id}
+            onChange={(v) => setTempForm({ ...tempForm, kepengurusan_id: v })}
+            options={kepengurusanList.map((p) => ({
+              id: p.id,
+              name: p.nama_kepengurusan,
+            }))}
+            // TAMBAHAN: Disable jika sedang Edit
+            disabled={!!editingItem}
           />
         </div>
 
