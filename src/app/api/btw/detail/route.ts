@@ -5,13 +5,14 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { TruckElectric } from 'lucide-react';
 
 // GET /api/btw/detail?id_btw=1 - List all (optional filter by kepengurusan)
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const idBtw = searchParams.get('id_btw');
-    
+
     const where: any = {};
     if (idBtw) {
       where.id_btw = parseInt(idBtw);
@@ -36,7 +37,7 @@ export async function GET(request: NextRequest) {
     console.error('Error:', error);
     return NextResponse.json(
       { success: false, message: 'Gagal mengambil data' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -45,17 +46,22 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    
+
     // Support both camelCase from frontend (anggota_id) and snake_case (id_anggota)
     const anggotaId = body.anggota_id ?? body.id_anggota;
     const divisiId = body.divisi_id ?? body.id_divisi;
     const btwId = body.kepengurusan_id ?? body.id_btw;
     const jabatanId = body.jabatan_id ?? body.id_jabatan;
+    const fotoAnggota = body.foto_anggota;
 
-    if (!anggotaId || !divisiId || !btwId || !jabatanId) {
+    if (!anggotaId || !divisiId || !btwId || !jabatanId || !fotoAnggota) {
       return NextResponse.json(
-        { success: false, message: 'Field wajib hilang (anggota, divisi, kepengurusan, jabatan).' },
-        { status: 400 }
+        {
+          success: false,
+          message:
+            'Field wajib hilang (anggota, divisi, kepengurusan, jabatan, foto).',
+        },
+        { status: 400 },
       );
     }
 
@@ -70,8 +76,11 @@ export async function POST(request: NextRequest) {
 
     if (existing) {
       return NextResponse.json(
-        { success: false, message: 'Anggota sudah terdaftar di divisi & kepengurusan ini' },
-        { status: 400 }
+        {
+          success: false,
+          message: 'Anggota sudah terdaftar di divisi & kepengurusan ini',
+        },
+        { status: 400 },
       );
     }
 
@@ -81,6 +90,7 @@ export async function POST(request: NextRequest) {
         id_divisi: divisiId,
         id_btw: btwId,
         id_jabatan: jabatanId,
+        foto_anggota: fotoAnggota,
       },
       include: {
         anggota: true,
@@ -92,13 +102,13 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       { success: true, message: 'Detail anggota berhasil dibuat', data },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error('Error:', error);
     return NextResponse.json(
       { success: false, message: 'Gagal membuat detail anggota' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

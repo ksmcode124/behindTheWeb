@@ -31,9 +31,12 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const divisi = await prisma.btw_divisi.findMany({
+    const Divisi = await prisma.btw_divisi.findMany({
       orderBy: { nama_divisi: 'asc' },
       include: {
+        galeri: {
+          where: { id_btw: kepengurusan.id_btw },
+        },
         detail: {
           where: { id_btw: kepengurusan.id_btw }, // ✅ Filter by tahun
           include: {
@@ -49,15 +52,15 @@ export async function GET(request: NextRequest) {
     });
 
     // ✅ FILTER: Hanya divisi yang punya anggota di tahun ini
-    const divisiWithMembers = divisi
-      .filter((d: any) => d.detail && d.detail.length > 0) // ✅ Filter divisi kosong
-      .map((d: any) => ({
-        nama_divisi: d.nama_divisi,
-        foto_divisi: d.foto_divisi ?? null,
-        deskripsi: d.deskripsi ?? '',
-        anggota: d.detail.map((detail: any) => ({
+    const divisiWithMembers = Divisi
+      .filter((divisi: any) => divisi.detail && divisi.detail.length > 0) // ✅ Filter divisi kosong
+      .map((divisi: any) => ({
+        nama_divisi: divisi.nama_divisi,
+        foto_divisi: divisi.galeri[0]?.foto_divisi ?? null,
+        deskripsi: divisi.deskripsi ?? '',
+        anggota: divisi.detail.map((detail: any) => ({
           nama_anggota: detail.anggota?.nama_anggota ?? '',
-          foto_anggota: detail.anggota?.foto_anggota ?? null,
+          foto_anggota: detail.foto_anggota ?? null,
           linkedin: detail.anggota?.linkedin ?? null,
           instagram: detail.anggota?.instagram ?? null,
           jabatan: detail.jabatan?.nama_jabatan ?? '',
