@@ -997,9 +997,22 @@ const DivisiAdmin: React.FC = () => {
                       <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
                         {item.nama_divisi}
                       </td>
-                      <td className="max-w-xs truncate px-6 py-4 text-sm text-gray-500">
-                        {/* Menampilkan deskripsi (truncate jika terlalu panjang) */}
-                        {item.deskripsi || '-'}
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {item.foto_divisi ? (
+                          <div className="h-10 w-10 overflow-hidden rounded-full">
+                            <Image
+                              src={item.foto_divisi}
+                              alt={item.nama_divisi}
+                              width={10}
+                              height={10}
+                              className="h-full w-full object-cover"
+                            />
+                          </div>
+                        ) : (
+                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200">
+                            <ImageIcon className="h-5 w-5 text-gray-500" />
+                          </div>
+                        )}
                       </td>
                       <td className="px-6 py-4 text-center text-sm font-medium whitespace-nowrap">
                         <button
@@ -1055,12 +1068,57 @@ const DivisiAdmin: React.FC = () => {
             <label className="mb-1 block text-xs font-semibold text-gray-700 uppercase">
               DESKRIPSI
             </label>
-            <textarea
-              value={tempDeskripsi}
-              onChange={(e) => setTempDeskripsi(e.target.value)}
-              placeholder="Deskripsi singkat divisi..."
-              className="h-24 w-full resize-none rounded-lg border border-gray-300 bg-gray-100 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            />
+            <div className="space-y-3">
+              {tempFoto && (
+                <div className="flex justify-center">
+                  <div className="h-32 w-32 overflow-hidden rounded-lg border">
+                    <Image
+                      src={tempFoto}
+                      alt="Preview"
+                      width={32}
+                      height={32}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                </div>
+              )}
+
+              <div className="flex items-center justify-center">
+                <label className="cursor-pointer">
+                  <div className="flex items-center space-x-2 rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600">
+                    <Upload className="h-4 w-4" />
+                    <span>Pilih Foto</span>
+                  </div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileSelect}
+                    className="hidden"
+                    disabled={isUploading}
+                  />
+                </label>
+              </div>
+
+              {selectedFile && (
+                <p className="text-center text-sm text-gray-600">
+                  File: {selectedFile.name}
+                </p>
+              )}
+
+              {isUploading && (
+                <div className="space-y-2">
+                  <div className="h-2 rounded-full bg-gray-200">
+                    <div
+                      className="h-2 rounded-full bg-blue-600 transition-all duration-300"
+                      style={{ width: `${uploadProgress}%` }}
+                    />
+                  </div>
+                  <p className="text-center text-xs text-gray-600">
+                    {uploadProgress}%
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <div className="mt-6 flex justify-end space-x-3">
@@ -1780,6 +1838,23 @@ const AnggotaAdmin: React.FC = () => {
                           {item.nama_anggota}
                         </span>
                       </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {item.foto_anggota ? (
+                          <div className="h-10 w-10 overflow-hidden rounded-full">
+                            <Image
+                              width={10}
+                              height={10}
+                              src={item.foto_anggota}
+                              alt={item.nama_anggota}
+                              className="h-full w-full object-cover"
+                            />
+                          </div>
+                        ) : (
+                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200">
+                            <User className="h-5 w-5 text-gray-500" />
+                          </div>
+                        )}
+                      </td>
                       <td className="px-6 py-4 text-center text-sm font-medium whitespace-nowrap">
                         <button
                           onClick={() => handleEdit(item)}
@@ -1826,28 +1901,22 @@ const AnggotaAdmin: React.FC = () => {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
       >
-        <div className="h-[70vh] space-y-4 overflow-y-auto pr-2">
-          {/* PERUBAHAN UI: 
-              Upload Foto HANYA muncul jika NOT editing (alias Create New).
-              Karena foto sekarang ada di tabel Detail, bukan Anggota.
-          */}
-          {!editingAnggota && (
-            <div className="mb-4 rounded-lg border border-blue-100 bg-blue-50 p-4">
-              <label className="mb-1 block text-xs font-semibold text-blue-800 uppercase">
-                FOTO PROFIL (Disimpan ke Detail Jabatan)
-              </label>
-              <div className="mt-2 space-y-3">
-                {tempFotoPreview && (
-                  <div className="flex justify-center">
-                    <div className="h-32 w-32 overflow-hidden rounded-full border-2 border-white shadow-sm">
-                      <Image
-                        src={tempFotoPreview}
-                        alt="Preview"
-                        className="h-full w-full object-cover"
-                        width={128}
-                        height={128}
-                      />
-                    </div>
+        <div className="space-y-4">
+          <div className="mb-4">
+            <label className="mb-1 block text-xs font-semibold text-gray-700 uppercase">
+              FOTO ANGGOTA
+            </label>
+            <div className="space-y-3">
+              {tempAnggota.foto_anggota && (
+                <div className="flex justify-center">
+                  <div className="h-32 w-32 overflow-hidden rounded-full border">
+                    <Image
+                      width={32}
+                      height={32}
+                      src={tempAnggota.foto_anggota}
+                      alt="Preview"
+                      className="h-full w-full object-cover"
+                    />
                   </div>
                 )}
                 <div className="flex items-center justify-center">
@@ -1991,10 +2060,17 @@ const AnggotaAdmin: React.FC = () => {
             {/* Note: selectedAnggota dari API 'anggota' skema baru tidak punya foto. 
                  Jadi ini akan selalu fallback ke icon User, kecuali Anda fetch detailnya. */}
             <div className="flex min-h-[150px] w-full flex-col items-center justify-center rounded-lg bg-gray-100 p-4 sm:w-1/3">
-              <User className="h-12 w-12 text-gray-500" />
-              <p className="mt-2 text-center text-[10px] text-gray-400">
-                Foto tersedia di menu Detail Anggota
-              </p>
+              {selectedAnggota.foto_anggota ? (
+                <Image
+                  src={selectedAnggota.foto_anggota}
+                  alt={selectedAnggota.nama_anggota}
+                  width={24}
+                  height={24}
+                  className="h-24 w-24 rounded-full object-cover"
+                />
+              ) : (
+                <User className="h-12 w-12 text-gray-500" />
+              )}
             </div>
             <div className="flex-1 space-y-1">
               <h3 className="text-xl font-bold text-gray-900">
@@ -2118,23 +2194,51 @@ const DetailAnggotaAdmin: React.FC = () => {
     loadAllData();
   }, []);
 
-  // Helper untuk memperbarui tampilan tabel setelah edit tanpa reload page
-  const enrichDetail = (detail: DetailAnggota) => ({
-    ...detail,
-    anggota_nama:
-      anggotaList.find((a) => a.id === detail.anggota_id)?.nama_anggota ||
-      detail.anggota_nama,
-    kepengurusan_nama:
+  // const enrichDetail = (detail: DetailAnggota) => ({
+  //   ...detail,
+  //   anggota_nama:
+  //     anggotaList.find((a) => a.id === detail.anggota_id)?.nama_anggota ||
+  //     detail.anggota_nama,
+  //   kepengurusan_nama:
+  //     kepengurusanList.find((k) => k.id === detail.kepengurusan_id)
+  //       ?.nama_kepengurusan || detail.kepengurusan_nama,
+  //   divisi_nama:
+  //     divisiList.find((d) => d.id === detail.divisi_id)?.nama_divisi ||
+  //     detail.divisi_nama,
+  //   jabatan_nama:
+  //     jabatanList.find((j) => j.id === detail.jabatan_id)?.nama_jabatan ||
+  //     detail.jabatan_nama,
+  // });
+  const enrichDetail = (detail: DetailAnggota): DetailAnggota => {
+    const anggotaNama =
+      anggotaList.find((a) => a.id === detail.anggota_id)?.nama_anggota ??
+      detail.anggota_nama ??
+      '';
+
+    const kepengurusanNama =
       kepengurusanList.find((k) => k.id === detail.kepengurusan_id)
-        ?.nama_kepengurusan || detail.kepengurusan_nama,
-    divisi_nama:
-      divisiList.find((d) => d.id === detail.divisi_id)?.nama_divisi ||
-      detail.divisi_nama,
-    jabatan_nama:
-      jabatanList.find((j) => j.id === detail.jabatan_id)?.nama_jabatan ||
-      detail.jabatan_nama,
-    foto_anggota: detail.foto_anggota, // Pastikan foto terupdate
-  });
+        ?.nama_kepengurusan ??
+      detail.kepengurusan_nama ??
+      '';
+
+    const divisiNama =
+      divisiList.find((d) => d.id === detail.divisi_id)?.nama_divisi ??
+      detail.divisi_nama ??
+      '';
+
+    const jabatanNama =
+      jabatanList.find((j) => j.id === detail.jabatan_id)?.nama_jabatan ??
+      detail.jabatan_nama ??
+      '';
+
+    return {
+      ...detail,
+      anggota_nama: anggotaNama,
+      kepengurusan_nama: kepengurusanNama,
+      divisi_nama: divisiNama,
+      jabatan_nama: jabatanNama,
+    };
+  };
 
   const loadAllData = async () => {
     setIsLoading(true);

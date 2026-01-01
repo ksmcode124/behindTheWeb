@@ -1,9 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* ======================================================
-   ROOT VARIABLES (SINGLE SOURCE OF TRUTH)
-   ====================================================== */
 :root {
   @theme inline {
   --color-foreground: var(--foreground);
@@ -23,6 +20,7 @@
   --color-sidebar-primary-foreground: var(--primary-foreground);
   --color-sidebar-border: var(--border);
   --color-sidebar-ring: var(--ring);
+  
   /* === BTW COLORS === */
   --color-primary-600: #F59A47;
   --color-primary-500: #FEB863;
@@ -87,9 +85,6 @@
   --spacing: 0.25rem;
 }
 
-/* ======================================================
-   RESPONSIVE BOX SYSTEM
-   ====================================================== */
 @media (min-width: 640px) {
   :root {
     --box-size: 36px;
@@ -104,9 +99,6 @@
   }
 }
 
-/* ======================================================
-   ANIMATIONS
-   ====================================================== */
 @keyframes loop {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
@@ -150,4 +142,8 @@
     transform: translateX(0);
     opacity: 1;
   }
+}
+
+html, body {
+  background-color: var(--color-secondary-300)
 }

@@ -1,6 +1,7 @@
 'use client';
 import { useRef, useEffect, useState } from 'react';
 import { useLoopScroll } from './useLoopScroll';
+import { Skeleton } from './Skeleton';
 
 interface ScrollingBoxesProps {
   speed?: number;
@@ -35,11 +36,8 @@ export default function ScrollingBoxes({ speed = 60 }: ScrollingBoxesProps) {
   useLoopScroll(trackRef, speed);
 
   return (
-    <div className="relative w-full overflow-hidden py-3 sm:py-4">
-      <div
-        ref={trackRef}
-        className="loop-track flex w-max gap-[var(--box-gap)]"
-      >
+    <div className="relative w-full overflow-hidden py-2 sm:py-3">
+      <div ref={trackRef} className="loop-track flex w-max gap-(--box-gap)">
         {Array.from({ length: items * 2 }).map((_, i) => (
           <Box key={i} />
         ))}
@@ -50,6 +48,20 @@ export default function ScrollingBoxes({ speed = 60 }: ScrollingBoxesProps) {
 
 function Box() {
   return (
-    <div className="bg-secondary-400 h-[var(--box-size)] w-[var(--box-size)] rounded-sm" />
+    <div className="bg-secondary-400 h-(--box-size) w-(--box-size) rounded-sm" />
+  );
+}
+
+export function ScrollingBoxesSkeleton() {
+  return (
+    <div className="relative w-full overflow-hidden py-2 sm:py-3">
+      <div className="loop-track flex w-max gap-(--box-gap)">
+        {Array.from({ length: 38 }).map((_: any, i: number) => (
+          <div key={i} className="h-(--box-size) w-(--box-size) rounded-sm">
+            <Skeleton className="h-full w-full" />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

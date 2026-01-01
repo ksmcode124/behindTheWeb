@@ -10,7 +10,7 @@ import {
 } from 'react-icons/fa';
 
 interface SocialMediaProps {
-  platform: 'instagram' | 'linkedin' | 'whatsapp' | 'email';
+  platform: string;
   href: string;
   label?: string;
   className?: string;

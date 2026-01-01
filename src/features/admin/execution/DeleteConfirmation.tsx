@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import {
   Dialog,
@@ -7,8 +7,8 @@ import {
   DialogTitle,
   DialogFooter,
   DialogClose,
-} from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
+} from '@/components/ui/Dialog';
+import { Button } from '@/components/ui/Button';
 
 export function DeleteConfirmation({
   item,
@@ -18,12 +18,12 @@ export function DeleteConfirmation({
   onClose,
   onConfirm,
 }: {
-  item: any
-  fields: { key: string; label: string }[]
-  title: string
-  description?: string
-  onClose: (open: boolean) => void
-  onConfirm: (data: any) => void
+  item: any;
+  fields: { key: string; label: string }[];
+  title: string;
+  description?: string;
+  onClose: (open: boolean) => void;
+  onConfirm: (data: any) => void;
 }) {
   return (
     <Dialog open onOpenChange={onClose}>
@@ -36,9 +36,9 @@ export function DeleteConfirmation({
         </DialogHeader>
 
         <div className="mt-3 space-y-2">
-          {fields.map(f => (
+          {fields.map((f) => (
             <p key={f.key}>
-              <strong>{f.label}:</strong> {String(item?.[f.key] ?? "")}
+              <strong>{f.label}:</strong> {String(item?.[f.key] ?? '')}
             </p>
           ))}
         </div>
@@ -48,14 +48,11 @@ export function DeleteConfirmation({
             <Button variant="outline">Batal</Button>
           </DialogClose>
 
-          <Button
-            variant="outline"
-            onClick={() => onConfirm(item)}
-          >
+          <Button variant="outline" onClick={() => onConfirm(item)}>
             Hapus
           </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

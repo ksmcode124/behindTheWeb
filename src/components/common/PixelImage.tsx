@@ -10,7 +10,7 @@ export default function PixelImage({ className }: Props) {
       alt="Decorative Pixel Art"
       width={320}
       height={42}
-      className={`h-auto w-full max-w-[180px] -skew-3 sm:max-w-[360px] md:max-w-[420px] ${className}`}
+      className={`pointer-events-none h-auto w-full max-w-[180px] -skew-3 select-none sm:max-w-[360px] md:max-w-[420px] ${className}`}
       sizes="(max-width: 640px) 300px, (max-width: 768px) 360px, 420px"
     />
   );

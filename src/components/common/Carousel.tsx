@@ -1,8 +1,9 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { FlipCard } from './FlipCard';
+import { FlipCard, FlipCardSkeleton } from './FlipCard';
 import Image from 'next/image';
 import { Anggota } from '@/lib/btw/interfaces/btw';
+import { Skeleton } from '../ui/Skeleton';
 
 export default function Carousel({ anggotaProp }: { anggotaProp: Anggota[] }) {
   const [batchSize, setBatchSize] = useState<number>(0); // ukuran window
@@ -112,5 +113,35 @@ export default function Carousel({ anggotaProp }: { anggotaProp: Anggota[] }) {
         </button>
       ) : null}
     </div>
+  );
+}
+
+export function CarouselSkeleton() {
+  const batchSize =
+    typeof window !== 'undefined' && window.innerWidth < 640 ? 3 : 5;
+
+  const center = Math.floor(batchSize / 2);
+
+  return (
+    <>
+      <div className="relative z-2 flex max-w-full items-center justify-center gap-3 overflow-x-hidden px-4 pb-20 font-sans sm:p-20 sm:px-20">
+        {/* Prev button (desktop only) */}
+        {batchSize === 5 && (
+          <Skeleton className="h-[70px] w-[70px] rounded-full bg-[#393c45]" />
+        )}
+
+        {/* FlipCards */}
+        {Array.from({ length: batchSize }).map((_, i) => {
+          const size = Math.max(1, 3 - Math.abs(i - center));
+
+          return <FlipCardSkeleton key={i} size={size as 1 | 2 | 3} />;
+        })}
+
+        {/* Next button (desktop only) */}
+        {batchSize === 5 && (
+          <Skeleton className="h-[70px] w-[70px] rounded-full bg-[#393c45]" />
+        )}
+      </div>
+    </>
   );
 }

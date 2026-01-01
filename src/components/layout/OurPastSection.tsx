@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import ShadowedText from '@/components/ui/ShadowedText';
-import { ROUTES, KSM_NAME, KSM_TAGLINE } from '@/lib/constants';
+import { ROUTES } from '@/lib/constants';
+import { Brand } from '@/lib/data';
 
-export default function OurPast() {
+export default function OurPastSection() {
   return (
     <div className="bg-secondary-300 text-secondary-400 relative grid grid-cols-2 gap-x-16 px-6 py-10 md:px-16 md:py-14 lg:gap-x-20 lg:px-56 lg:py-20">
       <BackgroundLines />
@@ -21,9 +22,9 @@ function BackgroundLines() {
 
 function LeftColumn() {
   return (
-    <div className="-ml-4 grid grid-rows-2 lg:-ml-20">
+    <div className="z-30 -mr-7 grid grid-rows-2 justify-end lg:mr-20">
       <div /> {/* empty top space */}
-      <div className="flex flex-col items-start">
+      <div className="flex max-w-2xl flex-col items-start gap-y-1 lg:gap-y-2">
         <CodePrevious />
         <MemberTags />
       </div>
@@ -33,9 +34,9 @@ function LeftColumn() {
 
 function CodePrevious() {
   return (
-    <div className="flex -skew-3 items-center gap-x-6">
+    <div className="flex -skew-3 items-center gap-x-3 uppercase lg:gap-x-6">
       <ShadowedText className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl">
-        {KSM_NAME}
+        {Brand.name}
       </ShadowedText>
       <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl">
         PREVIOUS
@@ -46,16 +47,16 @@ function CodePrevious() {
 
 function MemberTags() {
   return (
-    <div className="flex -skew-3 items-center gap-x-6">
+    <div className="flex -skew-3 items-center gap-x-3 lg:gap-x-6">
       <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl">
         MEMBER
       </p>
       <div className="flex flex-col leading-none sm:text-base md:text-lg lg:text-2xl xl:text-4xl">
         <p className="text-primary-500 [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:1px] text-shadow-[1.5px_1.5px_0_#FEB863]">
-          {KSM_TAGLINE}
+          {Brand.tagline}
         </p>
         <p className="text-primary-500 [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:1px] text-shadow-[1.5px_1.5px_0_#FEB863]">
-          {KSM_TAGLINE}
+          {Brand.tagline}
         </p>
       </div>
     </div>
@@ -64,9 +65,9 @@ function MemberTags() {
 
 function RightColumn() {
   return (
-    <div className="ml-4 grid w-full sm:ml-6 md:ml-8 lg:ml-12">
+    <div className="z-30 ml-4 grid w-full max-w-xl sm:ml-6 md:ml-8 lg:ml-20">
       <div className="flex flex-col justify-start px-6 sm:px-8">
-        <p className="-skew-3 text-left text-xl leading-tight font-bold tracking-tight sm:text-2xl sm:leading-tight md:text-3xl md:leading-snug lg:text-5xl lg:leading-none xl:text-7xl">
+        <p className="-skew-3 text-left text-xl leading-tight font-bold tracking-tight sm:text-3xl sm:leading-tight md:text-4xl md:leading-snug lg:text-5xl lg:leading-none xl:text-7xl">
           <span className="block">CHECKOUT OUR</span>
           <span className="block">PAST TEAM</span>
         </p>

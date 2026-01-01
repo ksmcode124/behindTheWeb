@@ -4,9 +4,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '@/components/ui/Card';
 import { Building, ChevronRight } from 'lucide-react';
-import { DashboardChart } from '../../../features/admin/dashboard-chart';
+import { DashboardChart } from '../../../features/admin/DashboardChart';
 
 export default function AdminPage() {
   return (

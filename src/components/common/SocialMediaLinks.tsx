@@ -1,5 +1,5 @@
-import { SOCIAL_MEDIA } from '@/lib/constants';
-import { SocialMediaLink } from '../ui/SocialMediaLink';
+import { SocialMediaLink } from '@/components/ui/SocialMediaLink';
+import { SocialMedia } from '@/lib/data';
 
 interface Props {
   className?: string;
@@ -13,7 +13,7 @@ export default function SocialMediaLinks({ className }: Props) {
     <div
       className={`border-primary-500 flex max-w-[300px] min-w-full -skew-3 flex-wrap items-center gap-3 gap-x-4 border-t-3 pt-3 sm:max-w-[360px] sm:gap-4 sm:pt-4 md:max-w-[420px] ${className}`}
     >
-      {SOCIAL_MEDIA.map((social) => (
+      {SocialMedia.map((social) => (
         <SocialMediaLink
           key={social.platform}
           platform={social.platform}

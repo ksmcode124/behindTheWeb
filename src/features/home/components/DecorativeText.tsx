@@ -8,7 +8,7 @@ export default function DecorativeText({
   strokeColor = 'var(--color-primary-400)',
 }: DecorativeTextProps) {
   return (
-    <div className="pointer-events-none absolute inset-0 z-0">
+    <div className="pointer-events-none absolute inset-0 z-0 uppercase">
       {/* DESKTOP */}
       <div className="hidden lg:block">
         {/* RIGHT BORDER – higher */}

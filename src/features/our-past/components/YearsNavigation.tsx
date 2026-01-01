@@ -1,3 +1,5 @@
+import { Skeleton } from '@/components/ui/Skeleton';
+
 type Props = {
   kepengurusan: any;
   currentIndex: number;
@@ -62,6 +64,35 @@ export default function YearNavigation({
             <path d="M4 2l16 10-16 10z" />
           </svg>
         </button>
+      </div>
+    </div>
+  );
+}
+
+export function YearNavigationSkeleton({
+  dotCount = 5,
+}: {
+  dotCount?: number;
+}) {
+  return (
+    <div>
+      {/* Dots */}
+      <div className="relative z-10 flex items-center justify-center gap-2">
+        {Array.from({ length: dotCount }).map((_, i) => (
+          <Skeleton key={i} className="h-2 w-2 rounded-full" />
+        ))}
+      </div>
+
+      {/* Controls + Year */}
+      <div className="my-4 flex items-center justify-center gap-4">
+        {/* Prev button */}
+        <Skeleton className="h-10 w-10 rounded border sm:h-12 sm:w-12 md:h-14 md:w-14" />
+
+        {/* Year text */}
+        <Skeleton className="h-10 w-40 sm:h-14 sm:w-56 md:h-16 md:w-72 lg:h-20 lg:w-96" />
+
+        {/* Next button */}
+        <Skeleton className="h-10 w-10 rounded border sm:h-12 sm:w-12 md:h-14 md:w-14" />
       </div>
     </div>
   );

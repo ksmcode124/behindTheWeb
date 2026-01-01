@@ -1,31 +1,20 @@
 import Image from 'next/image';
 import ShadowedText from '@/components/ui/ShadowedText';
-import AccordionParent from './Accordion';
-import CodeLens from '@/components/common/CodeLens';
-import { KepengurusanResponse } from '@/lib/btw/interfaces/btw';
-import { apiGet } from '@/lib/btw/api';
+import VisiMisiCardContainer from '@/features/home/components/VisiMisiCards';
+import CodeLens, { CodeLensSkeleton } from '@/components/common/CodeLens';
 import TexturedSection from '@/components/ui/TexturedSection';
-import { ACTIVITY, TEXTURES } from '@/lib/constants';
+import { ActivityProps, TEXTURES } from '@/lib/constants';
+import { CodeLensImages } from '@/lib/data';
+import Content from '../data/home-content.json';
 
-const ORIGIN_DESCRIPTION = [
-  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio facilis, est adipisci expedita recusandae architecto facere aut eligendi non consectetur nulla tempore inventore, aperiam fugiat vitae? Magni aliquid ut assumenda?',
-  'Nam laudantium placeat soluta obcaecati at sed, consequatur repellat velit optio a. Ad repudiandae eaque iure similique, praesentium fugit aperiam alias et blanditiis commodi officia placeat ex distinctio vitae labore.',
-  'Aliquam voluptate unde nemo sed rerum expedita dignissimos architecto, incidunt iste perspiciatis illum ex eius distinctio, commodi at tempore magnam explicabo?',
-];
-
-export default async function Origin() {
-  const kepengurusanResponse =
-    await apiGet<KepengurusanResponse>('/api/display/btw');
-
+export default async function OriginSection() {
+  const activities: ActivityProps[] = CodeLensImages[0]?.activities || [];
   return (
     <>
       <OriginIntro />
-      <TexturedSection texture={TEXTURES.TEXTURE4}>
-        <OriginStory />
-        <CodeLens data={ACTIVITY} />
-      </TexturedSection>
+      <OriginBlock activities={activities} />
       <TexturedSection texture={TEXTURES.TEXTURE3}>
-        <AccordionSection />
+        <VisiMisiSection />
       </TexturedSection>
     </>
   );
@@ -39,14 +28,14 @@ function OriginIntro() {
         alt="The First Commit"
         width={300}
         height={200}
-        className="h-[7vh] w-[55vw] sm:h-[8vh] sm:w-[50vw] lg:h-[15vh] lg:w-[40vw]"
+        className="pointer-events-none h-[7vh] w-[55vw] select-none sm:h-[8vh] sm:w-[50vw] lg:h-[15vh] lg:w-[40vw]"
       />
       <Image
         src="/images/line_brow_white.webp"
         alt="Decorative line"
         width={200}
         height={100}
-        className="lg:w-[15vw} h-[3vh] w-[25vw] lg:h-[5vh]"
+        className="lg:w-[15vw} pointer-events-none h-[3vh] w-[25vw] select-none lg:h-[5vh]"
       />
     </div>
   );
@@ -66,18 +55,31 @@ function OriginImage() {
   );
 }
 
+function OriginBlock({ activities }: { activities?: ActivityProps[] }) {
+  if (!activities) {
+    return <CodeLensSkeleton />;
+  }
+
+  return (
+    <TexturedSection texture={TEXTURES.TEXTURE4}>
+      <OriginStory />
+      <CodeLens data={activities} />
+    </TexturedSection>
+  );
+}
+
 function OriginContent() {
   return (
     <div className="flex max-w-2xl flex-col justify-start space-y-6 text-white sm:space-y-8">
       <ShadowedText
         as="h2"
-        className="-skew-3 text-3xl sm:text-5xl md:text-7xl lg:text-8xl"
+        className="-skew-3 text-3xl uppercase sm:text-5xl md:text-7xl lg:text-8xl"
       >
-        THE ORIGIN
+        {Content.origin.headline}
       </ShadowedText>
 
       <div className="text-secondary-400 space-y-5 text-xs leading-relaxed sm:text-base md:text-xl">
-        {ORIGIN_DESCRIPTION.map((paragraph, index) => (
+        {Content.origin.paragraphs.map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
         ))}
       </div>
@@ -93,7 +95,7 @@ function DecorativeLine() {
         alt="Decorative line"
         width={300}
         height={200}
-        className="h-[3vh] w-[32vw] sm:h-[4vh] sm:w-[38vw] lg:h-[10vh] lg:w-[25vw]"
+        className="pointer-events-none h-[3vh] w-[32vw] select-none sm:h-[4vh] sm:w-[38vw] lg:h-[10vh] lg:w-[25vw]"
       />
     </div>
   );
@@ -106,44 +108,44 @@ function OriginStory() {
       <OriginContent />
       <DecorativeLine />
 
-      <h2 className="text-secondary-400 col-span-full mt-6 text-right text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
-        THROUGH THE LENS OF US...
+      <h2 className="text-secondary-400 col-span-full mt-6 text-right text-2xl uppercase sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
+        {Content.origin.subHeadline}
       </h2>
     </section>
   );
 }
 
-function AccordionHeader() {
+function VisiMisiHeader() {
   return (
     <div className="relative top-[clamp(1.75rem,4vw,3.75rem)] z-2 flex w-full justify-between">
       <ShadowedText
-        className="pl-15 text-5xl sm:text-6xl lg:text-9xl"
+        className="pointer-events-none pl-15 text-5xl select-none sm:text-6xl lg:text-9xl"
         textShadow="6px 6px 0 #5EAA9E"
       >
-        124
+        {Content.origin.decorativeText}
       </ShadowedText>
       <Image
         src="/images/pixel_border.webp"
         alt="Decorative border"
         width={200}
         height={100}
-        className="h-[4vh] w-[60vw] lg:h-[8vh] lg:w-[40vw]"
+        className="pointer-events-none relative top-[clamp(0.3rem,2vw,1.6rem)] h-[4vh] w-[60vw] select-none lg:h-[8vh] lg:w-[40vw]"
       />
     </div>
   );
 }
 
-function AccordionSection() {
+function VisiMisiSection() {
   return (
     <>
-      <AccordionHeader />
-      <section className="flex w-full items-center justify-center px-[11vw] py-[11vw] lg:mb-10">
+      <VisiMisiHeader />
+      <section className="flex w-full items-center justify-center overflow-hidden px-[min(11vw,4rem)] py-[11vw] lg:mb-10">
         <div className="relative flex h-full w-full items-center justify-center bg-[url('/images/hero_bg.webp')] bg-cover bg-center p-[4vw] shadow-[0_0_0_4vw_var(--color-primary-200),0_0_0_8vw_#FEB863,0_0_0_12vw_#F2D3A5]">
           <div className="relative w-full max-w-[800px]">
-            <AccordionParent />
-
-            {/* BOTTOM-LEFT BARS */}
+            <VisiMisiCardContainer />
           </div>
+
+          {/* BOTTOM-LEFT BARS */}
           <div className="absolute bottom-[-4vw] left-2 flex h-40 items-end gap-2 sm:gap-4 md:left-5 md:gap-5 lg:gap-6">
             <div className="bg-primary-500 h-[35%] w-4 rounded-md sm:w-6 md:h-[60%] lg:h-[120%] lg:w-16" />
             <div className="bg-primary-300 h-[25%] w-4 rounded-md sm:w-6 md:h-[45%] lg:h-[95%] lg:w-16" />

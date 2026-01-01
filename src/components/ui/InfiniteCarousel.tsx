@@ -50,14 +50,13 @@ export default function InfiniteCarousel({
         {images.map((image, i) => (
           <div
             key={i}
-            className="flex flex-none items-center justify-center px-3 sm:px-5 lg:px-8"
+            className="relative mx-1 aspect-3/2 h-[clamp(80px,12vw,160px)] flex-none px-3 sm:mx-2 sm:px-5 md:mx-3 lg:mx-5 lg:px-8"
           >
             <Image
               src={image.src}
               alt={image.alt ?? ''}
-              width={400}
-              height={300}
-              className="aspect-3/2 h-[clamp(80px,12vw,160px)] object-cover object-center"
+              fill
+              className="object-cover object-center"
             />
           </div>
         ))}

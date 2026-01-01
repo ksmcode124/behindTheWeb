@@ -1,24 +1,24 @@
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/Button';
 
 export function DynamicRow({
   cells,
   onEdit,
   onDelete,
 }: {
-  cells: any[]
-  onEdit?: () => void
-  onDelete?: () => void
+  cells: any[];
+  onEdit?: () => void;
+  onDelete?: () => void;
 }) {
   return (
     <tr>
       {cells.map((cell, i) => (
-        <td key={i} className="px-4 py-2 border">
+        <td key={i} className="border px-4 py-2">
           {cell}
         </td>
       ))}
 
-      <td className="px-4 py-2 border text-center">
-        <div className="flex gap-2 justify-center">
+      <td className="border px-4 py-2 text-center">
+        <div className="flex justify-center gap-2">
           <Button size="sm" variant="outline" onClick={onEdit}>
             Edit
           </Button>
@@ -29,6 +29,5 @@ export function DynamicRow({
         </div>
       </td>
     </tr>
-  )
+  );
 }
-

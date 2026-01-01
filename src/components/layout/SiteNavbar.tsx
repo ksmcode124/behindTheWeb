@@ -2,10 +2,10 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import Logo from '../common/Logo';
-import { NavLink } from '@/components/ui/NavLink';
+import { NavigationLink } from '@/components/ui/NavigationLink';
 import { NAV_ITEMS } from '@/lib/constants';
 
-export default function Navbar() {
+export default function SiteNavbar() {
   return (
     <header className="bg-background/70 fixed inset-x-0 top-0 z-50">
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-20">
@@ -27,9 +27,9 @@ function DesktopNav({ className = '' }: { className?: string }) {
   return (
     <nav className={`flex gap-x-7 ${className}`} aria-label="Main navigation">
       {NAV_ITEMS.map((item) => (
-        <NavLink key={item.href} href={item.href}>
+        <NavigationLink key={item.href} href={item.href}>
           {item.label}
-        </NavLink>
+        </NavigationLink>
       ))}
     </nav>
   );
@@ -41,7 +41,7 @@ function MobileNav({ className }: { className: string }) {
   return (
     <div className={`${className} relative`}>
       <MobileMenuButton open={open} setOpen={setOpen} />
-      <MobileMenu open={open} />
+      <MobileMenu open={open} setOpen={setOpen} />
     </div>
   );
 }
@@ -72,7 +72,13 @@ function MobileMenuButton({
   );
 }
 
-function MobileMenu({ open }: { open: boolean }) {
+function MobileMenu({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: (val: boolean) => void;
+}) {
   return (
     <div
       className={`bg-secondary-300 absolute -top-5 -right-6 flex w-[40vw] flex-col items-start gap-4 p-5 pt-20 transition-all duration-300 ${
@@ -81,11 +87,15 @@ function MobileMenu({ open }: { open: boolean }) {
           : 'pointer-events-none translate-x-full opacity-0'
       }`}
     >
-      <div className="bg-secondary-400 mb-2 h-[2px] w-full opacity-40" />
+      <div className="bg-secondary-400 mb-2 h-0.5 w-full opacity-40" />
       {NAV_ITEMS.map((item) => (
-        <NavLink key={item.href} href={item.href}>
+        <NavigationLink
+          key={item.href}
+          href={item.href}
+          onClick={() => setOpen(false)}
+        >
           {item.label.toUpperCase()}
-        </NavLink>
+        </NavigationLink>
       ))}
     </div>
   );

@@ -1,24 +1,26 @@
+import Image from 'next/image';
 import ShadowedText from '@/components/ui/ShadowedText';
-import { KSM_NAME, KSM_TAGLINE } from '@/lib/constants';
 import SocialMediaLinks from '@/components/common/SocialMediaLinks';
 import PixelImage from '@/components/common/PixelImage';
+import { Brand } from '@/lib/data';
+import { IMAGES } from '@/lib/constants';
 
-export default function HeaderSection() {
+export default function OurPastHeader() {
   return (
     <section className="relative flex min-h-[70vh] w-full flex-col items-start justify-center gap-4 overflow-hidden py-12 text-white sm:min-h-[75vh] sm:gap-6 sm:py-14 md:min-h-[80vh] md:gap-8 md:py-16 lg:min-h-[85vh] lg:gap-10 lg:py-20">
       <div className="mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-12">
-        <div className="absolute inset-0 z-0 bg-[url('/images/header_meet_team.webp')] bg-[length:200%] bg-position-[right_20%_top] bg-no-repeat lg:bg-cover lg:bg-position-[left_top_15%]" />
+        <div className="absolute inset-0 z-0 bg-[url('/images/header_meet_team.webp')] bg-size-[200%] bg-position-[right_20%_top] bg-no-repeat md:bg-[length:450%] md:bg-position-[left_top_15%] lg:bg-cover lg:bg-position-[left_top_15%]" />
         <div className="absolute inset-0 z-0 rotate-180 bg-[url('/images/header_meet_team1.webp')] bg-cover bg-center" />
 
         {/* Title */}
         <div className="relative z-20 flex w-full max-w-7xl flex-col items-start gap-2 px-4 sm:gap-3 md:gap-4 lg:px-8 lg:text-left xl:px-12">
           <ShadowedText
-            className="-skew-3 text-5xl font-bold sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-9xl"
+            className="-skew-3 text-5xl font-bold uppercase sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-9xl"
             strokeWidth="1.5px sm:2px md:2.5px lg:2.87px"
           >
-            {KSM_NAME}
+            {Brand.name}
           </ShadowedText>
-          <h1 className="text-secondary-400 -skew-3 text-5xl leading-tight sm:text-6xl md:text-7xl lg:text-9xl xl:text-[9rem] 2xl:text-[10rem]">
+          <h1 className="text-secondary-400 -skew-3 text-5xl leading-tight sm:text-6xl md:text-7xl lg:text-9xl">
             PREVIOUS MEMBER
           </h1>
         </div>
@@ -35,7 +37,7 @@ export default function HeaderSection() {
                 textColor="var(--color-primary-500)"
                 strokeWidth="1px"
               >
-                {KSM_TAGLINE}
+                {Brand.tagline}
               </ShadowedText>
             </div>
             <SocialMediaLinks />
@@ -53,13 +55,24 @@ export default function HeaderSection() {
                   textColor="var(--color-primary-500)"
                   strokeWidth="1.5px"
                 >
-                  {KSM_TAGLINE}
+                  {Brand.tagline}
                 </ShadowedText>
                 <PixelImage />
               </div>
               <SocialMediaLinks />
             </div>
           </div>
+        </div>
+      </div>
+      <div className="relative block h-full w-full bg-white md:hidden lg:block">
+        <div className="absolute top-0 left-[78%] z-10 aspect-4/3 w-[80%] min-w-[350px] -translate-x-1/2 -translate-y-1/2 -rotate-12 lg:-top-25 lg:left-[83%] lg:w-[30%] lg:min-w-[650px]">
+          <Image
+            src={IMAGES.TV}
+            alt="TV"
+            fill
+            priority
+            className="object-contain"
+          />
         </div>
       </div>
     </section>

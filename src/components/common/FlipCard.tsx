@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { SocialMediaLink } from '../ui/SocialMediaLink';
+import { Skeleton } from '../ui/Skeleton';
 const cardVariant = cva('', {
   variants: {
     size: {
@@ -140,6 +141,18 @@ export function FlipCard({
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+export function FlipCardSkeleton({ size }: { size: 1 | 2 | 3 }) {
+  const scale =
+    size === 3 ? 'h-64 w-48' : size === 2 ? 'h-56 w-44' : 'h-48 w-40';
+
+  return (
+    <div className={`flex flex-col items-center justify-center ${scale}`}>
+      {/* Card */}
+      <Skeleton className="h-full w-full rounded-xl" />
     </div>
   );
 }

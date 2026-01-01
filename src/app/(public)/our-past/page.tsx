@@ -1,51 +1,22 @@
 'use client';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Wrapper from '@/components/common/Wrapper';
-import HeaderSection from '@/features/our-past/HeaderSection';
-import YearNavigation from '@/features/our-past/YearsNavigation';
-import YearCarouselContainer from '@/features/our-past/YearCarouselContainer';
-import { Skeleton } from '@/components/ui/skeleton';
+import DivisiWrapper from '@/components/common/DivisiWrapper';
+import OurPastHeader from '@/features/our-past/sections/OurPastHeader';
+import YearNavigation, {
+  YearNavigationSkeleton,
+} from '@/features/our-past/components/YearsNavigation';
+import YearCarousel, {
+  YearCarouselSkeleton,
+} from '@/features/our-past/components/YearCarousel';
 import TexturedSection from '@/components/ui/TexturedSection';
 import { TEXTURES } from '@/lib/constants';
 
 function ContentSkeleton() {
   return (
-    <div className="space-y-8 py-12">
-      {/* Year Navigation Skeleton */}
-      <div className="flex items-center justify-center gap-4">
-        <Skeleton className="h-10 w-10" />
-        <div className="flex gap-2">
-          {[...Array(2)].map((_, i) => (
-            <Skeleton key={i} className="h-12 w-50" />
-          ))}
-        </div>
-        <Skeleton className="h-10 w-10" />
-      </div>
-
-      {/* Carousel Skeleton */}
-      <div className="space-y-6">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {[...Array(2)].map((_, i) => (
-            <div key={i} className="space-y-3">
-              <Skeleton className="h-64 w-full" />
-              <Skeleton className="mx-auto h-5 w-3/4" />
-              <Skeleton className="mx-auto h-4 w-1/2" />
-            </div>
-          ))}
-        </div>
-        <Skeleton className="mx-auto h-10 w-48" />
-
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {[...Array(8)].map((_, i) => (
-            <div key={i} className="space-y-3">
-              <Skeleton className="h-64 w-full" />
-              <Skeleton className="mx-auto h-5 w-3/4" />
-              <Skeleton className="mx-auto h-4 w-1/2" />
-            </div>
-          ))}
-        </div>
-      </div>
+    <div className="py-12">
+      <YearNavigationSkeleton dotCount={5} />
+      <YearCarouselSkeleton />
     </div>
   );
 }
@@ -117,9 +88,9 @@ export default function OurPastTeam() {
   return (
     <main className="bg-secondary-300 font-display min-h-screen">
       <TexturedSection texture={TEXTURES.TEXTURE5}>
-        <HeaderSection />
+        <OurPastHeader />
       </TexturedSection>
-      <Wrapper>
+      <DivisiWrapper>
         {isLoading ? (
           <ContentSkeleton />
         ) : kepengurusan ? (
@@ -135,10 +106,10 @@ export default function OurPastTeam() {
               currentIndex={currentIndex}
               scrollToIndex={scrollToIndex}
             />
-            <YearCarouselContainer kepengurusan={kepengurusan} />
+            <YearCarousel kepengurusan={kepengurusan} />
           </div>
         ) : null}
-      </Wrapper>
+      </DivisiWrapper>
     </main>
   );
 }
