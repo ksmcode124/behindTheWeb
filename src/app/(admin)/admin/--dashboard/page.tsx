@@ -1876,7 +1876,7 @@ const AnggotaAdmin: React.FC = () => {
                 )}
               </tbody>
             </table>
-          </div>
+            <div>
         )}
 
         {/* Pagination ... */}

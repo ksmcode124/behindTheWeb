@@ -1,6 +1,8 @@
 import '@/app/globals.css';
-import { SidebarProvider } from '@/components/ui/Sidebar';
+import { SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/features/admin/AppSidebar';
+import { Montserrat } from 'next/font/google';
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,7 +10,15 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui/Breadcrumb';
+} from '@/components/ui/breadcrumb';
+import { cn } from '@/lib/utils';
+
+export const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-montserrat',
+  display: 'swap',
+});
 
 export default function DashboardLayout({
   children,
@@ -19,7 +29,7 @@ export default function DashboardLayout({
     <>
       <SidebarProvider>
         <AppSidebar />
-        <main className="w-full p-8">
+        <main className={cn('w-full p-8', montserrat.variable)}>
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>

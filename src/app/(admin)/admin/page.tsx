@@ -4,7 +4,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/Card';
+} from '@/components/ui/card';
 import { Building, ChevronRight } from 'lucide-react';
 import { DashboardChart } from '../../../features/admin/DashboardChart';
 
