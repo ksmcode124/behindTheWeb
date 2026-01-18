@@ -19,7 +19,7 @@ export function useLogin() {
       const data = await login({ email, password });
 
       if (data.user.role === 'admin' || data.user.role === 'superadmin') {
-        router.push('/admin/dashboard');
+        router.push('/admin/');
       } else {
         router.push('/');
       }

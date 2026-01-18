@@ -27,7 +27,7 @@ export default function DashboardLayout({
 }) {
   return (
     <>
-      <SidebarProvider>
+      <SidebarProvider className="bg-white">
         <AppSidebar />
         <main className={cn('w-full p-8', montserrat.variable)}>
           <Breadcrumb>

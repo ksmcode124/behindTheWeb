@@ -1876,7 +1876,7 @@ const AnggotaAdmin: React.FC = () => {
                 )}
               </tbody>
             </table>
-            <div>
+          </div>
         )}
 
         {/* Pagination ... */}
@@ -1892,7 +1892,7 @@ const AnggotaAdmin: React.FC = () => {
         </div>
       </div>
 
-      <CustomModal
+      {/* <CustomModal
         title={
           editingAnggota
             ? 'Edit Anggota (Info Dasar)'
@@ -1953,7 +1953,7 @@ const AnggotaAdmin: React.FC = () => {
                 )}
               </div>
             </div>
-          )}
+          )} */}
 
           <InputField
             label="NAMA LENGKAP"

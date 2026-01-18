@@ -26,7 +26,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <header className="flex h-[10vh] w-screen items-center gap-5 bg-[#01161E] text-white">
+      <header className="flex h-[10vh] w-screen items-center gap-5 bg-[#01161E] px-5 text-white">
         <div className="relative aspect-square h-20">
           <Image priority fill src={IMAGES.LOGO_WHITE} alt={''} />
         </div>
