@@ -15,10 +15,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import Logo from '@/components/common/Logo';
 import { IMAGES } from '@/lib/constants';
-import { redirect } from 'next/navigation';
-import { Button } from '@/components/ui/button';
 
 // Menu items.
 const items = [

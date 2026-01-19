@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import {
   Field,
   FieldGroup,
@@ -8,7 +8,7 @@ import {
   FieldLegend,
   FieldSet,
 } from '@/components/ui/field';
-import { Input } from '@/components/ui/Input';
+import { Input } from '@/components/ui/input';
 import { useLogin } from '@/features/admin/login/hooks/useLogin';
 import { IMAGES } from '@/lib/constants';
 import Image from 'next/image';

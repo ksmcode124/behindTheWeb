@@ -1,37 +1,53 @@
 'use client';
 
-import { Bar, BarChart, CartesianGrid } from 'recharts';
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 
-import { ChartConfig, ChartContainer } from '@/components/ui/Chart';
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from '@/components/ui/chart';
 
 const chartData = [
-  { month: 'January', desktop: 186, mobile: 80 },
-  { month: 'February', desktop: 305, mobile: 200 },
-  { month: 'March', desktop: 237, mobile: 120 },
-  { month: 'April', desktop: 73, mobile: 190 },
-  { month: 'May', desktop: 209, mobile: 130 },
-  { month: 'June', desktop: 214, mobile: 140 },
+  { kepengurusan: 'Komunitas Web', anggota: 20 },
+  { kepengurusan: 'The First Commit', anggota: 40 },
 ];
 
 const chartConfig = {
-  desktop: {
-    label: 'Desktop',
-    color: '#2563eb',
-  },
-  mobile: {
-    label: 'Mobile',
-    color: '#60a5fa',
+  anggota: {
+    label: 'Anggota',
+    color: '#102F41',
   },
 } satisfies ChartConfig;
 
 export function DashboardChart() {
   return (
-    <div className="mx-auto max-w-3xl rounded-xl border">
-      <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
+    <div className="mx-auto max-w-2xl rounded-xl border p-4">
+      <ChartContainer config={chartConfig} className="w-full">
         <BarChart accessibilityLayer data={chartData}>
+          <defs>
+            <linearGradient id="anggotaGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#102F41" />
+              <stop offset="100%" stopColor="#DBFCFF" />
+            </linearGradient>
+          </defs>
+
           <CartesianGrid vertical={false} />
-          <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-          <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+
+          <YAxis tickLine={false} axisLine={false} tickMargin={10} />
+
+          <XAxis
+            dataKey="kepengurusan"
+            interval={0}
+            textAnchor="middle"
+            tickLine={false}
+            axisLine={false}
+          />
+
+          <ChartTooltip content={<ChartTooltipContent />} />
+
+          <Bar dataKey="anggota" fill="url(#anggotaGradient)" radius={4} />
         </BarChart>
       </ChartContainer>
     </div>
