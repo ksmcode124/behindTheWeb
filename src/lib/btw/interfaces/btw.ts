@@ -10,7 +10,7 @@ export interface Anggota {
 
 // Data divisi (sesuai output endpoint / route.ts)
 export interface Divisi {
-  id?: number | string;
+  id: number | string;
   nama_divisi: string;
   deskripsi: string;
   foto_divisi?: string | null;

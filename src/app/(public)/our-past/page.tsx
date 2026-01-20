@@ -90,7 +90,7 @@ export default function OurPastTeam() {
       <TexturedSection texture={TEXTURES.TEXTURE5}>
         <OurPastHeader />
       </TexturedSection>
-      <DivisiWrapper>
+      <DivisiWrapper className="sm:min-h-[50vh]">
         {isLoading ? (
           <ContentSkeleton />
         ) : kepengurusan ? (
@@ -108,7 +108,11 @@ export default function OurPastTeam() {
             />
             <YearCarousel kepengurusan={kepengurusan} />
           </div>
-        ) : null}
+        ) : (
+          <p className="text-sm sm:text-xl md:text-2xl">
+            Data tidak ditemukan.
+          </p>
+        )}
       </DivisiWrapper>
     </main>
   );

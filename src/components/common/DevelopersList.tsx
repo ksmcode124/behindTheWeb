@@ -16,7 +16,7 @@ export default function DevelopersList({ divisi = [] }: { divisi: Divisi[] }) {
             <h3 className="text-primary-500 mb-10 -skew-4 text-4xl [-webkit-text-stroke-color:var(--color-secondary-300)] [-webkit-text-stroke-width:1px] text-shadow-[5px_4px_0_var(--color-primary-600)] lg:text-7xl lg:[-webkit-text-stroke-width:2.5px]">
               {nama_divisi}
             </h3>
-            <Carousel anggotaProp={anggota} />
+            <Carousel id={nama_divisi} anggotaProp={anggota} />
           </div>
         ))}
     </>

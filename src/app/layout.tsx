@@ -16,6 +16,20 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: 'Code124',
   description: 'Behind The Web',
+  icons: {
+    icon: [
+      {
+        media: '(prefers-color-scheme: light)',
+        url: '/favicon-white.ico',
+        href: '/favicon-white.ico',
+      },
+      {
+        media: '(prefers-color-scheme: dark)',
+        url: '/favicon-dark.ico',
+        href: '/favicon-dark.ico',
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

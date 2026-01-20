@@ -27,7 +27,7 @@ export default function DivisiCard({
       <div className="border-secondary-300 relative w-full max-w-4xl overflow-hidden border-[1.25em]">
         <div className="pointer-events-none absolute top-1/2 right-2 z-10 translate-x-[45%] -translate-y-[85%] rotate-90 sm:right-8 sm:translate-x-[50%] sm:-translate-y-[70%] lg:right-12 lg:translate-x-[55%] lg:-translate-y-[60%]">
           <p
-            className="text-secondary-400 text-sm leading-none whitespace-nowrap sm:text-xl md:text-2xl lg:text-5xl"
+            className="text-secondary-400 sm:text-md text-xs leading-none whitespace-nowrap md:text-2xl lg:text-5xl"
             style={{
               WebkitTextStroke: '1px var(--color-secondary-300)',
             }}
@@ -53,7 +53,7 @@ export default function DivisiCard({
           </p>
 
           <Link
-            href="/the-team"
+            href={`/the-team`}
             className="border-secondary-300 hover:text-secondary-300 bg-primary-600 text-secondary-400 hover:bg-secondary-400 pointer-events-auto relative border-[0.4em] px-4 py-1 text-center text-2xl font-bold transition-colors duration-300"
           >
             {Content.division.cta.divisionCard}

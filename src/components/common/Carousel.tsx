@@ -5,7 +5,13 @@ import Image from 'next/image';
 import { Anggota } from '@/lib/btw/interfaces/btw';
 import { Skeleton } from '../ui/skeleton';
 
-export default function Carousel({ anggotaProp }: { anggotaProp: Anggota[] }) {
+export default function Carousel({
+  anggotaProp,
+  id,
+}: {
+  anggotaProp: Anggota[];
+  id: string;
+}) {
   const [batchSize, setBatchSize] = useState<number>(0); // ukuran window
   const [startIndex, setStartIndex] = useState<number>(0); // index awal window
   const anggota = anggotaProp ?? [];
@@ -43,7 +49,10 @@ export default function Carousel({ anggotaProp }: { anggotaProp: Anggota[] }) {
   };
 
   return (
-    <div className="relative z-2 flex max-w-full items-center justify-center gap-3 overflow-x-hidden px-4 pb-20 font-sans sm:p-20 sm:px-20">
+    <div
+      id={id}
+      className="relative z-2 flex max-w-full items-center justify-center gap-3 overflow-x-hidden px-4 pb-20 font-sans sm:p-20 sm:px-20"
+    >
       {batchSize === 5 ? (
         <button
           onClick={handlePrev}

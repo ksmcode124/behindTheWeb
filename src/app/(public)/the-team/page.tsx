@@ -29,12 +29,11 @@ export default function TheTeam() {
           setIsLoading(false);
         }
       } catch {
-        if (!cancelled) {
-          setIsLoading(false);
-        }
+        if (!cancelled) setIsLoading(false);
       }
     };
     fetchData();
+
     return () => {
       cancelled = true;
     };
@@ -49,18 +48,12 @@ export default function TheTeam() {
       {isLoading ? (
         <CodeLensSkeleton />
       ) : (
-        // data && (
-        //   <CodeLens
-        //     data={CodeLensImages[0].activities}
-        //     className="lg:hidden"
-        //   />
-        // )
         CodeLensImages[0]?.activities && (
           <CodeLens data={CodeLensImages[0].activities} className="lg:hidden" />
         )
       )}
 
-      <DivisiWrapper>
+      <DivisiWrapper className="sm:min-h-[50vh]">
         {isLoading ? (
           <DevelopersSkeleton />
         ) : (
