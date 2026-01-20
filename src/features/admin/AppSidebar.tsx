@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 
 import {
   Building,
+  GalleryHorizontal,
   Home,
   LogOut,
   Star,
@@ -43,6 +44,16 @@ const items = [
     icon: Users,
   },
   {
+    title: 'Divisi Galeri',
+    url: '/admin/divisi-galeri',
+    icon: GalleryHorizontal,
+  },
+  {
+    title: 'Jabatan',
+    url: '/admin/jabatan',
+    icon: Star,
+  },
+  {
     title: 'Anggota',
     url: '/admin/anggota',
     icon: UserIcon,
@@ -51,11 +62,6 @@ const items = [
     title: 'Detail Anggota',
     url: '/admin/detail-anggota',
     icon: UserCircle2,
-  },
-  {
-    title: 'Jabatan',
-    url: '/admin/jabatan',
-    icon: Star,
   },
 ];
 

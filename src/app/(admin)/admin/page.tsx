@@ -14,11 +14,13 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { HeaderSection } from '@/features/admin/HeaderSection';
 import { fetchDataFromAPI } from '@/lib/btw/api';
+import { Loading } from '@/features/admin/Loading';
 
 export default function AdminPage() {
   const [chartData, setChartData] = React.useState<
     { kepengurusan: string; anggota: number }[]
   >([]);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const [summary, setSummary] = React.useState([
     {
@@ -46,6 +48,7 @@ export default function AdminPage() {
 
   React.useEffect(() => {
     const loadSummary = async () => {
+      setIsLoading(true);
       try {
         const [kepengurusanData, divisiData, anggotaData] = await Promise.all([
           fetchDataFromAPI('kepengurusan'),
@@ -78,8 +81,8 @@ export default function AdminPage() {
 
         setChartData(chartData);
         console.log(chartData);
-      } catch (err) {
-        console.error(err);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -89,39 +92,45 @@ export default function AdminPage() {
   return (
     <>
       <HeaderSection page="Home" title="Dashboard Admin Code124" />
-      <div className="card flex gap-5 rounded-xl border border-black px-6 py-4 text-white shadow-lg">
-        {summary.map((item, index) => (
-          <Card
-            key={index}
-            className={cn(
-              'flex w-full flex-col justify-between p-0 pt-8 text-center shadow-md',
-              item.backgroundColor,
-            )}
-          >
-            <CardHeader>
-              <CardTitle className="flex items-center justify-center gap-2 text-2xl text-white">
-                <item.icon /> {item.title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="py-6">
-              <span className="text-5xl font-bold text-white">
-                {item.count}
-              </span>
-            </CardContent>
-            <CardFooter className="h-full bg-black/40 text-white">
-              <Link
-                className="flex w-full items-center justify-center gap-2"
-                href={item.link}
+      {chartData ? (
+        <Loading />
+      ) : (
+        <>
+          <div className="card flex gap-5 rounded-xl border border-black px-6 py-4 text-white shadow-lg">
+            {summary.map((item, index) => (
+              <Card
+                key={index}
+                className={cn(
+                  'flex w-full flex-col justify-between p-0 pt-8 text-center shadow-md',
+                  item.backgroundColor,
+                )}
               >
-                More Info <ChevronRight />
-              </Link>
-            </CardFooter>
-          </Card>
-        ))}
-      </div>
-      <div className="mt-6">
-        <DashboardChart data={chartData} />
-      </div>
+                <CardHeader>
+                  <CardTitle className="flex items-center justify-center gap-2 text-2xl text-white">
+                    <item.icon /> {item.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="py-6">
+                  <span className="text-5xl font-bold text-white">
+                    {item.count}
+                  </span>
+                </CardContent>
+                <CardFooter className="h-full bg-black/40 text-white">
+                  <Link
+                    className="flex w-full items-center justify-center gap-2"
+                    href={item.link}
+                  >
+                    More Info <ChevronRight />
+                  </Link>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+          <div className="mt-6">
+            <DashboardChart data={chartData} />
+          </div>
+        </>
+      )}
     </>
   );
 }

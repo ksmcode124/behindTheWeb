@@ -14,6 +14,7 @@ import {
 import { useUploadThing } from '@/lib/uploadthing';
 import { fetchDataFromAPI, API_BASE } from '@/lib/btw/api';
 import { DivisiGaleriFormModal } from '@/features/admin/divisi-galeri/DivisiGaleriFormModal';
+import { Loading } from '@/features/admin/Loading';
 
 export default function DivisiGaleriPage() {
   const EMPTY_FORM = useMemo(
@@ -173,12 +174,6 @@ export default function DivisiGaleriPage() {
       }
 
       handleCloseModal();
-      alert(
-        result.message ||
-          (editingItem
-            ? 'Data berhasil diupdate'
-            : 'Data berhasil ditambahkan'),
-      );
     } catch (err: any) {
       console.error(err);
       alert(err.message || 'Gagal menyimpan data');
@@ -209,13 +204,17 @@ export default function DivisiGaleriPage() {
         handleTambah={handleAddNew}
       />
 
-      <KepengurusanTable
-        data={data}
-        columns={divisiGaleriColumns({
-          onEdit: handleEdit,
-          onDelete: handleDelete,
-        })}
-      />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <KepengurusanTable
+          data={data}
+          columns={divisiGaleriColumns({
+            onEdit: handleEdit,
+            onDelete: handleDelete,
+          })}
+        />
+      )}
 
       <DivisiGaleriFormModal
         open={isModalOpen}
