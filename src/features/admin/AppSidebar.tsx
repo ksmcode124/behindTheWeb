@@ -1,7 +1,15 @@
 'use client';
 import { useRouter } from 'next/navigation';
 
-import { Building, Home, LogOut, Star, UserIcon, Users } from 'lucide-react';
+import {
+  Building,
+  Home,
+  LogOut,
+  Star,
+  UserCircle2,
+  UserIcon,
+  Users,
+} from 'lucide-react';
 import Image from 'next/image';
 
 import {
@@ -38,6 +46,11 @@ const items = [
     title: 'Anggota',
     url: '/admin/anggota',
     icon: UserIcon,
+  },
+  {
+    title: 'Detail Anggota',
+    url: '/admin/detail-anggota',
+    icon: UserCircle2,
   },
   {
     title: 'Jabatan',

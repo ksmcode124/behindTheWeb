@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 type Props = {
   onView: (row: CrudAnggota) => void;
   onEdit: (row: CrudAnggota) => void;
-  onDelete: (id: number) => void;
+  onDelete: (row: CrudAnggota) => void;
 };
 
 export const anggotaColumns = ({
@@ -34,22 +34,28 @@ export const anggotaColumns = ({
   },
   {
     id: 'actions',
-    header: 'Action',
-    cell: ({ row }) => (
-      <div className="flex justify-center gap-2">
-        <Button
-          onClick={() => onEdit(row.original)}
-          className="rounded-full p-2 text-blue-600 hover:bg-blue-100"
-        >
-          <Edit className="h-4 w-4" />
-        </Button>
-        <Button
-          onClick={() => onDelete(row.original.id)}
-          className="rounded-full p-2 text-red-600 hover:bg-red-100"
-        >
-          <Trash2 className="h-4 w-4" />
-        </Button>
-      </div>
-    ),
+    header: 'Aksi',
+    cell: ({ row }) => {
+      const data = row.original;
+      return (
+        <div className="flex justify-center gap-2">
+          <Button
+            variant="ghost"
+            className="h-11 w-11 p-0 transition-all hover:scale-110 hover:bg-blue-500/10"
+            onClick={() => onEdit(data)}
+          >
+            <Edit className="h-6 w-6 text-blue-600" />
+          </Button>
+
+          <Button
+            variant="ghost"
+            className="h-11 w-11 p-0 transition-all hover:scale-110 hover:bg-red-500/10"
+            onClick={() => onDelete(data)}
+          >
+            <Trash2 className="h-6 w-6 text-red-600" />
+          </Button>
+        </div>
+      );
+    },
   },
 ];

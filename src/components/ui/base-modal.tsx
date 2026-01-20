@@ -4,6 +4,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { cn } from '@/lib/utils';
 import { ReactNode } from 'react';
 
 interface BaseModalProps {
@@ -31,7 +32,7 @@ export function BaseModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={sizeClass}>
+      <DialogContent className={cn('rounded-lg bg-white', sizeClass)}>
         {title && (
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
@@ -40,7 +41,9 @@ export function BaseModal({
 
         <div className="py-2">{children}</div>
 
-        {footer && <div className="mt-6 flex justify-end gap-3">{footer}</div>}
+        {footer && (
+          <div className="mt-6 flex justify-center gap-3">{footer}</div>
+        )}
       </DialogContent>
     </Dialog>
   );
