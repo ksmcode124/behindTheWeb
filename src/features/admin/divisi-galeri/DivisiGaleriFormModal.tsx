@@ -77,7 +77,7 @@ export function DivisiGaleriFormModal({
     }
 
     onSubmit({
-      id: initialData?.id,
+      id: initialData?.id, // <-- ini penting biar edit bisa
       foto_divisi: foto,
       divisi_id: divisiId,
       kepengurusan_id: kepengurusanId,

@@ -1,6 +1,6 @@
 import { KepengurusanResponse } from "./interfaces/btw";
 
-const API_BASE = '/api/btw';
+export const API_BASE = '/api/btw';
 
 // lib/api.ts
 async function apiGet<T>(path: string, options?: RequestInit): Promise<T> {
