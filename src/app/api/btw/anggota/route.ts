@@ -33,7 +33,6 @@ export async function POST(request: NextRequest) {
     const data = await prisma.btw_anggota.create({
       data: {
         nama_anggota: body.nama_anggota,
-        foto_anggota: body.foto_anggota,
         linkedin: body.linkedin,
         instagram: body.instagram,
       },

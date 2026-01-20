@@ -36,13 +36,6 @@ export interface KepengurusanResponse {
   helper: HelperKepengurusan;
 }
 
-// Response untuk /api/display/btw/years
-export interface YearsResponse {
-  success: boolean;
-  years: string[];
-}
-
-
 /* Untuk API input */
 
 export interface CrudKepengurusan {
@@ -54,7 +47,7 @@ export interface CrudKepengurusan {
 export interface CrudDivisi {
   id: number;
   nama_divisi: string;
-  foto_divisi: string;
+  deskripsi: string;
 }
 
 export interface CrudJabatan {
@@ -69,6 +62,8 @@ export interface CrudAnggota {
   foto_anggota: string;
   linkedin: string;
   instagram: string;
+  jabatan_anggota: string;
+  kepengurusan_anggota: string;
 }
 
 // Detail Anggota (join table)
