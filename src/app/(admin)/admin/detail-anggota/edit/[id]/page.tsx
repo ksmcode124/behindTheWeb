@@ -59,7 +59,7 @@ export default function EditAnggotaPage({ params }: Props) {
           divisiData,
           jabatanData,
         ] = await Promise.all([
-          fetchDataFromAPI('detail_anggota'),
+          fetchDataFromAPI('detail'),
           fetchDataFromAPI('anggota'),
           fetchDataFromAPI('kepengurusan'),
           fetchDataFromAPI('divisi'),
@@ -105,9 +105,13 @@ export default function EditAnggotaPage({ params }: Props) {
   const handleSubmit = async () => {
     setIsLoading(true);
     try {
-      const saveData = { ...form, foto_anggota: tempFoto };
-      await saveDataToAPI('detail_anggota', saveData, parseInt(id));
-      router.push('/admin/anggota');
+      const saveData = {
+        id_btw: form.kepengurusan_id,
+        id_divisi: form.divisi_id,
+        id_jabatan: form.jabatan_id,
+      };
+      await saveDataToAPI('detail', saveData, parseInt(id));
+      router.push('/admin/detail-anggota');
     } catch (err) {
       console.error(err);
       alert('Gagal menyimpan data');
