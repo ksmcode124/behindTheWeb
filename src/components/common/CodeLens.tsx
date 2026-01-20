@@ -3,7 +3,7 @@ import ScrollingBoxes, {
   ScrollingBoxesSkeleton,
 } from '@/components/ui/ScrollingBoxes';
 import InfiniteCarousel from '@/components/ui/InfiniteCarousel';
-import { Skeleton } from '../ui/Skeleton';
+import { Skeleton } from '../ui/skeleton';
 
 interface CodeLensProps {
   className?: string;

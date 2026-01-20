@@ -37,7 +37,7 @@ export async function GET(
   }
 }
 
-// PUT /api/btw/detail/1 - Update (ganti divisi atau jabatan)
+// PUT /api/btw/detail/1 - Update (ganti divisi, jabatan, atau kepengurusan)
 export async function PUT(
   request: NextRequest,
   props: { params: Promise<{ id: string }> }
@@ -51,6 +51,7 @@ export async function PUT(
       data: {
         id_divisi: body.id_divisi,
         id_jabatan: body.id_jabatan,
+        id_btw: body.id_btw,
       },
       include: {
         anggota: true,

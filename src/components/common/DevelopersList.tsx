@@ -1,7 +1,7 @@
 import { Divisi } from '@/lib/btw/interfaces/btw';
 import Carousel, { CarouselSkeleton } from './Carousel';
 import { isInti } from '@/lib/utils';
-import { Skeleton } from '../ui/Skeleton';
+import { Skeleton } from '../ui/skeleton';
 
 export default function DevelopersList({ divisi = [] }: { divisi: Divisi[] }) {
   return (

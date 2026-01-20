@@ -1,7 +1,7 @@
 'use client';
 import { useRef, useEffect, useState } from 'react';
 import { useLoopScroll } from './useLoopScroll';
-import { Skeleton } from './Skeleton';
+import { Skeleton } from './skeleton';
 
 interface ScrollingBoxesProps {
   speed?: number;

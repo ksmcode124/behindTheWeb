@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { FlipCard, FlipCardSkeleton } from './FlipCard';
 import Image from 'next/image';
 import { Anggota } from '@/lib/btw/interfaces/btw';
-import { Skeleton } from '../ui/Skeleton';
+import { Skeleton } from '../ui/skeleton';
 
 export default function Carousel({ anggotaProp }: { anggotaProp: Anggota[] }) {
   const [batchSize, setBatchSize] = useState<number>(0); // ukuran window
