@@ -11,7 +11,7 @@ export default function ClientGuard({
   const router = useRouter();
 
   useEffect(() => {
-    if (window.innerWidth < 768) {
+    if (window.innerWidth < 1024) {
       router.replace('/mobile-locked');
     }
   }, [router]);

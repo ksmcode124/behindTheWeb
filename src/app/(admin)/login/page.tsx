@@ -27,14 +27,14 @@ export default function LoginPage() {
   return (
     <>
       <header className="flex h-[10vh] w-screen items-center gap-5 bg-[#01161E] px-5 text-white">
-        <div className="relative aspect-square h-20">
+        <div className="relative aspect-square h-15">
           <Image priority fill src={IMAGES.LOGO_WHITE} alt={''} />
         </div>
         <p className="text-4xl font-bold italic">DASHBOARD</p>
       </header>
       <section className="grid h-[90vh] w-full items-center justify-items-center bg-white">
         <form
-          className="h-[40%] w-[30%] rounded-2xl bg-[#102F41] p-10 text-white"
+          className="h-[50%] w-[35%] rounded-2xl bg-[#102F41] p-10 text-white"
           onSubmit={handleSubmit}
         >
           <FieldSet className="flex h-full flex-col items-center justify-around">
