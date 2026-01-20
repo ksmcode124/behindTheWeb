@@ -84,7 +84,7 @@ export default function KepengurusanPage() {
       <ConfirmModal
         open={crud.isDelete}
         onOpenChange={(v) => !v && crud.close()}
-        description={`Yakin hapus data ID ${crud.activeItem?.id}?`}
+        description={`Data ID ${crud.activeItem?.id}?`}
         onConfirm={handleConfirmDelete}
       />
     </>

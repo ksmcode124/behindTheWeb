@@ -26,9 +26,14 @@ export function ConfirmModal({
       footer={
         <>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Batal
+            Cancel
           </Button>
-          <Button variant="destructive" onClick={onConfirm} disabled={loading}>
+          <Button
+            variant="destructive"
+            className="bg-red-500 text-white"
+            onClick={onConfirm}
+            disabled={loading}
+          >
             {loading ? 'Menghapus...' : 'Hapus'}
           </Button>
         </>
