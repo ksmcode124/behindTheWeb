@@ -71,7 +71,6 @@ export default function AdminPage() {
           }),
         );
 
-        // hitung jumlah anggota per kepengurusan
         const chartData = kepengurusanData.map((k: any) => {
           const anggotaCount = anggotaData.filter(
             (a: any) => a.kepengurusan_id === k.id,
@@ -80,7 +79,8 @@ export default function AdminPage() {
         });
 
         setChartData(chartData);
-        console.log(chartData);
+      } catch (err) {
+        console.error(err);
       } finally {
         setIsLoading(false);
       }
@@ -89,48 +89,48 @@ export default function AdminPage() {
     loadSummary();
   }, []);
 
+  if (isLoading) {
+    return <Loading />; // <-- Loading keseluruhan page
+  }
+
   return (
     <>
       <HeaderSection page="Home" title="Dashboard Admin Code124" />
-      {chartData ? (
-        <Loading />
-      ) : (
-        <>
-          <div className="card flex gap-5 rounded-xl border border-black px-6 py-4 text-white shadow-lg">
-            {summary.map((item, index) => (
-              <Card
-                key={index}
-                className={cn(
-                  'flex w-full flex-col justify-between p-0 pt-8 text-center shadow-md',
-                  item.backgroundColor,
-                )}
+
+      <div className="card flex gap-5 rounded-xl border border-black px-6 py-4 text-white shadow-lg">
+        {summary.map((item, index) => (
+          <Card
+            key={index}
+            className={cn(
+              'flex w-full flex-col justify-between p-0 pt-8 text-center shadow-md',
+              item.backgroundColor,
+            )}
+          >
+            <CardHeader>
+              <CardTitle className="flex items-center justify-center gap-2 text-2xl text-white">
+                <item.icon /> {item.title}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="py-6">
+              <span className="text-5xl font-bold text-white">
+                {item.count}
+              </span>
+            </CardContent>
+            <CardFooter className="h-full bg-black/40 text-white">
+              <Link
+                className="flex w-full items-center justify-center gap-2"
+                href={item.link}
               >
-                <CardHeader>
-                  <CardTitle className="flex items-center justify-center gap-2 text-2xl text-white">
-                    <item.icon /> {item.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="py-6">
-                  <span className="text-5xl font-bold text-white">
-                    {item.count}
-                  </span>
-                </CardContent>
-                <CardFooter className="h-full bg-black/40 text-white">
-                  <Link
-                    className="flex w-full items-center justify-center gap-2"
-                    href={item.link}
-                  >
-                    More Info <ChevronRight />
-                  </Link>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-          <div className="mt-6">
-            <DashboardChart data={chartData} />
-          </div>
-        </>
-      )}
+                More Info <ChevronRight />
+              </Link>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
+
+      <div className="mt-6">
+        <DashboardChart data={chartData} />
+      </div>
     </>
   );
 }
