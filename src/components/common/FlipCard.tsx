@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { SocialMediaLink } from '../ui/SocialMediaLink';
-import { Skeleton } from '../ui/Skeleton';
+import { Skeleton } from '../ui/skeleton';
 const cardVariant = cva('', {
   variants: {
     size: {

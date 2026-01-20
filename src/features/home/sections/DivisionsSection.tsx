@@ -11,7 +11,7 @@ import DivisiCard from '../components/DivisiCard';
 import TexturedSection from '@/components/ui/TexturedSection';
 import { TEXTURES } from '@/lib/constants';
 import Content from '../data/home-content.json';
-import { Skeleton } from '@/components/ui/Skeleton';
+import { Skeleton } from '@/components/ui/skeleton';
 import { useEffect, useState } from 'react';
 import { fetchCurrentKepengurusan } from '@/lib/btw/api';
 

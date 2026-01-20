@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlipCard } from '@/components/common/FlipCard';
 import { Divisi } from '@/lib/btw/interfaces/btw';
-import { Skeleton } from '@/components/ui/Skeleton';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface IntiProps {
   divisi?: Divisi;

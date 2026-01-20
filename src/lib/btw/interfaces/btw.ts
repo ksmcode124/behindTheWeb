@@ -78,3 +78,14 @@ export interface DetailAnggota {
   linkedin?: string;
   instagram?: string;
 }
+
+export interface CrudDivisiGaleri {
+  id: number; // ID foto galeri
+  divisi_id: number; // ID divisi terkait
+  kepengurusan_id: number; // ID kepengurusan terkait
+  foto_divisi: string; // URL foto
+
+  // Nama relasi untuk ditampilkan di tabel
+  divisi_nama: string;
+  kepengurusan_nama: string;
+}
