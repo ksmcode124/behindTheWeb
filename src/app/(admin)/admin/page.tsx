@@ -1,3 +1,6 @@
+'use client';
+
+import * as React from 'react';
 import {
   Card,
   CardContent,
@@ -10,37 +13,84 @@ import { DashboardChart } from '../../../features/admin/DashboardChart';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { HeaderSection } from '@/features/admin/HeaderSection';
-
-const SUMMARY_CARD = [
-  {
-    title: 'Kepengurusan',
-    icon: Building,
-    count: 0,
-    link: '/admin/kepengurusan',
-    backgroundColor: 'bg-[#FFB024]',
-  },
-  {
-    title: 'Divisi',
-    icon: Users,
-    count: 0,
-    link: '/admin/divisi',
-    backgroundColor: 'bg-[#4EB99F]',
-  },
-  {
-    title: 'Anggota',
-    icon: User,
-    count: 0,
-    link: '/admin/anggota',
-    backgroundColor: 'bg-[#058587]',
-  },
-];
+import { fetchDataFromAPI } from '@/lib/btw/api';
 
 export default function AdminPage() {
+  const [chartData, setChartData] = React.useState<
+    { kepengurusan: string; anggota: number }[]
+  >([]);
+
+  const [summary, setSummary] = React.useState([
+    {
+      title: 'Kepengurusan',
+      icon: Building,
+      count: 0,
+      link: '/admin/kepengurusan',
+      backgroundColor: 'bg-[#FFB024]',
+    },
+    {
+      title: 'Divisi',
+      icon: Users,
+      count: 0,
+      link: '/admin/divisi',
+      backgroundColor: 'bg-[#4EB99F]',
+    },
+    {
+      title: 'Anggota',
+      icon: User,
+      count: 0,
+      link: '/admin/anggota',
+      backgroundColor: 'bg-[#058587]',
+    },
+  ]);
+
+  React.useEffect(() => {
+    const loadSummary = async () => {
+      try {
+        const [kepengurusanData, divisiData, anggotaData] = await Promise.all([
+          fetchDataFromAPI('kepengurusan'),
+          fetchDataFromAPI('divisi'),
+          fetchDataFromAPI('detail_anggota'),
+        ]);
+
+        setSummary((prev) =>
+          prev.map((item) => {
+            switch (item.title) {
+              case 'Kepengurusan':
+                return { ...item, count: kepengurusanData.length };
+              case 'Divisi':
+                return { ...item, count: divisiData.length };
+              case 'Anggota':
+                return { ...item, count: anggotaData.length };
+              default:
+                return item;
+            }
+          }),
+        );
+
+        // hitung jumlah anggota per kepengurusan
+        const chartData = kepengurusanData.map((k: any) => {
+          const anggotaCount = anggotaData.filter(
+            (a: any) => a.kepengurusan_id === k.id,
+          ).length;
+          return { kepengurusan: k.nama_kepengurusan, anggota: anggotaCount };
+        });
+
+        setChartData(chartData);
+        console.log(chartData);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    loadSummary();
+  }, []);
+
   return (
     <>
       <HeaderSection page="Home" title="Dashboard Admin Code124" />
       <div className="card flex gap-5 rounded-xl border border-black px-6 py-4 text-white shadow-lg">
-        {SUMMARY_CARD.map((item, index) => (
+        {summary.map((item, index) => (
           <Card
             key={index}
             className={cn(
@@ -70,7 +120,7 @@ export default function AdminPage() {
         ))}
       </div>
       <div className="mt-6">
-        <DashboardChart />
+        <DashboardChart data={chartData} />
       </div>
     </>
   );

@@ -1,7 +1,6 @@
 'use client';
 
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
-
 import {
   ChartContainer,
   ChartTooltip,
@@ -9,10 +8,9 @@ import {
   type ChartConfig,
 } from '@/components/ui/chart';
 
-const chartData = [
-  { kepengurusan: 'Komunitas Web', anggota: 20 },
-  { kepengurusan: 'The First Commit', anggota: 40 },
-];
+interface DashboardChartProps {
+  data: { kepengurusan: string; anggota: number }[];
+}
 
 const chartConfig = {
   anggota: {
@@ -21,11 +19,11 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function DashboardChart() {
+export function DashboardChart({ data }: DashboardChartProps) {
   return (
     <div className="mx-auto max-w-2xl rounded-xl border p-4">
       <ChartContainer config={chartConfig} className="w-full">
-        <BarChart accessibilityLayer data={chartData}>
+        <BarChart accessibilityLayer data={data}>
           <defs>
             <linearGradient id="anggotaGradient" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#102F41" />
