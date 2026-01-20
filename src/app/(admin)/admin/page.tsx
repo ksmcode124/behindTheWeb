@@ -9,6 +9,7 @@ import { Building, ChevronRight, User, Users } from 'lucide-react';
 import { DashboardChart } from '../../../features/admin/DashboardChart';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { HeaderSection } from '@/features/admin/HeaderSection';
 
 const SUMMARY_CARD = [
   {
@@ -37,7 +38,7 @@ const SUMMARY_CARD = [
 export default function AdminPage() {
   return (
     <>
-      <h1 className="text-3xl font-bold italic">Dashboard Admin Web CODE124</h1>
+      <HeaderSection page="Home" title="Dashboard Admin Code124" />
       <div className="card flex gap-5 rounded-xl border border-black px-6 py-4 text-white shadow-lg">
         {SUMMARY_CARD.map((item, index) => (
           <Card

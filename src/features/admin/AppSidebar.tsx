@@ -63,7 +63,7 @@ export function AppSidebar() {
   };
 
   return (
-    <Sidebar className="flex h-screen flex-col bg-[#102F41] text-white">
+    <Sidebar className="flex h-screen flex-col bg-[#102F41] py-10 text-white">
       <SidebarHeader className="bg-[#102F41]">
         <div className="flex items-center justify-center gap-x-3">
           <div className="relative aspect-square h-10">

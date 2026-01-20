@@ -812,349 +812,349 @@ const KepengurusanAdmin: React.FC = () => {
 // E. KOMPONEN DIVISI DENGAN API & UPLOADTHING (Data Dasar)
 // ====================================================================
 
-const DivisiAdmin: React.FC = () => {
-  const [data, setData] = useState<CrudDivisi[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+// const DivisiAdmin: React.FC = () => {
+//   const [data, setData] = useState<CrudDivisi[]>([]);
+//   const [isModalOpen, setIsModalOpen] = useState(false);
+//   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  const [editingItem, setEditingItem] = useState<CrudDivisi | null>(null);
-  const [itemToDeleteId, setItemToDeleteId] = useState<number | null>(null);
+//   const [editingItem, setEditingItem] = useState<CrudDivisi | null>(null);
+//   const [itemToDeleteId, setItemToDeleteId] = useState<number | null>(null);
 
-  // State form
-  const [tempNama, setTempNama] = useState('');
-  const [tempDeskripsi, setTempDeskripsi] = useState('');
+//   // State form
+//   const [tempNama, setTempNama] = useState('');
+//   const [tempDeskripsi, setTempDeskripsi] = useState('');
 
-  const [isLoading, setIsLoading] = useState(true);
+//   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    loadDivisi();
-  }, []);
+//   useEffect(() => {
+//     loadDivisi();
+//   }, []);
 
-  const loadDivisi = async () => {
-    setIsLoading(true);
-    try {
-      const divisiData = await fetchDataFromAPI('divisi');
-      console.log('Data divisi yang akan ditampilkan:', divisiData);
-      setData(divisiData);
-    } catch (error) {
-      console.error('Gagal memuat data divisi:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+//   const loadDivisi = async () => {
+//     setIsLoading(true);
+//     try {
+//       const divisiData = await fetchDataFromAPI('divisi');
+//       console.log('Data divisi yang akan ditampilkan:', divisiData);
+//       setData(divisiData);
+//     } catch (error) {
+//       console.error('Gagal memuat data divisi:', error);
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
 
-  const handleEdit = (item: CrudDivisi) => {
-    setEditingItem(item);
-    setTempNama(item.nama_divisi);
-    // Menggunakan deskripsi dari item (atau string kosong jika null)
-    setTempDeskripsi(item.deskripsi || '');
-    setIsModalOpen(true);
-  };
+//   const handleEdit = (item: CrudDivisi) => {
+//     setEditingItem(item);
+//     setTempNama(item.nama_divisi);
+//     // Menggunakan deskripsi dari item (atau string kosong jika null)
+//     setTempDeskripsi(item.deskripsi || '');
+//     setIsModalOpen(true);
+//   };
 
-  const handleAddNew = () => {
-    setEditingItem(null);
-    setTempNama('');
-    setTempDeskripsi('');
-    setIsModalOpen(true);
-  };
+//   const handleAddNew = () => {
+//     setEditingItem(null);
+//     setTempNama('');
+//     setTempDeskripsi('');
+//     setIsModalOpen(true);
+//   };
 
-  const handleSave = async () => {
-    if (!tempNama) return;
+//   const handleSave = async () => {
+//     if (!tempNama) return;
 
-    setIsLoading(true);
-    try {
-      // Payload disesuaikan dengan skema baru: nama_divisi & deskripsi
-      const saveData = {
-        nama_divisi: tempNama,
-        deskripsi: tempDeskripsi, // Kirim deskripsi, bukan foto
-      };
+//     setIsLoading(true);
+//     try {
+//       // Payload disesuaikan dengan skema baru: nama_divisi & deskripsi
+//       const saveData = {
+//         nama_divisi: tempNama,
+//         deskripsi: tempDeskripsi, // Kirim deskripsi, bukan foto
+//       };
 
-      if (editingItem) {
-        const updated = await saveDataToAPI('divisi', saveData, editingItem.id);
-        const updatedItem = updated?.data ?? updated;
-        setData(data.map((d) => (d.id === editingItem.id ? updatedItem : d)));
-      } else {
-        const newItem = await saveDataToAPI('divisi', saveData);
-        const created = newItem?.data ?? newItem;
-        setData([...data, created]);
-      }
+//       if (editingItem) {
+//         const updated = await saveDataToAPI('divisi', saveData, editingItem.id);
+//         const updatedItem = updated?.data ?? updated;
+//         setData(data.map((d) => (d.id === editingItem.id ? updatedItem : d)));
+//       } else {
+//         const newItem = await saveDataToAPI('divisi', saveData);
+//         const created = newItem?.data ?? newItem;
+//         setData([...data, created]);
+//       }
 
-      handleCloseModal();
-    } catch (error) {
-      console.error('Gagal menyimpan data:', error);
-      alert('Gagal menyimpan data. Silakan coba lagi.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+//       handleCloseModal();
+//     } catch (error) {
+//       console.error('Gagal menyimpan data:', error);
+//       alert('Gagal menyimpan data. Silakan coba lagi.');
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setEditingItem(null);
-    setTempNama('');
-    setTempDeskripsi('');
-  };
+//   const handleCloseModal = () => {
+//     setIsModalOpen(false);
+//     setEditingItem(null);
+//     setTempNama('');
+//     setTempDeskripsi('');
+//   };
 
-  const handleDeleteClick = (id: number) => {
-    setItemToDeleteId(id);
-    setIsDeleteModalOpen(true);
-  };
+//   const handleDeleteClick = (id: number) => {
+//     setItemToDeleteId(id);
+//     setIsDeleteModalOpen(true);
+//   };
 
-  const handleConfirmDelete = async () => {
-    if (itemToDeleteId !== null) {
-      setIsLoading(true);
-      try {
-        const success = await deleteDataFromAPI('divisi', itemToDeleteId);
-        if (success) {
-          setData(data.filter((d) => d.id !== itemToDeleteId));
-        }
-      } catch (error) {
-        console.error('Gagal menghapus data:', error);
-        alert('Gagal menghapus data. Silakan coba lagi.');
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    setIsDeleteModalOpen(false);
-    setItemToDeleteId(null);
-  };
+//   const handleConfirmDelete = async () => {
+//     if (itemToDeleteId !== null) {
+//       setIsLoading(true);
+//       try {
+//         const success = await deleteDataFromAPI('divisi', itemToDeleteId);
+//         if (success) {
+//           setData(data.filter((d) => d.id !== itemToDeleteId));
+//         }
+//       } catch (error) {
+//         console.error('Gagal menghapus data:', error);
+//         alert('Gagal menghapus data. Silakan coba lagi.');
+//       } finally {
+//         setIsLoading(false);
+//       }
+//     }
+//     setIsDeleteModalOpen(false);
+//     setItemToDeleteId(null);
+//   };
 
-  const itemsPerPage = 10;
-  const currentPage = 1;
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+//   const itemsPerPage = 10;
+//   const currentPage = 1;
+//   const totalPages = Math.ceil(data.length / itemsPerPage);
 
-  return (
-    <div className="space-y-6 p-4 sm:p-8">
-      <h2 className="text-xl font-bold text-gray-800 sm:text-2xl">DIVISI</h2>
+//   return (
+//     <div className="space-y-6 p-4 sm:p-8">
+//       <h2 className="text-xl font-bold text-gray-800 sm:text-2xl">DIVISI</h2>
 
-      <div className="flex items-center justify-between">
-        <button
-          onClick={handleAddNew}
-          className="flex items-center space-x-2 rounded-lg bg-blue-500 px-4 py-2 font-semibold text-white shadow-md transition-colors hover:bg-blue-600"
-          disabled={isLoading}
-        >
-          <Plus className="h-5 w-5" />
-          <span>Tambah Baru</span>
-        </button>
-      </div>
+//       <div className="flex items-center justify-between">
+//         <button
+//           onClick={handleAddNew}
+//           className="flex items-center space-x-2 rounded-lg bg-blue-500 px-4 py-2 font-semibold text-white shadow-md transition-colors hover:bg-blue-600"
+//           disabled={isLoading}
+//         >
+//           <Plus className="h-5 w-5" />
+//           <span>Tambah Baru</span>
+//         </button>
+//       </div>
 
-      <div className="rounded-xl bg-white p-4 shadow-lg sm:p-6">
-        <div className="mb-4 flex flex-wrap items-center justify-between space-y-4 md:space-y-0">
-          <div className="relative w-full md:w-1/3">
-            <Search className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search Divisi..."
-              className="w-full rounded-xl border border-gray-300 p-3 pl-10 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            />
-          </div>
-        </div>
+//       <div className="rounded-xl bg-white p-4 shadow-lg sm:p-6">
+//         <div className="mb-4 flex flex-wrap items-center justify-between space-y-4 md:space-y-0">
+//           <div className="relative w-full md:w-1/3">
+//             <Search className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
+//             <input
+//               type="text"
+//               placeholder="Search Divisi..."
+//               className="w-full rounded-xl border border-gray-300 p-3 pl-10 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+//             />
+//           </div>
+//         </div>
 
-        {isLoading && (
-          <div className="flex h-64 items-center justify-center">
-            <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-blue-500"></div>
-          </div>
-        )}
+//         {isLoading && (
+//           <div className="flex h-64 items-center justify-center">
+//             <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-blue-500"></div>
+//           </div>
+//         )}
 
-        {!isLoading && (
-          <div className="min-h-[300px] overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                    ID
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                    NAMA DIVISI
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                    DESKRIPSI
-                  </th>
-                  <th className="px-6 py-3 text-center text-xs font-medium tracking-wider text-gray-500 uppercase">
-                    ACTION
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 bg-white">
-                {data.length === 0 ? (
-                  <tr>
-                    <td
-                      colSpan={4}
-                      className="px-6 py-4 text-center text-sm whitespace-nowrap text-gray-500"
-                    >
-                      Tidak ada data divisi
-                    </td>
-                  </tr>
-                ) : (
-                  data.map((item) => (
-                    <tr
-                      key={item.id}
-                      className="transition-colors hover:bg-gray-50"
-                    >
-                      <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-gray-900">
-                        {item.id}
-                      </td>
-                      <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
-                        {item.nama_divisi}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {item.foto_divisi ? (
-                          <div className="h-10 w-10 overflow-hidden rounded-full">
-                            <Image
-                              src={item.foto_divisi}
-                              alt={item.nama_divisi}
-                              width={10}
-                              height={10}
-                              className="h-full w-full object-cover"
-                            />
-                          </div>
-                        ) : (
-                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200">
-                            <ImageIcon className="h-5 w-5 text-gray-500" />
-                          </div>
-                        )}
-                      </td>
-                      <td className="px-6 py-4 text-center text-sm font-medium whitespace-nowrap">
-                        <button
-                          onClick={() => handleEdit(item)}
-                          className="mr-3 rounded-full p-2 text-blue-600 hover:bg-blue-100 hover:text-blue-900"
-                          disabled={isLoading}
-                        >
-                          <Edit className="h-5 w-5" />
-                        </button>
-                        <button
-                          onClick={() => handleDeleteClick(item.id)}
-                          className="rounded-full p-2 text-red-600 hover:bg-red-100 hover:text-red-900"
-                          disabled={isLoading}
-                        >
-                          <Trash2 className="h-5 w-5" />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        )}
+//         {!isLoading && (
+//           <div className="min-h-[300px] overflow-x-auto">
+//             <table className="min-w-full divide-y divide-gray-200">
+//               <thead className="bg-gray-50">
+//                 <tr>
+//                   <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+//                     ID
+//                   </th>
+//                   <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+//                     NAMA DIVISI
+//                   </th>
+//                   <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+//                     DESKRIPSI
+//                   </th>
+//                   <th className="px-6 py-3 text-center text-xs font-medium tracking-wider text-gray-500 uppercase">
+//                     ACTION
+//                   </th>
+//                 </tr>
+//               </thead>
+//               <tbody className="divide-y divide-gray-200 bg-white">
+//                 {data.length === 0 ? (
+//                   <tr>
+//                     <td
+//                       colSpan={4}
+//                       className="px-6 py-4 text-center text-sm whitespace-nowrap text-gray-500"
+//                     >
+//                       Tidak ada data divisi
+//                     </td>
+//                   </tr>
+//                 ) : (
+//                   data.map((item) => (
+//                     <tr
+//                       key={item.id}
+//                       className="transition-colors hover:bg-gray-50"
+//                     >
+//                       <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-gray-900">
+//                         {item.id}
+//                       </td>
+//                       <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
+//                         {item.nama_divisi}
+//                       </td>
+//                       <td className="px-6 py-4 whitespace-nowrap">
+//                         {item.foto_divisi ? (
+//                           <div className="h-10 w-10 overflow-hidden rounded-full">
+//                             <Image
+//                               src={item.foto_divisi}
+//                               alt={item.nama_divisi}
+//                               width={10}
+//                               height={10}
+//                               className="h-full w-full object-cover"
+//                             />
+//                           </div>
+//                         ) : (
+//                           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200">
+//                             <ImageIcon className="h-5 w-5 text-gray-500" />
+//                           </div>
+//                         )}
+//                       </td>
+//                       <td className="px-6 py-4 text-center text-sm font-medium whitespace-nowrap">
+//                         <button
+//                           onClick={() => handleEdit(item)}
+//                           className="mr-3 rounded-full p-2 text-blue-600 hover:bg-blue-100 hover:text-blue-900"
+//                           disabled={isLoading}
+//                         >
+//                           <Edit className="h-5 w-5" />
+//                         </button>
+//                         <button
+//                           onClick={() => handleDeleteClick(item.id)}
+//                           className="rounded-full p-2 text-red-600 hover:bg-red-100 hover:text-red-900"
+//                           disabled={isLoading}
+//                         >
+//                           <Trash2 className="h-5 w-5" />
+//                         </button>
+//                       </td>
+//                     </tr>
+//                   ))
+//                 )}
+//               </tbody>
+//             </table>
+//           </div>
+//         )}
 
-        <div className="mt-6 flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
-          <div className="text-sm text-gray-700">
-            Menampilkan {data.length} entries.
-          </div>
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            onPageChange={() => {}}
-          />
-        </div>
-      </div>
+//         <div className="mt-6 flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
+//           <div className="text-sm text-gray-700">
+//             Menampilkan {data.length} entries.
+//           </div>
+//           <Pagination
+//             totalPages={totalPages}
+//             currentPage={currentPage}
+//             onPageChange={() => {}}
+//           />
+//         </div>
+//       </div>
 
-      <CustomModal
-        title={editingItem ? 'Edit Divisi' : 'Tambah Divisi Baru'}
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-      >
-        <div className="space-y-4">
-          <InputField
-            label="NAMA DIVISI"
-            value={tempNama}
-            onChange={setTempNama}
-            placeholder="UI UX DESIGNER"
-          />
+//       <CustomModal
+//         title={editingItem ? 'Edit Divisi' : 'Tambah Divisi Baru'}
+//         isOpen={isModalOpen}
+//         onClose={handleCloseModal}
+//       >
+//         <div className="space-y-4">
+//           <InputField
+//             label="NAMA DIVISI"
+//             value={tempNama}
+//             onChange={setTempNama}
+//             placeholder="UI UX DESIGNER"
+//           />
 
-          {/* Mengganti Upload Foto dengan Input Deskripsi */}
-          <div className="mb-4">
-            <label className="mb-1 block text-xs font-semibold text-gray-700 uppercase">
-              DESKRIPSI
-            </label>
-            <div className="space-y-3">
-              {tempFoto && (
-                <div className="flex justify-center">
-                  <div className="h-32 w-32 overflow-hidden rounded-lg border">
-                    <Image
-                      src={tempFoto}
-                      alt="Preview"
-                      width={32}
-                      height={32}
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                </div>
-              )}
+//           {/* Mengganti Upload Foto dengan Input Deskripsi */}
+//           <div className="mb-4">
+//             <label className="mb-1 block text-xs font-semibold text-gray-700 uppercase">
+//               DESKRIPSI
+//             </label>
+//             <div className="space-y-3">
+//               {tempFoto && (
+//                 <div className="flex justify-center">
+//                   <div className="h-32 w-32 overflow-hidden rounded-lg border">
+//                     <Image
+//                       src={tempFoto}
+//                       alt="Preview"
+//                       width={32}
+//                       height={32}
+//                       className="h-full w-full object-cover"
+//                     />
+//                   </div>
+//                 </div>
+//               )}
 
-              <div className="flex items-center justify-center">
-                <label className="cursor-pointer">
-                  <div className="flex items-center space-x-2 rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600">
-                    <Upload className="h-4 w-4" />
-                    <span>Pilih Foto</span>
-                  </div>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileSelect}
-                    className="hidden"
-                    disabled={isUploading}
-                  />
-                </label>
-              </div>
+//               <div className="flex items-center justify-center">
+//                 <label className="cursor-pointer">
+//                   <div className="flex items-center space-x-2 rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600">
+//                     <Upload className="h-4 w-4" />
+//                     <span>Pilih Foto</span>
+//                   </div>
+//                   <input
+//                     type="file"
+//                     accept="image/*"
+//                     onChange={handleFileSelect}
+//                     className="hidden"
+//                     disabled={isUploading}
+//                   />
+//                 </label>
+//               </div>
 
-              {selectedFile && (
-                <p className="text-center text-sm text-gray-600">
-                  File: {selectedFile.name}
-                </p>
-              )}
+//               {selectedFile && (
+//                 <p className="text-center text-sm text-gray-600">
+//                   File: {selectedFile.name}
+//                 </p>
+//               )}
 
-              {isUploading && (
-                <div className="space-y-2">
-                  <div className="h-2 rounded-full bg-gray-200">
-                    <div
-                      className="h-2 rounded-full bg-blue-600 transition-all duration-300"
-                      style={{ width: `${uploadProgress}%` }}
-                    />
-                  </div>
-                  <p className="text-center text-xs text-gray-600">
-                    {uploadProgress}%
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-        <div className="mt-6 flex justify-end space-x-3">
-          <button
-            onClick={handleCloseModal}
-            className={`rounded-lg px-6 py-2 font-semibold text-gray-700 transition-colors`}
-            style={{ backgroundColor: BUTTON_GREY }}
-            disabled={isLoading}
-          >
-            Batal
-          </button>
-          <button
-            onClick={handleSave}
-            className={`rounded-lg px-6 py-2 font-semibold text-white shadow-md transition-colors`}
-            style={{ backgroundColor: BUTTON_BLUE }}
-            disabled={!tempNama || isLoading}
-          >
-            {isLoading
-              ? 'Menyimpan...'
-              : editingItem
-                ? 'Simpan Perubahan'
-                : 'Tambah Data'}
-          </button>
-        </div>
-      </CustomModal>
+//               {isUploading && (
+//                 <div className="space-y-2">
+//                   <div className="h-2 rounded-full bg-gray-200">
+//                     <div
+//                       className="h-2 rounded-full bg-blue-600 transition-all duration-300"
+//                       style={{ width: `${uploadProgress}%` }}
+//                     />
+//                   </div>
+//                   <p className="text-center text-xs text-gray-600">
+//                     {uploadProgress}%
+//                   </p>
+//                 </div>
+//               )}
+//             </div>
+//           </div>
+//         </div>
+//         <div className="mt-6 flex justify-end space-x-3">
+//           <button
+//             onClick={handleCloseModal}
+//             className={`rounded-lg px-6 py-2 font-semibold text-gray-700 transition-colors`}
+//             style={{ backgroundColor: BUTTON_GREY }}
+//             disabled={isLoading}
+//           >
+//             Batal
+//           </button>
+//           <button
+//             onClick={handleSave}
+//             className={`rounded-lg px-6 py-2 font-semibold text-white shadow-md transition-colors`}
+//             style={{ backgroundColor: BUTTON_BLUE }}
+//             disabled={!tempNama || isLoading}
+//           >
+//             {isLoading
+//               ? 'Menyimpan...'
+//               : editingItem
+//                 ? 'Simpan Perubahan'
+//                 : 'Tambah Data'}
+//           </button>
+//         </div>
+//       </CustomModal>
 
-      <ConfirmationModal
-        title="Konfirmasi Hapus"
-        message={`Apakah Anda yakin ingin menghapus divisi ini? Data ini akan hilang secara permanen.`}
-        isOpen={isDeleteModalOpen}
-        onClose={() => setIsDeleteModalOpen(false)}
-        onConfirm={handleConfirmDelete}
-      />
-    </div>
-  );
-};
+//       <ConfirmationModal
+//         title="Konfirmasi Hapus"
+//         message={`Apakah Anda yakin ingin menghapus divisi ini? Data ini akan hilang secara permanen.`}
+//         isOpen={isDeleteModalOpen}
+//         onClose={() => setIsDeleteModalOpen(false)}
+//         onConfirm={handleConfirmDelete}
+//       />
+//     </div>
+//   );
+// };
 
 // ====================================================================
 // F. KOMPONEN JABATAN DENGAN API (Data Dasar)
@@ -1419,721 +1419,722 @@ const JabatanAdmin: React.FC = () => {
 // G. KOMPONEN ANGGOTA DENGAN API & UPLOADTHING (MODIFIED: DENGAN INPUT DETAIL)
 // ====================================================================
 
-const AnggotaAdmin: React.FC = () => {
-  const [data, setData] = useState<CrudAnggota[]>([]);
+// const AnggotaAdmin: React.FC = () => {
+//   const [data, setData] = useState<CrudAnggota[]>([]);
 
-  // State untuk data dropdown
-  const [kepengurusanList, setKepengurusanList] = useState<CrudKepengurusan[]>(
-    [],
-  );
-  const [divisiList, setDivisiList] = useState<CrudDivisi[]>([]);
-  const [jabatanList, setJabatanList] = useState<CrudJabatan[]>([]);
+//   // State untuk data dropdown
+//   const [kepengurusanList, setKepengurusanList] = useState<CrudKepengurusan[]>(
+//     [],
+//   );
+//   const [divisiList, setDivisiList] = useState<CrudDivisi[]>([]);
+//   const [jabatanList, setJabatanList] = useState<CrudJabatan[]>([]);
 
-  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+//   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+//   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+//   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [selectedAnggota, setSelectedAnggota] = useState<CrudAnggota | null>(
-    null,
-  );
-  const [anggotaToDeleteId, setAnggotaToDeleteId] = useState<number | null>(
-    null,
-  );
-  const [editingAnggota, setEditingAnggota] = useState<CrudAnggota | null>(
-    null,
-  );
+//   const [selectedAnggota, setSelectedAnggota] = useState<CrudAnggota | null>(
+//     null,
+//   );
+//   const [anggotaToDeleteId, setAnggotaToDeleteId] = useState<number | null>(
+//     null,
+//   );
+//   const [editingAnggota, setEditingAnggota] = useState<CrudAnggota | null>(
+//     null,
+//   );
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+//   const [isLoading, setIsLoading] = useState(true);
+//   const [uploadProgress, setUploadProgress] = useState(0);
+//   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  // State sementara untuk preview foto (sebelum diupload ke detail)
-  const [tempFotoPreview, setTempFotoPreview] = useState('');
+//   // State sementara untuk preview foto (sebelum diupload ke detail)
+//   const [tempFotoPreview, setTempFotoPreview] = useState('');
 
-  // Form State Anggota (Hanya data teks sesuai tabel btw_anggota)
-  const EMPTY_ANGGOTA_FORM = useMemo(
-    () => ({
-      nama_anggota: '',
-      linkedin: '',
-      instagram: '',
-    }),
-    [],
-  );
+//   // Form State Anggota (Hanya data teks sesuai tabel btw_anggota)
+//   const EMPTY_ANGGOTA_FORM = useMemo(
+//     () => ({
+//       nama_anggota: '',
+//       linkedin: '',
+//       instagram: '',
+//     }),
+//     [],
+//   );
 
-  // Form State Detail
-  const EMPTY_DETAIL_FORM = useMemo(
-    () => ({
-      kepengurusan_id: '',
-      divisi_id: '',
-      jabatan_id: '',
-    }),
-    [],
-  );
+//   // Form State Detail
+//   const EMPTY_DETAIL_FORM = useMemo(
+//     () => ({
+//       kepengurusan_id: '',
+//       divisi_id: '',
+//       jabatan_id: '',
+//     }),
+//     [],
+//   );
 
-  const [tempAnggota, setTempAnggota] = useState<any>(EMPTY_ANGGOTA_FORM);
-  const [tempDetail, setTempDetail] = useState<any>(EMPTY_DETAIL_FORM);
+//   const [tempAnggota, setTempAnggota] = useState<any>(EMPTY_ANGGOTA_FORM);
+//   const [tempDetail, setTempDetail] = useState<any>(EMPTY_DETAIL_FORM);
 
-  // Gunakan useUploadThing
-  const { startUpload, isUploading } = useUploadThing('avatarUploader', {
-    onClientUploadComplete: (res) => {
-      if (res && res[0]) {
-        // Simpan URL ke state preview sementara
-        setTempFotoPreview(res[0].url);
-      }
-      setSelectedFile(null);
-      setUploadProgress(0);
-    },
-    onUploadProgress: (progress) => {
-      setUploadProgress(progress);
-    },
-  });
+//   // Gunakan useUploadThing
+//   const { startUpload, isUploading } = useUploadThing('avatarUploader', {
+//     onClientUploadComplete: (res) => {
+//       if (res && res[0]) {
+//         // Simpan URL ke state preview sementara
+//         setTempFotoPreview(res[0].url);
+//       }
+//       setSelectedFile(null);
+//       setUploadProgress(0);
+//     },
+//     onUploadProgress: (progress) => {
+//       setUploadProgress(progress);
+//     },
+//   });
 
-  useEffect(() => {
-    loadAllData();
-  }, []);
+//   useEffect(() => {
+//     loadAllData();
+//   }, []);
 
-  const loadAllData = async () => {
-    setIsLoading(true);
-    try {
-      const [anggotaData, kepengurusanData, divisiData, jabatanData] =
-        await Promise.all([
-          fetchDataFromAPI('anggota'),
-          fetchDataFromAPI('kepengurusan'),
-          fetchDataFromAPI('divisi'),
-          fetchDataFromAPI('jabatan'),
-        ]);
+//   const loadAllData = async () => {
+//     setIsLoading(true);
+//     try {
+//       const [anggotaData, kepengurusanData, divisiData, jabatanData] =
+//         await Promise.all([
+//           fetchDataFromAPI('anggota'),
+//           fetchDataFromAPI('kepengurusan'),
+//           fetchDataFromAPI('divisi'),
+//           fetchDataFromAPI('jabatan'),
+//         ]);
 
-      console.log('Data loaded for AnggotaAdmin');
-      setData(anggotaData);
-      setKepengurusanList(kepengurusanData);
-      setDivisiList(divisiData);
-      setJabatanList(jabatanData);
-    } catch (error) {
-      console.error('Gagal memuat data:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+//       console.log('Data loaded for AnggotaAdmin');
+//       setData(anggotaData);
+//       setKepengurusanList(kepengurusanData);
+//       setDivisiList(divisiData);
+//       setJabatanList(jabatanData);
+//     } catch (error) {
+//       console.error('Gagal memuat data:', error);
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
 
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setSelectedFile(file);
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        if (event.target?.result) {
-          setTempFotoPreview(event.target.result as string);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+//   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     if (e.target.files && e.target.files[0]) {
+//       const file = e.target.files[0];
+//       setSelectedFile(file);
+//       const reader = new FileReader();
+//       reader.onload = (event) => {
+//         if (event.target?.result) {
+//           setTempFotoPreview(event.target.result as string);
+//         }
+//       };
+//       reader.readAsDataURL(file);
+//     }
+//   };
 
-  // --- Handlers Modal ---
-  const handleEdit = (anggota: CrudAnggota) => {
-    setEditingAnggota(anggota);
-    // Load data teks saja. Foto tidak diload karena tidak ada di tabel anggota.
-    setTempAnggota({
-      nama_anggota: anggota.nama_anggota,
-      linkedin: anggota.linkedin || '',
-      instagram: anggota.instagram || '',
-    });
-    setTempDetail(EMPTY_DETAIL_FORM);
-    setTempFotoPreview(''); // Reset preview foto
-    setIsModalOpen(true);
-    setIsProfileModalOpen(false);
-    setSelectedFile(null);
-  };
+//   // --- Handlers Modal ---
+//   const handleEdit = (anggota: CrudAnggota) => {
+//     setEditingAnggota(anggota);
+//     // Load data teks saja. Foto tidak diload karena tidak ada di tabel anggota.
+//     setTempAnggota({
+//       nama_anggota: anggota.nama_anggota,
+//       linkedin: anggota.linkedin || '',
+//       instagram: anggota.instagram || '',
+//     });
+//     setTempDetail(EMPTY_DETAIL_FORM);
+//     setTempFotoPreview(''); // Reset preview foto
+//     setIsModalOpen(true);
+//     setIsProfileModalOpen(false);
+//     setSelectedFile(null);
+//   };
 
-  const handleAddNew = () => {
-    setEditingAnggota(null);
-    setTempAnggota(EMPTY_ANGGOTA_FORM);
-    setTempDetail(EMPTY_DETAIL_FORM);
-    setTempFotoPreview('');
-    setSelectedFile(null);
-    setIsModalOpen(true);
-  };
+//   const handleAddNew = () => {
+//     setEditingAnggota(null);
+//     setTempAnggota(EMPTY_ANGGOTA_FORM);
+//     setTempDetail(EMPTY_DETAIL_FORM);
+//     setTempFotoPreview('');
+//     setSelectedFile(null);
+//     setIsModalOpen(true);
+//   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setEditingAnggota(null);
-    setTempAnggota(EMPTY_ANGGOTA_FORM);
-    setTempDetail(EMPTY_DETAIL_FORM);
-    setTempFotoPreview('');
-    setSelectedFile(null);
-    setUploadProgress(0);
-  };
+//   const handleCloseModal = () => {
+//     setIsModalOpen(false);
+//     setEditingAnggota(null);
+//     setTempAnggota(EMPTY_ANGGOTA_FORM);
+//     setTempDetail(EMPTY_DETAIL_FORM);
+//     setTempFotoPreview('');
+//     setSelectedFile(null);
+//     setUploadProgress(0);
+//   };
 
-  const handleSave = async () => {
-    // ==========================================
-    // 1. VALIDASI INPUT FORM (PRE-CHECK)
-    // ==========================================
+//   const handleSave = async () => {
+//     // ==========================================
+//     // 1. VALIDASI INPUT FORM (PRE-CHECK)
+//     // ==========================================
 
-    // Validasi A: Nama Anggota Wajib
-    if (!tempAnggota.nama_anggota || tempAnggota.nama_anggota.trim() === '') {
-      alert('VALIDASI GAGAL: Nama Anggota wajib diisi.');
-      return;
-    }
+//     // Validasi A: Nama Anggota Wajib
+//     if (!tempAnggota.nama_anggota || tempAnggota.nama_anggota.trim() === '') {
+//       alert('VALIDASI GAGAL: Nama Anggota wajib diisi.');
+//       return;
+//     }
 
-    // Validasi B: Kelengkapan Detail (Khusus Tambah Baru)
-    // Kita cek ini DULUAN sebelum capek-capek upload foto.
-    if (!editingAnggota) {
-      if (
-        !tempDetail.kepengurusan_id ||
-        !tempDetail.divisi_id ||
-        !tempDetail.jabatan_id
-      ) {
-        alert(
-          'VALIDASI GAGAL: Harap lengkapi data Kepengurusan, Divisi, dan Jabatan sebelum menyimpan.',
-        );
-        return;
-      }
+//     // Validasi B: Kelengkapan Detail (Khusus Tambah Baru)
+//     // Kita cek ini DULUAN sebelum capek-capek upload foto.
+//     if (!editingAnggota) {
+//       if (
+//         !tempDetail.kepengurusan_id ||
+//         !tempDetail.divisi_id ||
+//         !tempDetail.jabatan_id
+//       ) {
+//         alert(
+//           'VALIDASI GAGAL: Harap lengkapi data Kepengurusan, Divisi, dan Jabatan sebelum menyimpan.',
+//         );
+//         return;
+//       }
 
-      // Validasi C: Keberadaan File Foto (Khusus Tambah Baru)
-      // Wajib punya file yang dipilih ATAU preview (jika case tertentu), karena foto wajib di tabel detail
-      if (!selectedFile && !tempFotoPreview) {
-        alert('VALIDASI GAGAL: Foto Anggota wajib diupload untuk data baru.');
-        return;
-      }
-    }
+//       // Validasi C: Keberadaan File Foto (Khusus Tambah Baru)
+//       // Wajib punya file yang dipilih ATAU preview (jika case tertentu), karena foto wajib di tabel detail
+//       if (!selectedFile && !tempFotoPreview) {
+//         alert('VALIDASI GAGAL: Foto Anggota wajib diupload untuk data baru.');
+//         return;
+//       }
+//     }
 
-    setIsLoading(true);
+//     setIsLoading(true);
 
-    try {
-      // ==========================================
-      // 2. PROSES UPLOAD FOTO
-      // ==========================================
-      let finalFotoUrl = tempAnggota.foto_anggota || ''; // Default string kosong
+//     try {
+//       // ==========================================
+//       // 2. PROSES UPLOAD FOTO
+//       // ==========================================
+//       let finalFotoUrl = tempAnggota.foto_anggota || ''; // Default string kosong
 
-      if (selectedFile) {
-        // Upload file...
-        const uploadResult = await startUpload([selectedFile]);
+//       if (selectedFile) {
+//         // Upload file...
+//         const uploadResult = await startUpload([selectedFile]);
 
-        // Cek hasil upload
-        if (!uploadResult || !uploadResult[0] || !uploadResult[0].url) {
-          throw new Error(
-            'Gagal mengupload foto ke server. Silakan cek koneksi internet Anda.',
-          );
-        }
+//         // Cek hasil upload
+//         if (!uploadResult || !uploadResult[0] || !uploadResult[0].url) {
+//           throw new Error(
+//             'Gagal mengupload foto ke server. Silakan cek koneksi internet Anda.',
+//           );
+//         }
 
-        finalFotoUrl = uploadResult[0].url;
-      } else if (tempFotoPreview) {
-        // Jika tidak ada file baru tapi ada preview (misal dari state sebelumnya)
-        finalFotoUrl = tempFotoPreview;
-      }
+//         finalFotoUrl = uploadResult[0].url;
+//       } else if (tempFotoPreview) {
+//         // Jika tidak ada file baru tapi ada preview (misal dari state sebelumnya)
+//         finalFotoUrl = tempFotoPreview;
+//       }
 
-      // ==========================================
-      // 3. VALIDASI URL FOTO (FINAL CHECK)
-      // ==========================================
-      // Khusus Create New, kita pastikan URL benar-benar ada string-nya
-      if (!editingAnggota && !finalFotoUrl) {
-        throw new Error(
-          'URL Foto tidak valid atau gagal digenerate. Data tidak akan disimpan.',
-        );
-      }
+//       // ==========================================
+//       // 3. VALIDASI URL FOTO (FINAL CHECK)
+//       // ==========================================
+//       // Khusus Create New, kita pastikan URL benar-benar ada string-nya
+//       if (!editingAnggota && !finalFotoUrl) {
+//         throw new Error(
+//           'URL Foto tidak valid atau gagal digenerate. Data tidak akan disimpan.',
+//         );
+//       }
 
-      // ==========================================
-      // 4. EKSEKUSI API (DATABASE)
-      // ==========================================
+//       // ==========================================
+//       // 4. EKSEKUSI API (DATABASE)
+//       // ==========================================
 
-      // Payload Dasar (btw_anggota)
-      const saveDataAnggota = {
-        nama_anggota: tempAnggota.nama_anggota,
-        linkedin: tempAnggota.linkedin,
-        instagram: tempAnggota.instagram,
-      };
+//       // Payload Dasar (btw_anggota)
+//       const saveDataAnggota = {
+//         nama_anggota: tempAnggota.nama_anggota,
+//         linkedin: tempAnggota.linkedin,
+//         instagram: tempAnggota.instagram,
+//       };
 
-      if (editingAnggota) {
-        // --- LOGIC EDIT (Hanya Update Profil) ---
-        const updated = await saveDataToAPI(
-          'anggota',
-          saveDataAnggota,
-          editingAnggota.id,
-        );
-        // Update state lokal
-        setData(data.map((a) => (a.id === editingAnggota.id ? updated : a)));
-      } else {
-        // --- LOGIC CREATE (Sequential: Anggota -> Detail) ---
+//       if (editingAnggota) {
+//         // --- LOGIC EDIT (Hanya Update Profil) ---
+//         const updated = await saveDataToAPI(
+//           'anggota',
+//           saveDataAnggota,
+//           editingAnggota.id,
+//         );
+//         // Update state lokal
+//         setData(data.map((a) => (a.id === editingAnggota.id ? updated : a)));
+//       } else {
+//         // --- LOGIC CREATE (Sequential: Anggota -> Detail) ---
 
-        // A. Simpan Anggota
-        const newAnggota = await saveDataToAPI('anggota', saveDataAnggota);
+//         // A. Simpan Anggota
+//         const newAnggota = await saveDataToAPI('anggota', saveDataAnggota);
 
-        // Validasi ID Anggota Baru
-        const newAnggotaId = newAnggota.id || newAnggota.data?.id;
-        if (!newAnggotaId) {
-          throw new Error('Gagal mendapatkan ID Anggota dari server.');
-        }
+//         // Validasi ID Anggota Baru
+//         const newAnggotaId = newAnggota.id || newAnggota.data?.id;
+//         if (!newAnggotaId) {
+//           throw new Error('Gagal mendapatkan ID Anggota dari server.');
+//         }
 
-        // B. Simpan Detail (Data sudah dijamin lengkap & valid di tahap 1 & 3)
-        const saveDataDetail = {
-          id_anggota: newAnggotaId,
-          id_btw: parseInt(tempDetail.kepengurusan_id),
-          id_divisi: parseInt(tempDetail.divisi_id),
-          id_jabatan: parseInt(tempDetail.jabatan_id),
-          foto_anggota: finalFotoUrl, // URL Foto masuk sini
-        };
+//         // B. Simpan Detail (Data sudah dijamin lengkap & valid di tahap 1 & 3)
+//         const saveDataDetail = {
+//           id_anggota: newAnggotaId,
+//           id_btw: parseInt(tempDetail.kepengurusan_id),
+//           id_divisi: parseInt(tempDetail.divisi_id),
+//           id_jabatan: parseInt(tempDetail.jabatan_id),
+//           foto_anggota: finalFotoUrl, // URL Foto masuk sini
+//         };
 
-        await saveDataToAPI('detail_anggota', saveDataDetail);
-        console.log('Sukses: Data Anggota dan Detail tersimpan.');
+//         await saveDataToAPI('detail_anggota', saveDataDetail);
+//         console.log('Sukses: Data Anggota dan Detail tersimpan.');
 
-        // Update state lokal (tambah data baru ke tabel)
-        setData([...data, newAnggota]);
-      }
+//         // Update state lokal (tambah data baru ke tabel)
+//         setData([...data, newAnggota]);
+//       }
 
-      // Tutup Modal hanya jika semua sukses
-      handleCloseModal();
-    } catch (error: any) {
-      console.error('Terjadi Kesalahan:', error);
-      // Ini adalah "Soft Error" (Alert) yang Anda inginkan
-      // User tetap di modal, data input tidak hilang, bisa coba lagi
-      alert(error.message || 'Terjadi kesalahan sistem saat menyimpan data.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+//       // Tutup Modal hanya jika semua sukses
+//       handleCloseModal();
+//     } catch (error: any) {
+//       console.error('Terjadi Kesalahan:', error);
+//       // Ini adalah "Soft Error" (Alert) yang Anda inginkan
+//       // User tetap di modal, data input tidak hilang, bisa coba lagi
+//       alert(error.message || 'Terjadi kesalahan sistem saat menyimpan data.');
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
 
-  // ... (handleViewProfile, handleCloseProfileModal, handleDeleteClick, handleConfirmDelete sama) ...
-  const handleViewProfile = (anggota: CrudAnggota) => {
-    setSelectedAnggota(anggota);
-    setIsProfileModalOpen(true);
-  };
-  const handleCloseProfileModal = () => {
-    setIsProfileModalOpen(false);
-    setSelectedAnggota(null);
-  };
-  const handleDeleteClick = (id: number) => {
-    setAnggotaToDeleteId(id);
-    setIsDeleteModalOpen(true);
-  };
-  const handleConfirmDelete = async () => {
-    if (anggotaToDeleteId !== null) {
-      setIsLoading(true);
-      try {
-        const success = await deleteDataFromAPI('anggota', anggotaToDeleteId);
-        if (success) {
-          setData(data.filter((a) => a.id !== anggotaToDeleteId));
-        }
-      } catch (error) {
-        console.error('Gagal menghapus data:', error);
-        alert('Gagal menghapus data. Silakan coba lagi.');
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    setIsDeleteModalOpen(false);
-    setAnggotaToDeleteId(null);
-  };
+//   // ... (handleViewProfile, handleCloseProfileModal, handleDeleteClick, handleConfirmDelete sama) ...
+//   const handleViewProfile = (anggota: CrudAnggota) => {
+//     setSelectedAnggota(anggota);
+//     setIsProfileModalOpen(true);
+//   };
+//   const handleCloseProfileModal = () => {
+//     setIsProfileModalOpen(false);
+//     setSelectedAnggota(null);
+//   };
+//   const handleDeleteClick = (id: number) => {
+//     setAnggotaToDeleteId(id);
+//     setIsDeleteModalOpen(true);
+//   };
+//   const handleConfirmDelete = async () => {
+//     if (anggotaToDeleteId !== null) {
+//       setIsLoading(true);
+//       try {
+//         const success = await deleteDataFromAPI('anggota', anggotaToDeleteId);
+//         if (success) {
+//           setData(data.filter((a) => a.id !== anggotaToDeleteId));
+//         }
+//       } catch (error) {
+//         console.error('Gagal menghapus data:', error);
+//         alert('Gagal menghapus data. Silakan coba lagi.');
+//       } finally {
+//         setIsLoading(false);
+//       }
+//     }
+//     setIsDeleteModalOpen(false);
+//     setAnggotaToDeleteId(null);
+//   };
 
-  const SelectFieldLocal: React.FC<{
-    label: string;
-    value: string;
-    onChange: (v: string) => void;
-    options: { id: number; name: string }[];
-    disabled?: boolean;
-  }> = ({ label, value, onChange, options, disabled }) => (
-    <div className="mb-4">
-      <label className="mb-1 block text-xs font-semibold text-gray-700 uppercase">
-        {label}
-      </label>
-      <div className="relative">
-        <select
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          disabled={disabled}
-          className="w-full appearance-none rounded-lg border border-gray-300 bg-gray-100 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none disabled:opacity-50"
-        >
-          <option value="">Pilih {label}</option>
-          {options.map((opt) => (
-            <option key={opt.id} value={opt.id}>
-              {opt.name}
-            </option>
-          ))}
-        </select>
-        <ChevronDown className="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 transform text-gray-500" />
-      </div>
-    </div>
-  );
+//   const SelectFieldLocal: React.FC<{
+//     label: string;
+//     value: string;
+//     onChange: (v: string) => void;
+//     options: { id: number; name: string }[];
+//     disabled?: boolean;
+//   }> = ({ label, value, onChange, options, disabled }) => (
+//     <div className="mb-4">
+//       <label className="mb-1 block text-xs font-semibold text-gray-700 uppercase">
+//         {label}
+//       </label>
+//       <div className="relative">
+//         <select
+//           value={value}
+//           onChange={(e) => onChange(e.target.value)}
+//           disabled={disabled}
+//           className="w-full appearance-none rounded-lg border border-gray-300 bg-gray-100 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none disabled:opacity-50"
+//         >
+//           <option value="">Pilih {label}</option>
+//           {options.map((opt) => (
+//             <option key={opt.id} value={opt.id}>
+//               {opt.name}
+//             </option>
+//           ))}
+//         </select>
+//         <ChevronDown className="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 transform text-gray-500" />
+//       </div>
+//     </div>
+//   );
 
-  const itemsPerPage = 10;
-  const currentPage = 1;
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+//   const itemsPerPage = 10;
+//   const currentPage = 1;
+//   const totalPages = Math.ceil(data.length / itemsPerPage);
 
-  return (
-    <div className="space-y-6 p-4 sm:p-8">
-      <h2 className="text-xl font-bold text-gray-800 sm:text-2xl">
-        ANGGOTA (DATA DASAR)
-      </h2>
-      <div className="flex items-center justify-between">
-        <button
-          onClick={handleAddNew}
-          className="flex items-center space-x-2 rounded-lg bg-blue-500 px-4 py-2 font-semibold text-white shadow-md transition-colors hover:bg-blue-600"
-          disabled={isLoading}
-        >
-          <Plus className="h-5 w-5" />
-          <span>Tambah Baru</span>
-        </button>
-      </div>
+//   return (
+//     <div className="space-y-6 p-4 sm:p-8">
+//       <h2 className="text-xl font-bold text-gray-800 sm:text-2xl">
+//         ANGGOTA (DATA DASAR)
+//       </h2>
+//       <div className="flex items-center justify-between">
+//         <button
+//           onClick={handleAddNew}
+//           className="flex items-center space-x-2 rounded-lg bg-blue-500 px-4 py-2 font-semibold text-white shadow-md transition-colors hover:bg-blue-600"
+//           disabled={isLoading}
+//         >
+//           <Plus className="h-5 w-5" />
+//           <span>Tambah Baru</span>
+//         </button>
+//       </div>
 
-      <div className="rounded-xl bg-white p-4 shadow-lg sm:p-6">
-        {/* ... Search ... */}
-        <div className="mb-4 flex flex-wrap items-center justify-between space-y-4 md:space-y-0">
-          <div className="relative w-full md:w-1/3">
-            <Search className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search Anggota..."
-              className="w-full rounded-xl border border-gray-300 p-3 pl-10 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            />
-          </div>
-        </div>
+//       <div className="rounded-xl bg-white p-4 shadow-lg sm:p-6">
+//         {/* ... Search ... */}
+//         <div className="mb-4 flex flex-wrap items-center justify-between space-y-4 md:space-y-0">
+//           <div className="relative w-full md:w-1/3">
+//             <Search className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
+//             <input
+//               type="text"
+//               placeholder="Search Anggota..."
+//               className="w-full rounded-xl border border-gray-300 p-3 pl-10 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+//             />
+//           </div>
+//         </div>
 
-        {isLoading && (
-          <div className="flex h-64 items-center justify-center">
-            <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-blue-500"></div>
-          </div>
-        )}
+//         {isLoading && (
+//           <div className="flex h-64 items-center justify-center">
+//             <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-blue-500"></div>
+//           </div>
+//         )}
 
-        {!isLoading && (
-          <div className="min-h-[300px] overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                    ID
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                    NAMA ANGGOTA
-                  </th>
-                  {/* Kolom FOTO dihapus dari tabel ini karena btw_anggota tidak punya foto */}
-                  <th className="px-6 py-3 text-center text-xs font-medium tracking-wider text-gray-500 uppercase">
-                    ACTION
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 bg-white">
-                {data.length === 0 ? (
-                  <tr>
-                    <td
-                      colSpan={3}
-                      className="px-6 py-4 text-center text-sm whitespace-nowrap text-gray-500"
-                    >
-                      Tidak ada data anggota
-                    </td>
-                  </tr>
-                ) : (
-                  data.map((item) => (
-                    <tr
-                      key={item.id}
-                      className="border-b border-gray-100 bg-white transition-colors hover:bg-gray-100"
-                    >
-                      <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-gray-900">
-                        {item.id}
-                      </td>
-                      <td className="px-6 py-4 text-sm whitespace-nowrap">
-                        <span
-                          className="flex cursor-pointer items-center text-blue-600 hover:underline"
-                          onClick={() => handleViewProfile(item)}
-                        >
-                          <Eye className="mr-2 hidden h-4 w-4 sm:inline" />{' '}
-                          {item.nama_anggota}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {item.foto_anggota ? (
-                          <div className="h-10 w-10 overflow-hidden rounded-full">
-                            <Image
-                              width={10}
-                              height={10}
-                              src={item.foto_anggota}
-                              alt={item.nama_anggota}
-                              className="h-full w-full object-cover"
-                            />
-                          </div>
-                        ) : (
-                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200">
-                            <User className="h-5 w-5 text-gray-500" />
-                          </div>
-                        )}
-                      </td>
-                      <td className="px-6 py-4 text-center text-sm font-medium whitespace-nowrap">
-                        <button
-                          onClick={() => handleEdit(item)}
-                          className="mr-3 rounded-full p-2 text-blue-600 hover:bg-blue-200 hover:text-blue-900"
-                          disabled={isLoading}
-                        >
-                          <Edit className="h-5 w-5" />
-                        </button>
-                        <button
-                          onClick={() => handleDeleteClick(item.id)}
-                          className="rounded-full p-2 text-red-600 hover:bg-red-200 hover:text-red-900"
-                          disabled={isLoading}
-                        >
-                          <Trash2 className="h-5 w-5" />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        )}
+//         {!isLoading && (
+//           <div className="min-h-[300px] overflow-x-auto">
+//             <table className="min-w-full divide-y divide-gray-200">
+//               <thead className="bg-gray-50">
+//                 <tr>
+//                   <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+//                     ID
+//                   </th>
+//                   <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+//                     NAMA ANGGOTA
+//                   </th>
+//                   {/* Kolom FOTO dihapus dari tabel ini karena btw_anggota tidak punya foto */}
+//                   <th className="px-6 py-3 text-center text-xs font-medium tracking-wider text-gray-500 uppercase">
+//                     ACTION
+//                   </th>
+//                 </tr>
+//               </thead>
+//               <tbody className="divide-y divide-gray-200 bg-white">
+//                 {data.length === 0 ? (
+//                   <tr>
+//                     <td
+//                       colSpan={3}
+//                       className="px-6 py-4 text-center text-sm whitespace-nowrap text-gray-500"
+//                     >
+//                       Tidak ada data anggota
+//                     </td>
+//                   </tr>
+//                 ) : (
+//                   data.map((item) => (
+//                     <tr
+//                       key={item.id}
+//                       className="border-b border-gray-100 bg-white transition-colors hover:bg-gray-100"
+//                     >
+//                       <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-gray-900">
+//                         {item.id}
+//                       </td>
+//                       <td className="px-6 py-4 text-sm whitespace-nowrap">
+//                         <span
+//                           className="flex cursor-pointer items-center text-blue-600 hover:underline"
+//                           onClick={() => handleViewProfile(item)}
+//                         >
+//                           <Eye className="mr-2 hidden h-4 w-4 sm:inline" />{' '}
+//                           {item.nama_anggota}
+//                         </span>
+//                       </td>
+//                       <td className="px-6 py-4 whitespace-nowrap">
+//                         {item.foto_anggota ? (
+//                           <div className="h-10 w-10 overflow-hidden rounded-full">
+//                             <Image
+//                               width={10}
+//                               height={10}
+//                               src={item.foto_anggota}
+//                               alt={item.nama_anggota}
+//                               className="h-full w-full object-cover"
+//                             />
+//                           </div>
+//                         ) : (
+//                           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200">
+//                             <User className="h-5 w-5 text-gray-500" />
+//                           </div>
+//                         )}
+//                       </td>
+//                       <td className="px-6 py-4 text-center text-sm font-medium whitespace-nowrap">
+//                         <button
+//                           onClick={() => handleEdit(item)}
+//                           className="mr-3 rounded-full p-2 text-blue-600 hover:bg-blue-200 hover:text-blue-900"
+//                           disabled={isLoading}
+//                         >
+//                           <Edit className="h-5 w-5" />
+//                         </button>
+//                         <button
+//                           onClick={() => handleDeleteClick(item.id)}
+//                           className="rounded-full p-2 text-red-600 hover:bg-red-200 hover:text-red-900"
+//                           disabled={isLoading}
+//                         >
+//                           <Trash2 className="h-5 w-5" />
+//                         </button>
+//                       </td>
+//                     </tr>
+//                   ))
+//                 )}
+//               </tbody>
+//             </table>
+//           </div>
+//         )}
 
-        {/* Pagination ... */}
-        <div className="mt-6 flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
-          <div className="text-sm text-gray-700">
-            Menampilkan {data.length} entries.
-          </div>
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            onPageChange={() => {}}
-          />
-        </div>
-      </div>
+//         {/* Pagination ... */}
+//         <div className="mt-6 flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
+//           <div className="text-sm text-gray-700">
+//             Menampilkan {data.length} entries.
+//           </div>
+//           <Pagination
+//             totalPages={totalPages}
+//             currentPage={currentPage}
+//             onPageChange={() => {}}
+//           />
+//         </div>
+//       </div>
 
-      {/* <CustomModal
-        title={
-          editingAnggota
-            ? 'Edit Anggota (Info Dasar)'
-            : 'Tambah Anggota Lengkap'
-        }
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-      >
-        <div className="space-y-4">
-          <div className="mb-4">
-            <label className="mb-1 block text-xs font-semibold text-gray-700 uppercase">
-              FOTO ANGGOTA
-            </label>
-            <div className="space-y-3">
-              {tempAnggota.foto_anggota && (
-                <div className="flex justify-center">
-                  <div className="h-32 w-32 overflow-hidden rounded-full border">
-                    <Image
-                      width={32}
-                      height={32}
-                      src={tempAnggota.foto_anggota}
-                      alt="Preview"
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                )}
-                <div className="flex items-center justify-center">
-                  <label className="cursor-pointer">
-                    <div className="flex items-center space-x-2 rounded-lg border border-blue-200 bg-white px-4 py-2 text-blue-600 shadow-sm transition-colors hover:bg-blue-50">
-                      <Upload className="h-4 w-4" />
-                      <span>
-                        {tempFotoPreview ? 'Ganti Foto' : 'Pilih Foto'}
-                      </span>
-                    </div>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileSelect}
-                      className="hidden"
-                      disabled={isUploading}
-                    />
-                  </label>
-                </div>
-                {selectedFile && (
-                  <p className="text-center text-xs text-gray-500">
-                    File: {selectedFile.name}
-                  </p>
-                )}
-                {isUploading && (
-                  <div className="space-y-2">
-                    <div className="h-2 rounded-full bg-gray-200">
-                      <div
-                        className="h-2 rounded-full bg-blue-600 transition-all duration-300"
-                        style={{ width: `${uploadProgress}%` }}
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          )} */}
+//       <CustomModal
+//         title={
+//           editingAnggota
+//             ? 'Edit Anggota (Info Dasar)'
+//             : 'Tambah Anggota Lengkap'
+//         }
+//         isOpen={isModalOpen}
+//         onClose={handleCloseModal}
+//       >
+//         <div className="space-y-4">
+//           <div className="mb-4">
+//             <label className="mb-1 block text-xs font-semibold text-gray-700 uppercase">
+//               FOTO ANGGOTA
+//             </label>
+//             <div className="space-y-3">
+//               {tempAnggota.foto_anggota && (
+//                 <div className="flex justify-center">
+//                   <div className="h-32 w-32 overflow-hidden rounded-full border">
+//                     <Image
+//                       width={32}
+//                       height={32}
+//                       src={tempAnggota.foto_anggota}
+//                       alt="Preview"
+//                       className="h-full w-full object-cover"
+//                     />
+//                   </div>
+//                 </div>
+//                 )}
+//                 <div className="flex items-center justify-center">
+//                   <label className="cursor-pointer">
+//                     <div className="flex items-center space-x-2 rounded-lg border border-blue-200 bg-white px-4 py-2 text-blue-600 shadow-sm transition-colors hover:bg-blue-50">
+//                       <Upload className="h-4 w-4" />
+//                       <span>
+//                         {tempFotoPreview ? 'Ganti Foto' : 'Pilih Foto'}
+//                       </span>
+//                     </div>
+//                     <input
+//                       type="file"
+//                       accept="image/*"
+//                       onChange={handleFileSelect}
+//                       className="hidden"
+//                       disabled={isUploading}
+//                     />
+//                   </label>
+//                 </div>
+//                 {selectedFile && (
+//                   <p className="text-center text-xs text-gray-500">
+//                     File: {selectedFile.name}
+//                   </p>
+//                 )}
+//                 {isUploading && (
+//                   <div className="space-y-2">
+//                     <div className="h-2 rounded-full bg-gray-200">
+//                       <div
+//                         className="h-2 rounded-full bg-blue-600 transition-all duration-300"
+//                         style={{ width: `${uploadProgress}%` }}
+//                       />
+//                     </div>
+//                   </div>
+//                 )}
+//               </div>
+//             </div>
+//           )}
 
-          <InputField
-            label="NAMA LENGKAP"
-            value={tempAnggota.nama_anggota}
-            onChange={(v) =>
-              setTempAnggota({ ...tempAnggota, nama_anggota: v })
-            }
-            placeholder="Nama Anggota"
-          />
-          <InputField
-            label="LINKEDIN (URL)"
-            value={tempAnggota.linkedin}
-            onChange={(v) => setTempAnggota({ ...tempAnggota, linkedin: v })}
-            placeholder="https://linkedin.com/in/..."
-            type="url"
-          />
-          <InputField
-            label="INSTAGRAM (URL)"
-            value={tempAnggota.instagram}
-            onChange={(v) => setTempAnggota({ ...tempAnggota, instagram: v })}
-            placeholder="https://instagram.com/..."
-            type="url"
-          />
+//           <InputField
+//             label="NAMA LENGKAP"
+//             value={tempAnggota.nama_anggota}
+//             onChange={(v) =>
+//               setTempAnggota({ ...tempAnggota, nama_anggota: v })
+//             }
+//             placeholder="Nama Anggota"
+//           />
+//           <InputField
+//             label="LINKEDIN (URL)"
+//             value={tempAnggota.linkedin}
+//             onChange={(v) => setTempAnggota({ ...tempAnggota, linkedin: v })}
+//             placeholder="https://linkedin.com/in/..."
+//             type="url"
+//           />
+//           <InputField
+//             label="INSTAGRAM (URL)"
+//             value={tempAnggota.instagram}
+//             onChange={(v) => setTempAnggota({ ...tempAnggota, instagram: v })}
+//             placeholder="https://instagram.com/..."
+//             type="url"
+//           />
 
-          {/* --- BAGIAN DETAIL (Hanya tampil saat Create New) --- */}
-          {!editingAnggota && (
-            <>
-              <div className="my-4 border-t border-gray-300 pt-4">
-                <h3 className="mb-2 text-sm font-bold text-gray-800">
-                  DETAIL JABATAN & POSISI
-                </h3>
-                <p className="mb-4 text-xs text-gray-500">
-                  Lengkapi data ini untuk otomatis membuat relasi.
-                </p>
-              </div>
+//           {/* --- BAGIAN DETAIL (Hanya tampil saat Create New) --- */}
+//           {!editingAnggota && (
+//             <>
+//               <div className="my-4 border-t border-gray-300 pt-4">
+//                 <h3 className="mb-2 text-sm font-bold text-gray-800">
+//                   DETAIL JABATAN & POSISI
+//                 </h3>
+//                 <p className="mb-4 text-xs text-gray-500">
+//                   Lengkapi data ini untuk otomatis membuat relasi.
+//                 </p>
+//               </div>
 
-              <SelectFieldLocal
-                label="KEPENGURUSAN"
-                value={tempDetail.kepengurusan_id}
-                onChange={(v) =>
-                  setTempDetail({ ...tempDetail, kepengurusan_id: v })
-                }
-                options={kepengurusanList.map((p) => ({
-                  id: p.id,
-                  name: p.nama_kepengurusan,
-                }))}
-              />
-              <SelectFieldLocal
-                label="DIVISI"
-                value={tempDetail.divisi_id}
-                onChange={(v) => setTempDetail({ ...tempDetail, divisi_id: v })}
-                options={divisiList.map((d) => ({
-                  id: d.id,
-                  name: d.nama_divisi,
-                }))}
-              />
-              <SelectFieldLocal
-                label="JABATAN"
-                value={tempDetail.jabatan_id}
-                onChange={(v) =>
-                  setTempDetail({ ...tempDetail, jabatan_id: v })
-                }
-                options={jabatanList.map((j) => ({
-                  id: j.id,
-                  name: j.nama_jabatan,
-                }))}
-              />
-            </>
-          )}
-        </div>
+//               <SelectFieldLocal
+//                 label="KEPENGURUSAN"
+//                 value={tempDetail.kepengurusan_id}
+//                 onChange={(v) =>
+//                   setTempDetail({ ...tempDetail, kepengurusan_id: v })
+//                 }
+//                 options={kepengurusanList.map((p) => ({
+//                   id: p.id,
+//                   name: p.nama_kepengurusan,
+//                 }))}
+//               />
+//               <SelectFieldLocal
+//                 label="DIVISI"
+//                 value={tempDetail.divisi_id}
+//                 onChange={(v) => setTempDetail({ ...tempDetail, divisi_id: v })}
+//                 options={divisiList.map((d) => ({
+//                   id: d.id,
+//                   name: d.nama_divisi,
+//                 }))}
+//               />
+//               <SelectFieldLocal
+//                 label="JABATAN"
+//                 value={tempDetail.jabatan_id}
+//                 onChange={(v) =>
+//                   setTempDetail({ ...tempDetail, jabatan_id: v })
+//                 }
+//                 options={jabatanList.map((j) => ({
+//                   id: j.id,
+//                   name: j.nama_jabatan,
+//                 }))}
+//               />
+//             </>
+//           )}
+//         </div>
 
-        <div className="mt-6 flex justify-end space-x-3 border-t pt-4">
-          <button
-            onClick={handleCloseModal}
-            className={`rounded-lg px-6 py-2 font-semibold text-gray-700 transition-colors`}
-            style={{ backgroundColor: BUTTON_GREY }}
-            disabled={isLoading || isUploading}
-          >
-            Batal
-          </button>
-          <button
-            onClick={handleSave}
-            className={`rounded-lg px-6 py-2 font-semibold text-white shadow-md transition-colors`}
-            style={{ backgroundColor: BUTTON_BLUE }}
-            disabled={!tempAnggota.nama_anggota || isLoading || isUploading}
-          >
-            {isLoading || isUploading
-              ? 'Menyimpan...'
-              : editingAnggota
-                ? 'Simpan Perubahan'
-                : 'Tambah Anggota'}
-          </button>
-        </div>
-      </CustomModal>
+//         <div className="mt-6 flex justify-end space-x-3 border-t pt-4">
+//           <button
+//             onClick={handleCloseModal}
+//             className={`rounded-lg px-6 py-2 font-semibold text-gray-700 transition-colors`}
+//             style={{ backgroundColor: BUTTON_GREY }}
+//             disabled={isLoading || isUploading}
+//           >
+//             Batal
+//           </button>
+//           <button
+//             onClick={handleSave}
+//             className={`rounded-lg px-6 py-2 font-semibold text-white shadow-md transition-colors`}
+//             style={{ backgroundColor: BUTTON_BLUE }}
+//             disabled={!tempAnggota.nama_anggota || isLoading || isUploading}
+//           >
+//             {isLoading || isUploading
+//               ? 'Menyimpan...'
+//               : editingAnggota
+//                 ? 'Simpan Perubahan'
+//                 : 'Tambah Anggota'}
+//           </button>
+//         </div>
+//       </CustomModal>
 
-      {/* Profile Modal & Delete Confirmation - Logika sama, hanya field foto menyesuaikan */}
-      <CustomModal
-        title="Detail Profil Anggota"
-        isOpen={isProfileModalOpen}
-        onClose={handleCloseProfileModal}
-      >
-        {selectedAnggota && (
-          <div className="flex flex-col items-start space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-            {/* Note: selectedAnggota dari API 'anggota' skema baru tidak punya foto. 
-                 Jadi ini akan selalu fallback ke icon User, kecuali Anda fetch detailnya. */}
-            <div className="flex min-h-[150px] w-full flex-col items-center justify-center rounded-lg bg-gray-100 p-4 sm:w-1/3">
-              {selectedAnggota.foto_anggota ? (
-                <Image
-                  src={selectedAnggota.foto_anggota}
-                  alt={selectedAnggota.nama_anggota}
-                  width={24}
-                  height={24}
-                  className="h-24 w-24 rounded-full object-cover"
-                />
-              ) : (
-                <User className="h-12 w-12 text-gray-500" />
-              )}
-            </div>
-            <div className="flex-1 space-y-1">
-              <h3 className="text-xl font-bold text-gray-900">
-                {selectedAnggota.nama_anggota}
-              </h3>
-              <p className="mb-4 text-sm text-gray-500">
-                ID Anggota: {selectedAnggota.id}
-              </p>
-              {/* ... Links Linkedin/IG ... */}
-              <div className="space-y-2 pt-2 text-sm">
-                <p className="font-semibold text-gray-700">Linkedin</p>
-                <a
-                  href={selectedAnggota.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center wrap-break-word text-blue-600 hover:underline"
-                >
-                  <Link className="mr-1 h-4 w-4" />{' '}
-                  {selectedAnggota.linkedin || 'Tidak ada'}
-                </a>
-                <p className="pt-2 font-semibold text-gray-700">Instagram</p>
-                <a
-                  href={selectedAnggota.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center wrap-break-word text-blue-600 hover:underline"
-                >
-                  <Link className="mr-1 h-4 w-4" />{' '}
-                  {selectedAnggota.instagram || 'Tidak ada'}
-                </a>
-              </div>
-              <div className="flex space-x-3 pt-4">
-                <button
-                  onClick={() => handleEdit(selectedAnggota)}
-                  className="rounded-full p-2 text-blue-600 transition-colors hover:bg-blue-100 hover:text-blue-800"
-                >
-                  <Edit className="h-5 w-5" />
-                </button>
-                <button
-                  onClick={() => {
-                    handleCloseProfileModal();
-                    handleDeleteClick(selectedAnggota.id);
-                  }}
-                  className="rounded-full p-2 text-red-600 transition-colors hover:bg-red-100 hover:text-red-800"
-                >
-                  <Trash2 className="h-5 w-5" />
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-      </CustomModal>
+//       {/* Profile Modal & Delete Confirmation - Logika sama, hanya field foto menyesuaikan */}
+//       <CustomModal
+//         title="Detail Profil Anggota"
+//         isOpen={isProfileModalOpen}
+//         onClose={handleCloseProfileModal}
+//       >
+//         {selectedAnggota && (
+//           <div className="flex flex-col items-start space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
+//             {/* Note: selectedAnggota dari API 'anggota' skema baru tidak punya foto.
+//                  Jadi ini akan selalu fallback ke icon User, kecuali Anda fetch detailnya. */}
+//             <div className="flex min-h-[150px] w-full flex-col items-center justify-center rounded-lg bg-gray-100 p-4 sm:w-1/3">
+//               {selectedAnggota.foto_anggota ? (
+//                 <Image
+//                   src={selectedAnggota.foto_anggota}
+//                   alt={selectedAnggota.nama_anggota}
+//                   width={24}
+//                   height={24}
+//                   className="h-24 w-24 rounded-full object-cover"
+//                 />
+//               ) : (
+//                 <User className="h-12 w-12 text-gray-500" />
+//               )}
+//             </div>
+//             <div className="flex-1 space-y-1">
+//               <h3 className="text-xl font-bold text-gray-900">
+//                 {selectedAnggota.nama_anggota}
+//               </h3>
+//               <p className="mb-4 text-sm text-gray-500">
+//                 ID Anggota: {selectedAnggota.id}
+//               </p>
+//               {/* ... Links Linkedin/IG ... */}
+//               <div className="space-y-2 pt-2 text-sm">
+//                 <p className="font-semibold text-gray-700">Linkedin</p>
+//                 <a
+//                   href={selectedAnggota.linkedin}
+//                   target="_blank"
+//                   rel="noopener noreferrer"
+//                   className="flex items-center wrap-break-word text-blue-600 hover:underline"
+//                 >
+//                   <Link className="mr-1 h-4 w-4" />{' '}
+//                   {selectedAnggota.linkedin || 'Tidak ada'}
+//                 </a>
+//                 <p className="pt-2 font-semibold text-gray-700">Instagram</p>
+//                 <a
+//                   href={selectedAnggota.instagram}
+//                   target="_blank"
+//                   rel="noopener noreferrer"
+//                   className="flex items-center wrap-break-word text-blue-600 hover:underline"
+//                 >
+//                   <Link className="mr-1 h-4 w-4" />{' '}
+//                   {selectedAnggota.instagram || 'Tidak ada'}
+//                 </a>
+//               </div>
+//               <div className="flex space-x-3 pt-4">
+//                 <button
+//                   onClick={() => handleEdit(selectedAnggota)}
+//                   className="rounded-full p-2 text-blue-600 transition-colors hover:bg-blue-100 hover:text-blue-800"
+//                 >
+//                   <Edit className="h-5 w-5" />
+//                 </button>
+//                 <button
+//                   onClick={() => {
+//                     handleCloseProfileModal();
+//                     handleDeleteClick(selectedAnggota.id);
+//                   }}
+//                   className="rounded-full p-2 text-red-600 transition-colors hover:bg-red-100 hover:text-red-800"
+//                 >
+//                   <Trash2 className="h-5 w-5" />
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         )}
+//       </CustomModal>
 
-      <ConfirmationModal
-        title="Konfirmasi Hapus Anggota"
-        message={`Apakah Anda yakin ingin menghapus anggota ini? Data ini akan hilang secara permanen.`}
-        isOpen={isDeleteModalOpen}
-        onClose={() => setIsDeleteModalOpen(false)}
-        onConfirm={handleConfirmDelete}
-      />
-    </div>
-  );
-};
+//       <ConfirmationModal
+//         title="Konfirmasi Hapus Anggota"
+//         message={`Apakah Anda yakin ingin menghapus anggota ini? Data ini akan hilang secara permanen.`}
+//         isOpen={isDeleteModalOpen}
+//         onClose={() => setIsDeleteModalOpen(false)}
+//         onConfirm={handleConfirmDelete}
+//       />
+//     </div>
+//   );
+// };
 
 // ====================================================================
 // H. KOMPONEN DETAIL ANGGOTA (JOIN TABLE)
@@ -3457,10 +3458,10 @@ function Dashboard() {
         return <DashboardHome onNavigate={setCurrentPage} />;
       case 'kepengurusan':
         return <KepengurusanAdmin />;
-      case 'divisi':
-        return <DivisiAdmin />;
-      case 'anggota':
-        return <AnggotaAdmin />;
+      // case 'divisi':
+      //   return <DivisiAdmin />;
+      // case 'anggota':
+      //   return <AnggotaAdmin />;
       case 'jabatan':
         return <JabatanAdmin />;
       case 'detail_anggota':
