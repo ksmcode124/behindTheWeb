@@ -1,9 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* ======================================================
-   ROOT VARIABLES (SINGLE SOURCE OF TRUTH)
-   ====================================================== */
 :root {
   @theme inline {
   --color-foreground: var(--foreground);
@@ -23,6 +20,7 @@
   --color-sidebar-primary-foreground: var(--primary-foreground);
   --color-sidebar-border: var(--border);
   --color-sidebar-ring: var(--ring);
+  
   /* === BTW COLORS === */
   --color-primary-600: #F59A47;
   --color-primary-500: #FEB863;
@@ -40,6 +38,7 @@
   /* === TYPOGRAPHY === */
   --font-display: "Anton", serif;
   --font-body: "Poppins", sans-serif;
+  --font-admin: "Montserrat", serif;
   --font-sans: Inter, sans-serif;
   --font-serif: Source Serif 4, serif;
   --font-mono: JetBrains Mono, monospace;
@@ -66,7 +65,7 @@
   --muted-foreground: oklch(0.551 0.0234 264.3637);
   --accent: oklch(0.9514 0.025 236.8242);
   --accent-foreground: oklch(0.3791 0.1378 265.5222);
-  --destructive: oklch(0.6368 0.2078 25.3313);
+  --color-destructive: oklch(0.6368 0.2078 25.3313);
   --destructive-foreground: oklch(1 0 0);
 
   --border: oklch(0.9276 0.0058 264.5313);
@@ -87,9 +86,6 @@
   --spacing: 0.25rem;
 }
 
-/* ======================================================
-   RESPONSIVE BOX SYSTEM
-   ====================================================== */
 @media (min-width: 640px) {
   :root {
     --box-size: 36px;
@@ -104,9 +100,6 @@
   }
 }
 
-/* ======================================================
-   ANIMATIONS
-   ====================================================== */
 @keyframes loop {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
@@ -150,4 +143,8 @@
     transform: translateX(0);
     opacity: 1;
   }
+}
+
+html, body {
+  background-color: var(--color-secondary-300)
 }

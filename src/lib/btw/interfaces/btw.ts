@@ -59,11 +59,8 @@ export interface CrudJabatan {
 export interface CrudAnggota {
   id: number;
   nama_anggota: string;
-  foto_anggota: string;
   linkedin: string;
   instagram: string;
-  jabatan_anggota: string;
-  kepengurusan_anggota: string;
 }
 
 // Detail Anggota (join table)
@@ -80,4 +77,15 @@ export interface DetailAnggota {
   foto_anggota?: string;
   linkedin?: string;
   instagram?: string;
+}
+
+export interface CrudDivisiGaleri {
+  id: number; // ID foto galeri
+  divisi_id: number; // ID divisi terkait
+  kepengurusan_id: number; // ID kepengurusan terkait
+  foto_divisi: string; // URL foto
+
+  // Nama relasi untuk ditampilkan di tabel
+  divisi_nama: string;
+  kepengurusan_nama: string;
 }
