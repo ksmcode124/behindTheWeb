@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Anton, Poppins } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
 import '@/app/globals.css';
 
 const anton = Anton({
@@ -29,6 +30,7 @@ export default function RootLayout({
         className={`${anton.variable} ${poppins.className} font-display bg-secondary-300 overflow-x-hidden antialiased`}
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );
